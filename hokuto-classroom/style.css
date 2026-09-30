@@ -1,0 +1,40 @@
+/* 꾸미기 수업: 여기서 색, 벽, 바닥, 조명과 픽셀 캐릭터 움직임을 바꿔 보세요. */
+:root { font-family: Pretendard, 'Malgun Gothic', sans-serif; color: #e8e9e4; background: #101824; --gold: #efc778; --wall: #304659; --floor: #745846; }
+* { box-sizing: border-box; }
+body { margin: 0; word-break: keep-all; }
+button { font: inherit; cursor: pointer; }
+button:focus-visible { outline: 3px solid #fff2ad; outline-offset: 3px; }
+header, main, footer { max-width: 1120px; margin: auto; }
+header { margin-top: 18px; padding: 22px 24px; border: 1px solid var(--gold); background: #192a3b; }
+h1 { margin: 0; font-size: clamp(1.4rem, 4vw, 2.3rem); color: var(--gold); }
+header p, footer { color: #c6d1d9; }
+.school-label { display: inline-block; padding: 4px 8px; background: #ffdd94; color: #14202d; font-weight: bold; }
+main { padding: 12px 8px 34px; }
+.floor-title { margin: 20px 6px 7px; font-size: 1rem; color: var(--gold); }
+.floor { display: grid; gap: 10px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.floor.single { grid-template-columns: 1fr; }
+.room { position: relative; min-height: 228px; overflow: hidden; border: 3px solid #b6996c; background: linear-gradient(145deg,#57809433 0 25%,transparent 45%), repeating-linear-gradient(90deg,transparent 0 47px,#ffffff0d 48px), var(--wall); box-shadow: inset 0 14px #c6d7bb18, inset 0 -23px #382b29, 0 7px #0a1019; }
+.room::before { content: ''; position: absolute; inset: 48% 0 0; background: repeating-linear-gradient(90deg,#ffffff0d 0 1px,transparent 1px 50px), linear-gradient(#8f7657,var(--floor) 30%,#4b3c39); clip-path: polygon(0 12%,100% 12%,100% 100%,0 100%); }
+.room::after { content: ''; pointer-events: none; position: absolute; inset: 0; background: linear-gradient(115deg,#fff5c118,transparent 35%,#080e2166 100%); }
+.room h3 { position: relative; z-index: 2; display: inline-block; margin: 9px; padding: 6px 10px; background: #172333e8; border-left: 4px solid var(--gold); font-size: .95rem; }
+.window { position: absolute; left: 8%; top: 52px; width: 80px; height: 65px; background: linear-gradient(135deg,#f2d6a672,#497b91 48%,#152f49); border: 7px solid #ad9978; box-shadow: 7px 8px 28px #ffe5a943; }
+.desk { position: absolute; bottom: 27px; left: 24%; width: 105px; height: 34px; background: linear-gradient(#d5a76f 0 8px,#684d39 8px); border: 3px solid #3f302e; box-shadow: 5px 8px 0 #161b23; }
+.desk::before { content: ''; position: absolute; bottom: 32px; left: 30px; width: 37px; height: 29px; background: #8cbaaa; border: 5px solid #2c3542; box-shadow: 0 0 18px #8be0d599; }
+.lamp { position: absolute; bottom: 26px; right: 14%; width: 28px; height: 76px; background: linear-gradient(90deg,#856447,#e8be72,#70563e); box-shadow: 0 0 25px #ffdc8344; }
+.lamp::before { content: ''; position: absolute; top: -8px; left: -18px; width: 65px; height: 18px; background: #f7d483; border: 4px solid #695240; box-shadow: 0 10px 25px #ffe8a966; }
+.actor { --step: 1.7s; position: absolute; left: var(--left); bottom: 34px; z-index: 2; width: 56px; border: 0; padding: 0; color: white; background: transparent; text-shadow: 1px 2px #101b27; animation: stroll var(--step) ease-in-out infinite alternate; }
+.actor svg { display: block; width: 48px; height: 72px; margin: auto; image-rendering: pixelated; filter: drop-shadow(3px 6px 2px #0a122988); animation: bounce .34s steps(2,end) infinite alternate; }
+.actor span { display: block; background: #102131d9; font-size: 11px; }
+.actor:hover, .actor:focus-visible { animation-play-state: paused; }
+@keyframes stroll { to { transform: translateX(30px); } }
+@keyframes bounce { to { transform: translateY(-3px); } }
+.controls { position: absolute; z-index: 3; right: 8px; bottom: 8px; display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.controls button { border: 1px solid #e2c17e; padding: 5px 8px; background: #162c40ec; color: #fff5da; }
+.controls button:hover { background: #3d5b6d; }
+footer { padding: 12px; font-size: .85rem; }
+dialog { position: fixed; z-index: 10; width: min(calc(100% - 32px), 440px); border: 2px solid var(--gold); padding: 22px; color: #e8e9e4; background: #1b2c3c; box-shadow: 8px 10px #070b13; }
+dialog::backdrop { background: #09111bd9; }
+dialog h2 { margin-top: 0; color: var(--gold); }
+dialog button { background: #ffdc94; color: #14212c; border: 0; padding: 8px 14px; }
+@media (max-width: 680px) { .floor { grid-template-columns: 1fr; } .room { min-height: 215px; } }
+@media (prefers-reduced-motion: reduce) { .actor, .actor svg { animation: none; } }
