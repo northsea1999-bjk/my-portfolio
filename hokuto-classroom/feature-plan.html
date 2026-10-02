@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>북두증권 — 기능계획서</title>
+<style>
+:root{--navy:#142235;--wood:#8B6545;--gold:#D8B56A;--ink:#233044;--muted:#617083;--line:#e2e6eb;--paper:#f3f4f6}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;line-height:1.8;word-break:keep-all}
+.wrap{max-width:940px;margin:auto;padding:0 26px}
+header{background:var(--navy);color:#fff;padding:45px 0 62px;border-top:6px solid var(--gold)}
+.brand{color:var(--gold);font-size:13px;letter-spacing:.18em;font-weight:700}
+.back{display:inline-block;color:#bdc8d5;font-size:13px;text-decoration:none;margin-bottom:14px}
+.back:hover{color:var(--gold)}
+h1{font-size:clamp(26px,5vw,36px);line-height:1.35;margin:14px 0}
+header p{color:#d2dbe5;margin:0}
+.meta{font-size:13px;color:#bdc8d5;margin-top:10px}
+.meta a{color:var(--gold)}
+.document{position:relative;margin-top:-30px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:38px 42px;box-shadow:0 12px 36px #1422350b}
+section{margin-bottom:35px}
+section:last-child{margin-bottom:0}
+h2{font-size:19px;margin:0 0 17px;padding-bottom:10px;border-bottom:1px solid var(--line);color:var(--navy)}
+.num{font-size:13px;color:var(--wood);margin-right:12px;letter-spacing:.06em}
+p{margin:0 0 12px;font-size:15px}
+.scenario{background:#f5f6f8;border-radius:7px;padding:14px 18px;margin-bottom:10px;font-size:14px}
+.scenario b{color:var(--wood)}
+.feature{border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-bottom:16px}
+.fhead{background:var(--navy);color:#fff;font-weight:700;font-size:15px;padding:10px 16px;display:flex;justify-content:space-between;gap:10px}
+.badge{font-size:11px;padding:2px 9px;border-radius:20px;background:#e8eef5;color:#274d72;white-space:nowrap;align-self:center}
+.later{background:#f8eedc;color:#80602d}
+.row{display:grid;grid-template-columns:110px 1fr;border-top:1px solid var(--line);font-size:14px}
+.row:first-of-type{border-top:0}
+.k{background:#f5f6f8;color:var(--muted);font-size:12px;font-weight:700;padding:11px 14px}
+.v{padding:11px 14px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;color:var(--muted);font-size:12px;background:#f5f6f8}
+th,td{padding:12px;border-bottom:1px solid var(--line);vertical-align:top}
+td:first-child{font-weight:700;white-space:nowrap}
+.note{padding:16px 19px;border-left:3px solid var(--gold);background:#faf7f0;font-size:14px}
+.actions{display:flex;justify-content:flex-end;padding:15px 0}
+button{font:inherit;font-size:13px;padding:8px 16px;border:1px solid #c6ced8;background:#fff;color:var(--navy);border-radius:6px;cursor:pointer}
+button:hover{background:#e9edf2}
+footer{padding:22px 0 35px;color:var(--muted);font-size:12px}
+@media(max-width:600px){.wrap{padding:0 16px}.document{padding:26px 20px}.row{grid-template-columns:1fr}.k{padding:9px 14px 3px;background:none}.v{padding:0 14px 11px}}
+@media print{@page{size:A4;margin:16mm}body{background:#fff}.wrap{max-width:none;padding:0}header{background:#fff;color:var(--navy);padding:15px 0 20px}header p,.meta,.back{color:var(--muted)}.document{margin:0;padding:20px 0;border:0;box-shadow:none}.actions,.back{display:none}.feature,section{break-inside:avoid}.fhead,.k,th{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<a class="back" href="graphic-improvement-plan.html">← 기획서로 돌아가기</a>
+<div class="brand">HOKUTO SECURITIES · FEATURE PLAN</div>
+<h1>북두증권 기능계획서</h1>
+<p>기획서의 핵심 기능을 “누르면 무슨 일이 생기는지”로 풀어쓴 문서</p>
+<div class="meta">김범준 · 2026.10.02 · 문의 <a href="mailto:northsea1974@naver.com">northsea1974@naver.com</a></div>
+</div></header>
+<main class="wrap"><article class="document">
+
+<section><h2><span class="num">01</span>사용자 시나리오</h2>
+<div class="scenario"><b>시나리오 1 —</b> 사무실 화면에 들어와 여러 방을 둘러보다가, 궁금한 방에 마우스를 올리면 반응하고 클릭하면 그 방의 정보 팝업이 열린다.</div>
+<div class="scenario"><b>시나리오 2 —</b> 사무실을 돌아다니는 캐릭터를 클릭하면 짧은 브리핑 말풍선이 나온다.</div>
+<div class="scenario"><b>시나리오 3 —</b> 정보를 다 본 뒤 닫기 버튼을 누르면 다시 사무실 화면으로 돌아온다.</div>
+</section>
+
+<section><h2><span class="num">02</span>기능별 상세</h2>
+
+<div class="feature"><div class="fhead">사무실 메인 화면<span class="badge">필수</span></div>
+<div class="row"><div class="k">목적</div><div class="v">전체 방을 한눈에 보고 원하는 곳을 고르게 하기 위해</div></div>
+<div class="row"><div class="k">무엇을 하면</div><div class="v">북두증권 페이지에 접속하면</div></div>
+<div class="row"><div class="k">무슨 일이</div><div class="v">뉴스룸·리서치센터·펀드매니저실·사장실·BNF 신호실·트레이딩룸이 한 화면에 보이고, 각 방에 이름표가 붙는다</div></div>
+<div class="row"><div class="k">예외 상황</div><div class="v">① 이미지가 늦게 뜨면 방 이름 글자만 먼저 보여준다<br>② 모바일 화면에서는 가로로 밀어서 볼 수 있게 한다</div></div>
+<div class="row"><div class="k">의존관계</div><div class="v">없음 — 가장 먼저 보이는 화면</div></div>
+</div>
+
+<div class="feature"><div class="fhead">방 선택 (마우스 올리기·클릭)<span class="badge">필수</span></div>
+<div class="row"><div class="k">목적</div><div class="v">방이 “누를 수 있는 메뉴”라는 걸 알려주기 위해</div></div>
+<div class="row"><div class="k">무엇을 하면</div><div class="v">방 위에 마우스를 올리고 클릭하면</div></div>
+<div class="row"><div class="k">무슨 일이</div><div class="v">올리면 방이 금색 테두리로 반짝이고, 클릭하면 그 방의 정보 팝업이 열린다</div></div>
+<div class="row"><div class="k">예외 상황</div><div class="v">① 터치 화면은 올리기 없이 탭만으로 열린다<br>② 팝업이 열려 있는 동안 다른 방은 눌러지지 않는다</div></div>
+<div class="row"><div class="k">의존관계</div><div class="v">“사무실 메인 화면”이 먼저 보여야 한다</div></div>
+</div>
+
+<div class="feature"><div class="fhead">방별 정보 팝업<span class="badge">필수</span></div>
+<div class="row"><div class="k">목적</div><div class="v">선택한 방의 설명과 예시 자료를 보여주기 위해</div></div>
+<div class="row"><div class="k">무엇을 하면</div><div class="v">방을 클릭하면</div></div>
+<div class="row"><div class="k">무슨 일이</div><div class="v">화면 가운데에 사무실과 같은 디자인의 팝업이 뜨고 방 이름, 짧은 설명, 가상 예시 자료가 보인다</div></div>
+<div class="row"><div class="k">예외 상황</div><div class="v">① 내용이 길면 팝업 안에서만 스크롤된다<br>② 예시 자료가 없으면 “준비 중입니다” 문구를 보여준다</div></div>
+<div class="row"><div class="k">의존관계</div><div class="v">“방 선택”에서 방을 눌러야 열린다</div></div>
+</div>
+
+<div class="feature"><div class="fhead">캐릭터 클릭 브리핑<span class="badge">필수</span></div>
+<div class="row"><div class="k">목적</div><div class="v">캐릭터가 방 담당자처럼 말을 걸어 사무실에 생동감을 주기 위해</div></div>
+<div class="row"><div class="k">무엇을 하면</div><div class="v">캐릭터를 클릭하면</div></div>
+<div class="row"><div class="k">무슨 일이</div><div class="v">캐릭터가 멈추고 머리 위에 한두 줄 브리핑 말풍선이 뜬다 (방별 팝업과 같은 디자인 사용)</div></div>
+<div class="row"><div class="k">예외 상황</div><div class="v">① 걷는 중에 눌러도 그 자리에서 멈춰서 말풍선을 보여준다<br>② 3초 뒤 또는 다른 곳을 누르면 말풍선이 사라진다</div></div>
+<div class="row"><div class="k">의존관계</div><div class="v">“캐릭터 애니메이션”이 먼저 동작해야 한다</div></div>
+</div>
+
+<div class="feature"><div class="fhead">캐릭터 애니메이션<span class="badge">필수</span></div>
+<div class="row"><div class="k">목적</div><div class="v">정지된 그림이 아닌 “일하는 사무실”처럼 보이게 하기 위해</div></div>
+<div class="row"><div class="k">무엇을 하면</div><div class="v">화면이 열리면 (누르지 않아도)</div></div>
+<div class="row"><div class="k">무슨 일이</div><div class="v">방마다 캐릭터가 있고, 평소엔 제자리에서 숨 쉬듯 대기하다가 가끔 걷는다</div></div>
+<div class="row"><div class="k">예외 상황</div><div class="v">① 기기 설정이 “동작 줄이기”면 대기 동작만 한다<br>② 캐릭터가 방 밖으로 나가지 않게 이동 범위를 제한한다</div></div>
+<div class="row"><div class="k">의존관계</div><div class="v">“사무실 메인 화면”의 방 배치가 먼저 있어야 한다</div></div>
+</div>
+
+<div class="feature"><div class="fhead">팝업 닫기<span class="badge">필수</span></div>
+<div class="row"><div class="k">목적</div><div class="v">정보를 본 뒤 막힘 없이 사무실로 돌아오게 하기 위해</div></div>
+<div class="row"><div class="k">무엇을 하면</div><div class="v">닫기(X) 버튼, 팝업 바깥, 또는 Esc 키를 누르면</div></div>
+<div class="row"><div class="k">무슨 일이</div><div class="v">팝업이 닫히고 사무실 메인 화면이 그대로 보인다</div></div>
+<div class="row"><div class="k">예외 상황</div><div class="v">① 닫기 버튼은 항상 팝업 오른쪽 위에 크게 보인다<br>② 팝업 안쪽을 눌렀을 때는 닫히지 않는다</div></div>
+<div class="row"><div class="k">의존관계</div><div class="v">팝업이 열려 있을 때만 작동</div></div>
+</div>
+
+<div class="feature"><div class="fhead">시간대별 조명·다양한 업무 동작<span class="badge later">나중에</span></div>
+<div class="row"><div class="k">목적</div><div class="v">아침·저녁 분위기를 바꿔 더 몰입감 있게 하기 위해</div></div>
+<div class="row"><div class="k">무슨 일이</div><div class="v">현재 시간에 따라 조명 색이 바뀌고, 캐릭터가 타이핑·통화 등 동작을 한다</div></div>
+<div class="row"><div class="k">의존관계</div><div class="v">필수 기능이 모두 끝난 뒤 진행</div></div>
+</div>
+</section>
+
+<section><h2><span class="num">03</span>화면에 쓰이는 데이터</h2>
+<p>수업에서는 가상 예시 자료만 쓰고, 실제 계좌·투자 정보는 넣지 않습니다.</p>
+<table>
+<thead><tr><th>항목</th><th>타입</th><th>비고</th></tr></thead>
+<tbody>
+<tr><td>방 이름</td><td>짧은 텍스트</td><td>6개 (뉴스룸 외)</td></tr>
+<tr><td>방 설명</td><td>긴 텍스트</td><td>2~3줄, 가상 예시</td></tr>
+<tr><td>예시 자료</td><td>텍스트·숫자</td><td>가상 값, 방마다 1~3개</td></tr>
+<tr><td>캐릭터 대사</td><td>짧은 텍스트</td><td>방마다 1~2개, 최대 40자</td></tr>
+</tbody></table>
+</section>
+
+<section><h2><span class="num">04</span>만드는 순서</h2>
+<div class="note"><strong>사장실 먼저</strong><br>사장실 한 곳의 ① 배경 → ② 캐릭터 → ③ 클릭 → ④ 팝업 → ⑤ 닫기를 먼저 완성해 기준을 정하고, 같은 방식으로 나머지 5개 방에 확대합니다.</div>
+</section>
+
+</article>
+<div class="actions"><button type="button" onclick="window.print()">인쇄 / PDF 저장</button></div>
+<footer>북두증권 HOKUTO · 기능계획서 · <a href="mailto:northsea1974@naver.com" style="color:inherit">northsea1974@naver.com</a></footer>
+</main>
+</body></html>
