@@ -21,7 +21,7 @@
 .art-pair{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:26px;align-items:start}
 .art-pair figure{min-width:0}.entry-crop{position:relative;aspect-ratio:1;overflow:hidden;border-radius:14px;background:var(--white)}
 .entry-crop img{position:absolute;inset:0;display:block;width:200%;max-width:none;height:100%;object-fit:fill}
-.lounge-pick{display:block;width:100%;aspect-ratio:1;object-fit:cover;object-position:38% center;border-radius:14px}
+.lounge-pick{display:block;width:100%;height:auto;aspect-ratio:1;object-fit:cover;object-position:38% center;border-radius:14px}
 .art-pair figcaption{padding-top:12px}.art-pair b{display:block;color:var(--sea);font-size:1.0625rem}.art-pair span{display:block;margin-top:3px;font-size:.875rem;line-height:1.6;color:var(--muted)}
 .hero .preview-stage{min-width:0}.hero .controls{display:grid;grid-template-columns:1fr 1fr;gap:10px}.hero .controls label{min-width:0}
 .phone iframe{height:700px}.feature,.example-type{border-color:#205b6252}
@@ -75,7 +75,7 @@
 </section>
 <section class="section" id="navigation">
 <div class="section-label">04 / INFORMATION & NAVIGATION</div><div class="section-head"><h2>공간의 개성과<br>익숙한 기능을 함께 둡니다.</h2><p>일상적으로 하는 작업을 메뉴로 삼고, 각 방의 분위기는 안쪽에서 살립니다. 기존 기능은 연결표로 빠짐없이 유지합니다.</p></div>
-<div class="flow-grid"><div class="flow-block"><h3>처음 방문</h3><span class="route">가게 한 장 → 오늘 소식 보기 / 건너뛰기 → 오늘</span><p>자동 연출을 기다리지 않습니다. 두 버튼 모두 오늘 화면으로 이동하며, 같은 브라우저의 다음 방문에는 입구를 생략합니다. 직접 연 상세 주소는 입구로 가로막지 않습니다.</p></div><div class="flow-block"><h3>다시 방문</h3><span class="route">오늘의 변화 → 관련 종목 → 근거</span><p>첫 화면을 매번 바꾸지 않습니다. 직접 연 방 주소는 그대로 열리고, 목록으로 돌아오면 읽던 위치를 유지합니다.</p></div></div>
+<div class="flow-grid"><div class="flow-block"><h3>처음 방문</h3><span class="route">가게 한 장 → 오늘 소식 보기 / 건너뛰기 → 오늘</span><p>자동 연출을 기다리지 않습니다. 두 버튼 모두 오늘 화면으로 이동하며, 같은 브라우저의 다음 방문에는 입구를 생략합니다. 직접 연 상세 주소는 입구로 가로막지 않습니다. 방문 기록을 지우거나 저장을 차단하면 입구가 다시 나올 수 있습니다.</p></div><div class="flow-block"><h3>다시 방문</h3><span class="route">오늘의 변화 → 관련 종목 → 근거</span><p>첫 화면을 매번 바꾸지 않습니다. 직접 연 방 주소는 그대로 열리고, 목록으로 돌아오면 읽던 위치를 유지합니다.</p></div></div>
 <div style="margin-top:28px"><table class="mapping"><thead><tr><th>하단 메뉴</th><th>처음 보여줄 것</th><th>기존 기능과 연결</th></tr></thead><tbody>
 <tr><td>오늘</td><td data-label="처음 보여줄 것">핵심 변화와 짧은 브리핑<small>실제 우선순위가 준비된 자료에서만 표시</small></td><td data-label="기존 기능">뉴스룸 · 관련 종목 상세</td></tr>
 <tr><td>내 주식</td><td data-label="처음 보여줄 것">보유종목의 변화와 확인할 사항<small>수량·평단 등은 상세에서 기존 방식대로</small></td><td data-label="기존 기능">트레이딩룸의 보유주식 관리</td></tr>
@@ -106,6 +106,7 @@
 <section class="section" id="acceptance">
 <div class="section-label">08 / ACCEPTANCE</div><div class="section-head"><h2>‘예쁘다’에서 끝내지 않고,<br>사용할 수 있는지 확인합니다.</h2><p>아래는 최종 운영 적용 전의 통과 기준입니다. 화면 예시 점검과 실제 휴대폰 검수는 구분합니다.</p></div>
 <ul class="checklist"><li>처음 방문은 가게 한 장, 건너뛴 뒤 새 방문은 오늘 화면. 직접 연 상세 주소는 유지한다.</li><li>전체 → 공간 보기에서 가게와 라운지를 다시 볼 수 있다.</li><li>320·375·430px에서 페이지 전체의 가로 스크롤과 겹치는 글자가 없다.</li><li>375×700px 기본 글자에서 오늘의 핵심과 주 버튼을 바로 찾을 수 있다.</li><li>글자를 200%로 키워도 내용과 버튼이 잘리지 않는다. 이때 첫 화면에 모두 담으려 글자를 줄이지 않는다.</li><li>하단 메뉴가 본문 마지막 버튼을 덮지 않는다. 아이폰 홈 표시줄·브라우저 주소창 변화도 실제 폰에서 확인한다.</li><li>뉴스 상세를 연 뒤 뒤로 가면 같은 목록과 읽던 위치로 돌아온다. 직접 주소로도 해당 화면을 연다.</li><li>그림이 늦거나 불러와지지 않아도 글자와 메뉴로 계속 이동할 수 있다.</li><li>색 없이도 현재 메뉴·신호 없음·미확인·오류를 글자로 구분할 수 있다.</li><li>키보드 포커스가 보이고, 동작 줄이기와 확대 설정을 존중한다.</li><li>공통 배경·본문·버튼 글자의 대비를 계산한다. 데이터 날짜와 화면 표시 날짜를 혼합하지 않는다.</li><li>실제 iPhone Safari에서 터치·스크롤·뒤로 가기를 마지막으로 확인한다. 브라우저 예시만으로 실기기 합격을 선언하지 않는다.</li></ul>
+<p class="subnote"><strong>이번 보완 검수 · 2026-10-11:</strong> 첫 방문 입구, 건너뛰기, 재방문 입구 생략, 전체 → 공간 보기, 새 변화 없음의 56px 안내원 얼굴을 확인했습니다. 320·375·430px 프레임 설정에서 가로 넘침이 없었고, 매일 화면의 소식 읽기 버튼은 높이 700px 안에서 하단 메뉴에 가리지 않았습니다. 320px 설정의 글자 200% 확대도 가로 넘침이 없었습니다. 브라우저 스크롤바를 제외한 실제 내용 폭은 305·360·415px입니다. 실제 아이폰 검수는 미실시입니다.</p>
 <p class="subnote"><strong>수정 전 예시 검수 기록 · 2026-10-11:</strong> 브라우저의 320·375·430px 프레임 설정, 320px에서 글자 200% 확대, 하단 메뉴·뉴스 상세·목록 복귀·상태 전환을 확인했습니다. 점검한 화면의 가로 넘침은 없었고 본문·보조 글자·주 버튼의 대비는 5.25:1 이상입니다. <a href="assets/mobile-review-v2.jpg">검수 화면 보기</a>. 실제 아이폰 검수는 미실시입니다.</p><div class="decision"><strong>이번 산출물:</strong> 모바일 기획서와 가상 화면 예시. 실제 운영 화면의 기능·자료·판정은 연결하지 않았습니다. 실기기 Safari의 주소창·안전 영역·터치감은 후속 확인 항목입니다.</div>
 </section>
 <section class="section" id="sources">
