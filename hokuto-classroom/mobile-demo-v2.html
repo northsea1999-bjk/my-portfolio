@@ -24,7 +24,7 @@
 <a href="#records" data-nav="records"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18H6zM9 8h6M9 12h6M9 16h4"/></svg><span>기록</span></a>
 <a href="#rooms" data-nav="rooms"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span>전체</span></a>
 </div></nav>
-<noscript><p style="padding:24px">화면 예시를 눌러보려면 JavaScript를 켜주세요. <a href="plan-mobile-v2.html">2차 기획서 읽기</a></p></noscript>
+<noscript><p style="padding:24px">화면 예시를 눌러보려면 JavaScript를 켜주세요. <a href="plan.html">2차 기획서 읽기</a></p></noscript>
 <script>
 (function(){
 'use strict';
@@ -74,7 +74,7 @@ var k=location.hash.slice(1)||'today';if(k==='main-content')k=current||'today';
 var html=k==='today'?stateHome():k==='news'?news():k==='article'||k==='article-b'?article(k==='article-b'):k==='holdings'?holdings():k==='holding-a'||k==='holding-b'?holding(k==='holding-b'):k==='candidates'?candidates():k==='candidate'?candidate():k==='records'?records():k==='rooms'?allrooms():extra[k]?generic(k):'';
 if(k==='chair'||k==='decision-detail')html=back('decision','판단의 책상')+title('구성 예시',k==='chair'?'사장실':'결정실','')+'<div class="reading"><h2>기존 기능의 독립된 입구</h2><p class="section">두 기능을 하나의 판정으로 합치지 않습니다. 실제 데이터 연결 때 각 화면의 원래 기능으로 이동합니다.</p></div>';
 if(!html){k='today';html=stateHome();}
-main.innerHTML=html+'<p class="hint">실제 투자 정보가 아닌 디자인 예시입니다.<br><a href="plan-mobile-v2.html" target="_top">2차 기획서 읽기 →</a></p>';
+main.innerHTML=html+'<p class="hint">실제 투자 정보가 아닌 디자인 예시입니다.<br><a href="plan.html" target="_top">2차 기획서 읽기 →</a></p>';
 document.querySelectorAll('[data-nav]').forEach(function(a){if(a.dataset.nav===active(k))a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
 current=k;var h=main.querySelector('h1');if(h)h.focus({preventScroll:true});window.scrollTo(0,positions[k]||0);
 }
