@@ -39,7 +39,7 @@
 <div class="actions"><a class="btn" href="mobile-demo-v2.html">예시 화면 직접 열기 ↗</a><a class="btn secondary" href="#review">바뀐 점 읽기 ↓</a></div><p class="meta">기존 채택 그림을 활용했습니다.<br>모든 종목과 내용은 가상 예시입니다.</p></div>
 <figure class="preview-stage" id="preview-stage">
 <div class="controls"><label>보는 화면<select id="view-control"><option value="today">매일 · 오늘</option><option value="research">리서치 · 추천테마·TOP6</option><option value="manager">펀드매니저 · 레인</option><option value="park">사장실 · 하루 변화</option><option value="news">오늘 뉴스 전체</option><option value="themes">테마 관심 비교</option><option value="decision">결정실 · 종목별 판정</option><option value="decision-a">결정실 · 판정 근거</option><option value="chart-a">트레이딩 · 매수 타이밍</option><option value="space">공간 보기</option></select></label><label>예시 화면 폭<select id="width-control"><option value="375">375px · 기본</option><option value="320">320px · 좁게</option><option value="430">430px · 넓게</option><option value="768">768px · 태블릿</option></select></label><label>자료 상태<select id="state-control"><option value="normal">정상</option><option value="loading">불러오는 중</option><option value="empty">새 변화 없음</option><option value="error">불러오기 실패</option><option value="stale">이전 자료</option></select></label><label>글자 확대<select id="text-control"><option value="100">100%</option><option value="200">200%</option></select></label></div>
-<div class="phone" id="phone"><iframe id="demo" title="눌러보는 북두증권 모바일 화면 예시" src="mobile-demo-v2.html?v=decision5&preview=1#today" loading="eager"></iframe></div>
+<div class="phone" id="phone"><iframe id="demo" title="눌러보는 북두증권 모바일 화면 예시" src="mobile-demo-v2.html?v=dossier1&preview=1#today" loading="eager"></iframe></div>
 <figcaption id="preview-caption">375px를 기준으로 보는 화면 예시 · 아래 메뉴를 눌러보세요.</figcaption>
 <details class="preview-wide"><summary>예시 화면을 볼 때 알아둘 점</summary><p>이 액자 안에서만 세로 스크롤됩니다. 실제 휴대폰 경험은 <a href="mobile-demo-v2.html">예시 화면을 직접 열어</a> 확인하세요. 화면 폭 선택값이 현재 기획서 폭보다 크면 들어갈 수 있는 폭까지만 표시됩니다. 200%는 글자 확대 점검용이며, 실제 브라우저 확대와 완전히 같지는 않습니다.</p></details>
 </figure>
@@ -109,8 +109,9 @@
 (function(){
 var view=document.getElementById('view-control');
 var width=document.getElementById('width-control'),state=document.getElementById('state-control'),text=document.getElementById('text-control'),frame=document.getElementById('demo'),phone=document.getElementById('phone'),stage=document.getElementById('preview-stage'),caption=document.getElementById('preview-caption');
-function update(){var w=Number(width.value);stage.classList.toggle('expanded',w>=768);phone.style.width=(w+18)+'px';caption.textContent=w+'px 기준 예시 · 공간이 좁으면 표시 폭이 줄어듭니다.';frame.src='mobile-demo-v2.html?v=decision5&preview=1&state='+state.value+'&text='+text.value+'#'+view.value;}
+function update(){var w=Number(width.value);stage.classList.toggle('expanded',w>=768);phone.style.width=(w+18)+'px';caption.textContent=w+'px 기준 예시 · 공간이 좁으면 표시 폭이 줄어듭니다.';frame.src='mobile-demo-v2.html?v=dossier1&preview=1&state='+state.value+'&text='+text.value+'#'+view.value;}
 view.addEventListener('change',update);width.addEventListener('change',update);state.addEventListener('change',update);text.addEventListener('change',update);phone.style.width='393px';
 })();
 </script>
 </body></html>
+
