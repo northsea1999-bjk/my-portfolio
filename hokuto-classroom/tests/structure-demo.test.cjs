@@ -69,4 +69,16 @@ f.setSearch('우주','all');assert(f.allThemes().includes('검색 결과 1개'))
 assert(f.articleRoute({id:1,company:'a',theme:'chip'}).includes('theme=material'));
 for(const st of ['stale','partial','pending','error','loading']){f.setState(st);assert(f.dataNotice().includes('role="status"'));}f.setState('normal');assert.equal(f.dataNotice(),'');
 for(const part of ['decision','source','chart','record']){const h=f.historyDetail(part);assert(h.includes('2026-09-08'));assert(!h.includes('판정 기준 2026-10-09'));}
+// Reading order and deep-link return context must survive the layout pass.
+const tradingD=pages.get('chart-d');
+assert(tradingD.indexOf('class="stock-nav"')<tradingD.indexOf('class="timing-panel"'));
+assert(tradingD.indexOf('class="next-line"')<tradingD.indexOf('id="chart-panel"'));
+assert(tradingD.indexOf('id="chart-readout"')<tradingD.indexOf('class="timing-supplement"'));
+assert.equal((tradingD.match(/id="case-control"/g)||[]).length,1);
+assert(!pages.get('chart-b').includes('class="scenario-tools"'));
+const companyArticle=f.article(1);assert(companyArticle.indexOf('class="stock-nav"')<companyArticle.indexOf('class="reading"'));
+ctx.history.state=null;assert(f.sourceDetail('a').includes('href="#research-theme-material"'));
+ctx.history.state={hokuto:true,from:'decision-a?theme=material&asof=2026-10-09'};
+assert(f.back('news','목록').includes('가상기업 A · 판정 · 돌아가기'));
+assert(plan.includes('일본어 전환은 이 과정이 끝날 때까지 보류'));
 console.log('PASS: '+pages.size+' display routes; stock/context links, decision states, holdings branch, prices, evaluation scopes, full titles and 6 completion steps, 28 themes, exception states, archive and outcome scopes.');
