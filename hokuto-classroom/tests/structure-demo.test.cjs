@@ -76,7 +76,7 @@ assert(tradingD.indexOf('class="next-line"')<tradingD.indexOf('id="chart-panel"'
 assert(tradingD.indexOf('id="chart-readout"')<tradingD.indexOf('class="timing-supplement"'));
 assert.equal((tradingD.match(/id="case-control"/g)||[]).length,1);
 assert(!pages.get('chart-b').includes('class="scenario-tools"'));
-const companyArticle=f.article(1);assert(companyArticle.indexOf('class="stock-nav"')<companyArticle.indexOf('class="reading"'));
+const companyArticle=f.article(1);assert.equal((companyArticle.match(/class="stock-nav"/g)||[]).length,1);assert(companyArticle.indexOf('class="stock-nav"')<companyArticle.indexOf('class="reading"'));
 ctx.history.state=null;assert(f.sourceDetail('a').includes('href="#research-theme-material"'));
 ctx.history.state={hokuto:true,from:'decision-a?theme=material&asof=2026-10-09'};
 assert(f.back('news','목록').includes('가상기업 A · 판정 · 돌아가기'));
