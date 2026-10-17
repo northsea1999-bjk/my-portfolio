@@ -2,16 +2,18 @@
 (() => {
   'use strict';
   const catalog = [
+    {id:'meeting',name:'리서치 회의실',short:'회의실',owner:'리서치',group:'original',icon:'compass',copy:'전체 테마의 순위·강도·돈몰림 요약',lead:'리서치센터의 요약부터 읽습니다. 어느 테마가 강하고 어디로 돈이 모이는지 비교합니다.',path:'hokuto_main.html#room1',scope:'office',brief:'리서치센터의 ▶ 브리핑',tone:'teal',preview:true,related:['ops','research']},
+    {id:'strategy',name:'펀드매니저 전략실',short:'전략실',owner:'펀드매니저',group:'original',icon:'folder',copy:'선정 조건을 충족한 후보와 그 이유',lead:'테마 안에서 어떤 회사가 선정 조건을 충족했는지 봅니다. 후보 선정과 최종 매수 판정은 다릅니다.',path:'hokuto_main.html#room2',scope:'office',brief:'펀드매니저실의 ▶ 브리핑',tone:'blue',preview:true,related:['recommend','ops']},
     {id:'news',name:'뉴스룸',alias:'뉴스',group:'original',icon:'news',copy:'기사 전체와 종목 연결 근거',lead:'새 소식과 회사의 연결을 확인합니다.',path:'news_board.html',tone:'teal',preview:true,related:['themes','research','decision']},
     {id:'themes',name:'테마뉴스',group:'original',icon:'layers',copy:'같은 테마의 소식을 모아보기',lead:'테마의 소식과 개별 회사의 영향을 나눠 읽습니다.',path:'theme_news.html',tone:'blue',preview:true,related:['news','research']},
-    {id:'research',name:'리서치센터',legacy:'북두테마',alias:'리서치 TOP6',group:'original',icon:'compass',copy:'추천테마와 구성 종목 살펴보기',lead:'테마 순위와 구성 종목을 봅니다. 종목 판정은 결정실에서 확인합니다.',path:'research_new.html',tone:'teal',preview:true,related:['recommend','themes']},
-    {id:'recommend',name:'펀드매니저실',legacy:'추천',alias:'종목검증실 레인',group:'original',icon:'folder',copy:'A·B·C·D 후보 선정 조건',lead:'어떤 조건으로 후보가 됐는지 확인하고, 같은 종목의 결정실 판정으로 이어갑니다.',path:'recommend.html',tone:'blue',preview:true,related:['research','decision']},
-    {id:'ops',name:'작전실',alias:'옛 리서치 작전지도',group:'original',icon:'layers',copy:'테마 균등매수 전략의 설명',lead:'테마를 고르게 담는 전략의 설명입니다. 개별 종목의 매수·보류 판정은 결정실에서 확인합니다.',path:'hokuto_today.html',tone:'violet',preview:false,related:['research','decision']},
+    {id:'research',name:'북두테마 상세',legacy:'리서치센터',alias:'리서치 TOP6',group:'original',icon:'compass',copy:'추천테마와 구성 종목의 자세한 자료',lead:'회의실 요약에서 더 살펴보고 싶은 테마의 상세 자료입니다.',path:'research_new.html',tone:'teal',preview:true,related:['meeting','themes']},
+    {id:'recommend',name:'펀드매니저 종목검증실',short:'종목검증실',owner:'펀드매니저',legacy:'추천',alias:'펀드매니저실 EPS 실적',group:'original',icon:'check',copy:'후보 회사별 EPS·실적과 자료 확인',lead:'전략실이 고른 회사의 실적을 확인합니다. 여기서 새로 탈락시키지 않고, 결정실이 최종 판정합니다.',path:'recommend.html',tone:'blue',preview:true,related:['strategy','decision']},
+    {id:'ops',name:'리서치 작전실',short:'작전실',owner:'리서치',alias:'작전지도 테마전략',group:'original',icon:'layers',copy:'주도·돈몰림·전환 테마 확인',lead:'회의실에서 본 테마 중 주도·관찰 대상으로 분류된 곳과 전환을 확인한 뒤, 종목 후보를 살펴봅니다.',path:'hokuto_today.html',tone:'teal',preview:true,related:['meeting','strategy']},
     {id:'decision',name:'결정실',group:'original',icon:'check',copy:'매수대상·보류·제외와 그 근거',lead:'왜 이런 판정이 나왔는지 읽고, 해당 종목의 보유 관리나 가격 확인으로 이어갑니다.',path:'decision_room.html',tone:'teal',preview:true,related:['recommend','performance']},
     {id:'park',name:'사장실 · 놀이공원',alias:'하루 변화 오늘의 변화',group:'original',icon:'swap',copy:'전 거래일과 달라진 내용',lead:'테마와 종목이 이전 기록에서 무엇이 달라졌는지 확인합니다.',path:'hokuto_fun.html',tone:'amber',preview:true,related:['research','news','decision']},
     {id:'signals',name:'BNF 신호실',alias:'BNF 신호',group:'original',icon:'pulse',copy:'독립 전략의 신호와 조건',lead:'BNF는 별도 전략입니다. 신호 충족이 결정실의 매수대상 선정을 뜻하지 않습니다.',path:'bnf_signal.html',tone:'violet',preview:true,related:['tradingGuide']},
     {id:'holdings',name:'내 주식',legacy:'보유주식 관리',alias:'보유 점검',group:'original',icon:'wallet',copy:'보유종목의 변화와 새 경고',lead:'결정실 목록에 없어도, 이미 보유한 종목의 점검은 계속됩니다.',path:'holdings_room.html',tone:'teal',preview:true,related:['news','performance']},
-    {id:'newbuy',name:'신규매수',legacy:'트레이딩룸',alias:'진입 타이밍 가격',group:'original',icon:'chart',copy:'매수대상 종목의 가격·진입 조건',lead:'결정실에서 매수대상으로 본 종목의 가격을 확인합니다. 선정과 지금 매수할 시점은 별개입니다.',path:'newbuy_room.html',tone:'blue',preview:true,related:['decision','performance']},
+    {id:'newbuy',name:'신규매수실',short:'신규매수실',legacy:'트레이딩룸',alias:'진입 타이밍 가격 아침',group:'original',icon:'chart',copy:'다음 거래일 가격·차트·진입 조건',lead:'결정실 매수대상의 차트 기준과 다음 거래일 시가·장중 관측을 함께 확인합니다. 가격 기준 시각과 수신 시각을 구분합니다.',path:'newbuy_room.html',tone:'blue',preview:true,related:['decision','performance']},
     {id:'performance',name:'성과기록',alias:'기록 성과기록실',group:'original',icon:'book',copy:'각 판단이 나온 뒤의 결과',lead:'호쿠토의 판단 단계별 결과와 추적 기록을 확인하는 화면입니다.',path:'performance_room.html',tone:'teal',preview:false,related:['selection','records']},
     {id:'selection',name:'선정성적',alias:'선정 후 성적',group:'original',icon:'chart',copy:'선정한 종목의 20일 성적 비교',lead:'선정했던 종목을 당시 테마와 비교합니다. 같은 종목의 연속 선정을 매일 새 선정으로 세지 않습니다.',path:'selection_results.html',tone:'blue',preview:false,related:['performance','scores']},
     {id:'tradingGuide',name:'트레이딩 상황실',alias:'매매 규칙 기존 트레이딩룸',group:'original',icon:'file',copy:'주도 테마·BNF와 기존 규칙',lead:'주도 테마와 BNF 신호, 기존 매매 규칙을 살펴봅니다. 신규매수의 종목별 가격 확인과는 별도 화면입니다.',path:'trading_logic.html',tone:'amber',preview:false,related:['ops','signals']},
@@ -20,13 +22,13 @@
     {id:'records',name:'종목별 변화·기록',alias:'기록실',group:'preview',icon:'book',copy:'그날의 분석과 입력 자료를 함께',lead:'알림 홈에서 이어 보는 종목별 기록의 디자인 시안입니다.',tone:'teal',preview:true,related:['scores','performance','selection']},
     {id:'scores',name:'종목별 성적표',group:'preview',icon:'chart',copy:'분석한 회차와 이후 결과 연결',lead:'종목별 성적표 시안',tone:'blue',preview:true,related:['records','performance','selection']}
   ];
+  const workflow=['meeting','ops','strategy','recommend','decision','newbuy'];
   const sections=[
-    {id:'check',title:'내 종목과 판정',copy:'지금 확인해야 할 종목',icon:'wallet',items:['holdings','decision','newbuy']},
-    {id:'discover',title:'뉴스와 후보',copy:'변화의 근거와 선정 조건',icon:'compass',items:['news','themes','research','recommend']},
-    {id:'review',title:'변화와 성과',copy:'어제와 비교하고, 판단을 복기',icon:'book',items:['park','performance','selection']},
-    {id:'strategy',title:'전략과 규칙',copy:'각 전략의 역할을 구분해서',icon:'layers',items:['ops','signals','tradingGuide']}
+    {id:'check',title:'보유와 뉴스',copy:'이미 가진 종목과 새 소식',icon:'wallet',items:['holdings','news','themes']},
+    {id:'review',title:'변화와 성과',copy:'이전 판단과 이후 결과',icon:'book',items:['park','performance','selection']},
+    {id:'reference',title:'테마·전략 자료',copy:'상세 자료와 독립 전략',icon:'layers',items:['research','signals','tradingGuide']}
   ];
-  const aliases={manager:'recommend',trading:'newbuy',space:'office',themeLab:'research'};
+  const aliases={manager:'strategy',trading:'newbuy',space:'office',themeLab:'research'};
   const resolve=id=>aliases[id]||id;
   function normaliseBase(value){
     let url;
@@ -41,10 +43,10 @@
     const item=catalog.find(m=>m.id===resolve(id));
     if(!item?.path)throw new Error('기존 화면 연결이 없는 시안입니다.');
     const address=new URL(normaliseBase(base));
-    if(item.group==='entry'&&address.pathname.endsWith('/ko/'))address.pathname=address.pathname.slice(0,-3);
+    if((item.group==='entry'||item.scope==='office')&&address.pathname.endsWith('/ko/'))address.pathname=address.pathname.slice(0,-3);
     return new URL(item.path,address).href;
   }
-  const api={catalog,sections,resolve,normaliseBase,destination};
+  const api={catalog,sections,workflow,resolve,normaliseBase,destination};
   if(typeof window!=='undefined')window.HokutoLinks=api;
   if(typeof module!=='undefined')module.exports=api;
 })();
