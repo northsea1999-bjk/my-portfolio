@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#18766b">
+  <meta name="description" content="호쿠토증권 종목 중심 홈 디자인 시안. 현재 분석, 당시 입력 자료, 변화 기록과 성적표를 한곳에서 살펴보세요. 모든 자료는 가상입니다.">
+  <title>종목의 오늘 · 호쿠토증권 디자인 시안</title>
+  <link rel="stylesheet" href="stock-home.css?v=20261017-1">
+  <script defer src="stock-home.js?v=20261017-1"></script>
+</head>
+<body>
+  <a class="skip" href="#workspace">본문으로 이동</a>
+  <div class="demo-notice"><span class="demo-dot"></span><strong>디자인 시안</strong><span>모든 종목·가격·분석·성과는 가상입니다.</span><a href="plan.html#toss-home" target="_top">기획서 <span aria-hidden="true">↗</span></a></div>
+  <header class="topbar">
+    <a class="brand" href="#view=home" aria-label="호쿠토증권 홈"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 1c1.7 10 5 13.3 15 15-10 1.7-13.3 5-15 15C14.3 21 11 17.7 1 16 11 14.3 14.3 11 16 1Z" fill="currentColor"/></svg><span>HOKUTO<small>호쿠토증권</small></span></a>
+    <label class="global-search"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="m13 13 4 4"/></svg><input id="stock-search" type="search" placeholder="종목 이름이나 코드 검색" autocomplete="off" aria-label="종목 이름이나 코드 검색"><kbd>/</kbd></label>
+    <div class="top-actions"><span class="example-date">10월 17일 토요일 <span>· 예시</span></span><button class="type-button" id="type-button" aria-label="글자 크게 보기" aria-pressed="false">가<span>+</span></button></div>
+  </header>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="주요 메뉴">
+      <div class="sidebar-label">MY HOKUTO</div>
+      <nav id="main-nav">
+        <button data-nav="home" class="nav-item active"><span class="nav-icon" data-icon="home"></span>오늘 한눈에</button>
+        <button data-nav="held" class="nav-item"><span class="nav-icon" data-icon="wallet"></span>내 주식<span class="nav-count">4</span></button>
+        <button data-nav="candidate" class="nav-item"><span class="nav-icon" data-icon="compass"></span>신규 후보<span class="nav-count">3</span></button>
+        <button data-nav="scores" class="nav-item"><span class="nav-icon" data-icon="chart"></span>성적표</button>
+      </nav>
+      <div class="sidebar-divider"></div>
+      <button class="nav-item" id="all-menu"><span class="nav-icon" data-icon="grid"></span>전체 메뉴</button>
+      <div class="side-note"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 31c8-12 16 12 24 0s12 0 12 0M6 38c8-12 16 12 24 0s12 0 12 0"/><path d="m24 4 2.5 7.5L34 14l-7.5 2.5L24 24l-2.5-7.5L14 14l7.5-2.5Z"/></svg><p>많은 뉴스보다,<br><strong>내 종목의 중요한 변화.</strong></p><small>현재 → 근거 → 기록 → 결과</small></div>
+    </aside>
+    <main id="workspace" class="main">
+      <div class="page-heading" id="page-heading"><div><div class="eyebrow">YOUR DAILY BRIEF</div><h1>내 종목의 오늘</h1><p>달라진 이유부터, 다음 확인까지.</p></div><div class="asof"><span class="status-dot"></span>휴장일 · 최근 거래일 자료<small>가격·판정 10.16 / 뉴스 10.17 · 예시</small></div></div>
+      <section class="briefing" id="briefing" aria-label="오늘 확인할 변화"></section>
+      <div class="workspace-grid" id="workspace-grid">
+        <div class="overview-column" id="overview-column">
+          <section class="stock-list-panel" aria-label="종목 목록">
+            <div class="list-heading"><div><h2 id="list-title">관찰 중인 종목 <span>7</span></h2><p>종목을 누르면 분석과 기록이 이어집니다.</p></div><label class="sort-label"><span class="sr-only">정렬</span><select id="stock-sort"><option value="change">최근 변화순</option><option value="name">이름순</option><option value="return">가격 등락순</option></select></label></div>
+            <div class="filter-tabs" id="stock-filters" role="group" aria-label="종목 구분"><button data-filter="all" aria-pressed="true">전체 <span>7</span></button><button data-filter="held" aria-pressed="false">내 주식 <span>4</span></button><button data-filter="candidate" aria-pressed="false">신규 후보 <span>3</span></button></div>
+            <div class="table-labels"><span>종목 / 달라진 내용</span><span>최근 20거래일</span><span>종가 / 전일 대비</span></div>
+            <div id="stock-list"></div>
+            <p class="list-footnote">보유 점검과 결정실 판정은 서로 다른 기준입니다.</p>
+          </section>
+          <section class="score-summary" aria-labelledby="score-summary-title"><div class="section-label"><span class="tiny-icon" data-icon="chart"></span><h2 id="score-summary-title">판단 뒤의 결과도 함께</h2></div><div class="score-summary-main"><div><p>20거래일 · 같은 테마 대비</p><strong class="down">−0.3<span>%p</span></strong><small>완료 2건의 평균 · 가상 성과</small></div><div class="mini-bars" aria-label="종목 평균 2.7퍼센트, 같은 테마 평균 3.0퍼센트"><div><span>종목</span><i style="--bar:72%"></i><b>+2.7%</b></div><div><span>테마</span><i class="muted-bar" style="--bar:80%"></i><b>+3.0%</b></div></div></div><button class="text-link" data-nav="scores">완료 2건 · 평가 대기 5건 보기 <span>→</span></button></section>
+          <div class="quiet-note"><span data-icon="book"></span><p>그날의 판단에는 그날의 자료가 붙어 있습니다.<br><strong>종목 → 변화·기록</strong>에서 함께 펼쳐보세요.</p></div>
+        </div>
+        <section class="detail-panel" id="detail-panel" aria-label="선택한 종목 상세"><div id="stock-detail"></div></section>
+      </div>
+      <section id="scores-view" class="scores-view" hidden></section>
+      <footer class="page-footer">호쿠토증권 · 종목 중심 홈 시안 <span>2026.10.17</span><small>미리 준비한 예시 기록으로 동작합니다. 운영 자료 조회·새 분석·실제 저장은 연결하지 않았습니다.</small></footer>
+    </main>
+  </div>
+  <nav class="mobile-nav" aria-label="휴대폰 주요 메뉴"><button data-nav="home" class="active"><span data-icon="home"></span>오늘</button><button data-nav="held"><span data-icon="wallet"></span>내 주식</button><button data-nav="candidate"><span data-icon="compass"></span>후보</button><button data-nav="scores"><span data-icon="chart"></span>성적표</button></nav>
+  <dialog id="evidence-dialog" class="evidence-dialog"><div id="dialog-content"></div></dialog>
+  <div id="announcer" class="sr-only" role="status" aria-live="polite"></div>
+  <noscript><div class="noscript">종목 선택과 기록 보기는 자바스크립트를 켜야 사용할 수 있습니다.</div></noscript>
+</body>
+</html>
