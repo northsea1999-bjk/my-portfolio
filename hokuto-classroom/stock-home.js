@@ -161,7 +161,7 @@
     if(document.activeElement!==$('#stock-search'))$('#stock-search').value=state.query;
   }
   function renderBriefing(){
-    $('#briefing').innerHTML=`<button class="brief-card" data-alert-room="holdings" data-alert-item="DEMO-B"><span class="brief-symbol">!</span><span><small>보유종목 · 새 경고 1건</small><strong>아오이 게임즈, 이익 전망 하향</strong></span><span class="brief-arrow">›</span></button><button class="brief-card" data-alert-room="decision" data-alert-item="DEMO-E"><span class="brief-symbol teal">＋</span><span><small>신규 후보 · 새 진입 1건</small><strong>세이운 소프트가 들어왔어요</strong></span><span class="brief-arrow">›</span></button><button class="brief-card" data-alert-room="news" data-alert-item="contract"><span class="brief-symbol blue">↗</span><span><small>지난 뉴스 · 후속 확인</small><strong>수주 협의가 계약으로 바뀌었어요</strong></span><span class="brief-arrow">›</span></button>`;
+    $('#briefing').innerHTML=`<button class="brief-card" data-alert-room="holdings" data-alert-item="DEMO-B"><span class="brief-symbol">!</span><span><small>보유종목 · 새 경고 1건</small><strong>아오이 게임즈, 이익 전망 하향</strong></span><span class="brief-arrow">›</span></button><button class="brief-card" data-alert-room="decision" data-alert-item="DEMO-E"><span class="brief-symbol teal">＋</span><span><small>신규 후보 · 새 후보 1건</small><strong>세이운 소프트가 들어왔어요</strong></span><span class="brief-arrow">›</span></button><button class="brief-card" data-alert-room="news" data-alert-item="contract"><span class="brief-symbol blue">↗</span><span><small>지난 뉴스 · 후속 확인</small><strong>수주 협의가 계약으로 바뀌었어요</strong></span><span class="brief-arrow">›</span></button>`;
   }
   function overview(s){
     const r=latest(s);
