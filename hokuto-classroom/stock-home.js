@@ -152,7 +152,7 @@
   function renderDetail(){
     const s=selectedStock();
     const names={overview:'현재 분석',history:'변화·기록',score:'성적표'};
-    $('#stock-detail').innerHTML=`<div class="detail-top">${state.from?`<button class="return-room" id="return-room">← ${rooms.menu(state.from).name}으로 돌아가기</button>`:'<button class="mobile-back" id="back-list">← 종목 목록으로</button>'}<div class="detail-label">${badge(s.group==='held'?'보유 예시':'신규 후보 예시',s.group==='held'?'gray':'blue')}<span>일본 주식 · 가상 종목</span><span class="selected-label">선택한 종목</span></div><div class="detail-identity">${avatar(s)}<div><h2 id="detail-heading" tabindex="-1">${s.name}</h2><small>${s.id} · ${s.theme}</small></div></div><div class="detail-price-line"><div class="detail-price">${priceText(s.price)}${s.price==null?'':'<span>엔</span>'}</div><div class="day-return ${colorClass(s.change)}">${signed(s.change)}</div></div><div class="price-asof">최근 종가 · 2026.10.16 / 전일 대비 · 가상 가격</div></div><div class="detail-tabs" role="tablist" aria-label="종목 상세 메뉴">${Object.entries(names).map(([key,label])=>`<button role="tab" id="tab-${key}" aria-selected="${state.tab===key}" aria-controls="detail-body" tabindex="${state.tab===key?'0':'-1'}" data-tab="${key}">${label}</button>`).join('')}</div><div class="detail-body" id="detail-body" role="tabpanel" aria-labelledby="tab-${state.tab}">${state.tab==='history'?historyView(s):state.tab==='score'?stockScore(s):overview(s)}</div>`;
+    $('#stock-detail').innerHTML=`<div class="detail-top">${state.from?`<button class="return-room" id="return-room">← ${rooms.menu(state.from).name}${['news','trading','space'].includes(state.from)?'으로':'로'} 돌아가기</button>`:'<button class="mobile-back" id="back-list">← 종목 목록으로</button>'}<div class="detail-label">${badge(s.group==='held'?'보유 예시':'신규 후보 예시',s.group==='held'?'gray':'blue')}<span>일본 주식 · 가상 종목</span><span class="selected-label">선택한 종목</span></div><div class="detail-identity">${avatar(s)}<div><h2 id="detail-heading" tabindex="-1">${s.name}</h2><small>${s.id} · ${s.theme}</small></div></div><div class="detail-price-line"><div class="detail-price">${priceText(s.price)}${s.price==null?'':'<span>엔</span>'}</div><div class="day-return ${colorClass(s.change)}">${signed(s.change)}</div></div><div class="price-asof">최근 종가 · 2026.10.16 / 전일 대비 · 가상 가격</div></div><div class="detail-tabs" role="tablist" aria-label="종목 상세 메뉴">${Object.entries(names).map(([key,label])=>`<button role="tab" id="tab-${key}" aria-selected="${state.tab===key}" aria-controls="detail-body" tabindex="${state.tab===key?'0':'-1'}" data-tab="${key}">${label}</button>`).join('')}</div><div class="detail-body" id="detail-body" role="tabpanel" aria-labelledby="tab-${state.tab}">${state.tab==='history'?historyView(s):state.tab==='score'?stockScore(s):overview(s)}</div>`;
     document.title=`${state.detail?s.name+' · ':''}${state.view==='scores'?'성적표':'종목의 오늘'} · 호쿠토증권 시안`;
   }
   function renderScores(){
@@ -180,7 +180,7 @@
   function selectStock(id,tab='overview',extra={}){
     if(!state.detail)listScroll=window.scrollY;
     route({view:'home',stock:id,tab,detail:true,date:'',round:'current',from:'',...extra});
-    if(matchMedia('(max-width:760px)').matches)window.scrollTo({top:0});
+    if(extra.from||matchMedia('(max-width:760px)').matches)window.scrollTo({top:0});
     $('#announcer').textContent=`${stocks.find(s=>s.id===id).name}, ${tab==='history'?'변화와 기록':tab==='score'?'성적표':'현재 분석'}를 엽니다.`;
   }
   function openDialog(content){
