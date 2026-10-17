@@ -97,7 +97,7 @@
   function readState(){
     const p=new URLSearchParams(location.hash.slice(1));
     const view=['home','scores','menu','room'].includes(p.get('view'))?p.get('view'):'home';
-    const stock=stocks.some(s=>s.id===p.get('stock'))?p.get('stock'):'DEMO-A';
+    const stock=stocks.some(s=>s.id===p.get('stock'))?p.get('stock'):'DEMO-B';
     const room=rooms.resolve(p.get('room')),from=rooms.resolve(p.get('from'));
     return {view,stock,filter:['all','held','candidate'].includes(p.get('filter'))?p.get('filter'):'all',tab:['overview','history','score'].includes(p.get('tab'))?p.get('tab'):'overview',date:p.get('date')||'',detail:p.get('detail')==='1',query:p.get('q')||'',sort:['change','name','return'].includes(p.get('sort'))?p.get('sort'):'change',benchmark:p.get('benchmark')==='market'?'market':'theme',round:p.get('round')==='past'?'past':'current',period:p.get('period')==='5'?'5':'20',room:rooms.catalog.some(m=>m.id===room)?room:'news',section:p.get('section')||'all',topic:p.get('topic')||'chip',item:p.get('item')||'',flowTopic:p.get('flowTopic')||'',menuQuery:p.get('menuQuery')||'',from:rooms.catalog.some(m=>m.id===from)?from:''};
   }
@@ -154,14 +154,14 @@
     const q=state.query.trim().toLowerCase();
     let found=stocks.filter(s=>(state.filter==='all'||s.group===state.filter)&&(!q||`${s.name} ${s.id} ${s.theme}`.toLowerCase().includes(q)));
     found.sort(state.sort==='name'?(a,b)=>a.name.localeCompare(b.name,'ko'):state.sort==='return'?(a,b)=>(b.change??-Infinity)-(a.change??-Infinity):(a,b)=>b.order-a.order);
-    $('#list-title').innerHTML=`${state.filter==='held'?'내 보유종목':state.filter==='candidate'?'새로 살펴볼 후보':'관찰 중인 종목'} <span>${found.length}</span>`;
+    $('#list-title').innerHTML=`${state.filter==='held'?'내 보유종목':state.filter==='candidate'?'새로 살펴볼 후보':'전체 종목'} <span>${found.length}</span>`;
     $('#stock-list').innerHTML=found.length?found.map(s=>`<button class="stock-row ${s.id===state.stock?'selected':''}" data-stock="${s.id}" aria-pressed="${s.id===state.stock}" aria-label="${s.name}, ${s.group==='held'?'보유 예시':'신규 후보 예시'}, ${s.badge}, 상세 보기"><span><span class="row-name">${avatar(s)}<span class="row-identity"><strong>${s.name}</strong><span class="row-meta"><span class="group-tag ${s.group}">${s.group==='held'?'보유':'후보'}</span><span class="row-status ${s.tone}">${s.badge}</span><span>${s.theme}</span></span></span></span><span class="row-update ${s.changed?'changed':''}"><i class="row-dot"></i>${s.update}</span></span>${spark(s)}<span class="row-price"><strong>${priceText(s.price)}${s.price==null?'':'<em> 엔</em>'}</strong><small class="${colorClass(s.change)}">${signed(s.change)}</small></span></button>`).join(''):`<div class="empty-list"><strong>일치하는 종목이 없어요.</strong>이름·코드·테마를 다시 확인해주세요.<br><button id="clear-search">검색과 필터 초기화</button></div>`;
     $$('#stock-filters button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.filter===state.filter));
     $('#stock-sort').value=state.sort;
     if(document.activeElement!==$('#stock-search'))$('#stock-search').value=state.query;
   }
   function renderBriefing(){
-    $('#briefing').innerHTML=`<button class="brief-card" data-alert-room="holdings" data-alert-item="DEMO-B"><span class="brief-symbol">!</span><span><small>보유종목 · 새 경고 1건</small><strong>아오이 게임즈, 이익 전망 하향</strong></span><span class="brief-arrow">›</span></button><button class="brief-card" data-alert-room="decision" data-alert-item="DEMO-E"><span class="brief-symbol teal">＋</span><span><small>신규 후보 · 새 후보 1건</small><strong>세이운 소프트가 들어왔어요</strong></span><span class="brief-arrow">›</span></button><button class="brief-card" data-alert-room="news" data-alert-item="contract"><span class="brief-symbol blue">↗</span><span><small>지난 뉴스 · 후속 확인</small><strong>수주 협의가 계약으로 바뀌었어요</strong></span><span class="brief-arrow">›</span></button>`;
+    $('#briefing').innerHTML=`<div class="daily-brief-title"><h2>먼저 확인할 변화</h2><span>브리핑 3건 · 가상</span></div><div class="daily-brief-body"><button class="priority-brief" data-alert-room="holdings" data-alert-item="DEMO-B"><span class="priority-label"><i></i>보유종목 · 새 경고</span><strong>아오이 게임즈<br>이익 전망이 10% 낮아졌어요.</strong><span class="priority-fact">연간 영업이익 <b>120 → 108억 엔</b></span><span class="priority-next">다음 확인 · 하향 원인과 신작 판매 수량</span><span class="priority-action">보유 경고 확인 <span aria-hidden="true">→</span></span></button><div class="brief-followups"><button class="followup-brief" data-alert-room="decision" data-alert-item="DEMO-E"><span class="followup-label">새 매수대상</span><strong>세이운 소프트</strong><span>보류 → 매수대상 · 진입 신호는 아직 없음</span><span class="followup-action">결정실에서 근거 보기 <b aria-hidden="true">→</b></span></button><button class="followup-brief" data-alert-room="news" data-alert-item="contract"><span class="followup-label">지난 뉴스의 변화</span><strong>호쿠토 반도체</strong><span>수주 협의 → 계약 확인 · 이익 영향 미확인</span><span class="followup-action">후속 뉴스 확인 <b aria-hidden="true">→</b></span></button></div></div>`;
   }
   function overview(s){
     const r=latest(s);
@@ -191,18 +191,22 @@
   function render(){
     const scores=state.view==='scores';
     const explore=state.view==='menu'||state.view==='room';
+    const focused=state.view==='home'&&state.detail&&!!state.from;
     document.body.classList.toggle('mobile-detail',state.detail&&!scores&&!explore);
     document.body.classList.toggle('explore-mode',explore);
-    $('#workspace-grid').hidden=scores||explore;$('#briefing').hidden=scores||explore;$('#scores-view').hidden=!scores;
-    $('#explore-view').hidden=!explore;$('#room-subnav').hidden=true;
+    document.body.classList.toggle('focused-detail',focused);
+    document.body.classList.toggle('home-overview',state.view==='home'&&!focused&&!state.query);
+    $('#workspace-grid').hidden=scores||explore;$('#briefing').hidden=scores||explore||focused||!!state.query;$('#scores-view').hidden=!scores;
+    $('#explore-view').hidden=!explore;
+    $('#overview-column').hidden=focused;
     const active=explore?(state.view==='room'&&state.room==='holdings'?'held':state.view==='room'&&state.room==='decision'?'candidate':'menu'):scores?'scores':'home';
     $$('[data-nav]').forEach(b=>{b.classList.toggle('active',b.dataset.nav===active);if(b.closest('nav'))b.setAttribute('aria-current',b.dataset.nav===active?'page':'false');});
     ['all-menu','mobile-all-menu'].forEach(id=>{const b=$('#'+id);b.classList.toggle('active',active==='menu');if(active==='menu')b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});
-    $('#page-heading h1').textContent=scores?'판단의 성적표':state.filter==='held'?'내 주식의 오늘':state.filter==='candidate'?'새로 살펴볼 종목':'내 종목의 오늘';
-    $('#page-heading p').textContent=scores?'그때의 판단과, 그 뒤의 결과를 함께.':'달라진 이유부터, 다음 확인까지.';
-    $('#page-heading .eyebrow').textContent=scores?'RECORDS & REVIEW':'YOUR DAILY BRIEF';
-    const journey=$('#journey-bar');journey.hidden=!(explore||scores||state.from);
-    journey.innerHTML=`<button id="journey-back">← 이전 화면</button><div><button data-nav="home">${icon('home')}알림 홈</button><button data-menu-home>${icon('grid')}전체 메뉴</button></div>`;
+    $('#page-heading h1').textContent=scores?'판단의 성적표':focused?'종목 분석':state.query?'종목 검색':state.filter==='held'?'내 주식의 오늘':state.filter==='candidate'?'새로 살펴볼 종목':'내 일본 주식의 중요한 변화';
+    $('#page-heading p').textContent=scores?'그때의 판단과, 그 뒤의 결과를 함께.':focused?rooms.menu(state.from).name+'에서 이어 보는 분석과 당시 기록':state.query?'이름·코드·테마가 일치하는 종목을 찾습니다.':'내 주식의 변화와 근거, 다음 확인을 한곳에서.';
+    $('#page-heading .eyebrow').textContent=scores?'기록과 결과':focused?'한 회사의 근거와 기록':'호쿠토 핵심 브리핑';
+    const journey=$('#journey-bar');journey.hidden=!(explore||scores);
+    journey.innerHTML=`<button id="journey-back">← 이전 화면</button><span>${scores?'기록과 결과':state.view==='menu'?'전체 메뉴':rooms.menu(state.room).owner||'호쿠토'}</span>`;
     renderBriefing();renderList();renderDetail();if(scores)renderScores();
     if(explore)rooms.render();
     $$('[data-icon]').forEach(el=>el.innerHTML=icon(el.dataset.icon));

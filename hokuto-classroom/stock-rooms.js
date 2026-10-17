@@ -138,19 +138,13 @@
     }
     function context(){
       const m=menu(get().room);
-      return workflowProgress()+`<div class="room-origin"><div><span class="origin-tag">${m.path?'기존 호쿠토 메뉴':'새 홈의 기록 시안'}</span><span>${m.brief?'운영: 사무실 → '+m.brief:m.preview?'가상 자료로 연결을 살펴보세요':'세부 내용은 기존 화면에서 확인'}</span></div>${m.path&&m.preview?sourceAction(m,m.brief?'사무실의 해당 위치':'기존 '+m.name+' 열기'):''}</div>`;
+      const source=m.path&&m.preview?`<div class="room-tools">${m.brief?`<span>기존 사무실에서 ${m.brief}을 누르세요.</span>`:''}${sourceAction(m,m.brief?'사무실의 해당 위치':'기존 화면 열기')}</div>`:'';
+      return workflowProgress()+source;
     }
     function continuation(){
-      const state=get(),m=menu(state.room),at=links.workflow.indexOf(m.id),selected=flowStock();
-      if(at>=0&&at<5){
-        const next=links.workflow[at+1],n=menu(next);
-        if(m.id==='recommend'&&!selected)return note('검증할 회사 자료가 없습니다. 전략실에서 확인할 회사를 선택하세요.');
-        if(next==='newbuy'&&selected)return `<div class="flow-next"><div><small>다음 확인</small><strong>${selected.name}</strong></div>${tradingAction(selected)}</div>`;
-        if(next==='decision'&&selected&&!decisionIds.includes(selected.id))return note('이 종목은 선정 자료가 없어 결정실 입력 대상이 아닙니다. 자료 확인을 기다립니다.');
-        const descriptions={ops:'요약에서 본 테마의 주도·관찰 상태 확인',strategy:'선정 조건을 충족한 회사 찾기',recommend:'후보 회사의 EPS·실적을 자세히 확인',decision:'근거를 모아 매수대상·보류·제외 확인',newbuy:'매수대상의 다음 거래일 가격 확인'};
-        return `<div class="flow-next"><div><small>다음 ${at+2}단계${selected?' · '+selected.name:''}</small><strong>${descriptions[next]}</strong></div><button data-flow-next="${next}">${n.short||n.name} <span>→</span></button></div>`;
-      }
-      return `<nav class="room-continuation" aria-label="이 화면과 이어지는 자료"><p>함께 확인할 자료</p><div>${m.related.slice(0,2).map(id=>`<button data-room="${id}"><span><strong>${menu(id).name}</strong><small>${menu(id).copy}</small></span><span aria-hidden="true">→</span></button>`).join('')}</div></nav>`;
+      // Company and theme cards own their next action. Only the summary needs a page-level next button.
+      if(get().room!=='meeting')return '';
+      return `<div class="flow-next"><div><small>다음 · 2단계</small><strong>${topic(get().topic).name}의 주도·관찰 상태 확인</strong></div><button data-flow-next="ops">작전실 <span>→</span></button></div>`;
     }
     function bridge(){
       const m=menu(get().room);
@@ -178,7 +172,7 @@
     }
     // The remaining rooms share this same shell and stock fixture.
     function decisionButton(s){
-      return decisionIds.includes(s.id)?`<button class="room-text-link" data-decision-stock="${s.id}">이 종목의 결정실 판정 <span>→</span></button>`:'<span class="route-unavailable">결정실 입력 없음 · 보유 점검은 별도</span>';
+      return decisionIds.includes(s.id)?`<button class="room-text-link" data-decision-stock="${s.id}">이 종목의 결정실 판정 <span>→</span></button>`:`<span class="route-unavailable">${s.group==='held'?'결정실 입력 없음 · 보유 점검은 별도':'선정 자료 미확인 · 결정실 입력 없음'}</span>`;
     }
     function tradingAction(s){
       if(s.group==='held')return `<button data-trading-stock="${s.id}">내 주식에서 보유 점검 <span>→</span></button>`;
@@ -217,8 +211,8 @@
     }
     function decisions(){
       const state=get(),all=decisionIds.map(stock),items=all.filter(s=>state.section==='all'||s.decision===state.section);
-      const counts=['매수대상','보류','제외'].map(label=>[label,all.filter(s=>s.decision===label).length,label==='매수대상'?'teal':'gray']);
-      return `<div class="decision-overview">${counts.map(([label,n,tone])=>`<button class="decision-total ${tone}" data-room-filter="${label}" aria-pressed="${state.section===label}"><span>${label}</span><strong>${n}<small>종목</small></strong></button>`).join('')}</div><section class="room-paper room-reading"><div class="section-headline"><div><h2>판정과 그 이유</h2><p>10.16 기준 · 3종목 · 보유 중인 매수대상 1종목 포함</p></div></div>${chips([['all','전체'],['매수대상','매수대상'],['보류','보류'],['제외','제외']],state.section,'data-room-filter','결정실 판정')}${items.length?`<div class="decision-stack">${items.map(s=>`<article class="decision-file ${state.item===s.id?'is-focused':''}" data-focus-item="${s.id}" tabindex="-1"><div class="decision-file-head">${stockIdentity(s)}${badge(s.decision,s.decision==='매수대상'?'teal':'gray')}</div><p class="decision-reason">${s.group==='held'?'기존 결정실 판정은 매수대상이며 이미 보유 중입니다. 최신 보유 점검은 정상이고, 새 경고는 없습니다.':latest(s).summary}</p><div class="decision-next"><b>다음 확인</b><span>${latest(s).next}</span></div><div class="decision-actions"><button class="room-text-link" data-verify-stock="${s.id}">이 회사의 실적 확인 <span>←</span></button>${stockButton(s.id,'네 가지 근거와 기록')}${tradingAction(s)}</div></article>`).join('')}</div>`:empty('해당 판정의 종목이 없습니다','이 예시의 제외 판정은 0건입니다.')}${note('보류·제외는 신규매수 타이밍 확인 대상이 아닙니다. 매수대상도 가격 확인이 별도로 필요합니다.')}</section>`;
+      const counts=[['all',all.length,'gray'],...['매수대상','보류','제외'].map(label=>[label,all.filter(s=>s.decision===label).length,label==='매수대상'?'teal':'gray'])];
+      return `<div class="decision-overview">${counts.map(([label,n,tone])=>`<button class="decision-total ${tone}" data-room-filter="${label}" aria-pressed="${state.section===label}"><span>${label==='all'?'전체':label}</span><strong>${n}<small>종목</small></strong></button>`).join('')}</div><section class="room-paper room-reading"><div class="section-headline"><div><h2>판정과 그 이유</h2><p>10.16 기준 · 3종목 · 보유 중인 매수대상 1종목 포함</p></div></div>${items.length?`<div class="decision-stack">${items.map(s=>`<article class="decision-file ${state.item===s.id?'is-focused':''}" data-focus-item="${s.id}" tabindex="-1"><div class="decision-file-head">${stockIdentity(s)}${badge(s.decision,s.decision==='매수대상'?'teal':'gray')}</div><p class="decision-reason">${s.group==='held'?'기존 결정실 판정은 매수대상이며 이미 보유 중입니다. 최신 보유 점검은 정상이고, 새 경고는 없습니다.':latest(s).summary}</p><div class="decision-next"><b>다음 확인</b><span>${latest(s).next}</span></div><div class="decision-actions"><button class="room-text-link" data-verify-stock="${s.id}">이 회사의 실적 확인 <span>←</span></button>${stockButton(s.id,'네 가지 근거와 기록')}${tradingAction(s)}</div></article>`).join('')}</div>`:empty('해당 판정의 종목이 없습니다','이 예시의 제외 판정은 0건입니다.')}${note('보류·제외는 신규매수 타이밍 확인 대상이 아닙니다. 매수대상도 가격 확인이 별도로 필요합니다.')}</section>`;
     }
     function trading(){
       const state=get(),isHoldings=state.room==='holdings';
@@ -226,7 +220,7 @@
       const s=state.item?choices.find(s=>s.id===state.item):choices[0];
       if(!s){const requested=stock(state.item);return `<section class="room-paper room-reading">${empty(isHoldings?'보유 목록에 없는 종목입니다':'이 종목의 신규매수 카드가 없습니다',requested?requested.name+' · '+requested.decision:'목록에서 종목을 다시 선택해 주세요.')}${requested?decisionButton(requested):''}${roomButton(isHoldings?'holdings':'newbuy','목록으로 돌아가기')}</section>`;}
       const linkedNews=articles.find(a=>a.stock===s.id&&a.kind==='direct');
-      return `<div class="theme-workspace"><section class="room-paper theme-index"><div class="room-paper-heading"><div><h2>${isHoldings?'보유종목':'가격 확인 대상'}</h2><p>${isHoldings?'결정실 포함 여부와 별개로 점검':'매수대상 중 신규매수 카드가 있는 종목'}</p></div></div>${choices.map(x=>`<button class="trade-select ${x.id===s.id?'selected':''}" data-room-item="${x.id}" aria-pressed="${x.id===s.id}">${stockIdentity(x)}<small>${isHoldings?'보유관리':'가격 확인'}</small></button>`).join('')}</section><section class="room-paper room-reading" data-focus-item="${s.id}" tabindex="-1"><div class="decision-file-head">${stockIdentity(s)}${badge(isHoldings?'보유관리':s.decision,isHoldings?'blue':'teal')}</div><div class="trade-price"><strong>${priceText(s.price)}${s.price==null?'':'<small>엔</small>'}</strong><span class="${colorClass(s.change)}">${signed(s.change)}</span></div><p class="room-meta">2026.10.16 종가 · 실시간 가격 아님 · 가상</p><div class="chart-container">${bigChart(s,'room-chart-fill')}</div><div class="trade-state"><span>${icon('clock')}</span><div><small>${isHoldings?'보유 중인 종목':'신규 진입 확인'}</small><h3>${isHoldings?'보유 상태와 새 경고를 확인해요':'아직 진입 신호가 없습니다'}</h3><p>${isHoldings?latest(s).next:'다음 가격 확인에서 회복·돌파 조건을 봅니다. 매수대상 선정만으로 지금 진입할 수 있는 것은 아닙니다.'}</p></div></div><dl class="room-dl"><div><dt>결정실 판정</dt><dd>${s.decision}</dd></div><div><dt>타이밍</dt><dd>${s.timing}</dd></div><div><dt>계좌·체결</dt><dd>시안에 연결하지 않음</dd></div></dl>${isHoldings?'':morningObservation(s)}<div class="same-stock-links"><span>이 종목 이어보기</span>${decisionButton(s)}${linkedNews?`<button class="room-text-link" data-stock-news="${s.id}">이 종목의 연결 뉴스 <span>→</span></button>`:'<small>직접 연결 뉴스 없음 · 예시</small>'}${stockButton(s.id,'종목 분석과 당시 기록')}</div>${note(isHoldings?'결정실에 없어도 보유 점검은 계속됩니다. 실제 주문·체결 기능은 없습니다.':'이 화면은 가격을 확인하는 곳입니다. 실제 주문·체결 기능은 없습니다.')}</section></div>`;
+      return `<div class="theme-workspace"><section class="room-paper theme-index"><div class="room-paper-heading"><div><h2>${isHoldings?'보유종목':'가격 확인 대상'}</h2><p>${isHoldings?'결정실 포함 여부와 별개로 점검':'매수대상 중 신규매수 카드가 있는 종목'}</p></div></div>${choices.map(x=>`<button class="trade-select ${x.id===s.id?'selected':''}" data-room-item="${x.id}" aria-pressed="${x.id===s.id}">${stockIdentity(x)}<small>${isHoldings?'보유관리':'가격 확인'}</small></button>`).join('')}</section><section class="room-paper room-reading" data-focus-item="${s.id}" tabindex="-1"><div class="decision-file-head">${stockIdentity(s)}${badge(isHoldings?s.badge:s.decision,isHoldings?s.tone:'teal')}</div>${isHoldings?`<div class="holding-change"><small>직전 기록과 달라진 점</small><p>${latest(s).change}</p></div>`:''}<div class="trade-price"><strong>${priceText(s.price)}${s.price==null?'':'<small>엔</small>'}</strong><span class="${colorClass(s.change)}">${signed(s.change)}</span></div><p class="room-meta">2026.10.16 종가 · 실시간 가격 아님 · 가상</p><div class="chart-container">${bigChart(s,'room-chart-fill')}</div><div class="trade-state"><span>${icon('clock')}</span><div><small>${isHoldings?'보유 중인 종목':'신규 진입 확인'}</small><h3>${isHoldings?'보유 상태와 새 경고를 확인해요':'아직 진입 신호가 없습니다'}</h3><p>${isHoldings?latest(s).next:'다음 가격 확인에서 회복·돌파 조건을 봅니다. 매수대상 선정만으로 지금 진입할 수 있는 것은 아닙니다.'}</p></div></div><dl class="room-dl"><div><dt>결정실 판정</dt><dd>${s.decision}</dd></div><div><dt>타이밍</dt><dd>${s.timing}</dd></div><div><dt>계좌·체결</dt><dd>시안에 연결하지 않음</dd></div></dl>${isHoldings?'':morningObservation(s)}<div class="same-stock-links"><span>이 종목 이어보기</span>${isHoldings?decisionButton(s):''}${linkedNews?`<button class="room-text-link" data-stock-news="${s.id}">이 종목의 연결 뉴스 <span>→</span></button>`:'<small>직접 연결 뉴스 없음 · 예시</small>'}${stockButton(s.id,'종목 분석과 당시 기록')}</div>${note(isHoldings?'결정실에 없어도 보유 점검은 계속됩니다. 실제 주문·체결 기능은 없습니다.':'이 화면은 가격을 확인하는 곳입니다. 실제 주문·체결 기능은 없습니다.')}</section></div>`;
     }
     function signals(){
       const fixtures=[{name:'가상 BNF 종목 01',state:'세 조건 충족',tone:'teal',values:['−22.0%','27.0','−4 → −2'],met:[true,true,true]},{name:'가상 BNF 종목 02',state:'조건 미충족',tone:'gray',values:['−21.0%','35.0','−4 → −2'],met:[true,false,true]},{name:'가상 BNF 종목 03',state:'확인 불가',tone:'amber',values:['자료 부족','자료 부족','자료 부족'],met:[null,null,null]}];
@@ -248,11 +242,9 @@
       const state=get(),isMenu=state.view==='menu';
       const m=menu(state.room);
       document.querySelector('#explore-view').innerHTML=isMenu?directory():context()+(renderers[m.id]||bridge)()+continuation();
-      const sub=document.querySelector('#room-subnav');
-      sub.innerHTML=['news','decision','holdings','newbuy'].map(id=>`<button class="${!isMenu&&id===state.room?'active':''}" data-room="${id}" ${!isMenu&&id===state.room?'aria-current="page"':''}>${glyph(menu(id).icon)}${menu(id).name}</button>`).join('');
       document.querySelector('#page-heading h1').textContent=isMenu?'호쿠토 전체 메뉴':m.name;
-      document.querySelector('#page-heading p').textContent=isMenu?'리서치 요약부터, 회사 검증과 다음 거래일 가격 확인까지.':m.lead;
-      document.querySelector('#page-heading .eyebrow').textContent=isMenu?'ALL OF HOKUTO':m.group==='preview'?'RECORDS & REVIEW':'ORIGINAL HOKUTO';
+      document.querySelector('#page-heading p').textContent=isMenu?'새 후보는 위의 여섯 단계로, 보유·뉴스·성과는 아래에서.':m.lead;
+      document.querySelector('#page-heading .eyebrow').textContent=isMenu?'전체 기능':m.group==='preview'?'기록과 결과':m.owner||'호쿠토';
       document.title=`${isMenu?'전체 메뉴':m.name} · 호쿠토증권 시안`;
     }
     function onClick(b){

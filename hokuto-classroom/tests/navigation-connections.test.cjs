@@ -66,14 +66,23 @@ for(const mobile of [false,true]){
   if(id!=='scores'){assert.equal(b.state().room,id);assert(!b.markup('#explore-view').includes('undefined'),id);}
  }
  const b=app('#view=home',mobile);
+ assert.equal(b.node('#page-heading h1').textContent,'내 일본 주식의 중요한 변화');
+ assert.equal(b.node('#page-heading .eyebrow').textContent,'호쿠토 핵심 브리핑');
+ assert.equal((b.markup('#briefing').match(/data-alert-room=/g)||[]).length,3);
+ assert.equal((b.markup('#briefing').match(/class="priority-brief"/g)||[]).length,1);
+ assert(b.markup('#briefing').includes('120 → 108억 엔'));
+ assert(b.markup('#stock-detail').includes('아오이 게임즈'));
+
  for(const [id,item] of [['holdings','DEMO-B'],['decision','DEMO-E'],['news','contract']]){
-  b.click('data-nav','home');b.click('data-alert-room',id,'#briefing');assert.equal(b.state().room,id);assert.equal(b.state().item,item);
+  b.click('data-nav','home');b.click('data-alert-room',id,'#briefing');assert.equal(b.state().room,id);assert.equal(b.state().item,item);if(id==='holdings')assert(b.markup('#explore-view').includes('이익 전망 유지 → 10% 하향'));
  }
  const c=app('#view=room&room=news',mobile);c.click('data-room-filter','held','#explore-view');c.ctx.scrollY=525;
  c.click('data-article','contract','#explore-view');c.click('data-room-stock','DEMO-A','#dialog-content');
  assert.equal(c.state().from,'news');assert.equal(c.state().section,'held');
+ assert(c.ctx.document.body.classList.contains('focused-detail'));assert(c.node('#briefing').hidden);assert(c.node('#overview-column').hidden);assert(c.node('#journey-bar').hidden);
+
  c.click('data-tab','history','#stock-detail');c.click('data-date','2026-10-13','#stock-detail');
- c.click('id','return-room','#stock-detail');assert.equal(c.state().view,'room');assert.equal(c.state().room,'news');assert.equal(c.state().section,'held');assert.equal(c.ctx.scrollY,525);
+ c.click('id','return-room','#stock-detail');assert.equal(c.state().view,'room');assert.equal(c.state().room,'news');assert.equal(c.state().section,'held');assert.equal(c.ctx.scrollY,525);assert(!c.ctx.document.body.classList.contains('focused-detail'));
  const d=app('#view=room&room=records',mobile);d.click('data-room-filter','2026-09-08','#explore-view');d.ctx.scrollY=310;
  const match=d.markup('#explore-view').match(/data-record-stock="([^"]+)"/);assert(match);
  d.click('data-record-stock',match[1],'#explore-view');assert.equal(d.state().date,'2026-09-08');d.click('data-tab','overview','#stock-detail');d.click('id','return-room','#stock-detail');assert.equal(d.state().section,'2026-09-08');assert.equal(d.ctx.scrollY,310);
@@ -89,10 +98,14 @@ for(const mobile of [false,true]){
  h.click('id','journey-back','#journey-bar');assert.equal(h.state().room,'recommend');assert.equal(h.state().item,'DEMO-F');
  h.click('id','journey-back','#journey-bar');assert.equal(h.state().room,'strategy');assert.equal(h.state().section,'C');assert.equal(h.ctx.scrollY,290);
  const i=app('#view=room&room=decision',mobile);
+ assert.equal((i.markup('#explore-view').match(/data-room-filter=/g)||[]).length,4);
+ i.click('data-room-filter','보류','#explore-view');assert(i.markup('#explore-view').includes('data-focus-item="DEMO-F"'));assert(!i.markup('#explore-view').includes('data-focus-item="DEMO-E"'));i.click('data-room-filter','all','#explore-view');
+ assert(!i.markup('#journey-bar').includes('data-nav='));assert(!i.markup('#explore-view').includes('class="room-continuation"'));
+
  assert(!i.markup('#explore-view').includes('data-focus-item="DEMO-G"'));
  i.click('data-trading-stock','DEMO-E','#explore-view');assert.equal(i.state().room,'newbuy');assert.equal(i.state().item,'DEMO-E');
  assert(i.markup('#explore-view').includes('data-room-item="DEMO-E"'));assert(!i.markup('#explore-view').includes('data-room-item="DEMO-F"'));
- i.click('data-decision-stock','DEMO-E','#explore-view');assert.equal(i.state().item,'DEMO-E');assert.equal(i.state().room,'decision');
+ i.click('data-flow-stage','decision','#explore-view');assert.equal(i.state().item,'DEMO-E');assert.equal(i.state().room,'decision');
  i.click('data-trading-stock','DEMO-D','#explore-view');assert.equal(i.state().room,'holdings');assert.equal(i.state().item,'DEMO-D');
  i.click('data-stock-news','DEMO-D','#explore-view');assert.equal(i.state().room,'news');assert.equal(i.state().item,'parts');
  const j=app('#view=room&room=newbuy&item=DEMO-F',mobile);assert(j.markup('#explore-view').includes('이 종목의 신규매수 카드가 없습니다'));assert(!j.markup('#explore-view').includes('data-room-item="DEMO-E"'));
@@ -107,19 +120,19 @@ for(const mobile of [false,true]){
  n.click('data-room-filter','converted','#explore-view');assert(n.markup('#explore-view').includes('새 주도전환'));
  n.click('data-strategy-topic','ai','#explore-view');assert.equal(n.state().room,'strategy');assert.equal(n.state().flowTopic,'ai');
  assert(n.markup('#explore-view').includes('data-verify-stock="DEMO-E"'));assert(!n.markup('#explore-view').includes('data-verify-stock="DEMO-F"'));
- n.click('data-verify-stock','DEMO-E','#explore-view');assert.equal(n.state().room,'recommend');assert.equal(n.state().item,'DEMO-E');assert(n.markup('#explore-view').includes('132엔'));
- n.click('data-flow-next','decision','#explore-view');assert.equal(n.state().room,'decision');assert.equal(n.state().item,'DEMO-E');
+ n.click('data-verify-stock','DEMO-E','#explore-view');assert.equal(n.state().room,'recommend');assert.equal(n.state().item,'DEMO-E');assert(n.markup('#explore-view').includes('132엔'));assert.equal((n.markup('#explore-view').match(/data-decision-stock="DEMO-E"/g)||[]).length,1);
+ n.click('data-decision-stock','DEMO-E','#explore-view');assert.equal(n.state().room,'decision');assert.equal(n.state().item,'DEMO-E');
  n.click('data-trading-stock','DEMO-E','#explore-view');assert.equal(n.state().room,'newbuy');assert.equal(n.state().item,'DEMO-E');assert.equal(n.state().flowTopic,'ai');
  n.click('data-quote-view','intraday','#explore-view');assert(n.markup('#explore-view').includes('10.19 09:10'));assert(n.markup('#explore-view').includes('10.19 09:30'));assert(n.markup('#explore-view').includes('실시간 아님'));assert(!n.markup('#explore-view').includes('<dd>아직 확인 전</dd>'));
  n.click('data-flow-stage','recommend','#explore-view');assert.equal(n.state().item,'DEMO-E');assert(n.markup('#explore-view').includes('data-focus-item="DEMO-E"'));
  n.click('data-room-stock','DEMO-E','#explore-view');n.click('id','return-room','#stock-detail');assert.equal(n.state().room,'recommend');assert.equal(n.state().flowTopic,'ai');
  const o=app('#view=room&room=recommend',mobile);assert(o.markup('#explore-view').includes('data-focus-item="DEMO-D"'));
- o.click('data-flow-next','decision','#explore-view');assert.equal(o.state().item,'DEMO-D');
- const p=app('#view=room&room=recommend&item=DEMO-G',mobile);assert(p.markup('#explore-view').includes('결정실 입력 대상이 아닙니다'));
+ o.click('data-decision-stock','DEMO-D','#explore-view');assert.equal(o.state().item,'DEMO-D');
+ const p=app('#view=room&room=recommend&item=DEMO-G',mobile);assert(p.markup('#explore-view').includes('선정 자료 미확인 · 결정실 입력 없음'));
  p.click('data-flow-stage','decision','#explore-view');assert.equal(p.state().room,'recommend');assert(!p.markup('#explore-view').includes('data-flow-next="decision"'));
  const q=app('#view=room&room=recommend&item=DEMO-F&flowTopic=grid',mobile);q.click('data-flow-stage','newbuy','#explore-view');assert.equal(q.state().room,'recommend');
  const r=app('#view=room&room=strategy&flowTopic=chip',mobile);assert(r.markup('#explore-view').includes('해당 조건의 후보 예시가 없습니다'));assert(!r.markup('#explore-view').includes('data-verify-stock="DEMO-E"'));
- r.click('data-flow-next','recommend','#explore-view');assert(r.markup('#explore-view').includes('이 범위의 회사 자료가 없습니다'));
+ r.click('data-flow-stage','recommend','#explore-view');assert(r.markup('#explore-view').includes('이 범위의 회사 자료가 없습니다'));
  const t=app('#view=menu',mobile,{'hokuto-operating-base-v1':'https://example.test/hokuto/ko/'});
  assert(t.markup('#explore-view').includes('https://example.test/hokuto/hokuto_main.html#room1'));assert(t.markup('#explore-view').includes('https://example.test/hokuto/hokuto_main.html#room2'));
  t.click('data-room','meeting','#explore-view');assert(t.markup('#explore-view').includes('사무실의 해당 위치'));
@@ -128,4 +141,4 @@ for(const mobile of [false,true]){
 const html=fs.readFileSync(path.join(dir,'stock-home.html'),'utf8');
 for(const f of [...html.matchAll(/(?:src|href)="(stock-[^?]+)\?/g)].map(x=>x[1]))assert(fs.existsSync(path.join(dir,f)),f);
 for(const f of ['stock-links.js','stock-navigation.css','stock-rooms.js','stock-home.html'])assert(!/https?:\/\/[^\s"\']+\.ts\.net/i.test(fs.readFileSync(path.join(dir,f),'utf8')),'private operating host published');
-console.log('PASS: 15 unique operating entries, 19 routes, six-stage theme/company flow, EPS verification separate from final judgment, delayed quote timestamps, eligibility branches, preserved date/filter/scroll, legacy aliases and office briefing destinations. Desktop/mobile logic paths checked; no visual browser test.');
+console.log('PASS: 15 unique operating entries, 19 routes, six-stage theme/company flow, EPS verification separate from final judgment, delayed quote timestamps, eligibility branches, preserved date/filter/scroll, legacy aliases and office briefing destinations. Priority briefing, focused stock detail and simplified actions checked. Desktop/mobile logic paths checked; no visual browser test.');
