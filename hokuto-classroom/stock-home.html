@@ -6,8 +6,10 @@
   <meta name="theme-color" content="#18766b">
   <meta name="description" content="호쿠토증권 종목 중심 홈 디자인 시안. 현재 분석, 당시 입력 자료, 변화 기록과 성적표를 한곳에서 살펴보세요. 모든 자료는 가상입니다.">
   <title>종목의 오늘 · 호쿠토증권 디자인 시안</title>
-  <link rel="stylesheet" href="stock-home.css?v=20261017-3">
-  <script defer src="stock-home.js?v=20261017-3"></script>
+  <link rel="stylesheet" href="stock-home.css?v=20261017-4">
+  <link rel="stylesheet" href="stock-rooms.css?v=20261017-4">
+  <script defer src="stock-rooms.js?v=20261017-4"></script>
+  <script defer src="stock-home.js?v=20261017-4"></script>
 </head>
 <body>
   <a class="skip" href="#workspace">본문으로 이동</a>
@@ -28,6 +30,7 @@
       </nav>
       <div class="sidebar-divider"></div>
       <button class="nav-item" id="all-menu"><span class="nav-icon" data-icon="grid"></span>전체 메뉴</button>
+      <nav id="room-subnav" class="room-subnav" aria-label="함께 보는 메뉴" hidden></nav>
       <div class="side-note"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 31c8-12 16 12 24 0s12 0 12 0M6 38c8-12 16 12 24 0s12 0 12 0"/><path d="m24 4 2.5 7.5L34 14l-7.5 2.5L24 24l-2.5-7.5L14 14l7.5-2.5Z"/></svg><p>많은 뉴스보다,<br><strong>내 종목의 중요한 변화.</strong></p><small>현재 → 근거 → 기록 → 결과</small></div>
     </aside>
     <main id="workspace" class="main">
@@ -48,6 +51,7 @@
         <section class="detail-panel" id="detail-panel" aria-label="선택한 종목 상세"><div id="stock-detail"></div></section>
       </div>
       <section id="scores-view" class="scores-view" hidden></section>
+      <section id="explore-view" class="explore-view" aria-label="호쿠토 전체 메뉴와 상세 화면" hidden></section>
       <footer class="page-footer">호쿠토증권 · 종목 중심 홈 시안 <span>2026.10.17</span><small>미리 준비한 예시 기록으로 동작합니다. 운영 자료 조회·새 분석·실제 저장은 연결하지 않았습니다.</small></footer>
     </main>
   </div>
