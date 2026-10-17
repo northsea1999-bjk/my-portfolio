@@ -1,20 +1,9 @@
 /* Shared navigation and fictional room examples. No production calls or writes. */
 (() => {
   'use strict';
-  const catalog = [
-    {id:'news',name:'뉴스룸',group:'flow',icon:'news',copy:'중요한 소식과 회사 연결을 확인해요',lead:'새 소식이 어느 종목에, 왜 연결되는지.',label:'6개 소식',tone:'teal'},
-    {id:'themes',name:'테마뉴스',group:'flow',icon:'layers',copy:'사건을 업종별로 모아 읽어요',lead:'같은 업종의 소식도 회사 영향은 다를 수 있어요.',label:'6개 테마',tone:'blue'},
-    {id:'research',name:'리서치센터',group:'flow',icon:'compass',copy:'테마 순위와 돈몰림을 비교해요',lead:'뉴스의 관심과 실제 가격 흐름을 나란히.',label:'테마 비교',tone:'violet'},
-    {id:'manager',name:'펀드매니저실',group:'decide',icon:'folder',copy:'후보가 들어온 조건을 살펴봐요',lead:'선정 조건부터 결정실 판정까지.',label:'조건 확인',tone:'blue'},
-    {id:'decision',name:'결정실',group:'decide',icon:'check',copy:'판정·이유·반대근거를 함께 봐요',lead:'왜 이 판단인지, 무엇을 더 확인할지.',label:'4개 종목',tone:'teal'},
-    {id:'trading',name:'트레이딩룸',group:'decide',icon:'chart',copy:'선정 뒤, 진입 시점을 확인해요',lead:'관심을 가질 종목과 진입 시점은 따로.',label:'타이밍 점검',tone:'amber'},
-    {id:'signals',name:'BNF 신호실',group:'decide',icon:'pulse',copy:'별도 전략의 조건을 확인해요',lead:'BNF 조건과 결정실 판정을 구분해 읽어요.',label:'독립 전략',tone:'violet'},
-    {id:'records',name:'기록실',group:'review',icon:'book',copy:'당시 자료와 분석을 다시 펼쳐요',lead:'그날 무엇을 보고, 어떤 판단을 했을까.',label:'날짜별 기록',tone:'teal'},
-    {id:'park',name:'오늘의 변화',alias:'사장실',group:'review',icon:'swap',copy:'이전 기록과 달라진 점만 봐요',lead:'바뀐 사실부터, 다음 확인까지 이어봅니다.',label:'사장실',tone:'amber'},
-    {id:'scores',name:'성적표',group:'review',icon:'chart',copy:'선정 이후의 결과를 비교해요',lead:'',label:'성과기록·선정성적',tone:'blue'},
-    {id:'space',name:'호쿠토의 공간',group:'space',icon:'home',copy:'바닷가 사무실에서 잠깐 쉬어가요',lead:'익숙한 작은 사무실, 필요할 때 들르는 곳.',label:'바닷가 사무실',tone:'teal'}
-  ];
-  const groups=[{id:'flow',name:'뉴스와 흐름',copy:'무슨 일이 일어났는지',number:'01'},{id:'decide',name:'후보와 판단',copy:'어떤 종목을 살펴볼지',number:'02'},{id:'review',name:'기록과 복기',copy:'그 뒤 어떻게 달라졌는지',number:'03'}];
+  const links=typeof window!=='undefined'?window.HokutoLinks:require('./stock-links.js');
+  const catalog=links.catalog;
+  const groups=[{id:'original',name:'기존 호쿠토 메뉴'},{id:'entry',name:'기존 입구'},{id:'preview',name:'종목별 기록 시안'}];
   const drawings={
     news:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h5v5H7zM15 8h3M15 12h3M7 16h11"/>',
     layers:'<path d="m12 3 10 5-10 5L2 8Zm-9 9 9 5 9-5M3 16l9 5 9-5"/>',
@@ -45,7 +34,7 @@
     const {stocks,latest,esc,icon,badge,avatar,signed,priceText,colorClass,route,selectStock,openDialog,bigChart}=api;
     const get=()=>api.getState();
     const stock=id=>stocks.find(s=>s.id===id);
-    const menu=id=>catalog.find(m=>m.id===id)||catalog[0];
+    const menu=id=>catalog.find(m=>m.id===links.resolve(id))||catalog[0];
     const topic=id=>topics.find(t=>t.id===id)||topics[0];
     const glyph=id=>drawings[id]?`<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${drawings[id]}</svg>`:icon(id);
     const note=(text)=>`<p class="room-note">${icon('file')}<span>${text}</span></p>`;
@@ -54,23 +43,56 @@
     const chips=(items,current,attr,label)=>`<div class="room-filters" role="group" aria-label="${label}">${items.map(([id,text])=>`<button ${attr}="${id}" aria-pressed="${current===id}">${text}</button>`).join('')}</div>`;
     const stockIdentity=(s)=>`<div class="room-stock-identity">${avatar(s)}<div><strong>${s.name}</strong><small>${s.id} · ${s.group==='held'?'보유 예시':'신규 후보'}</small></div></div>`;
     const empty=(title,copy)=>`<div class="room-empty"><span>${icon('file')}</span><h3>${title}</h3><p>${copy}</p></div>`;
+    let operatingBase='';
+    try { const saved=localStorage.getItem('hokuto-operating-base-v1');if(saved)operatingBase=links.normaliseBase(saved); } catch {}
+    let pendingSource='';
+    function sourceAction(m,label='기존 화면',klass='source-link'){
+      return operatingBase?`<a class="${klass}" href="${esc(links.destination(m.id,operatingBase))}" target="_blank" rel="noopener noreferrer" aria-label="${m.name} 기존 화면 새 탭에서 열기">${label} <span aria-hidden="true">↗</span></a>`:`<button class="${klass}" data-connect-source="${m.id}" aria-label="${m.name} 기존 화면 연결">${label} <span aria-hidden="true">↗</span></button>`;
+    }
+    function connectionDialog(id=''){
+      pendingSource=id;
+      openDialog(`<div class="dialog-header"><div><small>기존 호쿠토와 연결</small><h2>내 호쿠토 주소를 알려주세요</h2></div><button class="close-dialog" id="close-dialog" aria-label="연결 창 닫기">×</button></div><div class="dialog-body connection-dialog"><p>지금 사용하는 호쿠토의 오늘 화면이나 사무실 주소를 복사해 붙여넣으세요.</p><label for="operating-address">호쿠토 화면 주소</label><input id="operating-address" type="url" inputmode="url" autocomplete="off" spellcheck="false" placeholder="https://…/hokuto/ko/today.html" value="${esc(operatingBase)}"><p class="connection-error" id="connection-error" role="alert"></p><button class="connection-save" data-save-connection>${id?'연결하고 '+menu(id).name+' 열기':'연결 저장하기'}</button><p class="connection-private">주소는 이 브라우저에만 저장됩니다. 기존 화면은 새 탭에서 열리고, 이곳에서 보던 화면은 유지됩니다.</p></div>`);
+    }
+    function saveConnection(){
+      const input=document.querySelector('#operating-address');
+      try { operatingBase=links.normaliseBase(input.value); }
+      catch(error){document.querySelector('#connection-error').textContent=error.message;input.focus();return;}
+      let persisted=true;
+      try { localStorage.setItem('hokuto-operating-base-v1',operatingBase); } catch { persisted=false; }
+      const target=catalog.find(m=>m.id===pendingSource&&m.path);
+      document.querySelector('#evidence-dialog').close();
+      api.refresh();
+      document.querySelector('#announcer').textContent=persisted?'기존 호쿠토를 연결했습니다.':'현재 화면에서 연결했습니다. 브라우저 저장은 사용할 수 없습니다.';
+      if(target)window.open(links.destination(target.id,operatingBase),'_blank','noopener,noreferrer');
+      pendingSource='';
+    }
     function navigate(id,extra={}){
+      id=links.resolve(id);
       if(id==='scores'){route({view:'scores',detail:false,from:'',query:''});}
       else {route({view:'room',room:id,detail:false,from:'',section:'all',item:'',...extra});}
       window.scrollTo({top:0});
+      if(extra.item)requestAnimationFrame(()=>{
+        const target=document.querySelector('[data-focus-item="'+extra.item+'"]');
+        if(target){target.scrollIntoView({block:'center'});target.focus({preventScroll:true});}
+      });
     }
-    function directoryCard(m){return `<button class="directory-item" data-room="${m.id}" aria-label="${m.name} 열기"><span class="menu-symbol ${m.tone}">${glyph(m.icon)}</span><span class="directory-copy"><strong>${m.name}</strong><small>${m.copy}</small></span><span class="directory-chevron" aria-hidden="true">›</span></button>`;}
+    function directoryCard(m){return `<article class="original-menu-card"><div class="original-menu-title"><span class="menu-symbol ${m.tone}">${glyph(m.icon)}</span><div><h3>${m.name}</h3><p>${m.copy}</p></div></div><div class="original-menu-actions"><button class="preview-link" data-room="${m.id}">${m.preview?'미리보기':'연결 보기'} <span>→</span></button>${sourceAction(m)}</div></article>`;}
     function directory(){
       const q=get().menuQuery.trim().toLowerCase();
-      const matches=catalog.filter(m=>`${m.name} ${m.alias||''} ${m.copy} ${m.label}`.toLowerCase().includes(q));
-      return `<div class="directory-toolbar"><p>익숙한 기능을, 하려는 일에 맞춰 모았어요.</p><label class="menu-search">${glyph('compass')}<input id="menu-search" type="search" aria-label="전체 메뉴 검색" placeholder="메뉴 찾기 · 뉴스, 결정실, 기록…" value="${esc(get().menuQuery)}"></label></div><div class="directory-quick"><button data-nav="held"><span class="menu-symbol teal">${icon('wallet')}</span><span><small>매일 보는 곳</small><strong>내 주식 <em>4</em></strong></span><b>→</b></button><button data-nav="candidate"><span class="menu-symbol blue">${icon('compass')}</span><span><small>새로 살펴볼 종목</small><strong>신규 후보 <em>3</em></strong></span><b>→</b></button><button data-room="park"><span class="menu-symbol amber">${glyph('swap')}</span><span><small>놓치지 말아야 할 변화</small><strong>이전 기록과 비교</strong></span><b>→</b></button></div><div class="directory-groups">${groups.map(g=>{const found=matches.filter(m=>m.group===g.id);return found.length?`<section class="directory-group"><div class="directory-group-title"><span>${g.number}</span><div><h2>${g.name}</h2><p>${g.copy}</p></div></div>${found.map(directoryCard).join('')}</section>`:'';}).join('')}</div>${!matches.length?empty('찾는 메뉴가 없어요','뉴스, 결정실, 기록처럼 짧은 이름으로 찾아보세요.'):''}${matches.some(m=>m.id==='space')?`<button class="space-strip" data-room="space"><span class="space-mark" aria-hidden="true">✦</span><span><strong>호쿠토의 공간</strong><small>바닷가 사무실도 이곳에 그대로.</small></span><span class="space-strip-action">잠깐 둘러보기 →</span></button>`:''}<div class="directory-bottom"><span>어디서든 같은 메뉴, 같은 종목으로 이어집니다.</span><button data-nav="home">첫 화면으로 돌아가기 →</button></div>`;
+      const matches=catalog.filter(m=>`${m.name} ${m.alias||''} ${m.copy}`.toLowerCase().includes(q));
+      const originals=matches.filter(m=>m.group==='original'),entries=matches.filter(m=>m.group==='entry'),extras=matches.filter(m=>m.group==='preview');
+      return `<section class="connection-intro"><div><span class="eyebrow">YOUR HOKUTO, CONNECTED</span><h2>알림으로 시작하고,<br>익숙한 메뉴에서 확인하세요.</h2><p>새 알림 홈과 기존 호쿠토가 이어집니다.<br>추천·북두테마, 성과기록·선정성적도 각각 그대로.</p><button class="room-text-link" data-nav="home">알림 홈으로 <span>→</span></button></div><div class="connection-route"><div><span class="route-number">01</span><span><strong>알림 홈</strong><small>내 종목에서 달라진 것</small></span></div><span class="route-line" aria-hidden="true"></span><div><span class="route-number">02</span><span><strong>기존 호쿠토 메뉴</strong><small>근거를 읽고 자세히 확인</small></span></div><span class="route-line" aria-hidden="true"></span><div><span class="route-number">03</span><span><strong>읽던 곳으로 돌아오기</strong><small>종목 · 날짜 · 필터 유지</small></span></div></div></section><div class="connection-status"><span class="connection-status-copy"><i class="${operatingBase?'connected':''}"></i>${operatingBase?'내 호쿠토가 연결되어 있어요':'기존 화면도 바로 열고 싶다면'}</span><button data-connect-settings>${operatingBase?'연결 주소 변경':'내 호쿠토 연결'} <span>↗</span></button></div><section class="daily-entry"><div class="directory-section-heading"><h2>자주 확인하는 곳</h2><span>알림에서 이어지는 메뉴</span></div><div class="daily-entry-grid">${[{id:'holdings',note:'보유종목에 변화가 생겼다면'},{id:'decision',note:'새 후보의 판단이 궁금하다면'},{id:'newbuy',note:'진입 조건을 확인하려면'}].map(x=>`<button data-room="${x.id}"><span class="menu-symbol ${menu(x.id).tone}">${glyph(menu(x.id).icon)}</span><span><strong>${menu(x.id).name}</strong><small>${x.note}</small></span><b>→</b></button>`).join('')}</div></section><section class="original-directory"><div class="directory-section-heading menu-list-heading"><div><h2>기존 호쿠토 전체 메뉴 <span>12</span></h2><p>미리보기는 가상 자료 · 기존 화면은 내 호쿠토에서 새 탭으로</p></div><label class="menu-search">${glyph('compass')}<input id="menu-search" type="search" aria-label="전체 메뉴 검색" placeholder="메뉴 이름으로 찾기" value="${esc(get().menuQuery)}"></label></div><div class="original-menu-grid">${originals.map(directoryCard).join('')}</div>${!matches.length?empty('찾는 메뉴가 없어요','메뉴 이름이나 보유, 추천, 성과로 찾아보세요.'):''}</section>${entries.length?`<section class="entry-links"><div class="directory-section-heading"><h2>기존 입구도 그대로</h2></div><div class="entry-link-grid">${entries.map(m=>`<article><span class="menu-symbol ${m.tone}">${glyph(m.icon)}</span><div><h3>${m.name}</h3><p>${m.copy}</p></div>${sourceAction(m,'열기')}</article>`).join('')}</div></section>`:''}${extras.length?`<section class="preview-extras"><div class="directory-section-heading"><div><h2>종목별로 이어 보는 기록</h2><p>새 알림 홈에 더한 디자인 시안</p></div>${badge('미리보기','gray')}</div><div>${extras.map(m=>`<button data-room="${m.id}"><span>${glyph(m.icon)}</span><strong>${m.name}</strong><span>→</span></button>`).join('')}</div></section>`:''}<p class="directory-footnote">기존 메뉴의 역할은 유지합니다. 실제 화면은 연결된 호쿠토에서 확인하세요.</p>`;
     }
     function context(){
-      const m=menu(get().room),g=groups.find(g=>g.id===m.group);
-      return `<nav class="room-breadcrumb" aria-label="현재 위치"><button data-menu-home>전체 메뉴</button><span aria-hidden="true">/</span>${g?`<span>${g.name}</span><span aria-hidden="true">/</span>`:''}<strong>${m.name}</strong></nav>${g?`<nav class="room-siblings" aria-label="${g.name} 메뉴">${catalog.filter(x=>x.group===m.group).map(x=>`<button data-room="${x.id}" ${m.id===x.id?'aria-current="page"':''}>${glyph(x.icon)}${x.name}</button>`).join('')}</nav>`:''}`;
+      const m=menu(get().room);
+      return `<nav class="room-breadcrumb" aria-label="현재 위치"><button data-nav="home">알림 홈</button><span>/</span><button data-menu-home>전체 메뉴</button><span>/</span><strong>${m.name}</strong></nav><div class="room-origin"><div><span class="origin-tag">${m.path?'기존 호쿠토 메뉴':'새 홈의 기록 시안'}</span><span>${m.preview?'현재 내용은 가상 자료 미리보기':'세부 내용은 기존 화면에서 확인'}</span></div>${m.path?sourceAction(m,'기존 '+m.name+' 열기'):''}</div><nav class="room-siblings" aria-label="함께 확인할 메뉴">${(m.related||[]).map(id=>`<button data-room="${id}">${glyph(menu(id).icon)}${menu(id).name}<span>→</span></button>`).join('')}</nav>`;
+    }
+    function bridge(){
+      const m=menu(get().room);
+      return `<section class="original-bridge"><span class="menu-symbol ${m.tone}">${glyph(m.icon)}</span><span class="eyebrow">ORIGINAL HOKUTO</span><h2>${m.name},<br>기존 화면에서 이어보세요.</h2><p>${m.lead}</p>${sourceAction(m,m.name+' 열기','bridge-open')}<small>새 탭에서 열립니다. 이 화면으로 돌아오면 읽던 위치가 그대로입니다.</small></section><section class="bridge-next room-paper room-reading"><h3>이어서 확인할 곳</h3><div>${(m.related||[]).map(id=>roomButton(id)).join('')}</div></section>`;
     }
     function articleCard(a){
-      return `<article class="news-entry"><div class="news-time">${a.time}<small>10.16</small></div><div class="news-entry-content"><div class="news-tags">${badge(a.state,a.kind==='direct'?'teal':a.kind==='pending'?'amber':'gray')}<span>${a.country} · ${topic(a.topic).name}</span></div><button class="news-headline" data-article="${a.id}">${a.title}</button><p>${a.summary}</p><div class="news-related">${a.stock?stockButton(a.stock):`<span>${a.kind==='pending'?'분석 완료 후 연결 확인':'회사 직접 연결 없음'}</span>`}<button data-article="${a.id}">내용과 근거 <span aria-hidden="true">→</span></button></div></div></article>`;
+      return `<article class="news-entry ${get().item===a.id?'is-focused':''}" data-focus-item="${a.id}" tabindex="-1"><div class="news-time">${a.time}<small>10.16</small></div><div class="news-entry-content"><div class="news-tags">${badge(a.state,a.kind==='direct'?'teal':a.kind==='pending'?'amber':'gray')}<span>${a.country} · ${topic(a.topic).name}</span></div><button class="news-headline" data-article="${a.id}">${a.title}</button><p>${a.summary}</p><div class="news-related">${a.stock?stockButton(a.stock):`<span>${a.kind==='pending'?'분석 완료 후 연결 확인':'회사 직접 연결 없음'}</span>`}<button data-article="${a.id}">내용과 근거 <span aria-hidden="true">→</span></button></div></div></article>`;
     }
     function news(){
       const state=get(),items=articles.filter(a=>state.section==='all'||state.section==='held'&&a.stock&&stock(a.stock).group==='held'||state.section==='industry'&&a.kind==='industry'||state.section==='pending'&&a.kind==='pending');
@@ -96,12 +118,13 @@
     }
     function decisions(){
       const state=get(),items=decisionIds.map(stock).filter(s=>state.section==='all'||s.decision===state.section);
-      return `<div class="decision-overview">${[['매수대상',2,'teal'],['보류',1,'gray'],['제외',0,'gray'],['미입력',1,'amber']].map(([label,n,tone])=>`<button class="decision-total ${tone}" data-room-filter="${label}" aria-pressed="${state.section===label}"><span>${label}</span><strong>${n}<small>종목</small></strong></button>`).join('')}</div><section class="room-paper room-reading"><div class="section-headline"><div><h2>판정과 그 이유</h2><p>10.16 기준 · 보유 중인 매수대상 1종목 포함</p></div></div>${chips([['all','전체'],['매수대상','매수대상'],['보류','보류'],['제외','제외'],['미입력','미입력']],state.section,'data-room-filter','결정실 판정')}${items.length?`<div class="decision-stack">${items.map(s=>`<article class="decision-file"><div class="decision-file-head">${stockIdentity(s)}${badge(s.decision,s.decision==='매수대상'?'teal':s.price==null?'amber':'gray')}</div><p class="decision-reason">${s.group==='held'?'기존 결정실 판정은 매수대상이며 이미 보유 중입니다. 최신 보유 점검은 정상이고, 새 경고는 없습니다.':latest(s).summary}</p><div class="decision-next"><b>다음 확인</b><span>${latest(s).next}</span></div><div class="decision-actions">${stockButton(s.id,'네 가지 근거와 기록')}<button data-trading-stock="${s.id}">진입·보유 상태 <span>→</span></button></div></article>`).join('')}</div>`:empty('제외 판정 예시가 없습니다','0건과 자료 미확인 상태는 구분해서 표시합니다.')}${note('결정실의 매수대상은 진입 시점을 확인할 대상입니다. 보유 경고·매매 타이밍과 같은 뜻이 아닙니다.')}</section>`;
+      return `<div class="decision-overview">${[['매수대상',2,'teal'],['보류',1,'gray'],['제외',0,'gray'],['미입력',1,'amber']].map(([label,n,tone])=>`<button class="decision-total ${tone}" data-room-filter="${label}" aria-pressed="${state.section===label}"><span>${label}</span><strong>${n}<small>종목</small></strong></button>`).join('')}</div><section class="room-paper room-reading"><div class="section-headline"><div><h2>판정과 그 이유</h2><p>10.16 기준 · 보유 중인 매수대상 1종목 포함</p></div></div>${chips([['all','전체'],['매수대상','매수대상'],['보류','보류'],['제외','제외'],['미입력','미입력']],state.section,'data-room-filter','결정실 판정')}${items.length?`<div class="decision-stack">${items.map(s=>`<article class="decision-file ${state.item===s.id?'is-focused':''}" data-focus-item="${s.id}" tabindex="-1"><div class="decision-file-head">${stockIdentity(s)}${badge(s.decision,s.decision==='매수대상'?'teal':s.price==null?'amber':'gray')}</div><p class="decision-reason">${s.group==='held'?'기존 결정실 판정은 매수대상이며 이미 보유 중입니다. 최신 보유 점검은 정상이고, 새 경고는 없습니다.':latest(s).summary}</p><div class="decision-next"><b>다음 확인</b><span>${latest(s).next}</span></div><div class="decision-actions">${stockButton(s.id,'네 가지 근거와 기록')}<button data-trading-stock="${s.id}">진입·보유 상태 <span>→</span></button></div></article>`).join('')}</div>`:empty('제외 판정 예시가 없습니다','0건과 자료 미확인 상태는 구분해서 표시합니다.')}${note('결정실의 매수대상은 진입 시점을 확인할 대상입니다. 보유 경고·매매 타이밍과 같은 뜻이 아닙니다.')}</section>`;
     }
     function trading(){
-      const state=get(),s=stock(state.item)||stock('DEMO-E');
-      const choices=decisionIds.map(stock),isNew=s.group!=='held'&&s.decision==='매수대상';
-      return `<div class="theme-workspace"><section class="room-paper theme-index"><div class="room-paper-heading"><div><h2>진입·보유 확인</h2><p>종목을 선택해 상태를 봅니다.</p></div></div>${choices.map(x=>`<button class="trade-select ${x.id===s.id?'selected':''}" data-room-item="${x.id}" aria-pressed="${x.id===s.id}">${stockIdentity(x)}<small>${x.group==='held'?'보유관리':x.decision==='매수대상'?'신규 진입 확인':x.decision}</small></button>`).join('')}</section><section class="room-paper room-reading"><div class="decision-file-head">${stockIdentity(s)}${badge(s.group==='held'?'보유관리':s.decision,s.group==='held'?'blue':'gray')}</div><div class="trade-price"><strong>${priceText(s.price)}${s.price==null?'':'<small>엔</small>'}</strong><span class="${colorClass(s.change)}">${signed(s.change)}</span></div><p class="room-meta">2026.10.16 종가 · 실시간 가격 아님 · 가상</p><div class="chart-container">${bigChart(s,'room-chart-fill')}</div><div class="trade-state"><span>${icon('clock')}</span><div><small>${s.group==='held'?'보유 중인 종목':isNew?'신규 진입 확인':'판정 확인이 먼저'}</small><h3>${s.group==='held'?'보유 상태와 새 경고를 확인해요':isNew?'아직 진입 신호가 없습니다':s.price==null?'자료가 부족해 확인할 수 없습니다':'보류 상태를 유지합니다'}</h3><p>${s.group==='held'?latest(s).next:isNew?'매수대상 선정과 지금 진입할 수 있는지는 별개입니다. 다음 가격 확인에서 회복·돌파 조건을 봅니다.':latest(s).next}</p></div></div><dl class="room-dl"><div><dt>결정실 판정</dt><dd>${s.decision}</dd></div><div><dt>타이밍</dt><dd>${s.timing}</dd></div><div><dt>다음 거래일 가격</dt><dd>아직 확인 전</dd></div><div><dt>계좌·체결</dt><dd>시안에 연결하지 않음</dd></div></dl>${stockButton(s.id,'종목 분석과 당시 기록')}${note('버튼은 자료를 살펴보는 용도입니다. 실제 주문·체결 기능은 없습니다.')}</section></div>`;
+      const state=get(),isHoldings=state.room==='holdings';
+      const choices=stocks.filter(s=>s.group===(isHoldings?'held':'candidate'));
+      const s=choices.find(s=>s.id===state.item)||choices[0],isNew=s.group!=='held'&&s.decision==='매수대상';
+      return `<div class="theme-workspace"><section class="room-paper theme-index"><div class="room-paper-heading"><div><h2>${isHoldings?'보유주식 관리':'신규매수'}</h2><p>${isHoldings?'이미 보유한 종목의 상태와 경고':'새 후보의 판정과 진입 조건'}</p></div></div>${choices.map(x=>`<button class="trade-select ${x.id===s.id?'selected':''}" data-room-item="${x.id}" aria-pressed="${x.id===s.id}">${stockIdentity(x)}<small>${x.group==='held'?'보유관리':x.decision==='매수대상'?'신규 진입 확인':x.decision}</small></button>`).join('')}</section><section class="room-paper room-reading"><div class="decision-file-head">${stockIdentity(s)}${badge(s.group==='held'?'보유관리':s.decision,s.group==='held'?'blue':'gray')}</div><div class="trade-price"><strong>${priceText(s.price)}${s.price==null?'':'<small>엔</small>'}</strong><span class="${colorClass(s.change)}">${signed(s.change)}</span></div><p class="room-meta">2026.10.16 종가 · 실시간 가격 아님 · 가상</p><div class="chart-container">${bigChart(s,'room-chart-fill')}</div><div class="trade-state"><span>${icon('clock')}</span><div><small>${s.group==='held'?'보유 중인 종목':isNew?'신규 진입 확인':'판정 확인이 먼저'}</small><h3>${s.group==='held'?'보유 상태와 새 경고를 확인해요':isNew?'아직 진입 신호가 없습니다':s.price==null?'자료가 부족해 확인할 수 없습니다':'보류 상태를 유지합니다'}</h3><p>${s.group==='held'?latest(s).next:isNew?'매수대상 선정과 지금 진입할 수 있는지는 별개입니다. 다음 가격 확인에서 회복·돌파 조건을 봅니다.':latest(s).next}</p></div></div><dl class="room-dl"><div><dt>결정실 판정</dt><dd>${s.decision}</dd></div><div><dt>타이밍</dt><dd>${s.timing}</dd></div><div><dt>다음 거래일 가격</dt><dd>아직 확인 전</dd></div><div><dt>계좌·체결</dt><dd>시안에 연결하지 않음</dd></div></dl>${stockButton(s.id,'종목 분석과 당시 기록')}${note('버튼은 자료를 살펴보는 용도입니다. 실제 주문·체결 기능은 없습니다.')}</section></div>`;
     }
     function signals(){
       const fixtures=[{name:'가상 BNF 종목 01',state:'세 조건 충족',tone:'teal',values:['−22.0%','27.0','−4 → −2'],met:[true,true,true]},{name:'가상 BNF 종목 02',state:'조건 미충족',tone:'gray',values:['−21.0%','35.0','−4 → −2'],met:[true,false,true]},{name:'가상 BNF 종목 03',state:'확인 불가',tone:'amber',values:['자료 부족','자료 부족','자료 부족'],met:[null,null,null]}];
@@ -118,19 +141,23 @@
       return `<section class="change-hero"><div><span class="eyebrow">DAILY CHANGES · 사장실</span><h2>달라진 것부터 읽으세요.</h2><p>10.13 기록 → 10.16 기록 비교 · 가상</p></div><div><strong>${changed.length}</strong><span>변화가 있는 종목</span></div></section><div class="room-two-column"><section class="room-paper room-reading"><div class="section-headline"><h2>종목별 변화</h2><small>가격 등락과 판단 변화는 별도</small></div>${changed.map(s=>{const old=s.records[s.records.length-2],r=latest(s);return `<article class="change-item">${stockIdentity(s)}<div class="status-transition">${badge(old.status,'gray')}<span>→</span>${badge(r.status,s.tone)}</div><p>${r.change}</p><div class="decision-next"><b>다음 확인</b><span>${r.next}</span></div>${stockButton(s.id,'이전 기록과 비교','history')}</article>`;}).join('')}</section><aside class="room-aside"><section class="room-paper room-reading"><h3>판단이 유지된 종목</h3>${unchanged.map(s=>`<div class="unchanged-stock">${stockButton(s.id)}<p>${s.update}</p></div>`).join('')}</section><section class="room-paper room-reading"><h3>아직 비교할 수 없어요</h3><p>유키 메디컬은 자료가 부족하고 이전 기록도 없습니다.</p>${stockButton('DEMO-G','자료 상태 보기')}</section><section class="room-paper room-reading"><h3>테마 순위 변화</h3><p>테마 순위는 리서치센터에서 비교할 수 있습니다.</p>${roomButton('research','테마 흐름 보기')}</section></aside></div>`;
     }
     function space(){return `<section class="room-paper space-page"><div class="space-page-copy"><span class="eyebrow">A LITTLE BREAK</span><h2>바닷가의 작은 호쿠토.</h2><p>익숙한 공간은 남겨두고,<br>투자 정보는 같은 메뉴에서 또렷하게 봅니다.</p><button class="room-primary" data-nav="home">내 종목의 오늘로 <span>→</span></button></div><img src="assets/entry-mobile-v2.webp" alt="바닷가의 작은 호쿠토 사무실" width="1774" height="887"></section><section class="room-paper space-lounge"><img src="assets/lounge-mobile-v2.webp" alt="안내원이 있는 호쿠토 라운지" width="1000" height="500" loading="lazy"><div><h3>방 이름은 익숙하게, 이동은 간단하게.</h3><p>뉴스룸·결정실·기록실 모두 같은 화면 안에서 이어집니다.</p><button class="room-text-link" data-menu-home>전체 메뉴로 <span>→</span></button></div></section>`;}
-    const renderers={news,themes,research,manager,decision:decisions,trading,signals,records,park:changes,space};
+    const renderers={news,themes,research,recommend:manager,decision:decisions,holdings:trading,newbuy:trading,signals,records,park:changes};
     function render(){
       const state=get(),isMenu=state.view==='menu';
       const m=menu(state.room);
-      document.querySelector('#explore-view').innerHTML=isMenu?directory():context()+(renderers[m.id]||news)();
+      document.querySelector('#explore-view').innerHTML=isMenu?directory():context()+(renderers[m.id]||bridge)();
       const sub=document.querySelector('#room-subnav');
-      sub.innerHTML=['news','decision','trading','records'].map(id=>`<button class="${!isMenu&&id===state.room?'active':''}" data-room="${id}" ${!isMenu&&id===state.room?'aria-current="page"':''}>${glyph(menu(id).icon)}${menu(id).name}</button>`).join('');
+      sub.innerHTML=['news','decision','holdings','newbuy'].map(id=>`<button class="${!isMenu&&id===state.room?'active':''}" data-room="${id}" ${!isMenu&&id===state.room?'aria-current="page"':''}>${glyph(menu(id).icon)}${menu(id).name}</button>`).join('');
       document.querySelector('#page-heading h1').textContent=isMenu?'호쿠토 전체 메뉴':m.name;
-      document.querySelector('#page-heading p').textContent=isMenu?'내 종목을 이해하는 데 필요한 모든 곳.':m.lead;
-      document.querySelector('#page-heading .eyebrow').textContent=isMenu?'ALL OF HOKUTO':m.group==='flow'?'NEWS & RESEARCH':m.group==='decide'?'CANDIDATES & DECISIONS':m.group==='review'?'RECORDS & REVIEW':'HOKUTO LOUNGE';
+      document.querySelector('#page-heading p').textContent=isMenu?'새 알림 홈에서, 기존 호쿠토의 모든 기능으로.':m.lead;
+      document.querySelector('#page-heading .eyebrow').textContent=isMenu?'ALL OF HOKUTO':m.group==='preview'?'RECORDS & REVIEW':'ORIGINAL HOKUTO';
       document.title=`${isMenu?'전체 메뉴':m.name} · 호쿠토증권 시안`;
     }
     function onClick(b){
+      if(b.hasAttribute('data-connect-settings')){connectionDialog();return true;}
+      if(b.hasAttribute('data-connect-source')){connectionDialog(b.dataset.connectSource);return true;}
+      if(b.hasAttribute('data-save-connection')){saveConnection();return true;}
+      if(b.dataset.alertRoom){navigate(b.dataset.alertRoom,{item:b.dataset.alertItem||''});return true;}
       if(b.hasAttribute('data-menu-home')){route({view:'menu',detail:false,from:'',menuQuery:''});window.scrollTo({top:0});return true;}
       if(b.dataset.room){navigate(b.dataset.room);return true;}
       if(b.dataset.roomFilter){route({section:b.dataset.roomFilter},true);return true;}
@@ -140,16 +167,16 @@
       if(b.dataset.roomItem){route({item:b.dataset.roomItem},true);return true;}
       if(b.dataset.themeResearch){navigate('research',{topic:b.dataset.themeResearch});return true;}
       if(b.dataset.themeNews){navigate('themes',{topic:b.dataset.themeNews});return true;}
-      if(b.dataset.tradingStock){navigate('trading',{item:b.dataset.tradingStock});return true;}
+      if(b.dataset.tradingStock){navigate(stock(b.dataset.tradingStock)?.group==='held'?'holdings':'newbuy',{item:b.dataset.tradingStock});return true;}
       if(b.dataset.roomStock||b.dataset.recordStock){
         const d=document.querySelector('#evidence-dialog');if(d.open)d.close();
         const id=b.dataset.roomStock||b.dataset.recordStock;
         selectStock(id,b.dataset.recordStock?'history':b.dataset.roomTab||'overview',{from:get().room,filter:'all',query:'',date:b.dataset.recordDate||''});return true;
       }
-      if(b.id==='return-room'){route({view:'room',room:get().from,detail:false,from:''});window.scrollTo({top:0});return true;}
+      if(b.id==='return-room'){api.returnToOrigin();return true;}
       return false;
     }
-    return {render,navigate,onClick,catalog,menu};
+    return {render,navigate,onClick,catalog,menu,resolve:links.resolve};
   }
   if(typeof window!=='undefined')window.HokutoRooms={create,catalog};
   if(typeof module!=='undefined')module.exports={catalog,topics,articles,lanes,decisionIds};

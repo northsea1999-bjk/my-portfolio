@@ -90,21 +90,49 @@
   let state;
   let returnFocus;
   let listScroll=0;
-  const rooms=window.HokutoRooms.create({stocks,latest,esc,icon,badge,avatar,signed,priceText,colorClass,route,selectStock,openDialog,bigChart,getState:()=>state});
+  let originContext=history.state?.hokutoOrigin||null;
+  let renderedHash='';
+  if('scrollRestoration' in history)history.scrollRestoration='manual';
+  const rooms=window.HokutoRooms.create({stocks,latest,esc,icon,badge,avatar,signed,priceText,colorClass,route,selectStock,openDialog,bigChart,getState:()=>state,refresh:()=>render(),returnToOrigin});
   function readState(){
     const p=new URLSearchParams(location.hash.slice(1));
     const view=['home','scores','menu','room'].includes(p.get('view'))?p.get('view'):'home';
     const stock=stocks.some(s=>s.id===p.get('stock'))?p.get('stock'):'DEMO-A';
-    return {view,stock,filter:['all','held','candidate'].includes(p.get('filter'))?p.get('filter'):'all',tab:['overview','history','score'].includes(p.get('tab'))?p.get('tab'):'overview',date:p.get('date')||'',detail:p.get('detail')==='1',query:p.get('q')||'',sort:['change','name','return'].includes(p.get('sort'))?p.get('sort'):'change',benchmark:p.get('benchmark')==='market'?'market':'theme',round:p.get('round')==='past'?'past':'current',period:p.get('period')==='5'?'5':'20',room:rooms.catalog.some(m=>m.id===p.get('room'))?p.get('room'):'news',section:p.get('section')||'all',topic:p.get('topic')||'chip',item:p.get('item')||'',menuQuery:p.get('menuQuery')||'',from:rooms.catalog.some(m=>m.id===p.get('from'))?p.get('from'):''};
+    const room=rooms.resolve(p.get('room')),from=rooms.resolve(p.get('from'));
+    return {view,stock,filter:['all','held','candidate'].includes(p.get('filter'))?p.get('filter'):'all',tab:['overview','history','score'].includes(p.get('tab'))?p.get('tab'):'overview',date:p.get('date')||'',detail:p.get('detail')==='1',query:p.get('q')||'',sort:['change','name','return'].includes(p.get('sort'))?p.get('sort'):'change',benchmark:p.get('benchmark')==='market'?'market':'theme',round:p.get('round')==='past'?'past':'current',period:p.get('period')==='5'?'5':'20',room:rooms.catalog.some(m=>m.id===room)?room:'news',section:p.get('section')||'all',topic:p.get('topic')||'chip',item:p.get('item')||'',menuQuery:p.get('menuQuery')||'',from:rooms.catalog.some(m=>m.id===from)?from:''};
   }
   function route(patch,replace=false){
+    const scroll=window.scrollY,previousView=state.view;
+    const previousMeta=history.state||{hokutoIndex:0};
+    history.replaceState({...previousMeta,hokutoScroll:scroll,hokutoOrigin:originContext},'',location.href);
     state={...state,...patch};
+    if(patch.from===''&&!patch.detail)originContext=null;
     if(patch.filter && state.filter!=='all' && selectedStock().group!==state.filter){state.stock=stocks.filter(s=>s.group===state.filter).sort((a,b)=>b.order-a.order)[0].id;state.tab='overview';state.date='';}
     const p=new URLSearchParams();
     for(const [k,v] of Object.entries(state))if(v!=='' && v!==false)p.set(k==='query'?'q':k,k==='detail'?'1':v);
-    if(replace){history.replaceState(null,'',`#${p}`);render();}
-    else if(location.hash.slice(1)!==p.toString()) location.hash=p.toString();
-    else render();
+    const same=location.hash.slice(1)===p.toString();
+    const keepScroll=replace||(patch.view===undefined&&patch.room===undefined)||(state.view==='home'&&previousView==='home'&&!patch.from);
+    const meta={hokutoIndex:(previousMeta.hokutoIndex||0)+(replace||same?0:1),hokutoScroll:keepScroll?scroll:0,hokutoOrigin:originContext};
+    history[replace||same?'replaceState':'pushState'](meta,'',`#${p}`);
+    render();
+    if(!keepScroll)window.scrollTo({top:0});
+  }
+  function returnToOrigin(){
+    const origin=history.state?.hokutoOrigin||originContext;
+    if(origin){originContext=null;route({...origin.state});requestAnimationFrame(()=>window.scrollTo({top:origin.scroll||0}));return;}
+    if(state.from==='scores'){route({view:'scores',detail:false,from:''});return;}
+    if(state.from){route({view:'room',room:state.from,detail:false,from:''});return;}
+    route({view:'home',detail:false,from:''});requestAnimationFrame(()=>window.scrollTo({top:listScroll}));
+  }
+  function goBack(){
+    if((history.state?.hokutoIndex||0)>0){history.back();return;}
+    if(state.from){returnToOrigin();return;}
+    route({view:state.view==='menu'?'home':'menu',detail:false,from:''});
+  }
+  function locationChanged(){
+    if(location.hash===renderedHash)return;
+    state=readState();originContext=history.state?.hokutoOrigin||null;render();
+    requestAnimationFrame(()=>window.scrollTo({top:history.state?.hokutoScroll||0}));
   }
   function chartPath(values,width,height,pad=6){
     if(!values.length)return '';
@@ -133,7 +161,7 @@
     if(document.activeElement!==$('#stock-search'))$('#stock-search').value=state.query;
   }
   function renderBriefing(){
-    $('#briefing').innerHTML=`<button class="brief-card" data-open="DEMO-B" data-open-tab="history"><span class="brief-symbol">!</span><span><small>보유종목 · 새 경고 1건</small><strong>아오이 게임즈, 이익 전망 하향</strong></span><span class="brief-arrow">›</span></button><button class="brief-card" data-open="DEMO-E"><span class="brief-symbol teal">＋</span><span><small>신규 후보 · 새 진입 1건</small><strong>세이운 소프트가 들어왔어요</strong></span><span class="brief-arrow">›</span></button><button class="brief-card" data-open="DEMO-A" data-open-tab="history"><span class="brief-symbol blue">↗</span><span><small>지난 뉴스 · 후속 확인</small><strong>수주 협의가 계약으로 바뀌었어요</strong></span><span class="brief-arrow">›</span></button>`;
+    $('#briefing').innerHTML=`<button class="brief-card" data-alert-room="holdings" data-alert-item="DEMO-B"><span class="brief-symbol">!</span><span><small>보유종목 · 새 경고 1건</small><strong>아오이 게임즈, 이익 전망 하향</strong></span><span class="brief-arrow">›</span></button><button class="brief-card" data-alert-room="decision" data-alert-item="DEMO-E"><span class="brief-symbol teal">＋</span><span><small>신규 후보 · 새 진입 1건</small><strong>세이운 소프트가 들어왔어요</strong></span><span class="brief-arrow">›</span></button><button class="brief-card" data-alert-room="news" data-alert-item="contract"><span class="brief-symbol blue">↗</span><span><small>지난 뉴스 · 후속 확인</small><strong>수주 협의가 계약으로 바뀌었어요</strong></span><span class="brief-arrow">›</span></button>`;
   }
   function overview(s){
     const r=latest(s);
@@ -152,13 +180,13 @@
   function renderDetail(){
     const s=selectedStock();
     const names={overview:'현재 분석',history:'변화·기록',score:'성적표'};
-    $('#stock-detail').innerHTML=`<div class="detail-top">${state.from?`<button class="return-room" id="return-room">← ${rooms.menu(state.from).name}${['news','trading','space'].includes(state.from)?'으로':'로'} 돌아가기</button>`:'<button class="mobile-back" id="back-list">← 종목 목록으로</button>'}<div class="detail-label">${badge(s.group==='held'?'보유 예시':'신규 후보 예시',s.group==='held'?'gray':'blue')}<span>일본 주식 · 가상 종목</span><span class="selected-label">선택한 종목</span></div><div class="detail-identity">${avatar(s)}<div><h2 id="detail-heading" tabindex="-1">${s.name}</h2><small>${s.id} · ${s.theme}</small></div></div><div class="detail-price-line"><div class="detail-price">${priceText(s.price)}${s.price==null?'':'<span>엔</span>'}</div><div class="day-return ${colorClass(s.change)}">${signed(s.change)}</div></div><div class="price-asof">최근 종가 · 2026.10.16 / 전일 대비 · 가상 가격</div></div><div class="detail-tabs" role="tablist" aria-label="종목 상세 메뉴">${Object.entries(names).map(([key,label])=>`<button role="tab" id="tab-${key}" aria-selected="${state.tab===key}" aria-controls="detail-body" tabindex="${state.tab===key?'0':'-1'}" data-tab="${key}">${label}</button>`).join('')}</div><div class="detail-body" id="detail-body" role="tabpanel" aria-labelledby="tab-${state.tab}">${state.tab==='history'?historyView(s):state.tab==='score'?stockScore(s):overview(s)}</div>`;
+    $('#stock-detail').innerHTML=`<div class="detail-top">${state.from?`<button class="return-room" id="return-room">← ${rooms.menu(state.from).name} 돌아가기</button>`:'<button class="mobile-back" id="back-list">← 종목 목록으로</button>'}<div class="detail-label">${badge(s.group==='held'?'보유 예시':'신규 후보 예시',s.group==='held'?'gray':'blue')}<span>일본 주식 · 가상 종목</span><span class="selected-label">선택한 종목</span></div><div class="detail-identity">${avatar(s)}<div><h2 id="detail-heading" tabindex="-1">${s.name}</h2><small>${s.id} · ${s.theme}</small></div></div><div class="detail-price-line"><div class="detail-price">${priceText(s.price)}${s.price==null?'':'<span>엔</span>'}</div><div class="day-return ${colorClass(s.change)}">${signed(s.change)}</div></div><div class="price-asof">최근 종가 · 2026.10.16 / 전일 대비 · 가상 가격</div></div><div class="detail-tabs" role="tablist" aria-label="종목 상세 메뉴">${Object.entries(names).map(([key,label])=>`<button role="tab" id="tab-${key}" aria-selected="${state.tab===key}" aria-controls="detail-body" tabindex="${state.tab===key?'0':'-1'}" data-tab="${key}">${label}</button>`).join('')}</div><div class="detail-body" id="detail-body" role="tabpanel" aria-labelledby="tab-${state.tab}">${state.tab==='history'?historyView(s):state.tab==='score'?stockScore(s):overview(s)}</div>`;
     document.title=`${state.detail?s.name+' · ':''}${state.view==='scores'?'성적표':'종목의 오늘'} · 호쿠토증권 시안`;
   }
   function renderScores(){
     const benchmark=state.benchmark==='market'?'시장(1306 ETF)':'같은 테마';
     const avg=state.benchmark==='market'?.6:-.3;
-    $('#scores-view').innerHTML=`<div class="scores-header"><div><h2>선정 이후, 실제로 어떻게 움직였을까</h2><p>종목을 누르면 평가 회차의 분석까지 거슬러 올라갑니다.</p></div><div class="benchmark-switch" role="group" aria-label="전체 성적표 비교 기준"><button data-benchmark="theme" aria-pressed="${state.benchmark==='theme'}">같은 테마 대비</button><button data-benchmark="market" aria-pressed="${state.benchmark==='market'}">시장 대비</button></div></div><div class="scorecards"><div class="scorecard"><small>완료 회차 · 20거래일 평균 초과수익</small><strong class="${colorClass(avg)}">${signed(avg,'%p')}</strong><p>${benchmark} 대비 · 가상 완료 2건 기준</p></div><div class="scorecard"><small>평가 완료</small><strong>2<span class="muted"> 건</span></strong><p>같은 평가 기간의 결과만 집계</p></div><div class="scorecard"><small>아직 집계하지 않는 항목</small><strong>5<span class="muted"> 건</span></strong><p>평가 대기 2 · 선정 평가 없음 2 · 자료 부족 1</p></div></div><div class="score-table-wrap" tabindex="0" aria-label="종목별 성적표, 좁은 화면에서는 가로로 이동"><table class="score-table"><thead><tr><th>종목 / 평가 회차</th><th>종목 수익률</th><th>${benchmark}</th><th>차이</th><th>상태</th></tr></thead><tbody>${stocks.map(s=>`<tr><td><button data-score-stock="${s.id}">${s.name}<small>${s.evaluation?'09.08 선정 · 과거 회차':'10.16 최근 기록'}</small></button></td><td class="${colorClass(s.evaluation?.stock)}">${s.evaluation?signed(s.evaluation.stock):'—'}</td><td>${s.evaluation?signed(s.evaluation[state.benchmark]):'—'}</td><td class="${colorClass(scoreDifference(s,state.benchmark))}">${s.evaluation?signed(scoreDifference(s,state.benchmark),'%p'):'—'}</td><td>${badge(s.evaluation?'20일 완료':s.price==null?'자료 부족':s.decision==='매수대상'?'평가 대기':'선정 평가 없음',s.evaluation?'teal':'gray')}</td></tr>`).join('')}</tbody></table></div><p class="metric-note">모든 성과는 화면 동작을 위한 가상 값입니다. 실제 계좌 손익이 아니며, 호쿠토의 실제 성능을 나타내지 않습니다.</p>`;
+    $('#scores-view').innerHTML=`<div class="score-original-links"><span>종목별 성적표 시안</span><button data-room="performance">기존 성과기록 →</button><button data-room="selection">기존 선정성적 →</button></div><div class="scores-header"><div><h2>선정 이후, 실제로 어떻게 움직였을까</h2><p>종목을 누르면 평가 회차의 분석까지 거슬러 올라갑니다.</p></div><div class="benchmark-switch" role="group" aria-label="전체 성적표 비교 기준"><button data-benchmark="theme" aria-pressed="${state.benchmark==='theme'}">같은 테마 대비</button><button data-benchmark="market" aria-pressed="${state.benchmark==='market'}">시장 대비</button></div></div><div class="scorecards"><div class="scorecard"><small>완료 회차 · 20거래일 평균 초과수익</small><strong class="${colorClass(avg)}">${signed(avg,'%p')}</strong><p>${benchmark} 대비 · 가상 완료 2건 기준</p></div><div class="scorecard"><small>평가 완료</small><strong>2<span class="muted"> 건</span></strong><p>같은 평가 기간의 결과만 집계</p></div><div class="scorecard"><small>아직 집계하지 않는 항목</small><strong>5<span class="muted"> 건</span></strong><p>평가 대기 2 · 선정 평가 없음 2 · 자료 부족 1</p></div></div><div class="score-table-wrap" tabindex="0" aria-label="종목별 성적표, 좁은 화면에서는 가로로 이동"><table class="score-table"><thead><tr><th>종목 / 평가 회차</th><th>종목 수익률</th><th>${benchmark}</th><th>차이</th><th>상태</th></tr></thead><tbody>${stocks.map(s=>`<tr><td><button data-score-stock="${s.id}">${s.name}<small>${s.evaluation?'09.08 선정 · 과거 회차':'10.16 최근 기록'}</small></button></td><td class="${colorClass(s.evaluation?.stock)}">${s.evaluation?signed(s.evaluation.stock):'—'}</td><td>${s.evaluation?signed(s.evaluation[state.benchmark]):'—'}</td><td class="${colorClass(scoreDifference(s,state.benchmark))}">${s.evaluation?signed(scoreDifference(s,state.benchmark),'%p'):'—'}</td><td>${badge(s.evaluation?'20일 완료':s.price==null?'자료 부족':s.decision==='매수대상'?'평가 대기':'선정 평가 없음',s.evaluation?'teal':'gray')}</td></tr>`).join('')}</tbody></table></div><p class="metric-note">모든 성과는 화면 동작을 위한 가상 값입니다. 실제 계좌 손익이 아니며, 호쿠토의 실제 성능을 나타내지 않습니다.</p>`;
   }
   function render(){
     const scores=state.view==='scores';
@@ -166,20 +194,26 @@
     document.body.classList.toggle('mobile-detail',state.detail&&!scores&&!explore);
     document.body.classList.toggle('explore-mode',explore);
     $('#workspace-grid').hidden=scores||explore;$('#briefing').hidden=scores||explore;$('#scores-view').hidden=!scores;
-    $('#explore-view').hidden=!explore;$('#room-subnav').hidden=!explore;
-    const active=explore?'menu':scores?'scores':state.filter==='all'?'home':state.filter;
+    $('#explore-view').hidden=!explore;$('#room-subnav').hidden=true;
+    const active=explore?(state.view==='room'&&state.room==='holdings'?'held':state.view==='room'&&state.room==='decision'?'candidate':'menu'):scores?'scores':'home';
     $$('[data-nav]').forEach(b=>{b.classList.toggle('active',b.dataset.nav===active);if(b.closest('nav'))b.setAttribute('aria-current',b.dataset.nav===active?'page':'false');});
-    ['all-menu','mobile-all-menu'].forEach(id=>{const b=$('#'+id);b.classList.toggle('active',explore);if(explore)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});
+    ['all-menu','mobile-all-menu'].forEach(id=>{const b=$('#'+id);b.classList.toggle('active',active==='menu');if(active==='menu')b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});
     $('#page-heading h1').textContent=scores?'판단의 성적표':state.filter==='held'?'내 주식의 오늘':state.filter==='candidate'?'새로 살펴볼 종목':'내 종목의 오늘';
     $('#page-heading p').textContent=scores?'그때의 판단과, 그 뒤의 결과를 함께.':'달라진 이유부터, 다음 확인까지.';
     $('#page-heading .eyebrow').textContent=scores?'RECORDS & REVIEW':'YOUR DAILY BRIEF';
+    const journey=$('#journey-bar');journey.hidden=!(explore||scores||state.from);
+    journey.innerHTML=`<button id="journey-back">← 이전 화면</button><div><button data-nav="home">${icon('home')}알림 홈</button><button data-menu-home>${icon('grid')}전체 메뉴</button></div>`;
     renderBriefing();renderList();renderDetail();if(scores)renderScores();
     if(explore)rooms.render();
     $$('[data-icon]').forEach(el=>el.innerHTML=icon(el.dataset.icon));
+    if(!explore)document.title=`${scores?'종목별 성적표':'알림 홈'} · 호쿠토증권 시안`;
+    renderedHash=location.hash;
   }
   function selectStock(id,tab='overview',extra={}){
     if(!state.detail)listScroll=window.scrollY;
-    route({view:'home',stock:id,tab,detail:true,date:'',round:'current',from:'',...extra});
+    const from=state.view==='room'?state.room:state.view==='scores'?'scores':'';
+    if(from||!state.detail)originContext={state:{...state},scroll:window.scrollY};
+    route({view:'home',stock:id,tab,detail:true,date:'',round:'current',from,...extra});
     if(extra.from||matchMedia('(max-width:760px)').matches)window.scrollTo({top:0});
     $('#announcer').textContent=`${stocks.find(s=>s.id===id).name}, ${tab==='history'?'변화와 기록':tab==='score'?'성적표':'현재 분석'}를 엽니다.`;
   }
@@ -198,9 +232,12 @@
     route({view:'menu',detail:false,from:'',menuQuery:''});window.scrollTo({top:0});
   }
   document.addEventListener('click',ev=>{
+    if(ev.target.closest('[data-home-link]')){ev.preventDefault();route({view:'home',filter:'all',detail:false,from:'',query:''});return;}
+    if(ev.target.closest('.skip')){ev.preventDefault();$('#workspace').focus();$('#workspace').scrollIntoView();return;}
     const b=ev.target.closest('button');if(!b)return;
     if(rooms.onClick(b))return;
-    if(b.dataset.nav){const n=b.dataset.nav;route({view:n==='scores'?'scores':'home',filter:n==='held'||n==='candidate'?n:'all',detail:false,query:'',from:''});window.scrollTo({top:0});return;}
+    if(b.dataset.nav){const n=b.dataset.nav;if(n==='held'||n==='candidate'){rooms.navigate(n==='held'?'holdings':'decision');return;}route({view:n==='scores'?'scores':'home',filter:'all',detail:false,query:'',from:''});window.scrollTo({top:0});return;}
+    if(b.id==='journey-back'){goBack();return;}
     if(b.dataset.stock){selectStock(b.dataset.stock);return;}
     if(b.dataset.open){selectStock(b.dataset.open,b.dataset.openTab||'overview');return;}
     if(b.dataset.filter){route({filter:b.dataset.filter,detail:false});return;}
@@ -211,7 +248,7 @@
     if(b.dataset.benchmark){route({benchmark:b.dataset.benchmark},true);return;}
     if(b.dataset.scoreStock){const s=stocks.find(s=>s.id===b.dataset.scoreStock);selectStock(s.id,'score',{round:s.evaluation?'past':'current'});return;}
     if(b.id==='clear-search'){route({query:'',filter:'all'});return;}
-    if(b.id==='back-list'){if(state.from){rooms.navigate(state.from);return;}route({detail:false});requestAnimationFrame(()=>window.scrollTo({top:listScroll}));return;}
+    if(b.id==='back-list'){returnToOrigin();return;}
     if(b.id==='type-button'){document.documentElement.classList.toggle('large-text');b.setAttribute('aria-pressed',document.documentElement.classList.contains('large-text'));return;}
     if(b.id==='record-to-score'){route({tab:'score',round:'past'});return;}
     if(b.id==='score-to-record'){route({tab:'history',date:selectedStock().evaluation.recordDate});return;}
@@ -232,6 +269,8 @@
   });
   $('#evidence-dialog').addEventListener('click',e=>{if(e.target===e.currentTarget){const r=e.currentTarget.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)e.currentTarget.close();}});
   $('#evidence-dialog').addEventListener('close',()=>{if(returnFocus?.isConnected)returnFocus.focus();});
-  window.addEventListener('hashchange',()=>{state=readState();render();});
+  window.addEventListener('popstate',locationChanged);
+  window.addEventListener('hashchange',locationChanged);
+  history.replaceState({...history.state,hokutoIndex:history.state?.hokutoIndex||0},'',location.href);
   state=readState();render();
 })();
