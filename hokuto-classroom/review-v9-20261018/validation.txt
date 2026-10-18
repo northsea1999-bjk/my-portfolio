@@ -1,0 +1,11 @@
+호쿠토 v9 검토 묶음 — 검사 실행 결과
+실행시각: 2026-10-18T09:22:59.456408+09:00
+검토 기준: e1c74fec7ffb5b7df170271567b235ce82543d2f
+명령: node preview/tests/navigation-connections.test.cjs
+종료코드: 0
+
+PASS: 15 unique operating entries, 19 routes, six-stage theme/company flow, EPS verification separate from final judgment, delayed quote timestamps, eligibility branches, preserved date/filter/scroll, legacy aliases and office briefing destinations. Priority briefing, focused stock detail and simplified actions checked. Desktop/mobile logic paths checked; no visual browser test.
+
+이 결과는 브라우저 없는 코드 상태 검사입니다. 화면 배치·휴대폰 캡처·실제 운영 서버 접근·5초 사용자 테스트는 수행하지 않았습니다.
+
+추가 확인 완료: HTML 30개, 상대 링크와 문서 앵커, 읽기용 사본의 JavaScript 비의존, 파일 목록의 해시 일치, 개인 서버 주소 미포함.

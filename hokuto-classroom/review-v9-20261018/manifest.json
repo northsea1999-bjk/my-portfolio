@@ -1,0 +1,220 @@
+{
+  "title": "호쿠토 v9 검토 묶음",
+  "snapshot_date": "2026-10-18",
+  "source_commit": "e1c74fec7ffb5b7df170271567b235ce82543d2f",
+  "operating_source_commit_read": "4f793a7e39ec8955579b4f5c494c8df369b05a33",
+  "static_screen_count": 28,
+  "notes": [
+    "All display data are fictional.",
+    "Reading copies are prefilled generated HTML, not browser screenshots.",
+    "Frozen preview header plan link points to this review guide; behavior and fixtures are v9.",
+    "manifest.json excludes its own hash."
+  ],
+  "files": [
+    {
+      "path": "NAVIGATION-MAP.md",
+      "bytes": 9547,
+      "sha256": "0a1982a3a17ab61250f969931f26dbf85216a5a236c9c411355c5c2a82338e24"
+    },
+    {
+      "path": "build-review.cjs",
+      "bytes": 6534,
+      "sha256": "e0b235f9ace84ce52704d259d164f3095c9ed8f37346149e34ddcc5fb0abf3b2"
+    },
+    {
+      "path": "index.html",
+      "bytes": 29812,
+      "sha256": "808c9709fa0fd747dfe8858c6ade3e33b28f353b4c4228c512395d761cc4a7a8"
+    },
+    {
+      "path": "preview/stock-home.css",
+      "bytes": 32033,
+      "sha256": "b1df8d8bb804f638a843ae5c66a09f4ff44e89199a6f47979f99314a656d1069"
+    },
+    {
+      "path": "preview/stock-home.html",
+      "bytes": 7059,
+      "sha256": "0236e696e792e4ceeba0aca8f4efa41b40547853469b22aaa06cc4dab2e2e56c"
+    },
+    {
+      "path": "preview/stock-home.js",
+      "bytes": 42536,
+      "sha256": "3a59204e4115165edf26d42582f4a767812063de0691a04226052d928429b903"
+    },
+    {
+      "path": "preview/stock-links.js",
+      "bytes": 8779,
+      "sha256": "b6fae038fcf2ab04c87e261392d20d246e1cd8c0cd92a9eaecb531e59e03ddf2"
+    },
+    {
+      "path": "preview/stock-navigation.css",
+      "bytes": 32095,
+      "sha256": "787a3d554d3ff6a3a2d8fd6f1fb70d957712e60771549ee1cd8f5d95a35f6f61"
+    },
+    {
+      "path": "preview/stock-rooms.css",
+      "bytes": 30286,
+      "sha256": "7ed8e9a85baad9535fe342bc6d5b5f7b59f64787bbdb83eaa1952e20df85628f"
+    },
+    {
+      "path": "preview/stock-rooms.js",
+      "bytes": 53374,
+      "sha256": "6bee0ab758deb9e456b2c530ebf347429eed007c0310682fe9c11a480ff176e9"
+    },
+    {
+      "path": "preview/tests/navigation-connections.test.cjs",
+      "bytes": 18377,
+      "sha256": "b29e208a2c4e4b6890f7420f751db07b839ab3980026cf63a9604eeaa86cf406"
+    },
+    {
+      "path": "screens/company-analysis.html",
+      "bytes": 7465,
+      "sha256": "44df5321cf46496753628b5ce32386fb8b0a66a3f568880851ccfb23e77d7787"
+    },
+    {
+      "path": "screens/company-history.html",
+      "bytes": 6321,
+      "sha256": "d9501c18bfc919aa477e31cdef2de6d7e4c4c9f2177c45b13825d1ba09bdaac7"
+    },
+    {
+      "path": "screens/company-input.html",
+      "bytes": 4568,
+      "sha256": "c639e2b209319c98a07189352b743ec060263e1d6f220bd584656f378ab3c7ca"
+    },
+    {
+      "path": "screens/decision-hold.html",
+      "bytes": 6018,
+      "sha256": "c0ccd9fd3dc4de0e4e14c152799271e7fb2fc5e40157c7ef07ebd34c39929457"
+    },
+    {
+      "path": "screens/decision.html",
+      "bytes": 8094,
+      "sha256": "4c461773c49b8c6a8f27b40b4fac2f8cb10c5ff3badba3b982426f56a11f01c4"
+    },
+    {
+      "path": "screens/holdings.html",
+      "bytes": 8026,
+      "sha256": "20158e3b715db9fda1e20b2f4fe33aee180e48185d5cbe572fef337a4e4153f7"
+    },
+    {
+      "path": "screens/home.html",
+      "bytes": 18647,
+      "sha256": "3b4a75c8cf05dbefa9aedd897cb061a5554227d811b5346e4c4a97985c1f4446"
+    },
+    {
+      "path": "screens/meeting.html",
+      "bytes": 7185,
+      "sha256": "6a7b40953cf52818c8df62aa53cc53101ae83230c909c8870bd0cfb73d9b84fa"
+    },
+    {
+      "path": "screens/menu.html",
+      "bytes": 17138,
+      "sha256": "eb6ef08b051aa17eacf96ed3edae4230a982139dcd1cbf81a75080f1767d945c"
+    },
+    {
+      "path": "screens/newbuy-intraday.html",
+      "bytes": 9008,
+      "sha256": "07b135497bbddeab059f7b6c5b91f150085811d64040db8e39dfed9993b8a654"
+    },
+    {
+      "path": "screens/newbuy.html",
+      "bytes": 8853,
+      "sha256": "a102b8062f8003ddbd2219d50fbdececf5c99bd78d009e0ae5875783bbf00039"
+    },
+    {
+      "path": "screens/news.html",
+      "bytes": 9024,
+      "sha256": "1423727130108ef66816dd4fdb535c5ea9027867def123446af1f2920874572f"
+    },
+    {
+      "path": "screens/office.html",
+      "bytes": 3233,
+      "sha256": "06ab0df64c2fb65e40d259f47cbe9c23772baa89625215dac39d28227cf6f2d6"
+    },
+    {
+      "path": "screens/ops.html",
+      "bytes": 7649,
+      "sha256": "60497d32708b6345a64b194fe6120551f01d8a15be016137058c4e820d04ab2f"
+    },
+    {
+      "path": "screens/park.html",
+      "bytes": 7607,
+      "sha256": "58a3daa5c1d24f85e86e97fd235dd5f265dae739a81782f868d7ea9d70415a51"
+    },
+    {
+      "path": "screens/performance.html",
+      "bytes": 3285,
+      "sha256": "d78c1708ed1f0b5326c843028b1bead303cd98cc392881d11f1e8c0dc42868c2"
+    },
+    {
+      "path": "screens/recommend.html",
+      "bytes": 6299,
+      "sha256": "cf80172c41d3daa912fb3693670e9258c42474e330cadafe79220e78283d5af5"
+    },
+    {
+      "path": "screens/records.html",
+      "bytes": 10838,
+      "sha256": "2bb67cdc59dd0d39159cc21a7fb04bfb546c3a032e37a5c71e69f9fb8565c6b4"
+    },
+    {
+      "path": "screens/research.html",
+      "bytes": 6318,
+      "sha256": "fbfd54249e4ce100e62473023231b8de0e68a6521a115044c868113d1bfa2b03"
+    },
+    {
+      "path": "screens/scores.html",
+      "bytes": 5992,
+      "sha256": "1f9e6fb59bb17c086295e831e0110e064ba12bb904b097efa043586b83801a47"
+    },
+    {
+      "path": "screens/selection.html",
+      "bytes": 3338,
+      "sha256": "e51edee1f319dae127555643d7a4ae4c2aa149b6c605a36e86c36c7bfffdbc41"
+    },
+    {
+      "path": "screens/signals.html",
+      "bytes": 5718,
+      "sha256": "b8027166fbb9ce25bf23eecd41e78b4e943b20d2f4bc54a385618f5c010159ff"
+    },
+    {
+      "path": "screens/strategy-ai.html",
+      "bytes": 5708,
+      "sha256": "deafdc8bdf38a8becba420e0ac6608f2fed62f1f56a22c245031d16f6de1a393"
+    },
+    {
+      "path": "screens/strategy.html",
+      "bytes": 7476,
+      "sha256": "a760f88fbe7e48ea3f746240cc71a9d595ffae65d72cc6f8188a06b0afd70cce"
+    },
+    {
+      "path": "screens/themes.html",
+      "bytes": 7159,
+      "sha256": "532b98c3f724853562dc0e066eb3078154fa3fb7f74c2cd7009313b7054fb7d9"
+    },
+    {
+      "path": "screens/today.html",
+      "bytes": 3274,
+      "sha256": "88952ce7031d852dd9206f12d2a92d7c4c20d90a6b4d99ff2d117147ac26995d"
+    },
+    {
+      "path": "screens/tradingGuide.html",
+      "bytes": 3424,
+      "sha256": "3f5ee07459f16febe1ebcfc4846e5a5c363de4c3bf3dab7f3954b21816955009"
+    },
+    {
+      "path": "screens/verification-missing.html",
+      "bytes": 7249,
+      "sha256": "95ffe130da3065f7487774900064d1261c9fc55ebea09477f485527e7af13edc"
+    },
+    {
+      "path": "screens-index.json",
+      "bytes": 3875,
+      "sha256": "a0e6dd84f2da37b96a6706d18ade304d33eae61a1317f79a5146f913374fd067"
+    },
+    {
+      "path": "validation.txt",
+      "bytes": 972,
+      "sha256": "a5437a0eecaca8a7230ec7fe81e1431b675f9e04c0b44d8582d0c2f6fa5087c1"
+    }
+  ]
+}
