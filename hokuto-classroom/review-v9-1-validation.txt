@@ -1,0 +1,9 @@
+호쿠토 v9.1 표시 수정 검사
+실행 시각: 2026-10-18T09:57:37.091846+09:00
+비교 기준: review-v9-20261018/preview (원본 v9 e1c74fec7ffb5b7df170271567b235ce82543d2f)
+
+PASS: 15 unique operating entries, 19 routes, six-stage theme/company flow, EPS verification separate from final judgment, delayed quote timestamps, eligibility branches, preserved date/filter/scroll, legacy aliases and office briefing destinations. Priority briefing, focused stock detail, separate holding/decision labels, four unique holding rows and unchanged v9 fixtures checked. Desktop/mobile logic paths checked; no visual browser test.
+
+비교 범위: 가상 종목 전체와 각 과거 기록·입력·판정·성과, 가상 테마·뉴스·레인·후보/결정실/신규매수 목록·EPS. 모두 변경 없음.
+보유 선택 버튼 4개와 선택 상세 1개, 보유 점검/결정실 라벨 구분, 나머지 성적표 항목을 확인.
+브라우저 없는 상태 검사. 실제 운영 계산의 재실행, 화면 렌더링·폰 캡처 검수는 수행하지 않음.

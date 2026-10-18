@@ -86,6 +86,8 @@
   const colorClass = n => n == null || n===0 ? 'muted' : n>0 ? 'up':'down';
   const selectedStock = () => stocks.find(s=>s.id===state.stock) || stocks[0];
   const badge = (text,tone='gray') => `<span class="pill ${tone}">${esc(text)}</span>`;
+  const decisionLabel = s => s.decision.startsWith('결정실 ')?s.decision:'결정실 '+s.decision;
+  const statusChips = s => s.group==='held'?`<span class="status-pair" role="group" aria-label="보유 점검과 결정실 판정">${badge('보유 점검 '+s.badge,s.tone)}${badge(decisionLabel(s),'gray')}</span>`:badge(s.badge,s.tone);
   const avatar = s => `<span class="stock-avatar" style="--avatar-bg:${s.color};--avatar-ink:${s.ink}">${s.short}</span>`;
   let state;
   let returnFocus;
@@ -93,7 +95,7 @@
   let originContext=history.state?.hokutoOrigin||null;
   let renderedHash='';
   if('scrollRestoration' in history)history.scrollRestoration='manual';
-  const rooms=window.HokutoRooms.create({stocks,latest,esc,icon,badge,avatar,signed,priceText,colorClass,route,selectStock,openDialog,bigChart,getState:()=>state,refresh:()=>render(),returnToOrigin});
+  const rooms=window.HokutoRooms.create({stocks,latest,esc,icon,badge,statusChips,avatar,signed,priceText,colorClass,route,selectStock,openDialog,bigChart,getState:()=>state,refresh:()=>render(),returnToOrigin});
   function readState(){
     const p=new URLSearchParams(location.hash.slice(1));
     const view=['home','scores','menu','room'].includes(p.get('view'))?p.get('view'):'home';
@@ -155,7 +157,7 @@
     let found=stocks.filter(s=>(state.filter==='all'||s.group===state.filter)&&(!q||`${s.name} ${s.id} ${s.theme}`.toLowerCase().includes(q)));
     found.sort(state.sort==='name'?(a,b)=>a.name.localeCompare(b.name,'ko'):state.sort==='return'?(a,b)=>(b.change??-Infinity)-(a.change??-Infinity):(a,b)=>b.order-a.order);
     $('#list-title').innerHTML=`${state.filter==='held'?'내 보유종목':state.filter==='candidate'?'새로 살펴볼 후보':'전체 종목'} <span>${found.length}</span>`;
-    $('#stock-list').innerHTML=found.length?found.map(s=>`<button class="stock-row ${s.id===state.stock?'selected':''}" data-stock="${s.id}" aria-pressed="${s.id===state.stock}" aria-label="${s.name}, ${s.group==='held'?'보유 예시':'신규 후보 예시'}, ${s.badge}, 상세 보기"><span><span class="row-name">${avatar(s)}<span class="row-identity"><strong>${s.name}</strong><span class="row-meta"><span class="group-tag ${s.group}">${s.group==='held'?'보유':'후보'}</span><span class="row-status ${s.tone}">${s.badge}</span><span>${s.theme}</span></span></span></span><span class="row-update ${s.changed?'changed':''}"><i class="row-dot"></i>${s.update}</span></span>${spark(s)}<span class="row-price"><strong>${priceText(s.price)}${s.price==null?'':'<em> 엔</em>'}</strong><small class="${colorClass(s.change)}">${signed(s.change)}</small></span></button>`).join(''):`<div class="empty-list"><strong>일치하는 종목이 없어요.</strong>이름·코드·테마를 다시 확인해주세요.<br><button id="clear-search">검색과 필터 초기화</button></div>`;
+    $('#stock-list').innerHTML=found.length?found.map(s=>`<button class="stock-row ${s.id===state.stock?'selected':''}" data-stock="${s.id}" aria-pressed="${s.id===state.stock}" aria-label="${s.name}, ${s.group==='held'?'보유 예시':'신규 후보 예시'}, ${s.group==='held'?'보유 점검 '+s.badge+', '+decisionLabel(s):s.badge}, 상세 보기"><span><span class="row-name">${avatar(s)}<span class="row-identity"><strong>${s.name}</strong><span class="row-meta"><span class="group-tag ${s.group}">${s.group==='held'?'보유':'후보'}</span><span>${s.theme}</span></span></span></span><span class="row-judgments">${statusChips(s)}</span><span class="row-update ${s.changed?'changed':''}"><i class="row-dot"></i>${s.update}</span></span>${spark(s)}<span class="row-price"><strong>${priceText(s.price)}${s.price==null?'':'<em> 엔</em>'}</strong><small class="${colorClass(s.change)}">${signed(s.change)}</small></span></button>`).join(''):`<div class="empty-list"><strong>일치하는 종목이 없어요.</strong>이름·코드·테마를 다시 확인해주세요.<br><button id="clear-search">검색과 필터 초기화</button></div>`;
     $$('#stock-filters button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.filter===state.filter));
     $('#stock-sort').value=state.sort;
     if(document.activeElement!==$('#stock-search'))$('#stock-search').value=state.query;
@@ -165,7 +167,7 @@
   }
   function overview(s){
     const r=latest(s);
-    return `<div class="body-title">${badge(s.badge,s.tone)}<span>${s.group==='held'?'보유관리 기준':'결정실 기준'}</span></div><p class="analysis-lead">${r.summary}</p><p class="analysis-context">${s.group==='held'?`결정실: ${s.decision.replace('결정실 ','')}. 보유 상태는 실적·테마·가격·뉴스를 별도로 점검한 결과입니다.`:`진입 시점: ${s.timing}. 매수대상은 진입 시점을 확인할 대상입니다.`}</p><div class="chart-container">${bigChart(s)}</div><div class="evidence-grid">${r.axes.map(a=>{const [name,...value]=a.split(':');return `<div class="evidence-cell"><small>${name}</small><strong>${value.join(':').trim()}</strong></div>`;}).join('')}</div><div class="next-check"><span>${icon('clock')}</span><div><h3>다음에 확인할 것</h3><p>${r.next}</p><small>아직 확인하지 못한 내용은 결론으로 바꾸지 않습니다.</small></div></div><div class="evidence-heading"><h3>이 분석에 사용한 자료</h3><small>그날의 자료와 결과</small></div><button class="source-row" data-evidence="${r.date}"><span class="source-icon">${icon('file')}</span><span><strong>${s.name} · ${s.price==null?'자료 확보 상태':'회사 발표와 당시 가격'}</strong><small>${r.inputAt} · 가상 자료</small></span><span>↗</span></button><p class="source-note">원문 입력 부분·당시 숫자·분석 결과를 함께 엽니다.</p>`;
+    return `<div class="body-title">${statusChips(s)}${s.group==='held'?'':'<span>결정실 기준</span>'}</div><p class="analysis-lead">${r.summary}</p><p class="analysis-context">${s.group==='held'?'보유 상태는 실적·테마·가격·뉴스를 별도로 점검한 결과입니다.':`진입 시점: ${s.timing}. 매수대상은 진입 시점을 확인할 대상입니다.`}</p><div class="chart-container">${bigChart(s)}</div><div class="evidence-grid">${r.axes.map(a=>{const [name,...value]=a.split(':');return `<div class="evidence-cell"><small>${name}</small><strong>${value.join(':').trim()}</strong></div>`;}).join('')}</div><div class="next-check"><span>${icon('clock')}</span><div><h3>다음에 확인할 것</h3><p>${r.next}</p><small>아직 확인하지 못한 내용은 결론으로 바꾸지 않습니다.</small></div></div><div class="evidence-heading"><h3>이 분석에 사용한 자료</h3><small>그날의 자료와 결과</small></div><button class="source-row" data-evidence="${r.date}"><span class="source-icon">${icon('file')}</span><span><strong>${s.name} · ${s.price==null?'자료 확보 상태':'회사 발표와 당시 가격'}</strong><small>${r.inputAt} · 가상 자료</small></span><span>↗</span></button><p class="source-note">원문 입력 부분·당시 숫자·분석 결과를 함께 엽니다.</p>`;
   }
   function historyView(s){
     const r=s.records.find(r=>r.date===state.date)||latest(s);

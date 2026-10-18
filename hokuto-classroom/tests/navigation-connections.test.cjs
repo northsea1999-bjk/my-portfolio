@@ -2,6 +2,11 @@ const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/st
 // Browserless navigation checks; this does not validate visual layout.
 const dir=path.resolve(__dirname,'..');
 const {catalog,sections,workflow,resolve,normaliseBase,destination}=require(path.join(dir,'stock-links.js'));
+// The review changes presentation only; compare every fixture against the retained v9 input.
+const frozen=path.join(dir,'review-v9-20261018','preview');
+assert.deepEqual(require(path.join(dir,'stock-home.js')).stocks,require(path.join(frozen,'stock-home.js')).stocks);
+assert.deepEqual(require(path.join(dir,'stock-rooms.js')),require(path.join(frozen,'stock-rooms.js')));
+
 const expected=['news_board.html','theme_news.html','research_new.html','recommend.html','hokuto_today.html','decision_room.html','hokuto_fun.html','bnf_signal.html','holdings_room.html','newbuy_room.html','performance_room.html','selection_results.html','trading_logic.html'];
 assert.deepEqual(catalog.filter(m=>m.group==='original').map(m=>m.path).sort(),[...expected,'hokuto_main.html#room1','hokuto_main.html#room2'].sort());
 assert.deepEqual(workflow,['meeting','ops','strategy','recommend','decision','newbuy']);
@@ -72,6 +77,17 @@ for(const mobile of [false,true]){
  assert.equal((b.markup('#briefing').match(/class="priority-brief"/g)||[]).length,1);
  assert(b.markup('#briefing').includes('120 → 108억 엔'));
  assert(b.markup('#stock-detail').includes('아오이 게임즈'));
+ const stockRow=id=>b.markup('#stock-list').match(new RegExp('<button[^>]*data-stock=\"'+id+'\"[^>]*>[\\s\\S]*?</button>'))?.[0]||'';
+ assert(stockRow('DEMO-D').includes('보유 점검 정상'));assert(stockRow('DEMO-D').includes('결정실 매수대상'));
+ for(const id of ['DEMO-A','DEMO-B','DEMO-C'])assert(stockRow(id).includes('결정실 미입력'));
+ assert(stockRow('DEMO-A').includes('실적 전망은 확인 필요'));
+ const holding=app('#view=room&room=holdings&item=DEMO-B',mobile),heldMarkup=holding.markup('#explore-view');
+ assert.deepEqual([...heldMarkup.matchAll(/data-room-item="([^"]+)"/g)].map(x=>x[1]),['DEMO-A','DEMO-B','DEMO-C','DEMO-D']);
+ assert.equal((heldMarkup.match(/data-focus-item="DEMO-B"/g)||[]).length,1);
+ assert(heldMarkup.includes('보유 목록'));assert(heldMarkup.includes('4종목'));assert(heldMarkup.includes('선택한 종목 상세'));assert(heldMarkup.includes('보유 점검 주의'));
+ const scoring=app('#view=scores',mobile);
+ assert.equal((scoring.markup('#scores-view').match(/data-score-stock=/g)||[]).length,7);
+
 
  for(const [id,item] of [['holdings','DEMO-B'],['decision','DEMO-E'],['news','contract']]){
   b.click('data-nav','home');b.click('data-alert-room',id,'#briefing');assert.equal(b.state().room,id);assert.equal(b.state().item,item);if(id==='holdings')assert(b.markup('#explore-view').includes('이익 전망 유지 → 10% 하향'));
@@ -141,4 +157,4 @@ for(const mobile of [false,true]){
 const html=fs.readFileSync(path.join(dir,'stock-home.html'),'utf8');
 for(const f of [...html.matchAll(/(?:src|href)="(stock-[^?]+)\?/g)].map(x=>x[1]))assert(fs.existsSync(path.join(dir,f)),f);
 for(const f of ['stock-links.js','stock-navigation.css','stock-rooms.js','stock-home.html'])assert(!/https?:\/\/[^\s"\']+\.ts\.net/i.test(fs.readFileSync(path.join(dir,f),'utf8')),'private operating host published');
-console.log('PASS: 15 unique operating entries, 19 routes, six-stage theme/company flow, EPS verification separate from final judgment, delayed quote timestamps, eligibility branches, preserved date/filter/scroll, legacy aliases and office briefing destinations. Priority briefing, focused stock detail and simplified actions checked. Desktop/mobile logic paths checked; no visual browser test.');
+console.log('PASS: 15 unique operating entries, 19 routes, six-stage theme/company flow, EPS verification separate from final judgment, delayed quote timestamps, eligibility branches, preserved date/filter/scroll, legacy aliases and office briefing destinations. Priority briefing, focused stock detail, separate holding/decision labels, four unique holding rows and unchanged v9 fixtures checked. Desktop/mobile logic paths checked; no visual browser test.');
