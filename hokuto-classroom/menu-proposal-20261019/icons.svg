@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <symbol id="news" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M8 4h17v24H5V8h3" fill="currentColor" fill-opacity=".12"/>
+    <path d="M8 4v20H5M12 8h9M12 12h9M12 17h4v5h-4zM20 17h1M20 21h1"/>
+  </symbol>
+  <symbol id="wallet" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M5 9V5h18v4M5 9h22v18H5V9Z" fill="currentColor" fill-opacity=".12"/>
+    <path d="M19 14h10v8H19z" fill="currentColor" fill-opacity=".12"/>
+    <path d="M23 18h1M9 13h5"/>
+  </symbol>
+  <symbol id="change" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M4 7h17V3h3v4h3v3h-3v3h-3v-3H4Z" fill="currentColor" fill-opacity=".12"/>
+    <path d="M28 25H11v4H8v-4H5v-3h3v-3h3v3h17Z" fill="currentColor" fill-opacity=".12"/>
+    <path d="M8 14v3M24 15v3"/>
+  </symbol>
+  <symbol id="theme" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M12 3h8v8h-8zM3 21h8v8H3zM21 21h8v8h-8z" fill="currentColor" fill-opacity=".15"/>
+    <path d="M16 11v6M7 21v-4h18v4M16 17v8M14 25h4"/>
+  </symbol>
+  <symbol id="target" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M9 5h14v4h4v14h-4v4H9v-4H5V9h4Z" fill="currentColor" fill-opacity=".12"/>
+    <path d="M11 11h10v10H11zM16 2v5M16 25v5M2 16h5M25 16h5"/>
+    <path d="M14 14h4v4h-4z" fill="currentColor" stroke="none"/>
+  </symbol>
+  <symbol id="briefcase" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M10 10V4h12v6M3 10h26v18H3Z" fill="currentColor" fill-opacity=".12"/>
+    <path d="M3 17h26M13 15h6v5h-6z" fill="currentColor" fill-opacity=".15"/>
+  </symbol>
+  <symbol id="inspect" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M9 3h10v3h3v3h3v10h-3v3h-3v3H9v-3H6v-3H3V9h3V6h3Z" fill="currentColor" fill-opacity=".12"/>
+    <path d="M22 22h3v3h4v4h-4v-4h-3M9 10h10M9 14h10M9 18h6"/>
+  </symbol>
+  <symbol id="decision" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M10 6H6v23h20V6h-4M11 3h10v6H11Z" fill="currentColor" fill-opacity=".12"/>
+    <path d="M10 17h3v4h3v-4h3v-4h3M10 25h12"/>
+  </symbol>
+  <symbol id="chart" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M3 4h26v20H3Z" fill="currentColor" fill-opacity=".12"/>
+    <path d="M8 28h16M16 24v4M7 19h5v-5h6V9h7M22 7h4v4"/>
+  </symbol>
+  <symbol id="books" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M3 9h7v19H3zM13 3h7v25h-7zM23 7h6v21h-6z" fill="currentColor" fill-opacity=".15"/>
+    <path d="M6 13h1M16 7h1M26 11h1M6 23h1M16 23h1M26 23h1"/>
+  </symbol>
+  <symbol id="trophy" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M9 3h14v11h-3v4h-8v-4H9Z" fill="currentColor" fill-opacity=".15"/>
+    <path d="M9 6H4v8h5M23 6h5v8h-5M16 18v7M11 25h10v4H11Z"/>
+    <path d="M14 7h4v4h-4z" fill="currentColor" stroke="none"/>
+  </symbol>
+  <symbol id="layers" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M4 3h24v7H4z" fill="currentColor" fill-opacity=".15"/>
+    <path d="M4 13h24v7H4zM4 23h24v6H4z"/>
+    <path d="M8 6h2M8 16h2M8 26h2M15 6h9M15 16h9M15 26h9"/>
+  </symbol>
+  <symbol id="pulse" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M8 3h16v3h3v3h3v14h-3v3h-3v3H8v-3H5v-3H2V9h3V6h3Z" fill="currentColor" fill-opacity=".12"/>
+    <path d="M7 16h5V9h5v14h4v-7h4"/>
+  </symbol>
+  <symbol id="rules" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M5 3h17v6h6v20H5Z" fill="currentColor" fill-opacity=".12"/>
+    <path d="M22 3v3h3v3h3M10 9h5M10 15h2M17 15h6M10 21h2M17 21h6M10 25h2M17 25h6"/>
+  </symbol>
+  <symbol id="history" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M5 12V9h3V6h4V3h10v3h4v4h3v12h-3v4h-4v3H12v-3H8v-3H5" fill="currentColor" fill-opacity=".12"/>
+    <path d="M2 6v7h7M17 9v8h6"/>
+    <path d="M15 15h4v4h-4z" fill="currentColor" stroke="none"/>
+  </symbol>
+  <symbol id="office" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M8 3h16v26H8zM3 11h5v18H3zM24 11h5v18h-5z" fill="currentColor" fill-opacity=".12"/>
+    <path d="M12 8h2M18 8h2M12 13h2M18 13h2M12 18h2M18 18h2M13 29v-6h6v6"/>
+  </symbol>
+</svg>
