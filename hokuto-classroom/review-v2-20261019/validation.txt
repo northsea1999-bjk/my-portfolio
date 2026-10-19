@@ -1,9 +1,17 @@
 Design v2.0 — 2026-10-19
 
-PASS: 15 unique operating entries, 19 routes, six-stage theme/company flow, EPS verification separate from final judgment, delayed quote timestamps, eligibility branches, preserved date/filter/scroll, legacy aliases and office briefing destinations. Priority briefing, focused stock detail, separate holding/decision labels, four unique holding rows and unchanged v9 fixtures checked. Desktop/mobile logic paths checked; no visual browser test.
+PASS: 15 unique operating entries, 19 routes, six-stage theme/company flow, EPS verification separate from final judgment, delayed quote timestamps, eligibility branches, preserved date/filter/scroll, legacy aliases and office briefing destinations. Priority briefing, focused stock detail, separate holding/decision labels, four unique holding rows and unchanged v9 fixtures checked. Automated logic checks passed. Actual browser checks are recorded below.
 
 New coverage: complete fictional news set; headline expansion; country and relationship filters; query/empty/reset; no invented company link on pending articles; article/company/return preserves query, filter and scroll; browser back closes article dialog.
 
 All stock/record/price/decision/EPS/theme/article/score fixtures equal retained v9. All catalog IDs, route destinations, relation mappings and eligibility rules retained.
 
-Browser QA: pending deployed-site verification.
+Browser QA: Chrome on deployed GitHub Pages, 2026-10-19.
+- Home at fixed frame widths 360/390/768/1280px: document scrollWidth equals clientWidth (343/373/751/1263px after frame border/scrollbar).
+- 360px news, all menus, decision, newbuy, holdings and meeting: no document horizontal overflow. Wide research table scrolls inside its own container.
+- 19px large-text mode at 360px: meeting and newbuy remain within document width.
+- Actual clicks: AI theme -> operations -> strategy -> Seiun -> earnings verification -> decision -> newbuy. Company remains DEMO-E; holdings alternative and deferred candidate branches visibly distinct.
+- Actual news interactions: country filter, no-result query, reset, held filter + Korean search, article, company history, return to original query/filter.
+- Desktop screenshot: browser-home.jpg. Static screens/*.html are readable renderer snapshots, not browser captures.
+
+Scope: desktop Chrome with responsive frames; no physical phone, Safari, screen reader or first-time-user comprehension study. The public prototype uses six fictional articles. Live news ingestion and production deployment are not performed.
