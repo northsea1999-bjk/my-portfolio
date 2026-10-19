@@ -1,0 +1,42 @@
+{
+  "version": "v7.3",
+  "scope": "Fictional prototype only; not proof of production equivalence",
+  "dataInvariantChecks": {
+    "scope": "quest v6 -> v7 fictional prototype; no production release",
+    "allSevenStockObjectsEqual": true,
+    "themeAndMarketScoresEqual": true,
+    "allRoomDataExportsEqual": true,
+    "candidateIds": [
+      "DEMO-D",
+      "DEMO-E",
+      "DEMO-F",
+      "DEMO-G"
+    ],
+    "decisionIds": [
+      "DEMO-D",
+      "DEMO-E",
+      "DEMO-F"
+    ],
+    "newbuyIds": [
+      "DEMO-E"
+    ],
+    "entireOHLCVFixtureByteIdentical": true,
+    "allCloseArraysEqual": true,
+    "sixMonthWindow": {
+      "from": "2026-04-17",
+      "to": "2026-10-16",
+      "priceRows": 20,
+      "unavailablePeriodContainsDatesOnly": true,
+      "pricesInvented": false
+    }
+  },
+  "titleDisplay": {
+    "testedArticles": 6,
+    "syntheticJapaneseExamples": 4,
+    "missingOriginalFallbacks": 2,
+    "koreanTitlesRestored": true,
+    "numericTokensInContractAndForecastUnchanged": true,
+    "existingArticleExportsDeepEqual": true
+  },
+  "browserChecks": "See REVIEW.md after deployed UI verification"
+}

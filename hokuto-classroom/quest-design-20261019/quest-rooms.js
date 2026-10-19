@@ -140,22 +140,25 @@
       const m=menu(get().room);
       return `<section class="original-bridge"><span class="menu-symbol ${m.tone}">${glyph(m.icon)}</span><span class="eyebrow">주제 안내</span><h2>${m.name}</h2><p>${m.lead}</p>${sourceAction(m,m.name+' 열기','bridge-open')}<small>이 주제의 상세 데이터는 아직 이 시안에 연결되지 않았습니다. 임의의 규칙이나 성과를 만들지 않습니다.</small></section>`;
     }
+    function headline(a){
+      return `<span class="news-title-text" data-news-title="${a.id}" data-title-fallback="${esc(a.title)}">${esc(a.title)}</span><small class="title-origin-note" data-title-status="${a.id}"></small>`;
+    }
     function articleCard(a){
-      return `<article class="news-entry ${get().item===a.id?'is-focused':''}" data-focus-item="${a.id}" tabindex="-1"><div class="news-time">${a.time}<small>10.16</small></div><div class="news-entry-content"><div class="news-tags">${badge(a.state,a.kind==='direct'?'teal':a.kind==='pending'?'amber':'gray')}<span>${a.country} · ${topic(a.topic).name}</span></div><button class="news-headline" data-article="${a.id}">${a.title}</button><p>${a.summary}</p><div class="news-related">${a.stock?stockButton(a.stock):`<span>${a.kind==='pending'?'분석 완료 후 연결 확인':'회사 직접 연결 없음'}</span>`}<button data-article="${a.id}">내용과 근거 <span aria-hidden="true">→</span></button></div></div></article>`;
+      return `<article class="news-entry ${get().item===a.id?'is-focused':''}" data-focus-item="${a.id}" tabindex="-1"><div class="news-time">${a.time}<small>10.16</small></div><div class="news-entry-content"><div class="news-tags">${badge(a.state,a.kind==='direct'?'teal':a.kind==='pending'?'amber':'gray')}<span>${a.country} · ${topic(a.topic).name}</span></div><button class="news-headline" data-article="${a.id}">${headline(a)}</button><p>${a.summary}</p><div class="news-related">${a.stock?stockButton(a.stock):`<span>${a.kind==='pending'?'분석 완료 후 연결 확인':'회사 직접 연결 없음'}</span>`}<button data-article="${a.id}">내용과 근거 <span aria-hidden="true">→</span></button></div></div></article>`;
     }
     function newsItems(section='all',query='',country='all'){
       const q=query.trim().toLowerCase();
       return articles.filter(a=>(section==='all'||section==='held'&&a.stock&&stock(a.stock).group==='held'||section==='candidate'&&a.stock&&stock(a.stock).group==='candidate'||section==='industry'&&a.kind==='industry'||section==='pending'&&a.kind==='pending')
         &&(country==='all'||country==='other'&&!['일본','미국'].includes(a.country)||a.country===country)
-        &&(!q||`${a.title} ${a.summary} ${a.country} ${topic(a.topic).name} ${a.stock?stock(a.stock).name:''}`.toLowerCase().includes(q)))
+        &&(!q||`${a.title} ${window.HokutoText?.demoJapaneseTitles[a.id]||''} ${a.summary} ${a.country} ${topic(a.topic).name} ${a.stock?stock(a.stock).name:''}`.toLowerCase().includes(q)))
         .sort((a,b)=>b.time.localeCompare(a.time));
     }
     function headlineRow(a,home=false){
-      return `<li class="${home?'home-headline':'headline-row'} ${get().item===a.id?'is-focused':''}" data-focus-item="${a.id}" tabindex="-1"><time datetime="2026-10-16T${a.time}:00+09:00">${a.time}</time><button ${home?'data-headline':'data-article'}="${a.id}">${esc(a.title)}</button><span class="headline-state">${esc(a.state)}</span></li>`;
+      return `<li class="${home?'home-headline':'headline-row'} ${get().item===a.id?'is-focused':''}" data-focus-item="${a.id}" tabindex="-1"><time datetime="2026-10-16T${a.time}:00+09:00">${a.time}</time><button ${home?'data-headline':'data-article'}="${a.id}">${headline(a)}</button><span class="headline-state">${esc(a.state)}</span></li>`;
     }
     function homeNews(){
       const items=newsItems(),first=items.slice(0,3),rest=items.slice(3),expanded=get().headlinesExpanded;
-      return `<div class="home-news-heading"><div><h2 id="home-news-title">오늘 뉴스 제목 <strong>${items.length}<small>개 · 예시</small></strong></h2><p>뉴스룸 전체 목록 · 10.16 수집 예시 · 최신순</p></div>${roomButton('news','전체 뉴스 보기')}</div><ul class="home-headline-list">${first.map(a=>headlineRow(a,true)).join('')}</ul>${rest.length?`<div class="home-more"><button data-headlines-expand aria-expanded="${expanded}" aria-controls="more-headlines">${expanded?'접기':'나머지 '+rest.length+'개 보기'} <span aria-hidden="true">${expanded?'↑':'↓'}</span></button>${expanded?`<ul class="home-headline-list" id="more-headlines">${rest.map(a=>headlineRow(a,true)).join('')}</ul>`:'<div id="more-headlines" hidden></div>'}</div>`:''}<div class="home-news-footer"><span>제목을 누르면 기사 내용과 연결 근거가 열립니다.</span>${sourceAction(menu('news'),'운영 뉴스룸')}</div>`;
+      return `<div class="home-news-heading"><div><h2 id="home-news-title">오늘 뉴스 제목 <strong>${items.length}<small>개 · 예시</small></strong></h2><p>뉴스룸 전체 목록 · 10.16 수집 예시 · 최신순</p></div>${roomButton('news','전체 뉴스 보기')}</div><ul class="home-headline-list">${first.map(a=>headlineRow(a,true)).join('')}</ul>${rest.length?`<div class="home-more"><button data-headlines-expand aria-expanded="${expanded}" aria-controls="more-headlines">${expanded?'접기':'나머지 '+rest.length+'개 보기'} <span aria-hidden="true">${expanded?'↑':'↓'}</span></button>${expanded?`<ul class="home-headline-list" id="more-headlines">${rest.map(a=>headlineRow(a,true)).join('')}</ul>`:'<div id="more-headlines" hidden></div>'}</div>`:''}<div class="home-news-footer"><span>제목을 누르면 기사 내용과 연결 근거가 열립니다.</span><small class="title-demo-note" data-ui-copy="titleDemoNotice"></small>${sourceAction(menu('news'),'운영 뉴스룸')}</div>`;
     }
     function news(){
       const state=get(),items=newsItems(state.section,state.newsQuery,state.newsCountry),all=newsItems();
@@ -165,7 +168,7 @@
     function showArticle(id){
       const a=articles.find(a=>a.id===id);if(!a)return;
       const s=a.stock?stock(a.stock):null;
-      openDialog(`<div class="dialog-header"><div><small>뉴스룸 · 수집 2026.10.16 ${a.time} · 가상 기사</small><h2>${a.title}</h2></div><button class="close-dialog" id="close-dialog" aria-label="뉴스 상세 닫기">×</button></div><div class="dialog-body news-dialog">${badge(a.state,a.kind==='direct'?'teal':a.kind==='pending'?'amber':'gray')}<h3>확인한 사실</h3><p>${a.summary}</p><h3>종목 연결 근거</h3><p>${a.proof}</p><h3>아직 모르는 것</h3><p>${a.unknown}</p><details class="room-details"><summary>입력 자료 · 출처 보기</summary><blockquote>${s?latest(s).input:a.kind==='pending'?'원문 분석이 아직 완료되지 않았습니다.':'전력 설비 투자 계획이 추가 발표됐다. 공급 회사와 계약 금액은 공개하지 않았다.'}</blockquote><p>화면 시연용 가상 자료입니다. 실제 기사 원문 링크는 없습니다.</p></details></div>`);
+      openDialog(`<div class="dialog-header"><div><small>뉴스룸 · 수집 2026.10.16 ${a.time} · 가상 기사</small><h2>${headline(a)}</h2></div><button class="close-dialog" id="close-dialog" aria-label="뉴스 상세 닫기">×</button></div><div class="dialog-body news-dialog">${badge(a.state,a.kind==='direct'?'teal':a.kind==='pending'?'amber':'gray')}<h3>확인한 사실</h3><p>${a.summary}</p><h3>종목 연결 근거</h3><p>${a.proof}</p><h3>아직 모르는 것</h3><p>${a.unknown}</p><details class="room-details"><summary>입력 자료 · 출처 보기</summary><blockquote>${s?latest(s).input:a.kind==='pending'?'원문 분석이 아직 완료되지 않았습니다.':'전력 설비 투자 계획이 추가 발표됐다. 공급 회사와 계약 금액은 공개하지 않았다.'}</blockquote><p>화면 시연용 가상 자료입니다. 실제 기사 원문 링크는 없습니다.</p></details></div>`);
     }
     function themes(){
       const t=topic(get().topic),related=articles.filter(a=>a.topic===t.id);
