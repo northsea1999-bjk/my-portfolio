@@ -53,3 +53,6 @@
 :root[data-palette=quest] .home-overview .example-date span{color:#d4dff3}
 :root[data-palette=quest] .home-overview .home-jumps>a:nth-child(2) .jump-copy>span,:root[data-palette=quest] .home-overview .home-jumps>a:nth-child(2) .jump-copy small{color:#f6e9bf;opacity:1}
 :root[data-palette=quest] .home-overview .home-news-heading h2 strong small{color:#e4ebfa}
+/* A sticky chart panel establishes a stacking context: lift it above navigation while expanded. */
+body.chart-expanded .home-chart-panel{z-index:2000;overflow:visible}
+body.chart-expanded .detail-panel,body.chart-expanded .room-reading{position:relative;z-index:2000;overflow:visible}
