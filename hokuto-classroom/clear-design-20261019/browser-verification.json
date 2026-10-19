@@ -1,0 +1,62 @@
+{
+  "scope": "Public fictional prototype; responsive browser preview, not actual phone hardware.",
+  "sourceCommit": "26d4c397e1a7d4975d22f0ee88f4c671381b8083",
+  "url": "https://northsea1999-bjk.github.io/my-portfolio/hokuto-classroom/clear-design-20261019/?v=2",
+  "viewports": {
+    "desktop": [
+      1348,
+      1348
+    ],
+    "mobile360": [
+      341,
+      341
+    ],
+    "mobile390": [
+      371,
+      371
+    ],
+    "mobile430": [
+      411,
+      411
+    ]
+  },
+  "home": {
+    "visibleContentNavigationLinks": 0,
+    "alerts": 3,
+    "inlineDetailsWithoutRouteChange": true
+  },
+  "menu": {
+    "primaryEntries": 6,
+    "extraEntries": 14,
+    "extrasCollapsedByDefault": true
+  },
+  "news": {
+    "headlines": 6,
+    "articleDialogSamePage": true,
+    "dialogCrossRoomButtons": 0
+  },
+  "holdings": {
+    "stocks": 4,
+    "duplicateCharts": 0,
+    "crossRoomButtons": 0
+  },
+  "decision": {
+    "stocks": 3,
+    "inlineEvidencePanels": 3,
+    "crossRoomButtons": 0
+  },
+  "records": {
+    "evidenceDialogSamePage": true,
+    "scoresRows": 7,
+    "unchangedThemeExcessReturnSummary": "-0.3%p"
+  },
+  "chart": {
+    "sixMonthFrom": "2026-04-17",
+    "sixMonthTo": "2026-10-16",
+    "priceRows": 20,
+    "returnTo20DaysVerified": true,
+    "missingPriceStateVerified": true
+  },
+  "realDeviceTesting": false,
+  "actualSixMonthMarketDataConnected": false
+}
