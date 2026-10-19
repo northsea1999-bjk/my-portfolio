@@ -1,0 +1,89 @@
+{
+  "scope": "Fictional public design prototype. Not production data or November 10 evaluation validation.",
+  "baseline": "../stock-home.js",
+  "allStockDataEqual": true,
+  "stocks": [
+    {
+      "id": "DEMO-A",
+      "price": 8240,
+      "change": 2.1,
+      "badge": "주의",
+      "decision": "결정실 미입력",
+      "chartClosesEqual": true,
+      "pricePoints": 20,
+      "themeScore": 3.6,
+      "marketScore": 5.7
+    },
+    {
+      "id": "DEMO-B",
+      "price": 5860,
+      "change": -1.4,
+      "badge": "주의",
+      "decision": "결정실 미입력",
+      "chartClosesEqual": true,
+      "pricePoints": 20,
+      "themeScore": -4.2,
+      "marketScore": -4.5
+    },
+    {
+      "id": "DEMO-C",
+      "price": 3420,
+      "change": 0.9,
+      "badge": "정상",
+      "decision": "결정실 미입력",
+      "chartClosesEqual": true,
+      "pricePoints": 20,
+      "themeScore": null,
+      "marketScore": null
+    },
+    {
+      "id": "DEMO-D",
+      "price": 4725,
+      "change": -0.3,
+      "badge": "정상",
+      "decision": "매수대상",
+      "chartClosesEqual": true,
+      "pricePoints": 20,
+      "themeScore": null,
+      "marketScore": null
+    },
+    {
+      "id": "DEMO-E",
+      "price": 6130,
+      "change": 3.2,
+      "badge": "매수대상",
+      "decision": "매수대상",
+      "chartClosesEqual": true,
+      "pricePoints": 20,
+      "themeScore": null,
+      "marketScore": null
+    },
+    {
+      "id": "DEMO-F",
+      "price": 2980,
+      "change": -0.6,
+      "badge": "보류",
+      "decision": "보류",
+      "chartClosesEqual": true,
+      "pricePoints": 20,
+      "themeScore": null,
+      "marketScore": null
+    },
+    {
+      "id": "DEMO-G",
+      "price": null,
+      "change": null,
+      "badge": "자료 부족",
+      "decision": "미입력",
+      "chartClosesEqual": true,
+      "pricePoints": 0,
+      "themeScore": null,
+      "marketScore": null
+    }
+  ],
+  "ohlcvIsFictional": true,
+  "ohlcBoundsValid": true,
+  "missingPricePreserved": true,
+  "library": "lightweight-charts@5.0.9",
+  "librarySha256": "e6bd6516d9ab9cb897c0d6438e3fe1126f2fdce07e68c23836e84d527de81f52"
+}
