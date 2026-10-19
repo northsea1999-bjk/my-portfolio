@@ -190,11 +190,16 @@
   function renderScores(){
     const benchmark=state.benchmark==='market'?'시장(1306 ETF)':'같은 테마';
     const avg=state.benchmark==='market'?.6:-.3;
-    $('#scores-view').innerHTML=`<div class="score-original-links"><span>종목별 성적표 시안</span><button data-room="performance">기존 성과기록 →</button><button data-room="selection">기존 선정성적 →</button></div><div class="scores-header"><div><h2>선정 이후, 실제로 어떻게 움직였을까</h2><p>종목을 누르면 평가 회차의 분석까지 거슬러 올라갑니다.</p></div><div class="benchmark-switch" role="group" aria-label="전체 성적표 비교 기준"><button data-benchmark="theme" aria-pressed="${state.benchmark==='theme'}">같은 테마 대비</button><button data-benchmark="market" aria-pressed="${state.benchmark==='market'}">시장 대비</button></div></div><div class="scorecards"><div class="scorecard"><small>완료 회차 · 20거래일 평균 초과수익</small><strong class="${colorClass(avg)}">${signed(avg,'%p')}</strong><p>${benchmark} 대비 · 가상 완료 2건 기준</p></div><div class="scorecard"><small>평가 완료</small><strong>2<span class="muted"> 건</span></strong><p>같은 평가 기간의 결과만 집계</p></div><div class="scorecard"><small>아직 집계하지 않는 항목</small><strong>5<span class="muted"> 건</span></strong><p>평가 대기 2 · 선정 평가 없음 2 · 자료 부족 1</p></div></div><div class="score-table-wrap" tabindex="0" aria-label="종목별 성적표, 좁은 화면에서는 가로로 이동"><table class="score-table"><thead><tr><th>종목 / 평가 회차</th><th>종목 수익률</th><th>${benchmark}</th><th>차이</th><th>상태</th></tr></thead><tbody>${stocks.map(s=>`<tr><td><button data-score-stock="${s.id}">${s.name}<small>${s.evaluation?'09.08 선정 · 과거 회차':'10.16 최근 기록'}</small></button></td><td class="${colorClass(s.evaluation?.stock)}">${s.evaluation?signed(s.evaluation.stock):'—'}</td><td>${s.evaluation?signed(s.evaluation[state.benchmark]):'—'}</td><td class="${colorClass(scoreDifference(s,state.benchmark))}">${s.evaluation?signed(scoreDifference(s,state.benchmark),'%p'):'—'}</td><td>${badge(s.evaluation?'20일 완료':s.price==null?'자료 부족':s.decision==='매수대상'?'평가 대기':'선정 평가 없음',s.evaluation?'teal':'gray')}</td></tr>`).join('')}</tbody></table></div><p class="metric-note">모든 성과는 화면 동작을 위한 가상 값입니다. 실제 계좌 손익이 아니며, 호쿠토의 실제 성능을 나타내지 않습니다.</p>`;
+    $('#scores-view').innerHTML=`<div class="scores-header"><div><h2>선정 이후, 실제로 어떻게 움직였을까</h2><p>종목을 누르면 평가 회차의 분석까지 거슬러 올라갑니다.</p></div><div class="benchmark-switch" role="group" aria-label="전체 성적표 비교 기준"><button data-benchmark="theme" aria-pressed="${state.benchmark==='theme'}">같은 테마 대비</button><button data-benchmark="market" aria-pressed="${state.benchmark==='market'}">시장 대비</button></div></div><div class="scorecards"><div class="scorecard"><small>완료 회차 · 20거래일 평균 초과수익</small><strong class="${colorClass(avg)}">${signed(avg,'%p')}</strong><p>${benchmark} 대비 · 가상 완료 2건 기준</p></div><div class="scorecard"><small>평가 완료</small><strong>2<span class="muted"> 건</span></strong><p>같은 평가 기간의 결과만 집계</p></div><div class="scorecard"><small>아직 집계하지 않는 항목</small><strong>5<span class="muted"> 건</span></strong><p>평가 대기 2 · 선정 평가 없음 2 · 자료 부족 1</p></div></div><div class="score-table-wrap" tabindex="0" aria-label="종목별 성적표, 좁은 화면에서는 가로로 이동"><table class="score-table"><thead><tr><th>종목 / 평가 회차</th><th>종목 수익률</th><th>${benchmark}</th><th>차이</th><th>상태</th></tr></thead><tbody>${stocks.map(s=>`<tr><td><button data-score-stock="${s.id}">${s.name}<small>${s.evaluation?'09.08 선정 · 과거 회차':'10.16 최근 기록'}</small></button></td><td class="${colorClass(s.evaluation?.stock)}">${s.evaluation?signed(s.evaluation.stock):'—'}</td><td>${s.evaluation?signed(s.evaluation[state.benchmark]):'—'}</td><td class="${colorClass(scoreDifference(s,state.benchmark))}">${s.evaluation?signed(scoreDifference(s,state.benchmark),'%p'):'—'}</td><td>${badge(s.evaluation?'20일 완료':s.price==null?'자료 부족':s.decision==='매수대상'?'평가 대기':'선정 평가 없음',s.evaluation?'teal':'gray')}</td></tr>`).join('')}</tbody></table></div><p class="metric-note">모든 성과는 화면 동작을 위한 가상 값입니다. 실제 계좌 손익이 아니며, 호쿠토의 실제 성능을 나타내지 않습니다.</p>`;
   }
   function render(){
-    if(state.view==='menu'){location.replace('menu.html?v=6');return;}
+    if(state.view==='menu'){location.replace('menu.html?v=7');return;}
     document.body.dataset.room=state.view==='room'?state.room:'';
+    const inTopic=state.view==='room'||state.view==='scores'||!!state.from;
+    document.body.classList.toggle('topic-focused',inTopic);
+    const brand=document.querySelector('.brand');
+    if(inTopic){brand.removeAttribute('href');brand.removeAttribute('data-home-link');brand.setAttribute('aria-label','호쿠토증권');}
+    else {brand.setAttribute('href','#view=home');brand.setAttribute('data-home-link','');brand.setAttribute('aria-label','호쿠토증권 알림 홈');}
     const scores=state.view==='scores';
     const explore=state.view==='menu'||state.view==='room';
     const focused=state.view==='home'&&state.detail&&!!state.from;
@@ -215,7 +220,7 @@
     $('#page-heading p').textContent=scores?'그때의 판단과, 그 뒤의 결과를 함께.':focused?rooms.menu(state.from).name+'에서 이어 보는 분석과 당시 기록':state.query?'이름·코드·테마가 일치하는 종목을 찾습니다.':'뉴스를 훑고, 보유 변화를 확인하고, 새 후보를 검토합니다.';
     $('#page-heading .eyebrow').textContent=scores?'기록과 결과':focused?'한 회사의 근거와 기록':'호쿠토 핵심 브리핑';
     const journey=$('#journey-bar');journey.hidden=!(explore||scores);
-    journey.innerHTML=`<button id="journey-back">← 이전 화면</button><span>${scores?'기록과 결과':state.view==='menu'?'전체 메뉴':rooms.menu(state.room).owner||'호쿠토'}</span>`;
+    journey.innerHTML=`<span>전체 메뉴 <span aria-hidden="true">/</span> <strong>${scores?'종목별 성적표':rooms.menu(state.room).name}</strong></span>`;
     renderBriefing();renderList();renderDetail();if(scores)renderScores();
     if(explore)rooms.render();
     $$('[data-icon]').forEach(el=>el.innerHTML=icon(el.dataset.icon));
@@ -233,15 +238,16 @@
     $('#announcer').textContent=`${stocks.find(s=>s.id===id).name}, ${tab==='history'?'변화와 기록':tab==='score'?'성적표':'현재 분석'}를 엽니다.`;
   }
   function openDialog(content){
-    returnFocus=document.activeElement;
+    if(!$('#evidence-dialog').open)returnFocus=document.activeElement;
     $('#dialog-content').innerHTML=content;
     const d=$('#evidence-dialog');if(!d.open)d.showModal();
     $('#close-dialog')?.focus();
   }
-  function showEvidence(date){
-    const s=selectedStock(),r=s.records.find(r=>r.date===date);
+  function showEvidence(date,id){
+    const s=id?stocks.find(s=>s.id===id):selectedStock();if(!s)return;
+    const r=date?s.records.find(r=>r.date===date):latest(s);
     if(!r)return;
-    openDialog(`<div class="dialog-header"><div><small>${s.name} · ${r.date} 보존 기록 · 가상</small><h2>그날 무엇을 보고 판단했나요?</h2></div><button class="close-dialog" id="close-dialog" aria-label="당시 자료 닫기">×</button></div><div class="dialog-body"><div class="snapshot-banner"><strong>이 날짜의 자료와 분석을 한 묶음으로 보존한 예시</strong>다른 날짜의 기사·가격으로 내용을 바꾸지 않았습니다.</div><h3>당시 분석 결과</h3>${badge(r.status,r.status==='주의'?'amber':'gray')}<p class="snapshot-summary">${r.summary}</p><h3>실제로 분석에 넣은 문장</h3><blockquote class="input-quote">${r.input}</blockquote><div class="input-data"><div><small>당시 종가</small><strong>${priceText(r.price)}${r.price==null?'':'엔'}</strong></div><div><small>자료 시각</small><strong>${r.inputAt}</strong></div><div><small>분석 보존 시각</small><strong>${r.savedAt}</strong></div><div><small>자료 출처</small><strong>가상 회사 발표 / 가상 가격</strong></div></div><h3>당시 사용한 근거</h3><div class="evidence-grid">${r.axes.map(a=>`<div class="evidence-cell"><strong>${a}</strong></div>`).join('')}</div><h3>그날 남겨둔 다음 확인</h3><p class="snapshot-summary">${r.next}</p><p class="dialog-caption">이 문서는 화면 시연용으로 작성한 가상 입력입니다. 실제 기사 링크나 운영 기록을 포함하지 않습니다.</p></div>`);
+    openDialog(`<div class="dialog-header"><div><small>${s.name} · ${r.date} 보존 기록 · 가상</small><h2>그날 무엇을 보고 판단했나요?</h2></div><button class="close-dialog" id="close-dialog" aria-label="당시 자료 닫기">×</button></div><div class="dialog-body"><div class="record-select" role="group" aria-label="같은 종목의 보존 기록 날짜">${[...s.records].reverse().map(x=>`<button data-local-record="${s.id}" data-record-date="${x.date}" aria-pressed="${x.date===r.date}">${x.date.slice(5).replace('-','.')}</button>`).join('')}</div><div class="snapshot-banner"><strong>이 날짜의 자료와 분석을 한 묶음으로 보존한 예시</strong>다른 날짜의 기사·가격으로 내용을 바꾸지 않았습니다.</div><h3>당시 분석 결과</h3>${badge(r.status,r.status==='주의'?'amber':'gray')}<p class="snapshot-summary">${r.summary}</p><h3>실제로 분석에 넣은 문장</h3><blockquote class="input-quote">${r.input}</blockquote><div class="input-data"><div><small>당시 종가</small><strong>${priceText(r.price)}${r.price==null?'':'엔'}</strong></div><div><small>자료 시각</small><strong>${r.inputAt}</strong></div><div><small>분석 보존 시각</small><strong>${r.savedAt}</strong></div><div><small>자료 출처</small><strong>가상 회사 발표 / 가상 가격</strong></div></div><h3>당시 사용한 근거</h3><div class="evidence-grid">${r.axes.map(a=>`<div class="evidence-cell"><strong>${a}</strong></div>`).join('')}</div><h3>그날 남겨둔 다음 확인</h3><p class="snapshot-summary">${r.next}</p><p class="dialog-caption">이 문서는 화면 시연용으로 작성한 가상 입력입니다. 실제 기사 링크나 운영 기록을 포함하지 않습니다.</p></div>`);
   }
   function showMenu(){
     route({view:'menu',detail:false,from:'',menuQuery:''});window.scrollTo({top:0});
@@ -250,6 +256,7 @@
     if(ev.target.closest('[data-home-link]')){ev.preventDefault();route({view:'home',filter:'all',detail:false,from:'',query:''});return;}
     if(ev.target.closest('.skip')){ev.preventDefault();$('#workspace').focus();$('#workspace').scrollIntoView();return;}
     const b=ev.target.closest('button');if(!b)return;
+    if(b.dataset.localRecord){showEvidence(b.dataset.recordDate,b.dataset.localRecord);return;}
     if(rooms.onClick(b))return;
     if(b.dataset.nav){const n=b.dataset.nav;if(n==='held'||n==='candidate'||n==='news'){rooms.navigate(n==='held'?'holdings':n==='news'?'news':'decision');return;}route({view:n==='scores'?'scores':'home',filter:'all',detail:false,query:'',from:''});window.scrollTo({top:0});return;}
     if(b.id==='journey-back'){goBack();return;}

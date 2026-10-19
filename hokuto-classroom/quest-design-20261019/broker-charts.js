@@ -8,10 +8,11 @@ const preferences=new Map();
 let lastHomeStock='';
 function settings(id,period){if(!preferences.has(id))preferences.set(id,{type:'candles',period:Number(period)||20,ma5:true,ma10:true,volume:true});return preferences.get(id);}
 // Dates without prices are whitespace, never invented candles or zero prices.
-function yearWindow(bars){
+function sixMonthWindow(bars){
  const last=bars.at(-1).time,end=new Date(last+'T00:00:00Z');
- const priorYear=end.getUTCFullYear()-1,month=end.getUTCMonth(),day=Math.min(end.getUTCDate(),new Date(Date.UTC(priorYear,month+1,0)).getUTCDate());
- const start=new Date(Date.UTC(priorYear,month,day+1));
+ const target=new Date(Date.UTC(end.getUTCFullYear(),end.getUTCMonth()-6,1));
+ const day=Math.min(end.getUTCDate(),new Date(Date.UTC(target.getUTCFullYear(),target.getUTCMonth()+1,0)).getUTCDate());
+ const start=new Date(Date.UTC(target.getUTCFullYear(),target.getUTCMonth(),day+1));
  const from=start.toISOString().slice(0,10),spaces=[];
  for(const day=new Date(start);day.toISOString().slice(0,10)<bars[0].time;day.setUTCDate(day.getUTCDate()+1))spaces.push({time:day.toISOString().slice(0,10)});
  return {from,to:last,spaces};
@@ -20,8 +21,8 @@ function markup(s,period='20'){
  if(!fixture[s.id]?.bars.length)return '<div class="chart-unavailable"><span aria-hidden="true">▧</span><strong>가격 자료가 아직 없습니다.</strong><p>자료가 들어오면 차트를 표시합니다. 빈 값을 0으로 그리지 않습니다.</p></div>';
  const c=settings(s.id,period);
  return `<section class="broker-chart" data-chart-stock="${esc(s.id)}" aria-label="${esc(s.name)} 가상 일봉 차트">
- <div class="chart-controls"><div class="chart-control-group" role="group" aria-label="차트 표시"><button data-chart-type="candles" aria-pressed="${c.type==='candles'}">캔들</button><button data-chart-type="line" aria-pressed="${c.type==='line'}">종가선</button></div><div class="chart-control-group" role="group" aria-label="차트 기간"><button data-chart-range="5" aria-pressed="${c.period===5}">5일</button><button data-chart-range="20" aria-pressed="${c.period===20}">20일</button><button data-chart-range="365" aria-pressed="${c.period===365}">1년</button></div><button class="chart-fit" data-chart-fit aria-label="차트 전체 맞춤">전체 맞춤</button><button class="chart-expand" data-chart-expand aria-pressed="false">크게 보기</button></div>
- <div class="chart-range-note" role="status" ${c.period===365?'':'hidden'}></div>
+ <div class="chart-controls"><div class="chart-control-group" role="group" aria-label="차트 표시"><button data-chart-type="candles" aria-pressed="${c.type==='candles'}">캔들</button><button data-chart-type="line" aria-pressed="${c.type==='line'}">종가선</button></div><div class="chart-control-group" role="group" aria-label="차트 기간"><button data-chart-range="5" aria-pressed="${c.period===5}">5일</button><button data-chart-range="20" aria-pressed="${c.period===20}">20일</button><button data-chart-range="180" aria-pressed="${c.period===180}">6개월</button></div><button class="chart-fit" data-chart-fit aria-label="차트 전체 맞춤">전체 맞춤</button><button class="chart-expand" data-chart-expand aria-pressed="false">크게 보기</button></div>
+ <div class="chart-range-note" role="status" ${c.period===180?'':'hidden'}></div>
  <div class="chart-indicators"><span>일봉 · 엔</span><label class="ma5"><input type="checkbox" data-chart-indicator="ma5" ${c.ma5?'checked':''}>MA 5</label><label class="ma10"><input type="checkbox" data-chart-indicator="ma10" ${c.ma10?'checked':''}>MA 10</label><label><input type="checkbox" data-chart-indicator="volume" ${c.volume?'checked':''}>거래량</label><span class="chart-demo-label">가상 OHLCV</span></div>
  <div class="chart-quote" aria-live="off"></div><div class="broker-canvas" tabindex="0" role="group" aria-label="${esc(s.name)} 가격과 거래량. 좌우 화살표로 날짜 이동. 핀치 또는 휠로 확대."></div>
  <div class="chart-under"><div><button data-chart-step="-1" aria-label="이전 날짜 수치">←</button><button data-chart-step="1" aria-label="다음 날짜 수치">→</button><span>날짜별 수치</span></div><span>드래그 이동 · 휠/핀치 확대</span></div>
@@ -43,15 +44,15 @@ function mountOne(el){
  chart.panes()[1].setHeight(90);
  let index=bars.length-1;
  const update=()=>{candle.applyOptions({visible:c.type==='candles'});line.applyOptions({visible:c.type==='line'});ma5.applyOptions({visible:c.ma5});ma10.applyOptions({visible:c.ma10});volume.applyOptions({visible:c.volume});el.dataset.chartType=c.type;el.dataset.chartPeriod=c.period;el.querySelectorAll('[data-chart-type]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.chartType===c.type));el.querySelectorAll('[data-chart-range]').forEach(b=>b.setAttribute('aria-pressed',Number(b.dataset.chartRange)===c.period));};
- const year=yearWindow(bars);
+ const year=sixMonthWindow(bars);
  const fit=()=>{
-   const annual=c.period===365,spaces=annual?year.spaces:[];
+   const annual=c.period===180,spaces=annual?year.spaces:[];
    candle.setData([...spaces,...bars]);line.setData([...spaces,...bars.map(d=>({time:d.time,value:d.close}))]);
    chart.timeScale().applyOptions({minBarSpacing:annual?.1:4,tickMarkFormatter:time=>{const t=typeof time==='object'?`${time.year}-${String(time.month).padStart(2,'0')}-${String(time.day).padStart(2,'0')}`:String(time);return annual?t.slice(0,7).replace('-','/'):t.slice(5).replace('-','/');}});
    if(annual)chart.timeScale().setVisibleRange({from:year.from,to:year.to});
    else chart.timeScale().setVisibleLogicalRange({from:bars.length-c.period-.6,to:bars.length+.2});
    const note=el.querySelector('.chart-range-note');note.hidden=!annual;
-   note.innerHTML=annual?`<strong>1년 범위 · ${year.from} ~ ${year.to}</strong>현재 시안 자료: ${bars[0].time} ~ ${year.to}, ${bars.length}일. 앞선 빈 구간은 가격 자료가 없습니다.<button data-chart-range="20">보유한 20일 자료 확대</button>`:'';
+   note.innerHTML=annual?`<strong>6개월 범위 · ${year.from} ~ ${year.to}</strong>보유한 시안 자료: ${bars[0].time} ~ ${year.to}, ${bars.length}일. 앞선 빈 구간은 가격 자료가 없습니다.<button data-chart-range="20">보유한 20일 자료 확대</button>`:'';
    el.dataset.chartPeriod=c.period;el.dataset.rangeFrom=annual?year.from:bars[Math.max(0,bars.length-c.period)].time;el.dataset.rangeTo=year.to;
  };
  const select=(delta)=>{index=Math.min(bars.length-1,Math.max(0,index+delta));const d=bars[index];quote(el,d,c);chart.setCrosshairPosition(d.close,d.time,c.type==='candles'?candle:line);};
@@ -89,5 +90,5 @@ document.addEventListener('keydown',e=>{
   else if(!e.shiftKey&&(document.activeElement===last||!el.contains(document.activeElement))){e.preventDefault();first.focus();}
  }
 });
-window.HokutoCharts={markup,mount,renderHome,yearWindow};
+window.HokutoCharts={markup,mount,renderHome,sixMonthWindow};
 })();

@@ -1,0 +1,29 @@
+{
+  "scope": "quest v6 -> v7 fictional prototype; no production release",
+  "allSevenStockObjectsEqual": true,
+  "themeAndMarketScoresEqual": true,
+  "allRoomDataExportsEqual": true,
+  "candidateIds": [
+    "DEMO-D",
+    "DEMO-E",
+    "DEMO-F",
+    "DEMO-G"
+  ],
+  "decisionIds": [
+    "DEMO-D",
+    "DEMO-E",
+    "DEMO-F"
+  ],
+  "newbuyIds": [
+    "DEMO-E"
+  ],
+  "entireOHLCVFixtureByteIdentical": true,
+  "allCloseArraysEqual": true,
+  "sixMonthWindow": {
+    "from": "2026-04-17",
+    "to": "2026-10-16",
+    "priceRows": 20,
+    "unavailablePeriodContainsDatesOnly": true,
+    "pricesInvented": false
+  }
+}

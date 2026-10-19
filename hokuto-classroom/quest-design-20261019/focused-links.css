@@ -1,0 +1,22 @@
+/* Navigation refinement: preserve the established quest home and menu styles. */
+.daily-links{display:flex;gap:0;border:1px solid #b8c4d6;border-radius:3px;background:#fffefa}
+.daily-link{display:flex;align-items:center;gap:12px;padding:14px 18px;flex:1;min-width:0;text-decoration:none;color:#283e5f;min-height:56px}
+.daily-link+.daily-link{border-left:1px solid #d9e0ea}
+.daily-link strong{font-size:16px;white-space:nowrap}
+.daily-link>span{font-size:13px;color:#5b6e89}
+.daily-link>b{margin-left:auto;font-size:20px;color:#6d83a3}
+.daily-link:hover{background:#edf3fc}
+.daily-section{margin-bottom:24px}
+.topic-focused #main-nav,.topic-focused .global-search,.topic-focused .home-guide,.topic-focused .mobile-nav [data-nav]{display:none!important}
+.topic-focused .home-navigation{justify-content:flex-end}
+.topic-focused .brand{cursor:default}
+.topic-focused .mobile-nav{justify-content:center}
+.topic-focused .mobile-nav #mobile-all-menu{flex:0 1 220px;display:flex;align-items:center;justify-content:center;gap:10px}
+.topic-focused .journey-bar{padding:12px 16px}
+.topic-focused .journey-bar strong{color:#294b7a}
+.topic-focused .journey-bar span span{margin-inline:10px;color:#9aaabe}
+.same-stock-links{flex-wrap:wrap}
+.evidence-dialog .record-select{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+.evidence-dialog .record-select button{min-height:44px}
+@media(max-width:900px){.daily-link{flex-wrap:wrap;gap:4px 10px}.daily-link>span{flex-basis:100%;order:3}.daily-link>b{order:2}}
+@media(max-width:600px){.daily-links{display:block}.daily-link{padding:12px 15px;flex-wrap:nowrap}.daily-link+.daily-link{border-left:0;border-top:1px solid #d9e0ea}.daily-link>span{flex-basis:auto;order:0;font-size:12px}.daily-link strong{font-size:15px}.daily-link>b{order:0}}
