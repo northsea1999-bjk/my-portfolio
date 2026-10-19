@@ -57,6 +57,21 @@ TradingView Lightweight Charts 5.0.9를 공식 npm 패키지에서 받아 시안
 - 테마/시장 초과수익 계산 일치, 모든 캔들의 종가가 기존 배열과 동일, OHLC 범위 검사 통과.
 - 결측 가격을 0 또는 가짜 차트로 채우지 않음.
 - 19개 메뉴의 해시 목적지를 보존하고 통합 화면으로 연결.
-- 브라우저 표시와 상호작용 검사는 배포 후 기록한다.
+- PC 알림 홈과 차트 렌더링 확인, 페이지 가로 넘침 없음.
+- 모바일 검토 폭 360/390/430px의 뉴스·차트·분석·전체메뉴에서 가로 넘침 없음. 실제 휴대폰 기기 검사는 별도다.
+- 캔들/종가선, 5/20일 구간, MA 선택, 날짜 이동(버튼·키보드), 20행 수치 표, 크게 보기/복귀 확인.
+- 가상 종목 선택, 가격 결측 상태, 차트 → 분석 → 기록, 뉴스 → 기사 근거 → 회사 분석 연결 확인.
+- 전체메뉴 19개 목적지 유지, 메뉴 → 신규매수실의 공통 차트 렌더링 확인.
+- 모바일 제목이 단어 중간에서 끊기는 부분과 화면 크기 변경 시 차트 기간 표시를 보정했다.
+- 페이지 캐시가 구버전을 섞지 않도록 통합 화면 링크와 수정 자산에 버전을 붙였다.
 
 공식 구현 참고: https://tradingview.github.io/lightweight-charts/docs/5.0 · https://tradingview.github.io/lightweight-charts/tutorials/how_to/panes
+
+## 검토 기준 버전과 화면
+
+- 최종 공유: https://northsea1999-bjk.github.io/my-portfolio/hokuto-classroom/final-design-20261019/?v=3
+- 기존 데이터 기준: `a6029ef00b6064ef1058a39ecd6774cfca4d82df`의 `hokuto-classroom/stock-home.js`.
+- 구현 최종: `ff26e61ec689e5556b814c0eccf6030f815f5b0b`.
+- Pages 배포 성공 및 화면 확인. 실제 운영 배포 컷라인과는 별개다.
+- `final-desktop.jpg`, `final-desktop-chart.jpg`, `final-mobile-home.jpg`, `final-mobile-chart.jpg`는 실제 시안 브라우저 화면이다.
+- `browser-verification.json`에는 반응형 폭과 주요 연결·차트 동작 검사 범위를 기록했다.

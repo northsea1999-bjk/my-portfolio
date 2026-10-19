@@ -1,0 +1,51 @@
+{
+  "scope": "Public fictional design preview only; no production data or trading tests",
+  "previewURL": "https://northsea1999-bjk.github.io/my-portfolio/hokuto-classroom/final-design-20261019/?v=3",
+  "viewportChecks": [
+    {
+      "screen": "news",
+      "scroll": 341,
+      "viewport": 341
+    },
+    {
+      "chartReady": "true",
+      "heading": "호쿠토 반도체",
+      "screen": "article-to-analysis",
+      "scroll": 341,
+      "viewport": 341
+    },
+    {
+      "screen": "detail-wide",
+      "scroll": 411,
+      "viewport": 411
+    },
+    {
+      "menuCount": 19,
+      "screen": "menu",
+      "scroll": 411,
+      "viewport": 411
+    }
+  ],
+  "pcViewport": 1348,
+  "pcNoHorizontalOverflow": true,
+  "mobile390NoHorizontalOverflow": true,
+  "chartControls": {
+    "candlestickLineSwitch": true,
+    "period5and20": true,
+    "maToggle": true,
+    "dateButtons": true,
+    "keyboardDateSelection": true,
+    "tableRows": 20,
+    "expandAndRestore": true,
+    "resizePreserves20DayRange": true
+  },
+  "connections": {
+    "chartToAnalysis": true,
+    "analysisToHistory": true,
+    "newsToEvidenceToCompany": true,
+    "menu19Destinations": true,
+    "menuToNewbuyChart": true
+  },
+  "missingPriceRemainsMissing": true,
+  "realDeviceTesting": false
+}
