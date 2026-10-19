@@ -10,7 +10,8 @@ function settings(id,period){if(!preferences.has(id))preferences.set(id,{type:'c
 // Dates without prices are whitespace, never invented candles or zero prices.
 function yearWindow(bars){
  const last=bars.at(-1).time,end=new Date(last+'T00:00:00Z');
- const start=new Date(end);start.setUTCFullYear(start.getUTCFullYear()-1);start.setUTCDate(start.getUTCDate()+1);
+ const priorYear=end.getUTCFullYear()-1,month=end.getUTCMonth(),day=Math.min(end.getUTCDate(),new Date(Date.UTC(priorYear,month+1,0)).getUTCDate());
+ const start=new Date(Date.UTC(priorYear,month,day+1));
  const from=start.toISOString().slice(0,10),spaces=[];
  for(const day=new Date(start);day.toISOString().slice(0,10)<bars[0].time;day.setUTCDate(day.getUTCDate()+1))spaces.push({time:day.toISOString().slice(0,10)});
  return {from,to:last,spaces};

@@ -48,3 +48,8 @@
 :root.large-text .chart-data-note,:root.large-text .chart-range-note{font-size:13px}
 :root.large-text .home-headline-list li{height:auto;min-height:100px}
 @media(max-width:760px){.chart-controls button{min-height:44px}.chart-controls{gap:7px}.chart-under button{min-width:44px;min-height:44px}.chart-indicators label{min-height:38px}.chart-indicators input{width:16px;height:16px}.chart-range-note{font-size:11px;margin-inline:10px}.chart-range-note strong{font-size:12px}.daily-brief-title{flex-wrap:wrap;gap:4px}.chart-under>span{white-space:normal;text-align:right;max-width:118px}.broker-chart.expanded .broker-canvas{height:calc(100dvh - 340px);min-height:215px}:root[data-palette=quest] .home-overview .home-jumps>a{box-shadow:2px 3px 0 #bca469}:root[data-palette=quest] .home-overview .home-jumps>a:nth-child(2){box-shadow:2px 3px 0 #a6b6d0}:root[data-palette=quest] .home-overview .home-jumps>a:nth-child(3){box-shadow:2px 3px 0 #99b99c}}
+/* Explicit foregrounds override inherited colors in the earlier pixel theme. */
+:root[data-palette=quest] .home-overview .brand svg{color:#f6d582}
+:root[data-palette=quest] .home-overview .example-date span{color:#d4dff3}
+:root[data-palette=quest] .home-overview .home-jumps>a:nth-child(2) .jump-copy>span,:root[data-palette=quest] .home-overview .home-jumps>a:nth-child(2) .jump-copy small{color:#f6e9bf;opacity:1}
+:root[data-palette=quest] .home-overview .home-news-heading h2 strong small{color:#e4ebfa}
