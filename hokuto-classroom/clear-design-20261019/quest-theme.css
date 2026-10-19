@@ -1,0 +1,58 @@
+/* Royal blue, parchment, antique gold: original pixel RPG palette, no game assets. */
+:root[data-palette=quest] body.home-overview{background:#f6f1df;color:#172e53}
+:root[data-palette=quest] .home-overview .main{background-color:#faf6e9;background-image:radial-gradient(#c9c1a6 .6px,transparent .6px)}
+:root[data-palette=quest] .home-overview .topbar{background:#19376f;color:#fff6d9;border-bottom:3px solid #d6b763}
+:root[data-palette=quest] .home-overview .brand{color:#f6d582}
+:root[data-palette=quest] .home-overview .brand small,:root[data-palette=quest] .home-overview .example-date{color:#e1e9f9}
+:root[data-palette=quest] .home-overview .type-button{background:#294c89;border-color:#a8badd;color:#fff7df}
+:root[data-palette=quest] .home-overview .global-search{background:#fffdf6;border-color:#a6b9df;color:#25426e}
+:root[data-palette=quest] .home-overview .home-navigation{background:#e8edf7;border-bottom-color:#9baed1}
+:root[data-palette=quest] .home-overview .nav-item.active{background:#244b8d;color:#fff9e5;border-color:#15356f;box-shadow:3px 3px 0 #cdb36c}
+:root[data-palette=quest] .home-overview .page-heading h1{color:#18386c}
+:root[data-palette=quest] .home-overview .page-heading .eyebrow{color:#76571b}
+:root[data-palette=quest] .home-overview .home-jumps>a{background:#f7df97;color:#62450e;border-color:#9a7835;box-shadow:4px 4px 0 #bca469}
+:root[data-palette=quest] .home-overview .home-jumps>a:nth-child(2){background:#244e96;color:#fff3cf;border-color:#142f64;box-shadow:4px 4px 0 #a6b6d0}
+:root[data-palette=quest] .home-overview .home-jumps>a:nth-child(2) strong{color:#fff9e8}
+:root[data-palette=quest] .home-overview .home-jumps>a:nth-child(2) .jump-icon{background:#f4f1df;color:#254a8b}
+:root[data-palette=quest] .home-overview .home-jumps>a:nth-child(3){background:#c9e2cd;color:#225b3e;border-color:#5a896b;box-shadow:4px 4px 0 #99b99c}
+:root[data-palette=quest] .home-overview .briefing{border:1px solid #937137;box-shadow:4px 4px 0 #bda56c}
+:root[data-palette=quest] .home-overview .daily-brief-title{background:#233e74;border-bottom:3px solid #dfbf6d;box-shadow:inset 0 0 0 3px #e6ebfa;padding-top:17px;padding-bottom:17px}
+:root[data-palette=quest] .home-overview .daily-brief-title h2{color:#fff6d8}
+:root[data-palette=quest] .home-overview .daily-brief-title>span{color:#e7d297}
+:root[data-palette=quest] .home-overview .daily-brief-title .brief-pixel{color:#f0ce77}
+:root[data-palette=quest] .home-overview .priority-brief{background:#fff3cf;border-bottom:0}
+:root[data-palette=quest] .home-overview .priority-brief>strong{color:#403115}
+:root[data-palette=quest] .home-overview .priority-label{color:#785017}
+:root[data-palette=quest] .home-overview .priority-action{background:#234985;color:#fff7df;border-color:#163766;box-shadow:3px 3px 0 #c6a457}
+:root[data-palette=quest] .home-overview .followup-brief{background:#e5d9f3;border-color:#a894bc;color:#533379}
+:root[data-palette=quest] .home-overview .followup-brief:last-child{background:#dae7f9;color:#244e86}
+:root[data-palette=quest] .home-overview .home-news{border-color:#21457e;box-shadow:4px 4px 0 #a6b7d1;background:#fffef9}
+:root[data-palette=quest] .home-overview .home-news-heading{background:#295397;border-bottom:3px solid #d5b967;box-shadow:inset 0 0 0 3px #e1eafa}
+:root[data-palette=quest] .home-overview .home-news-heading h2,:root[data-palette=quest] .home-overview .home-news-heading h2 strong{color:#fff2c6}
+:root[data-palette=quest] .home-overview .home-news-heading p{color:#e2ebfa}
+:root[data-palette=quest] .home-overview .home-news-heading>.brief-pixel{color:#fff0c4}
+:root[data-palette=quest] .home-overview .home-news-heading button{background:#fff6da;border-color:#d9bd73;color:#214477;box-shadow:2px 2px 0 #18366b}
+:root[data-palette=quest] .home-overview .home-news-expand,:root[data-palette=quest] .home-overview .home-news-foot{background:#edf2fb}
+:root[data-palette=quest] .home-overview .list-heading,:root[data-palette=quest] .home-overview .filter-tabs{background:#d2e7cf}
+:root[data-palette=quest] .home-overview .desk-chart-head{background:#203c73;border-bottom-color:#d8b86a;box-shadow:inset 0 0 0 3px #e5ecfa}
+:root[data-palette=quest] .home-overview .home-guide{background:#eee4d0;border-color:#b8a678;box-shadow:3px 3px 0 #cabb94}
+:root[data-palette=quest] .home-overview .mobile-nav{background:#1e3b72;border-top:3px solid #d4b768}
+:root[data-palette=quest] .home-overview .mobile-nav button,:root[data-palette=quest] .home-overview .mobile-nav a{color:#e7edf9}
+:root[data-palette=quest] .home-overview .mobile-nav button.active{background:#f3dda0;color:#203f74}
+:root[data-palette=quest] .home-overview .topbar :focus-visible,:root[data-palette=quest] .home-overview .mobile-nav :focus-visible{outline-color:#ffe2a0}
+/* Final audit fixes apply in both comparison palettes. */
+.chart-range-note{margin:2px 14px 9px;padding:9px 11px;background:#f1f5fc;border:1px solid #b6c8e0;color:#284f7b;font-size:12px;line-height:1.65;word-break:keep-all}
+.chart-range-note strong{display:block;font-size:13px;color:#244677}.chart-range-note button{display:block;margin-top:7px;border:1px solid #5a779f;background:#fff;padding:6px 10px;color:#244677;min-height:38px;font:inherit}
+.chart-range-note[hidden]{display:none}.chart-indicators label{min-height:28px}.chart-under button{min-height:36px}
+:root.large-text .priority-next,:root.large-text .priority-fact,:root.large-text .followup-brief>span:not([class]),:root.large-text .home-guide p{font-size:15px}
+:root.large-text .chart-data-note,:root.large-text .chart-range-note{font-size:13px}
+:root.large-text .home-headline-list li{height:auto;min-height:100px}
+@media(max-width:760px){.chart-controls button{min-height:44px}.chart-controls{gap:7px}.chart-under button{min-width:44px;min-height:44px}.chart-indicators label{min-height:38px}.chart-indicators input{width:16px;height:16px}.chart-range-note{font-size:11px;margin-inline:10px}.chart-range-note strong{font-size:12px}.daily-brief-title{flex-wrap:wrap;gap:4px}.chart-under>span{white-space:normal;text-align:right;max-width:118px}.broker-chart.expanded .broker-canvas{height:calc(100dvh - 340px);min-height:215px}:root[data-palette=quest] .home-overview .home-jumps>a{box-shadow:2px 3px 0 #bca469}:root[data-palette=quest] .home-overview .home-jumps>a:nth-child(2){box-shadow:2px 3px 0 #a6b6d0}:root[data-palette=quest] .home-overview .home-jumps>a:nth-child(3){box-shadow:2px 3px 0 #99b99c}}
+/* Explicit foregrounds override inherited colors in the earlier pixel theme. */
+:root[data-palette=quest] .home-overview .brand svg{color:#f6d582}
+:root[data-palette=quest] .home-overview .example-date span{color:#d4dff3}
+:root[data-palette=quest] .home-overview .home-jumps>a:nth-child(2) .jump-copy>span,:root[data-palette=quest] .home-overview .home-jumps>a:nth-child(2) .jump-copy small{color:#f6e9bf;opacity:1}
+:root[data-palette=quest] .home-overview .home-news-heading h2 strong small{color:#e4ebfa}
+/* A sticky chart panel establishes a stacking context: lift it above navigation while expanded. */
+body.chart-expanded .home-chart-panel{z-index:2000;overflow:visible}
+body.chart-expanded .detail-panel,body.chart-expanded .room-reading{position:relative;z-index:2000;overflow:visible}

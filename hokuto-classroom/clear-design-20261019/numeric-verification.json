@@ -1,0 +1,38 @@
+{
+  "scope": "Fictional prototype only; not production or Nov 10 performance validation",
+  "allSevenStockObjectsEqual": true,
+  "themeAndMarketScoreResultsEqual": true,
+  "allNewsAndRoomFixturesEqual": true,
+  "candidateIdsUnchanged": [
+    "DEMO-D",
+    "DEMO-E",
+    "DEMO-F",
+    "DEMO-G"
+  ],
+  "decisionIdsUnchanged": [
+    "DEMO-D",
+    "DEMO-E",
+    "DEMO-F"
+  ],
+  "newbuyIdsUnchanged": [
+    "DEMO-E"
+  ],
+  "entireOHLCVFixtureByteIdentical": true,
+  "originalClosesPreserved": true,
+  "missingPricePreserved": true,
+  "sixMonthRange": {
+    "anchor": "latest supplied sample close, not the system clock",
+    "from": "2026-04-17",
+    "to": "2026-10-16",
+    "availablePriceRows": 20,
+    "blankDatesOnly": true,
+    "generatedHistoricalPrices": false,
+    "monthEndClampingPassed": true
+  },
+  "navigation": {
+    "mainEntrances": 6,
+    "collapsedExtraEntrances": 14,
+    "originalDestinationsPreserved": 19,
+    "recordsAndScoresGroupedAsOneTask": true
+  }
+}
