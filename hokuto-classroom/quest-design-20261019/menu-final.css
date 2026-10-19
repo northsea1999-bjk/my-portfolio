@@ -1,0 +1,4 @@
+/* Same menu architecture, all 19 destinations now use the integrated final theme. */
+.proposal-toolbar{display:none}.proposal-footnote{padding-bottom:30px}.map-footer{padding-bottom:25px}.topbar{border-bottom:1px solid #adbbce}.brand{color:#23344f}.home-link{border-color:#7a92b5;color:#2d527f;background:#f4f7fd}.intro-art{width:244px}.intro h1{color:#20334f}.daily-card{transition:transform .15s}.daily-card:hover{transform:translateY(-2px)}.step-card{transition:transform .15s}.step-card:hover{transform:translateY(-2px)}
+@media(max-width:760px){.intro-art{width:92px}.intro h1{font-size:29px}.topbar{padding-block:16px}.home-link{min-height:42px}.proposal-footnote{padding-bottom:90px}}
+@media(prefers-reduced-motion:reduce){.daily-card,.step-card{transition:none}}

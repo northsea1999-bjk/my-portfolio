@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="#23334e" name="theme-color"/>
+<meta content="내 일본 주식의 중요한 변화와 근거, 다음 확인을 모아 보는 호쿠토증권 디자인 시안. 모든 자료는 가상입니다." name="description"/>
+<title>알림 홈 · 호쿠토증권 최종 디자인 시안</title>
+<link href="../stock-home.css?v=20261019-2-0-2" rel="stylesheet"/>
+<link href="../stock-rooms.css?v=20261019-2-0-2" rel="stylesheet"/>
+<link href="../stock-navigation.css?v=20261019-2-0-2" rel="stylesheet"/>
+<link href="../stock-v2.css?v=20261019-2-0-2" rel="stylesheet"/>
+<script defer="" src="../stock-links.js?v=20261019-2-0-2"></script>
+<script defer="" src="../stock-rooms.js?v=20261019-2-0-2"></script>
+<script defer="" src="vendor/lightweight-charts-5.0.9.js"></script><script defer="" src="chart-fixture.js"></script><script defer="" src="broker-charts.js?v=4"></script><script defer="" src="app.js?v=4"></script>
+<link href="home-pixel.css?v=1" rel="stylesheet"/><script defer="" src="final-ui.js?v=1"></script><link href="final.css?v=2" rel="stylesheet"/><script src="quest-theme.js?v=4"></script><link href="quest-theme.css?v=4" rel="stylesheet"/></head>
+<body>
+<a class="skip" href="#workspace">본문으로 이동</a>
+<div class="demo-notice"><span class="demo-dot"></span><strong>최종 디자인 시안</strong><span>모든 종목·가격·분석·성과는 가상입니다.</span><a href="REVIEW.md" target="_top">검토 자료 <span aria-hidden="true">↗</span></a></div>
+<header class="topbar">
+<a aria-label="호쿠토증권 알림 홈" class="brand" data-home-link="" href="#view=home"><svg aria-hidden="true" viewbox="0 0 32 32"><path d="M13 0h6v7h4v6h9v6h-9v6h-4v7h-6v-7H9v-6H0v-6h9V7h4z" fill="currentColor"></path></svg><span>HOKUTO<small>호쿠토증권</small></span></a>
+<label class="global-search"><svg aria-hidden="true" viewbox="0 0 20 20"><circle cx="8.5" cy="8.5" r="5.5"></circle><path d="m13 13 4 4"></path></svg><input aria-label="종목 이름이나 코드 검색" autocomplete="off" id="stock-search" placeholder="종목 이름이나 코드 검색" type="search"/><kbd>/</kbd></label>
+<div class="top-actions"><span class="example-date">10월 18일 일요일 <span>· 예시</span></span><button aria-label="글자 크게 보기" aria-pressed="false" class="type-button" id="type-button">가<span>+</span></button></div>
+</header><div aria-label="주요 메뉴" class="home-navigation">
+<nav id="main-nav">
+<button class="nav-item active" data-nav="home"><span class="nav-icon" data-icon="home"></span>알림 홈</button>
+<button class="nav-item" data-nav="news"><span class="nav-icon" data-icon="file"></span>오늘 뉴스</button>
+<button class="nav-item" data-nav="held"><span class="nav-icon" data-icon="wallet"></span>내 주식<span class="nav-count">4</span></button>
+<button class="nav-item" data-nav="candidate"><span class="nav-icon" data-icon="compass"></span>결정실<span class="nav-count">3</span></button>
+<button class="nav-item" data-nav="scores"><span class="nav-icon" data-icon="chart"></span>성적표</button>
+</nav>
+<a class="nav-item" href="menu.html?v=4" id="all-menu"><span class="nav-icon" data-icon="grid"></span>전체 메뉴</a>
+</div>
+<div class="app-shell">
+<main class="main" id="workspace" tabindex="-1">
+<div class="page-heading" id="page-heading"><div><div class="eyebrow">호쿠토 핵심 브리핑</div><h1>내 일본 주식의 중요한 변화</h1><p>뉴스를 훑고, 보유 변화를 확인하고, 새 후보를 검토합니다.</p></div><svg aria-hidden="true" class="home-desk" focusable="false" shape-rendering="crispEdges" viewbox="0 0 244 98"><path d="M4 79h232v8H4zM15 88h222v3H15z" fill="#dfe8eb"></path><path d="M20 71h205v6H20zM30 77h6v15h-6zM209 77h6v15h-6z" fill="#29354b"></path><path d="M32 31h6v9h-6zM25 38h6v7h-6zM39 24h7v12h-7zM39 43h7v12h-7zM33 44h6v18h-6zM23 55h26v5H23z" fill="#42766b"></path><path d="M25 59h22v7H25zM29 66h14v5H29z" fill="#d89968"></path><path d="M67 13h103v5h5v49H62V18h5zM115 66h9v5h-9z" fill="#26344c"></path><path d="M68 20h101v40H68z" fill="#acc6eb"></path><path d="M74 25h45v29H74zM125 25h37v7h-37zM125 38h37v4h-37zM125 48h28v5h-28z" fill="#fffefa"></path><path d="M80 32h32v4H80zM80 42h19v5H80z" fill="#526fa5"></path><path d="M104 41h8v9h-8zM187 42h27v24h-27zM211 45h9v17h-9z" fill="#e9bf63"></path><path d="M214 49h3v9h-3z" fill="#fffefa"></path><path d="M186 66h29v5h-29zM80 68h31v3H80zM128 68h32v3h-32z" fill="#26344c"></path><path d="M189 12h4v4h4v4h-4v4h-4v-4h-4v-4h4zM50 8h3v5h-3zM47 11h9v2h-9z" fill="#d8a956"></path></svg></div><div class="asof"><span class="status-dot"></span>휴장일 · 최근 거래일 자료<small>가격·판정·뉴스 10.16 · 예시</small></div><nav aria-label="알림 홈 구역 바로가기" class="home-jumps"><a href="#briefing"><span aria-hidden="true" class="jump-icon"><svg viewbox="0 0 32 32"><use href="icons.svg#wallet"></use></svg></span><span class="jump-copy"><small>01 · 오늘 확인</small><strong>먼저 확인할 변화</strong><span>보유 경고와 새로운 후보</span></span><b aria-hidden="true" class="jump-arrow">↘</b></a><a href="#home-news"><span aria-hidden="true" class="jump-icon"><svg viewbox="0 0 32 32"><use href="icons.svg#news"></use></svg></span><span class="jump-copy"><small>02 · 오늘 확인</small><strong>오늘 어떤 소식이 있나요?</strong><span>전체 뉴스 제목부터 확인</span></span><b aria-hidden="true" class="jump-arrow">↘</b></a><a href="#workspace-grid"><span aria-hidden="true" class="jump-icon"><svg viewbox="0 0 32 32"><use href="icons.svg#chart"></use></svg></span><span class="jump-copy"><small>03 · 오늘 확인</small><strong>가격 흐름과 종목 확인</strong><span>차트에서 근거와 기록까지</span></span><b aria-hidden="true" class="jump-arrow">↘</b></a></nav>
+<nav aria-label="화면 이동" class="journey-bar" hidden="" id="journey-bar"></nav>
+<div class="home-top-grid"><section aria-label="먼저 확인할 중요한 변화" class="briefing" id="briefing"></section><section aria-labelledby="home-news-title" class="home-news" id="home-news"></section></div>
+<div class="workspace-grid" id="workspace-grid">
+<div class="overview-column" id="overview-column">
+<section aria-label="종목 목록" class="stock-list-panel">
+<div class="list-heading"><div><h2 id="list-title">전체 종목 <span>7</span></h2><p>종목을 선택해 판단 근거와 지난 기록을 확인하세요.</p></div><label class="sort-label"><span class="sr-only">정렬</span><select id="stock-sort"><option value="change">최근 변화순</option><option value="name">이름순</option><option value="return">가격 등락순</option></select></label></div>
+<div aria-label="종목 구분" class="filter-tabs" id="stock-filters" role="group"><button aria-pressed="true" data-filter="all">전체 <span>7</span></button><button aria-pressed="false" data-filter="held">내 주식 <span>4</span></button><button aria-pressed="false" data-filter="candidate">신규 후보 <span>3</span></button></div>
+<div class="table-labels"><span>종목 / 달라진 내용</span><span>최근 20거래일</span><span>종가 / 전일 대비</span></div>
+<div id="stock-list"></div>
+<p class="list-footnote">보유 점검과 결정실 판정은 서로 다른 기준입니다.<span class="price-color-key">한국식 색상 · + 상승(빨강) / − 하락(파랑)</span></p>
+</section>
+</div>
+<aside aria-label="종목 차트 미리보기" class="home-chart-panel" id="home-chart"></aside><section aria-label="선택한 종목 상세" class="detail-panel" id="detail-panel"><div id="stock-detail"></div></section>
+</div>
+<section class="scores-view" hidden="" id="scores-view"></section>
+<section aria-label="호쿠토 전체 메뉴와 상세 화면" class="explore-view" hidden="" id="explore-view"></section>
+<section aria-label="전체메뉴 안내" class="home-guide"><span aria-hidden="true" class="guide-art"><svg viewbox="0 0 32 32"><use href="icons.svg#office"></use></svg></span><div><span class="guide-kicker">다음에 볼 곳이 궁금하다면</span><h2>전체메뉴에서 확인 순서를 살펴보세요.</h2><p>시장·테마 → 후보·실적 → 판정·가격. 필요한 자료와 기록까지 연결됩니다.</p></div><a href="menu.html?v=4">전체 안내도 열기 <span aria-hidden="true">↗</span></a></section><footer class="page-footer">호쿠토증권 디자인 v2.0 <span>최종 디자인 시안 · 운영 미반영</span><small>모든 종목·뉴스·가격·판정·성과는 가상 자료입니다.</small></footer>
+</main>
+</div>
+<nav aria-label="휴대폰 주요 메뉴" class="mobile-nav"><button class="active" data-nav="home"><span data-icon="home"></span>알림 홈</button><button data-nav="held"><span data-icon="wallet"></span>내 주식</button><button data-nav="candidate"><span data-icon="compass"></span>결정실</button><button data-nav="news"><span data-icon="file"></span>뉴스</button><a href="menu.html?v=4" id="mobile-all-menu"><span data-icon="grid"></span>전체</a></nav>
+<dialog class="evidence-dialog" id="evidence-dialog"><div id="dialog-content"></div></dialog>
+<div aria-live="polite" class="sr-only" id="announcer" role="status"></div>
+<noscript><div class="noscript">종목 선택과 기록 보기는 자바스크립트를 켜야 사용할 수 있습니다.</div></noscript>
+</body>
+</html>

@@ -1,0 +1,43 @@
+{
+  "scope": "Fictional design prototype only. Not production / Nov 10 verification.",
+  "baselineCommit": "8e8f325e2b7f6556b5ad9dfd0ed57b4f927b16fd",
+  "allSevenStockObjectsEqual": true,
+  "allThemeAndMarketScoresEqual": true,
+  "entireOHLCVFixtureByteIdentical": true,
+  "allCloseArraysEqual": true,
+  "missingPricePreserved": true,
+  "annualWindow": {
+    "from": "2025-10-17",
+    "to": "2026-10-16",
+    "availablePriceRows": 20,
+    "blankDatesContainNoPriceOrVolume": true,
+    "extendedPricesInvented": false
+  },
+  "contrastPairs": [
+    {
+      "label": "header",
+      "ratio": 9.48
+    },
+    {
+      "label": "brief heading",
+      "ratio": 9.65
+    },
+    {
+      "label": "news heading",
+      "ratio": 6.75
+    },
+    {
+      "label": "news subtitle",
+      "ratio": 6.3
+    },
+    {
+      "label": "primary button",
+      "ratio": 8.3
+    },
+    {
+      "label": "year note",
+      "ratio": 7.7
+    }
+  ],
+  "librarySha256": "e6bd6516d9ab9cb897c0d6438e3fe1126f2fdce07e68c23836e84d527de81f52"
+}
