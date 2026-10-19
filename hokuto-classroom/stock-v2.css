@@ -61,6 +61,7 @@ select:focus-visible, summary:focus-visible {
   line-height: 1.65;
 }
 .asof { max-width: 245px; }
+.news-mode .asof { display: none; }
 .journey-bar, .journey-bar > span { color: var(--v2-muted); font-size: var(--v2-small); }
 .journey-bar button { min-height: 44px; font-size: var(--v2-body); }
 .page-footer, .page-footer > span, .page-footer small {
@@ -454,6 +455,8 @@ select:focus-visible, summary:focus-visible {
 /* Mobile uses the original list/detail switch and six-step 3-by-2 layout. */
 @media (max-width: 760px) {
   .topbar { height: auto; min-height: 126px; gap: 12px; padding: 12px 16px; }
+  .news-mode .topbar { min-height: 74px; }
+  .news-mode .global-search { display: none; }
   .brand { min-width: 116px; }
   .brand > span { font-size: 1.125rem; }
   .brand small { margin-top: 1px; }
@@ -531,8 +534,9 @@ select:focus-visible, summary:focus-visible {
   .home-more > p { padding-left: 17px; padding-right: 17px; }
   .home-news-footer { padding-left: 17px; padding-right: 17px; }
   .news-tools { padding-left: 18px; padding-right: 18px; }
-  .news-tools label { flex-basis: 100%; }
-  .news-tools .news-country { flex-basis: 100%; }
+  .news-tools { gap: 8px; }
+  .news-tools .news-search { flex: 1 1 140px; }
+  .news-tools .news-country { flex: 0 0 110px; }
   .headline-row { grid-template-columns: 52px minmax(0,1fr); padding: 11px 18px; align-items: start; gap: 3px 10px; }
   .headline-row > time, .headline-row > .news-time { padding-top: 10px; }
   .headline-row > .headline-state, .headline-row > .headline-meta { grid-column: 2; max-width: none; }

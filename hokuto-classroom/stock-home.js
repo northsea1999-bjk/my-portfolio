@@ -197,6 +197,7 @@
     const focused=state.view==='home'&&state.detail&&!!state.from;
     document.body.classList.toggle('mobile-detail',state.detail&&!scores&&!explore);
     document.body.classList.toggle('explore-mode',explore);
+    document.body.classList.toggle('news-mode',state.view==='room'&&state.room==='news');
     document.body.classList.toggle('focused-detail',focused);
     document.body.classList.toggle('home-overview',state.view==='home'&&!focused&&!state.query);
     $('#workspace-grid').hidden=scores||explore;$('#briefing').hidden=scores||explore||focused||!!state.query;$('#scores-view').hidden=!scores;
