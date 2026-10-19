@@ -5,7 +5,10 @@ const {catalog,sections,workflow,resolve,normaliseBase,destination}=require(path
 // The review changes presentation only; compare every fixture against the retained v9 input.
 const frozen=path.join(dir,'review-v9-20261018','preview');
 assert.deepEqual(require(path.join(dir,'stock-home.js')).stocks,require(path.join(frozen,'stock-home.js')).stocks);
-assert.deepEqual(require(path.join(dir,'stock-rooms.js')),require(path.join(frozen,'stock-rooms.js')));
+const currentRooms=require(path.join(dir,'stock-rooms.js')),frozenRooms=require(path.join(frozen,'stock-rooms.js'));
+// Menu labels may change. Every analysis/input fixture and every route contract stays frozen.
+for(const key of Object.keys(frozenRooms).filter(key=>key!=='catalog'))assert.deepEqual(currentRooms[key],frozenRooms[key],key);
+assert.deepEqual(catalog.map(({id,path,related,preview,scope,group})=>({id,path,related,preview,scope,group})),frozenRooms.catalog.map(({id,path,related,preview,scope,group})=>({id,path,related,preview,scope,group})));
 
 const expected=['news_board.html','theme_news.html','research_new.html','recommend.html','hokuto_today.html','decision_room.html','hokuto_fun.html','bnf_signal.html','holdings_room.html','newbuy_room.html','performance_room.html','selection_results.html','trading_logic.html'];
 assert.deepEqual(catalog.filter(m=>m.group==='original').map(m=>m.path).sort(),[...expected,'hokuto_main.html#room1','hokuto_main.html#room2'].sort());
@@ -57,7 +60,7 @@ function app(initial='#view=menu',mobile=false,saved={}){
   for(const m of found[2].matchAll(/([\w-]+)(?:="([^"]*)")?/g)){const[k,v]=[m[1],m[2]||''];b.attrs[k]=v;if(k==='id')b.id=v;if(k.startsWith('data-'))b.dataset[k.slice(5).replace(/-([a-z])/g,(_,c)=>c.toUpperCase())]=v;}
   if(!b.hasAttribute('disabled'))event(listeners,'click',{target:b,preventDefault(){}});return b;
  }
- return {ctx,click,markup,input:(id,value)=>{const target=document.querySelector('#'+id);target.value=value;event(listeners,'input',{target})},state:()=>Object.fromEntries(new URLSearchParams(url.hash.slice(1))),node:q=>document.querySelector(q),storage};
+ return {ctx,click,markup,input:(id,value)=>{const target=document.querySelector('#'+id);target.value=value;event(listeners,'input',{target})},change:(id,value)=>{const target=document.querySelector('#'+id);target.value=value;event(listeners,'change',{target})},state:()=>Object.fromEntries(new URLSearchParams(url.hash.slice(1))),node:q=>document.querySelector(q),storage};
 }
 for(const mobile of [false,true]){
  const a=app('#view=menu&room=news',mobile);
@@ -77,6 +80,33 @@ for(const mobile of [false,true]){
  assert.equal((b.markup('#briefing').match(/class="priority-brief"/g)||[]).length,1);
  assert(b.markup('#briefing').includes('120 → 108억 엔'));
  assert(b.markup('#stock-detail').includes('아오이 게임즈'));
+ assert(b.markup('#home-news').includes('오늘 뉴스 제목'));
+ assert.equal((b.markup('#home-news').match(/data-headline=/g)||[]).length,3);
+ b.click('data-headlines-expand',undefined,'#home-news');
+ assert.equal((b.markup('#home-news').match(/data-headline=/g)||[]).length,6);
+ assert(b.markup('#home-news').includes('공급 회사는 미공개'));
+ b.click('data-headline','contract','#home-news');assert.equal(b.state().room,'news');
+ assert(b.node('#evidence-dialog').open);b.click('id','close-dialog','#dialog-content');
+ b.click('id','journey-back','#journey-bar');assert.equal(b.state().headlinesExpanded,'true');
+ b.click('data-headline','game','#home-news');assert(b.node('#evidence-dialog').open);
+ b.ctx.history.back();assert.equal(b.state().view,'home');assert(!b.node('#evidence-dialog').open);
+ b.click('data-headline','contract','#home-news');
+ b.click('id','close-dialog','#dialog-content');b.click('id','journey-back','#journey-bar');
+ const news=app('#view=room&room=news',mobile);
+ const articleIds=()=>[...news.markup('#explore-view').matchAll(/data-article="([^"]+)"/g)].map(x=>x[1]);
+ assert.deepEqual(articleIds(),['contract','game','ai','grid','parts','pending']);
+ news.change('news-country','미국');assert.deepEqual(articleIds(),['grid']);
+ news.change('news-country','all');news.click('data-room-filter','held','#explore-view');
+ assert.deepEqual(articleIds(),['contract','game','parts']);
+ news.input('news-search','게임즈');assert.deepEqual(articleIds(),['game']);news.ctx.scrollY=280;
+ news.click('data-article','game','#explore-view');news.click('data-room-stock','DEMO-B','#dialog-content');
+ news.click('id','return-room','#stock-detail');assert.equal(news.state().newsQuery,'게임즈');assert.equal(news.state().section,'held');assert.equal(news.ctx.scrollY,280);
+ news.input('news-search','없는뉴스');assert(news.markup('#explore-view').includes('조건에 맞는 뉴스가 없습니다'));
+ news.click('data-news-reset',undefined,'#explore-view');assert.equal(articleIds().length,6);
+ news.click('data-room-filter','pending','#explore-view');news.click('data-article','pending','#explore-view');
+ assert(!news.markup('#dialog-content').includes('data-room-stock='),'Unverified article must not link to an arbitrary company');
+ news.click('id','close-dialog','#dialog-content');news.click('data-news-mode','analysis','#explore-view');
+ assert(news.markup('#explore-view').includes('원문과 회사 연결을 아직 확인하지 못했습니다'));
  const stockRow=id=>b.markup('#stock-list').match(new RegExp('<button[^>]*data-stock=\"'+id+'\"[^>]*>[\\s\\S]*?</button>'))?.[0]||'';
  assert(stockRow('DEMO-D').includes('보유 점검 정상'));assert(stockRow('DEMO-D').includes('결정실 매수대상'));
  for(const id of ['DEMO-A','DEMO-B','DEMO-C'])assert(stockRow(id).includes('결정실 미입력'));

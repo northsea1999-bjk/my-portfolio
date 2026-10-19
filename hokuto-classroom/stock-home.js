@@ -101,7 +101,7 @@
     const view=['home','scores','menu','room'].includes(p.get('view'))?p.get('view'):'home';
     const stock=stocks.some(s=>s.id===p.get('stock'))?p.get('stock'):'DEMO-B';
     const room=rooms.resolve(p.get('room')),from=rooms.resolve(p.get('from'));
-    return {view,stock,filter:['all','held','candidate'].includes(p.get('filter'))?p.get('filter'):'all',tab:['overview','history','score'].includes(p.get('tab'))?p.get('tab'):'overview',date:p.get('date')||'',detail:p.get('detail')==='1',query:p.get('q')||'',sort:['change','name','return'].includes(p.get('sort'))?p.get('sort'):'change',benchmark:p.get('benchmark')==='market'?'market':'theme',round:p.get('round')==='past'?'past':'current',period:p.get('period')==='5'?'5':'20',room:rooms.catalog.some(m=>m.id===room)?room:'news',section:p.get('section')||'all',topic:p.get('topic')||'chip',item:p.get('item')||'',flowTopic:p.get('flowTopic')||'',menuQuery:p.get('menuQuery')||'',from:rooms.catalog.some(m=>m.id===from)?from:''};
+    return {view,stock,filter:['all','held','candidate'].includes(p.get('filter'))?p.get('filter'):'all',tab:['overview','history','score'].includes(p.get('tab'))?p.get('tab'):'overview',date:p.get('date')||'',detail:p.get('detail')==='1',query:p.get('q')||'',sort:['change','name','return'].includes(p.get('sort'))?p.get('sort'):'change',benchmark:p.get('benchmark')==='market'?'market':'theme',round:p.get('round')==='past'?'past':'current',period:p.get('period')==='5'?'5':'20',room:rooms.catalog.some(m=>m.id===room)?room:'news',section:p.get('section')||'all',topic:p.get('topic')||'chip',item:p.get('item')||'',flowTopic:p.get('flowTopic')||'',menuQuery:p.get('menuQuery')||'',newsQuery:p.get('newsQuery')||'',newsCountry:p.get('newsCountry')||'all',newsMode:p.get('newsMode')==='analysis'?'analysis':'titles',headlinesExpanded:p.get('headlinesExpanded')==='true',from:rooms.catalog.some(m=>m.id===from)?from:''};
   }
   function route(patch,replace=false){
     const scroll=window.scrollY,previousView=state.view;
@@ -133,6 +133,7 @@
   }
   function locationChanged(){
     if(location.hash===renderedHash)return;
+    if($('#evidence-dialog').open)$('#evidence-dialog').close();
     state=readState();originContext=history.state?.hokutoOrigin||null;render();
     requestAnimationFrame(()=>window.scrollTo({top:history.state?.hokutoScroll||0}));
   }
@@ -183,7 +184,7 @@
     const s=selectedStock();
     const names={overview:'현재 분석',history:'변화·기록',score:'성적표'};
     $('#stock-detail').innerHTML=`<div class="detail-top">${state.from?`<button class="return-room" id="return-room">← ${rooms.menu(state.from).name} 돌아가기</button>`:'<button class="mobile-back" id="back-list">← 종목 목록으로</button>'}<div class="detail-label">${badge(s.group==='held'?'보유 예시':'신규 후보 예시',s.group==='held'?'gray':'blue')}<span>일본 주식 · 가상 종목</span><span class="selected-label">선택한 종목</span></div><div class="detail-identity">${avatar(s)}<div><h2 id="detail-heading" tabindex="-1">${s.name}</h2><small>${s.id} · ${s.theme}</small></div></div><div class="detail-price-line"><div class="detail-price">${priceText(s.price)}${s.price==null?'':'<span>엔</span>'}</div><div class="day-return ${colorClass(s.change)}">${signed(s.change)}</div></div><div class="price-asof">최근 종가 · 2026.10.16 / 전일 대비 · 가상 가격</div></div><div class="detail-tabs" role="tablist" aria-label="종목 상세 메뉴">${Object.entries(names).map(([key,label])=>`<button role="tab" id="tab-${key}" aria-selected="${state.tab===key}" aria-controls="detail-body" tabindex="${state.tab===key?'0':'-1'}" data-tab="${key}">${label}</button>`).join('')}</div><div class="detail-body" id="detail-body" role="tabpanel" aria-labelledby="tab-${state.tab}">${state.tab==='history'?historyView(s):state.tab==='score'?stockScore(s):overview(s)}</div>`;
-    document.title=`${state.detail?s.name+' · ':''}${state.view==='scores'?'성적표':'종목의 오늘'} · 호쿠토증권 시안`;
+    document.title=`${state.detail?s.name+' · ':''}${state.view==='scores'?'성적표':'종목의 오늘'} · 호쿠토증권 디자인 v2.0`;
   }
   function renderScores(){
     const benchmark=state.benchmark==='market'?'시장(1306 ETF)':'같은 테마';
@@ -200,19 +201,21 @@
     document.body.classList.toggle('home-overview',state.view==='home'&&!focused&&!state.query);
     $('#workspace-grid').hidden=scores||explore;$('#briefing').hidden=scores||explore||focused||!!state.query;$('#scores-view').hidden=!scores;
     $('#explore-view').hidden=!explore;
+    $('#home-news').hidden=scores||explore||focused||!!state.query;
+    $('#home-news').innerHTML=rooms.homeNews();
     $('#overview-column').hidden=focused;
-    const active=explore?(state.view==='room'&&state.room==='holdings'?'held':state.view==='room'&&state.room==='decision'?'candidate':'menu'):scores?'scores':'home';
+    const active=explore?(state.view==='room'&&state.room==='holdings'?'held':state.view==='room'&&state.room==='decision'?'candidate':state.view==='room'&&state.room==='news'?'news':'menu'):scores?'scores':'home';
     $$('[data-nav]').forEach(b=>{b.classList.toggle('active',b.dataset.nav===active);if(b.closest('nav'))b.setAttribute('aria-current',b.dataset.nav===active?'page':'false');});
     ['all-menu','mobile-all-menu'].forEach(id=>{const b=$('#'+id);b.classList.toggle('active',active==='menu');if(active==='menu')b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});
     $('#page-heading h1').textContent=scores?'판단의 성적표':focused?'종목 분석':state.query?'종목 검색':state.filter==='held'?'내 주식의 오늘':state.filter==='candidate'?'새로 살펴볼 종목':'내 일본 주식의 중요한 변화';
-    $('#page-heading p').textContent=scores?'그때의 판단과, 그 뒤의 결과를 함께.':focused?rooms.menu(state.from).name+'에서 이어 보는 분석과 당시 기록':state.query?'이름·코드·테마가 일치하는 종목을 찾습니다.':'내 주식의 변화와 근거, 다음 확인을 한곳에서.';
+    $('#page-heading p').textContent=scores?'그때의 판단과, 그 뒤의 결과를 함께.':focused?rooms.menu(state.from).name+'에서 이어 보는 분석과 당시 기록':state.query?'이름·코드·테마가 일치하는 종목을 찾습니다.':'뉴스를 훑고, 보유 변화를 확인하고, 새 후보를 검토합니다.';
     $('#page-heading .eyebrow').textContent=scores?'기록과 결과':focused?'한 회사의 근거와 기록':'호쿠토 핵심 브리핑';
     const journey=$('#journey-bar');journey.hidden=!(explore||scores);
     journey.innerHTML=`<button id="journey-back">← 이전 화면</button><span>${scores?'기록과 결과':state.view==='menu'?'전체 메뉴':rooms.menu(state.room).owner||'호쿠토'}</span>`;
     renderBriefing();renderList();renderDetail();if(scores)renderScores();
     if(explore)rooms.render();
     $$('[data-icon]').forEach(el=>el.innerHTML=icon(el.dataset.icon));
-    if(!explore)document.title=`${scores?'종목별 성적표':'알림 홈'} · 호쿠토증권 시안`;
+    if(!explore)document.title=`${scores?'종목별 성적표':'알림 홈'} · 호쿠토증권 디자인 v2.0`;
     renderedHash=location.hash;
   }
   function selectStock(id,tab='overview',extra={}){
@@ -242,11 +245,12 @@
     if(ev.target.closest('.skip')){ev.preventDefault();$('#workspace').focus();$('#workspace').scrollIntoView();return;}
     const b=ev.target.closest('button');if(!b)return;
     if(rooms.onClick(b))return;
-    if(b.dataset.nav){const n=b.dataset.nav;if(n==='held'||n==='candidate'){rooms.navigate(n==='held'?'holdings':'decision');return;}route({view:n==='scores'?'scores':'home',filter:'all',detail:false,query:'',from:''});window.scrollTo({top:0});return;}
+    if(b.dataset.nav){const n=b.dataset.nav;if(n==='held'||n==='candidate'||n==='news'){rooms.navigate(n==='held'?'holdings':n==='news'?'news':'decision');return;}route({view:n==='scores'?'scores':'home',filter:'all',detail:false,query:'',from:''});window.scrollTo({top:0});return;}
     if(b.id==='journey-back'){goBack();return;}
     if(b.dataset.stock){selectStock(b.dataset.stock);return;}
     if(b.dataset.open){selectStock(b.dataset.open,b.dataset.openTab||'overview');return;}
     if(b.dataset.filter){route({filter:b.dataset.filter,detail:false});return;}
+    if(b.hasAttribute('data-headlines-expand')){route({headlinesExpanded:!state.headlinesExpanded},true);return;}
     if(b.dataset.tab){route({tab:b.dataset.tab,date:'',round:'current'});return;}
     if(b.dataset.period){route({period:b.dataset.period},true);return;}
     if(b.dataset.date){route({date:b.dataset.date});return;}
@@ -262,6 +266,15 @@
     if(b.id==='close-dialog'){$('#evidence-dialog').close();return;}
   });
   $('#stock-search').addEventListener('input',e=>route({query:e.target.value,view:'home',detail:false,from:''},true));
+  document.addEventListener('input',e=>{
+    if(e.target.id!=='news-search'||e.isComposing)return;
+    const value=e.target.value;
+    const caret=e.target.selectionStart;
+    route({newsQuery:value,item:''},true);
+    const input=$('#news-search');input.focus({preventScroll:true});
+    if(caret!=null)input.setSelectionRange?.(caret,caret);
+  });
+  document.addEventListener('change',e=>{if(e.target.id==='news-country')route({newsCountry:e.target.value,item:''},true);});
   document.addEventListener('input',e=>{if(e.target.id==='menu-search'){const value=e.target.value;route({menuQuery:value},true);const input=$('#menu-search');input.focus();}});
   $('#stock-sort').addEventListener('change',e=>route({sort:e.target.value},true));
   document.addEventListener('change',e=>{if(e.target.id==='score-round')route({round:e.target.value},true);});

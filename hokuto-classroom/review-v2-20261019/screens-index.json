@@ -1,0 +1,170 @@
+[
+  {
+    "id": "home",
+    "title": "첫 화면",
+    "hash": "#view=home",
+    "kind": "home"
+  },
+  {
+    "id": "menu",
+    "title": "전체 메뉴",
+    "hash": "#view=menu",
+    "kind": "room"
+  },
+  {
+    "id": "meeting",
+    "title": "리서치 회의실",
+    "hash": "#view=room&room=meeting&topic=ai",
+    "kind": "room"
+  },
+  {
+    "id": "strategy",
+    "title": "펀드매니저 전략실",
+    "hash": "#view=room&room=strategy",
+    "kind": "room"
+  },
+  {
+    "id": "news",
+    "title": "오늘 뉴스 · 뉴스룸",
+    "hash": "#view=room&room=news",
+    "kind": "room"
+  },
+  {
+    "id": "themes",
+    "title": "테마뉴스",
+    "hash": "#view=room&room=themes",
+    "kind": "room"
+  },
+  {
+    "id": "research",
+    "title": "북두테마 상세",
+    "hash": "#view=room&room=research",
+    "kind": "room"
+  },
+  {
+    "id": "recommend",
+    "title": "펀드매니저 종목검증실",
+    "hash": "#view=room&room=recommend&item=DEMO-E&flowTopic=ai",
+    "kind": "room"
+  },
+  {
+    "id": "ops",
+    "title": "리서치 작전실",
+    "hash": "#view=room&room=ops&topic=ai",
+    "kind": "room"
+  },
+  {
+    "id": "decision",
+    "title": "결정실",
+    "hash": "#view=room&room=decision",
+    "kind": "room"
+  },
+  {
+    "id": "park",
+    "title": "사장실 · 놀이공원",
+    "hash": "#view=room&room=park",
+    "kind": "room"
+  },
+  {
+    "id": "signals",
+    "title": "BNF 신호실",
+    "hash": "#view=room&room=signals",
+    "kind": "room"
+  },
+  {
+    "id": "holdings",
+    "title": "내 주식",
+    "hash": "#view=room&room=holdings&item=DEMO-B",
+    "kind": "room"
+  },
+  {
+    "id": "newbuy",
+    "title": "신규매수실",
+    "hash": "#view=room&room=newbuy&item=DEMO-E",
+    "kind": "room"
+  },
+  {
+    "id": "performance",
+    "title": "성과기록",
+    "hash": "#view=room&room=performance",
+    "kind": "room"
+  },
+  {
+    "id": "selection",
+    "title": "선정성적",
+    "hash": "#view=room&room=selection",
+    "kind": "room"
+  },
+  {
+    "id": "tradingGuide",
+    "title": "매매 전략·규칙",
+    "hash": "#view=room&room=tradingGuide",
+    "kind": "room"
+  },
+  {
+    "id": "today",
+    "title": "기존 오늘 화면",
+    "hash": "#view=room&room=today",
+    "kind": "room"
+  },
+  {
+    "id": "office",
+    "title": "기존 사무실",
+    "hash": "#view=room&room=office",
+    "kind": "room"
+  },
+  {
+    "id": "records",
+    "title": "종목별 변화·기록",
+    "hash": "#view=room&room=records",
+    "kind": "room"
+  },
+  {
+    "id": "scores",
+    "title": "종목별 성적표",
+    "hash": "#view=scores",
+    "kind": "scores"
+  },
+  {
+    "id": "strategy-ai",
+    "title": "선택한 테마의 후보",
+    "hash": "#view=room&room=strategy&topic=ai&flowTopic=ai",
+    "kind": "room"
+  },
+  {
+    "id": "newbuy-intraday",
+    "title": "신규매수실 · 장중 지연 시세",
+    "hash": "#view=room&room=newbuy&item=DEMO-E&section=intraday&flowTopic=ai",
+    "kind": "room"
+  },
+  {
+    "id": "decision-hold",
+    "title": "결정실 · 보류 종목",
+    "hash": "#view=room&room=decision&item=DEMO-F&section=%EB%B3%B4%EB%A5%98",
+    "kind": "room"
+  },
+  {
+    "id": "verification-missing",
+    "title": "종목검증실 · 선정 자료 미확인",
+    "hash": "#view=room&room=recommend&item=DEMO-G",
+    "kind": "room"
+  },
+  {
+    "id": "company-analysis",
+    "title": "회사 분석 · 집중 화면",
+    "hash": "#view=home&stock=DEMO-B&detail=1&from=holdings&tab=overview",
+    "kind": "detail"
+  },
+  {
+    "id": "company-history",
+    "title": "회사 분석 · 과거 기록",
+    "hash": "#view=home&stock=DEMO-B&detail=1&from=holdings&tab=history&date=2026-10-13",
+    "kind": "detail"
+  },
+  {
+    "id": "company-input",
+    "title": "과거 분석에 사용한 입력 자료",
+    "hash": "#view=home&stock=DEMO-B&detail=1&from=holdings&tab=history&date=2026-10-13",
+    "kind": "dialog"
+  }
+]

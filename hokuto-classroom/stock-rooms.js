@@ -62,7 +62,7 @@
     let operatingBase='';
     try { const saved=localStorage.getItem('hokuto-operating-base-v1');if(saved)operatingBase=links.normaliseBase(saved); } catch {}
     let pendingSource='';
-    function sourceAction(m,label='기존 화면',klass='source-link'){
+    function sourceAction(m,label='운영 화면',klass='source-link'){
       return operatingBase?`<a class="${klass}" href="${esc(links.destination(m.id,operatingBase))}" target="_blank" rel="noopener noreferrer" aria-label="${m.brief?m.name+'이 있는 사무실 위치':m.name+' 기존 화면'} 새 탭에서 열기">${label} <span aria-hidden="true">↗</span></a>`:`<button class="${klass}" data-connect-source="${m.id}" aria-label="${m.name} 기존 화면 연결">${label} <span aria-hidden="true">↗</span></button>`;
     }
     function connectionDialog(id=''){
@@ -85,10 +85,10 @@
     function navigate(id,extra={}){
       id=links.resolve(id);
       if(id==='scores'){route({view:'scores',detail:false,from:'',query:''});}
-      else {route({view:'room',room:id,detail:false,from:'',section:'all',item:'',flowTopic:'',...extra});}
+      else {route({view:'room',room:id,detail:false,from:'',section:'all',item:'',flowTopic:'',newsQuery:'',newsCountry:'all',newsMode:'titles',...extra});}
       window.scrollTo({top:0});
       if(extra.item)requestAnimationFrame(()=>{
-        const target=document.querySelector('[data-focus-item="'+extra.item+'"]');
+        const target=document.querySelector('#explore-view [data-focus-item="'+extra.item+'"]');
         if(target){target.scrollIntoView({block:'center'});target.focus({preventScroll:true});}
       });
     }
@@ -101,7 +101,7 @@
       const groups=[['리서치','어느 테마를 볼까',['meeting','ops']],['펀드매니저','어떤 회사를 볼까',['strategy','recommend']],['판정과 가격 확인','다음에 무엇을 확인할까',['decision','newbuy']]];
       const columns=groups.map(([name,copy,ids])=>({name,copy,items:ids.map(menu).filter(m=>matches.includes(m))})).filter(g=>g.items.length);
       if(!columns.length)return '';
-      return `<section class="workflow-directory"><div class="workflow-heading"><div><span class="eyebrow">후보를 검토하는 순서</span><h2>테마를 읽고, 회사를 확인하고, 가격을 봅니다.</h2></div><span>6단계</span></div><div class="workflow-columns">${columns.map(g=>`<section><header><h3>${g.name}</h3><p>${g.copy}</p></header>${g.items.map(workflowCard).join('')}</section>`).join('')}</div><p class="workflow-caption">번호는 읽는 순서입니다. ‘후보 선정 · 실적 확인 · 최종 판정 · 진입 확인’의 결과는 서로 구분합니다.</p></section>`;
+      return `<section class="workflow-directory"><div class="workflow-heading"><div><span class="eyebrow">후보를 검토하는 순서</span><h2>새 종목 검토는 1단계부터 시작하세요.</h2></div><span>6단계</span></div><div class="workflow-columns">${columns.map(g=>`<section><header><h3>${g.name}</h3><p>${g.copy}</p></header>${g.items.map(workflowCard).join('')}</section>`).join('')}</div><p class="workflow-caption">번호는 읽는 순서입니다. ‘후보 선정 · 실적 확인 · 최종 판정 · 진입 확인’의 결과는 서로 구분합니다.</p></section>`;
     }
     function directory(){
       const q=get().menuQuery.trim().toLowerCase();
@@ -138,7 +138,7 @@
     }
     function context(){
       const m=menu(get().room);
-      const source=m.path&&m.preview?`<div class="room-tools">${m.brief?`<span>기존 사무실에서 ${m.brief}을 누르세요.</span>`:''}${sourceAction(m,m.brief?'사무실의 해당 위치':'기존 화면 열기')}</div>`:'';
+      const source=m.path&&m.preview?`<div class="room-tools">${m.brief?`<span>기존 사무실에서 ${m.brief}을 누르세요.</span>`:''}${sourceAction(m,m.brief?'사무실의 해당 위치':'운영 화면 열기')}</div>`:'';
       return workflowProgress()+source;
     }
     function continuation(){
@@ -153,9 +153,24 @@
     function articleCard(a){
       return `<article class="news-entry ${get().item===a.id?'is-focused':''}" data-focus-item="${a.id}" tabindex="-1"><div class="news-time">${a.time}<small>10.16</small></div><div class="news-entry-content"><div class="news-tags">${badge(a.state,a.kind==='direct'?'teal':a.kind==='pending'?'amber':'gray')}<span>${a.country} · ${topic(a.topic).name}</span></div><button class="news-headline" data-article="${a.id}">${a.title}</button><p>${a.summary}</p><div class="news-related">${a.stock?stockButton(a.stock):`<span>${a.kind==='pending'?'분석 완료 후 연결 확인':'회사 직접 연결 없음'}</span>`}<button data-article="${a.id}">내용과 근거 <span aria-hidden="true">→</span></button></div></div></article>`;
     }
+    function newsItems(section='all',query='',country='all'){
+      const q=query.trim().toLowerCase();
+      return articles.filter(a=>(section==='all'||section==='held'&&a.stock&&stock(a.stock).group==='held'||section==='candidate'&&a.stock&&stock(a.stock).group==='candidate'||section==='industry'&&a.kind==='industry'||section==='pending'&&a.kind==='pending')
+        &&(country==='all'||country==='other'&&!['일본','미국'].includes(a.country)||a.country===country)
+        &&(!q||`${a.title} ${a.summary} ${a.country} ${topic(a.topic).name} ${a.stock?stock(a.stock).name:''}`.toLowerCase().includes(q)))
+        .sort((a,b)=>b.time.localeCompare(a.time));
+    }
+    function headlineRow(a,home=false){
+      return `<li class="${home?'home-headline':'headline-row'} ${get().item===a.id?'is-focused':''}" data-focus-item="${a.id}" tabindex="-1"><time datetime="2026-10-16T${a.time}:00+09:00">${a.time}</time><button ${home?'data-headline':'data-article'}="${a.id}">${esc(a.title)}</button><span class="headline-state">${esc(a.state)}</span></li>`;
+    }
+    function homeNews(){
+      const items=newsItems(),first=items.slice(0,3),rest=items.slice(3),expanded=get().headlinesExpanded;
+      return `<div class="home-news-heading"><div><h2 id="home-news-title">오늘 뉴스 제목 <strong>${items.length}<small>개 · 예시</small></strong></h2><p>뉴스룸 전체 목록 · 10.16 수집 예시 · 최신순</p></div>${roomButton('news','전체 뉴스 보기')}</div><ul class="home-headline-list">${first.map(a=>headlineRow(a,true)).join('')}</ul>${rest.length?`<div class="home-more"><button data-headlines-expand aria-expanded="${expanded}" aria-controls="more-headlines">${expanded?'접기':'나머지 '+rest.length+'개 보기'} <span aria-hidden="true">${expanded?'↑':'↓'}</span></button>${expanded?`<ul class="home-headline-list" id="more-headlines">${rest.map(a=>headlineRow(a,true)).join('')}</ul>`:'<div id="more-headlines" hidden></div>'}</div>`:''}<div class="home-news-footer"><span>제목을 누르면 기사 내용과 연결 근거가 열립니다.</span>${sourceAction(menu('news'),'운영 뉴스룸')}</div>`;
+    }
     function news(){
-      const state=get(),items=articles.filter(a=>state.section==='all'||state.section==='held'&&a.stock&&stock(a.stock).group==='held'||state.section==='industry'&&a.kind==='industry'||state.section==='pending'&&a.kind==='pending');
-      return `<div class="room-two-column"><section class="room-paper"><div class="room-paper-heading"><div><h2>오늘의 소식</h2><p>가상 기사 6건 · 10.16 수집 예시</p></div><span class="small-asof">수집시각순</span></div>${chips([['all','전체 6'],['held','내 주식 3'],['industry','업종 참고 1'],['pending','분석 대기 1']],state.section,'data-room-filter','뉴스 범위')}<div class="news-feed">${items.map(articleCard).join('')}</div></section><aside class="room-aside"><section class="room-paper room-reading"><span class="eyebrow">FOLLOW THE CHANGE</span><h2>협의가 계약으로<br>바뀌었어요.</h2><p>호쿠토 반도체의 같은 사건을 이어서 봅니다.</p><div class="follow-mini"><div><time>10.13</time><strong>공급 협의</strong><small>금액·납기 미확정</small></div><div><time>10.16</time><strong>계약 체결</strong><small>42억 엔 · 이익 영향 미확인</small></div></div>${stockButton('DEMO-A','후속 기록 보기','history')}</section><section class="room-paper room-reading"><h3>읽을 때 구분해요</h3><ul class="reading-list"><li><b>직접 연결</b><span>회사와 사건을 함께 확인</span></li><li><b>업종 참고</b><span>회사 영향은 별도로 확인</span></li><li><b>분석 대기</b><span>아직 영향 판단이 없음</span></li></ul>${roomButton('themes','테마별로 모아보기')}</section></aside></div>`;
+      const state=get(),items=newsItems(state.section,state.newsQuery,state.newsCountry),all=newsItems();
+      const filters=[['all','전체'],['held','내 주식'],['candidate','신규 후보'],['industry','업종 참고'],['pending','분석 대기']].map(([id,label])=>[id,label+' '+newsItems(id).length]);
+      return `<div class="room-two-column"><section class="room-paper"><div class="room-paper-heading"><div><h2>오늘 뉴스 제목 <span class="list-size">전체 ${all.length}개 · 예시</span></h2><p>회사에 연결되지 않은 뉴스도 함께 봅니다.</p></div></div><div class="news-tools"><label class="news-search"><span>뉴스 검색</span><input id="news-search" type="search" placeholder="제목·회사·테마 검색" value="${esc(state.newsQuery)}"></label><label class="news-country">국가<select id="news-country"><option value="all" ${state.newsCountry==='all'?'selected':''}>전체 국가</option><option value="일본" ${state.newsCountry==='일본'?'selected':''}>일본</option><option value="미국" ${state.newsCountry==='미국'?'selected':''}>미국</option><option value="other" ${state.newsCountry==='other'?'selected':''}>기타·미확인</option></select></label></div>${chips(filters,state.section,'data-room-filter','뉴스 범위')}<div class="news-list-caption"><span>${items.length}개 표시 / 전체 ${all.length}개 · 최신순</span>${chips([['titles','제목만'],['analysis','분석 함께']],state.newsMode,'data-news-mode','뉴스 보기 방식')}</div>${items.length?(state.newsMode==='analysis'?`<div class="news-feed">${items.map(articleCard).join('')}</div>`:`<ul class="news-headline-list">${items.map(a=>headlineRow(a)).join('')}</ul>`):`<div class="news-empty"><h3>조건에 맞는 뉴스가 없습니다.</h3><p>다른 검색어를 입력하거나 필터를 초기화하세요.</p><button class="room-text-link" data-news-reset>전체 뉴스로 돌아가기 →</button></div>`}<p class="news-origin-note">10.16 수집 가상 뉴스 ${all.length}개입니다. 현재 운영 뉴스는 상단의 ‘운영 화면’에서 확인하세요.</p></section><aside class="room-aside"><section class="room-paper room-reading"><span class="eyebrow">지난 기사에서 달라진 것</span><h2>협의가 계약으로<br>바뀌었어요.</h2><p>호쿠토 반도체의 같은 사건을 이어서 봅니다.</p><div class="follow-mini"><div><time>10.13</time><strong>공급 협의</strong><small>금액·납기 미확정</small></div><div><time>10.16</time><strong>계약 체결</strong><small>42억 엔 · 이익 영향 미확인</small></div></div>${stockButton('DEMO-A','후속 기록 보기','history')}</section><section class="room-paper room-reading"><h3>기사 다음에는 어디로?</h3><ul class="reading-list"><li><b>직접 연결</b><span>해당 회사의 분석과 기록</span></li><li><b>업종 참고</b><span>테마 뉴스에서 흐름 확인</span></li><li><b>분석 대기</b><span>연결 근거가 확보될 때까지 대기</span></li></ul>${roomButton('themes','테마별로 모아보기')}</section></aside></div>`;
     }
     function showArticle(id){
       const a=articles.find(a=>a.id===id);if(!a)return;
@@ -245,13 +260,13 @@
       document.querySelector('#page-heading h1').textContent=isMenu?'호쿠토 전체 메뉴':m.name;
       document.querySelector('#page-heading p').textContent=isMenu?'새 후보는 위의 여섯 단계로, 보유·뉴스·성과는 아래에서.':m.lead;
       document.querySelector('#page-heading .eyebrow').textContent=isMenu?'전체 기능':m.group==='preview'?'기록과 결과':m.owner||'호쿠토';
-      document.title=`${isMenu?'전체 메뉴':m.name} · 호쿠토증권 시안`;
+      document.title=`${isMenu?'전체 메뉴':m.name} · 호쿠토증권 디자인 v2.0`;
     }
     function onClick(b){
       if(b.hasAttribute('data-connect-settings')){connectionDialog();return true;}
       if(b.hasAttribute('data-connect-source')){connectionDialog(b.dataset.connectSource);return true;}
       if(b.hasAttribute('data-save-connection')){saveConnection();return true;}
-      if(b.dataset.alertRoom){navigate(b.dataset.alertRoom,{item:b.dataset.alertItem||''});return true;}
+      if(b.dataset.alertRoom){navigate(b.dataset.alertRoom,{item:b.dataset.alertItem||'',...(b.dataset.alertRoom==='news'?{newsMode:'analysis'}:{})});return true;}
       if(b.hasAttribute('data-menu-home')){route({view:'menu',detail:false,from:'',menuQuery:''});window.scrollTo({top:0});return true;}
       if(b.dataset.flowStage){stageNavigate(b.dataset.flowStage);return true;}
       if(b.dataset.flowNext){const t=get().flowTopic||get().topic;stageNavigate(b.dataset.flowNext,{flowTopic:['ops','strategy'].includes(b.dataset.flowNext)?t:get().flowTopic});return true;}
@@ -264,12 +279,15 @@
       if(b.dataset.roomFilter){route({section:b.dataset.roomFilter},true);return true;}
       if(b.dataset.topic){route({topic:b.dataset.topic},true);return true;}
       if(b.dataset.article){showArticle(b.dataset.article);return true;}
+      if(b.dataset.headline){navigate('news',{item:b.dataset.headline});document.querySelector('[data-article="'+b.dataset.headline+'"]')?.focus({preventScroll:true});showArticle(b.dataset.headline);return true;}
+      if(b.dataset.newsMode){route({newsMode:b.dataset.newsMode},true);return true;}
+      if(b.hasAttribute('data-news-reset')){route({section:'all',newsQuery:'',newsCountry:'all',item:''},true);return true;}
       if(b.dataset.articleTopic){document.querySelector('#evidence-dialog').close();navigate('themes',{topic:b.dataset.articleTopic});return true;}
       if(b.dataset.roomItem){route({item:b.dataset.roomItem},true);return true;}
       if(b.dataset.themeResearch){navigate('research',{topic:b.dataset.themeResearch});return true;}
       if(b.dataset.themeNews){navigate('themes',{topic:b.dataset.themeNews});return true;}
       if(b.dataset.decisionStock){if(decisionIds.includes(b.dataset.decisionStock))stageNavigate('decision',{item:b.dataset.decisionStock});return true;}
-      if(b.dataset.stockNews){const article=articles.find(a=>a.stock===b.dataset.stockNews&&a.kind==='direct');if(article)navigate('news',{item:article.id});return true;}
+      if(b.dataset.stockNews){const article=articles.find(a=>a.stock===b.dataset.stockNews&&a.kind==='direct');if(article)navigate('news',{item:article.id,newsMode:'analysis'});return true;}
       if(b.dataset.tradingStock){const s=stock(b.dataset.tradingStock);if(s?.group==='held')navigate('holdings',{item:s.id});else if(s?.decision==='매수대상'&&newbuyIds.includes(s.id))stageNavigate('newbuy',{item:s.id});return true;}
       if(b.dataset.roomStock||b.dataset.recordStock){
         const d=document.querySelector('#evidence-dialog');if(d.open)d.close();
@@ -279,7 +297,7 @@
       if(b.id==='return-room'){api.returnToOrigin();return true;}
       return false;
     }
-    return {render,navigate,onClick,catalog,menu,resolve:links.resolve};
+    return {render,navigate,onClick,catalog,menu,homeNews,resolve:links.resolve};
   }
   if(typeof window!=='undefined')window.HokutoRooms={create,catalog};
   if(typeof module!=='undefined')module.exports={catalog,topics,articles,lanes,candidateIds,decisionIds,newbuyIds,themeStates,companyChecks};

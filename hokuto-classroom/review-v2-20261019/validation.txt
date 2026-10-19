@@ -1,0 +1,9 @@
+Design v2.0 — 2026-10-19
+
+PASS: 15 unique operating entries, 19 routes, six-stage theme/company flow, EPS verification separate from final judgment, delayed quote timestamps, eligibility branches, preserved date/filter/scroll, legacy aliases and office briefing destinations. Priority briefing, focused stock detail, separate holding/decision labels, four unique holding rows and unchanged v9 fixtures checked. Desktop/mobile logic paths checked; no visual browser test.
+
+New coverage: complete fictional news set; headline expansion; country and relationship filters; query/empty/reset; no invented company link on pending articles; article/company/return preserves query, filter and scroll; browser back closes article dialog.
+
+All stock/record/price/decision/EPS/theme/article/score fixtures equal retained v9. All catalog IDs, route destinations, relation mappings and eligibility rules retained.
+
+Browser QA: pending deployed-site verification.
