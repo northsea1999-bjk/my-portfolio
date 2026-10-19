@@ -20,3 +20,5 @@
 .evidence-dialog .record-select button{min-height:44px}
 @media(max-width:900px){.daily-link{flex-wrap:wrap;gap:4px 10px}.daily-link>span{flex-basis:100%;order:3}.daily-link>b{order:2}}
 @media(max-width:600px){.daily-links{display:block}.daily-link{padding:12px 15px;flex-wrap:nowrap}.daily-link+.daily-link{border-left:0;border-top:1px solid #d9e0ea}.daily-link>span{flex-basis:auto;order:0;font-size:12px}.daily-link strong{font-size:15px}.daily-link>b{order:0}}
+
+@container(max-width:460px){.intro h1{max-width:calc(100% - 86px);padding-right:0;font-size:26px;word-break:keep-all}}

@@ -1,0 +1,60 @@
+{
+  "sourceCommit": "c9e0d544147b5b83a294c87eb31df7918abf01d9",
+  "environment": "Public GitHub Pages / desktop Chromium responsive iframe; not physical devices",
+  "home": {
+    "briefings": 3,
+    "largeShortcutButtons": 0,
+    "operatingConnectButtons": 0,
+    "clientWidth": 1348,
+    "scrollWidth": 1348,
+    "articleOpensInSameScreen": true
+  },
+  "menu": {
+    "topicEntries": 17,
+    "largeCards": 0,
+    "compactDailyEntries": 3,
+    "homeLinks": 0,
+    "legacyEntries": 0,
+    "desktopNoHorizontalOverflow": true,
+    "mobileWidthsTested": [
+      360,
+      390
+    ],
+    "mobileNoHorizontalOverflow": true
+  },
+  "decision": {
+    "cards": 3,
+    "localRecordButtons": 3,
+    "tradingDestinations": [
+      "DEMO-E"
+    ],
+    "repeatedSixStepNav": 0,
+    "operatingButtons": 0
+  },
+  "records": {
+    "stock": "DEMO-E",
+    "latest": "2026-10-16",
+    "selectedPast": "2026-10-13",
+    "modalDateSwitchWorks": true
+  },
+  "chart": {
+    "room": "newbuy",
+    "stock": "DEMO-E",
+    "ready": true,
+    "from": "2026-04-17",
+    "to": "2026-10-16",
+    "priceRows": 20,
+    "missingPricesDisclosed": true,
+    "mobile360NoHorizontalOverflow": true
+  },
+  "foundAndCorrected": {
+    "menuSearchOldFallback": "Changed from legacy entrance to actual compact topic description",
+    "mobileTitle": "Keep Korean words together and reserve illustration width"
+  },
+  "limits": [
+    "No real six-month historical data",
+    "No live news feed",
+    "No physical phone or pinch test",
+    "Three legacy-only topics have no detailed preview data"
+  ]
+}

@@ -23,7 +23,7 @@
       const title = document.createElement('strong');
       title.textContent = original.querySelector('strong')?.textContent || original.textContent.replace('↗','').trim();
       const subtitle = document.createElement('small');
-      subtitle.textContent = original.querySelector('.room-name,small')?.textContent || '기존 호쿠토 입구';
+      subtitle.textContent = original.querySelector('.room-name,small,.daily-link>span')?.textContent || '메뉴 안내';
       label.append(title,subtitle);link.append(label);list.append(link);
     });
     $('#search-list').replaceChildren(list);
