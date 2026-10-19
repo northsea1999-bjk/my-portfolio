@@ -57,3 +57,12 @@
 기준 commit: `8e8f325e2b7f6556b5ad9dfd0ed57b4f927b16fd`.
 
 차트 라이브러리: 기존 Lightweight Charts 5.0.9 유지. LICENSE·NOTICE·출처 유지. 소스 API는 로컬 5.0.9 타입 선언 및 공식 문서를 확인했다.
+
+## 최종 확인
+
+- 공유: https://northsea1999-bjk.github.io/my-portfolio/hokuto-classroom/quest-design-20261019/?v=6&palette=quest
+- 구현: `0254ccfb5ae93b6815275c72d5fbaff9c2d47584`.
+- PC 1348px 및 모바일 프레임 내부 341/371/411px 가로 넘침 없음.
+- 색감 전환, 1년/20일 전환, 확대/닫기, 키보드 초점, 결측 종목, 차트→분석과 전체메뉴 연결 확인.
+- 확대 차트의 닫기 버튼이 고정 메뉴에 가리지 않는 것을 실제 화면과 버튼 위치 검사로 확인.
+- 화면: `quest-desktop.jpg`, `quest-mobile.jpg`, `quest-annual.jpg`.

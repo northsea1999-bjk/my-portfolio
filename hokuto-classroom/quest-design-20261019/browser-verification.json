@@ -1,0 +1,44 @@
+{
+  "scope": "Public fictional prototype only; desktop browser responsive preview, not physical phone testing.",
+  "sourceCommit": "0254ccfb5ae93b6815275c72d5fbaff9c2d47584",
+  "url": "https://northsea1999-bjk.github.io/my-portfolio/hokuto-classroom/quest-design-20261019/?v=6&palette=quest",
+  "viewports": [
+    {
+      "mode": "desktop",
+      "clientWidth": 1348,
+      "scrollWidth": 1348
+    },
+    {
+      "mode": "360px frame",
+      "clientWidth": 341,
+      "scrollWidth": 341
+    },
+    {
+      "mode": "390px frame",
+      "clientWidth": 371,
+      "scrollWidth": 371
+    },
+    {
+      "mode": "430px frame",
+      "clientWidth": 411,
+      "scrollWidth": 411
+    }
+  ],
+  "verified": [
+    "RPG/classic palette switch",
+    "new actual foreground colors on dark backgrounds",
+    "1-year range 2025-10-17 to 2026-10-16; only existing 20 price rows",
+    "return to 20-day view",
+    "mobile chart controls 44px tall",
+    "expanded modal Tab boundary and Escape focus restore",
+    "expanded PC close button visible above sticky menu (element hit test and screenshot)",
+    "missing-price DEMO-G remains empty",
+    "chart to stock detail on 341px viewport",
+    "full menu loads on 341px viewport",
+    "all original menu destination hashes preserved by source comparison"
+  ],
+  "realDeviceTesting": false,
+  "pinchGestureTesting": false,
+  "observedAppErrors": [],
+  "browserExtensionMetadataErrorsExcluded": true
+}
