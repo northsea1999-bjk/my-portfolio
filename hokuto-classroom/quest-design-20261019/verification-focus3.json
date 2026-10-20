@@ -1,0 +1,19 @@
+{
+  "version": "v8-focus3",
+  "date": "2026-10-20",
+  "fixtureOnly": true,
+  "passed": [
+    "7 stock fixtures, price arrays, decisions and old evaluations unchanged",
+    "news and translation behavior unchanged",
+    "six leading themes and three focus themes distinct",
+    "positive six-month trend and top three 20-day return fixture consistency",
+    "outside-star focus preserved",
+    "D membership unchanged and D-only exclusion tested",
+    "A/D overlap counted once",
+    "rule versions isolated and no invented monthly returns",
+    "application boot and home/ops/strategy/performance/selection/scores route handlers exercised",
+    "record detail does not relabel 10/16 analysis as 10/20",
+    "only performance and selection in result menu; daily changes on home"
+  ],
+  "verificationLimit": "Non-rendering DOM integration checks only. Browser visual/mobile QA was unavailable; no screenshot or overflow verification claimed."
+}

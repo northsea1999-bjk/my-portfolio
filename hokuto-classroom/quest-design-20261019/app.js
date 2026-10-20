@@ -95,13 +95,17 @@
   let originContext=history.state?.hokutoOrigin||null;
   let renderedHash='';
   if('scrollRestoration' in history)history.scrollRestoration='manual';
-  const rooms=window.HokutoRooms.create({stocks,latest,esc,icon,badge,statusChips,avatar,signed,priceText,colorClass,route,selectStock,openDialog,bigChart,getState:()=>state,refresh:()=>render(),returnToOrigin});
+  const focusViews=window.HokutoFocusViews.create({stocks,latest,esc,badge,signed,openDialog,getState:()=>state,route});
+  const rooms=window.HokutoRooms.create({stocks,latest,esc,icon,badge,statusChips,avatar,signed,priceText,colorClass,route,selectStock,openDialog,bigChart,getState:()=>state,refresh:()=>render(),returnToOrigin,focusViews});
   function readState(){
     const p=new URLSearchParams(location.hash.slice(1));
-    const view=['home','scores','menu','room'].includes(p.get('view'))?p.get('view'):'home';
+    let view=['home','scores','menu','room'].includes(p.get('view'))?p.get('view'):'home';
     const stock=stocks.some(s=>s.id===p.get('stock'))?p.get('stock'):'DEMO-B';
-    const room=rooms.resolve(p.get('room')),from=rooms.resolve(p.get('from'));
-    return {view,stock,filter:['all','held','candidate'].includes(p.get('filter'))?p.get('filter'):'all',tab:['overview','history','score'].includes(p.get('tab'))?p.get('tab'):'overview',date:p.get('date')||'',detail:p.get('detail')==='1',query:p.get('q')||'',sort:['change','name','return'].includes(p.get('sort'))?p.get('sort'):'change',benchmark:p.get('benchmark')==='market'?'market':'theme',round:p.get('round')==='past'?'past':'current',period:p.get('period')==='5'?'5':'20',room:rooms.catalog.some(m=>m.id===room)?room:'news',section:p.get('section')||'all',topic:p.get('topic')||'chip',item:p.get('item')||'',flowTopic:p.get('flowTopic')||'',menuQuery:p.get('menuQuery')||'',newsQuery:p.get('newsQuery')||'',newsCountry:p.get('newsCountry')||'all',newsMode:p.get('newsMode')==='analysis'?'analysis':'titles',headlinesExpanded:p.get('headlinesExpanded')==='true',from:rooms.catalog.some(m=>m.id===from)?from:''};
+    let room=rooms.resolve(p.get('room'));
+    const from=rooms.resolve(p.get('from'));
+    if(room==='park'&&view==='room')view='home';
+    if(room==='records')room='performance';
+    return {view,stock,ruleVersion:p.get('ruleVersion')==='legacy'?'legacy':'focus',resultScope:['all','abc','d'].includes(p.get('resultScope'))?p.get('resultScope'):'all',resultMetric:['stock','theme','market'].includes(p.get('resultMetric'))?p.get('resultMetric'):'stock',filter:['all','held','candidate'].includes(p.get('filter'))?p.get('filter'):'all',tab:['overview','history','score'].includes(p.get('tab'))?p.get('tab'):'overview',date:p.get('date')||'',detail:p.get('detail')==='1',query:p.get('q')||'',sort:['change','name','return'].includes(p.get('sort'))?p.get('sort'):'change',benchmark:p.get('benchmark')==='market'?'market':'theme',round:p.get('round')==='past'?'past':'current',period:p.get('period')==='5'?'5':'20',room:rooms.catalog.some(m=>m.id===room)?room:'news',section:p.get('section')||'all',topic:p.get('topic')||'chip',item:p.get('item')||'',flowTopic:p.get('flowTopic')||'',menuQuery:p.get('menuQuery')||'',newsQuery:p.get('newsQuery')||'',newsCountry:p.get('newsCountry')||'all',newsMode:p.get('newsMode')==='analysis'?'analysis':'titles',headlinesExpanded:p.get('headlinesExpanded')==='true',from:rooms.catalog.some(m=>m.id===from)?from:''};
   }
   function route(patch,replace=false){
     const scroll=window.scrollY,previousView=state.view;
@@ -159,13 +163,13 @@
     let found=stocks.filter(s=>(state.filter==='all'||s.group===state.filter)&&(!q||`${s.name} ${s.id} ${s.theme}`.toLowerCase().includes(q)));
     found.sort(state.sort==='name'?(a,b)=>a.name.localeCompare(b.name,'ko'):state.sort==='return'?(a,b)=>(b.change??-Infinity)-(a.change??-Infinity):(a,b)=>b.order-a.order);
     $('#list-title').innerHTML=`${state.filter==='held'?'내 보유종목':state.filter==='candidate'?'새로 살펴볼 후보':'전체 종목'} <span>${found.length}</span>`;
-    $('#stock-list').innerHTML=found.length?found.map(s=>`<button class="stock-row ${s.id===state.stock?'selected':''}" data-stock="${s.id}" aria-pressed="${s.id===state.stock}" aria-label="${s.name}, ${s.group==='held'?'보유 예시':'신규 후보 예시'}, ${s.group==='held'?'보유 점검 '+s.badge+', '+decisionLabel(s):s.badge}, 상세 보기"><span><span class="row-name">${avatar(s)}<span class="row-identity"><strong>${s.name}</strong><span class="row-meta"><span class="group-tag ${s.group}">${s.group==='held'?'보유':'후보'}</span><span>${s.theme}</span></span></span></span><span class="row-judgments">${statusChips(s)}</span><span class="row-update ${s.changed?'changed':''}"><i class="row-dot"></i>${s.update}</span></span>${spark(s)}<span class="row-price"><strong>${priceText(s.price)}${s.price==null?'':'<em> 엔</em>'}</strong><small class="${colorClass(s.change)}">${signed(s.change)}</small></span></button>`).join(''):`<div class="empty-list"><strong>일치하는 종목이 없어요.</strong>이름·코드·테마를 다시 확인해주세요.<br><button id="clear-search">검색과 필터 초기화</button></div>`;
+    $('#stock-list').innerHTML=found.length?found.map(s=>`<button class="stock-row ${s.id===state.stock?'selected':''}" data-stock="${s.id}" aria-pressed="${s.id===state.stock}" aria-label="${s.name}, ${s.group==='held'?'보유 예시':'신규 후보 예시'}, ${s.group==='held'?'보유 점검 '+s.badge+', '+decisionLabel(s):s.badge}, 상세 보기"><span><span class="row-name">${avatar(s)}<span class="row-identity"><strong>${s.name}</strong><span class="row-meta"><span class="group-tag ${s.group}">${s.group==='held'?'보유':'후보'}</span><span>${s.theme}</span></span></span></span><span class="row-judgments">${statusChips(s)}${window.HokutoFocus.focusForStock(s.id)?`<span class="focus-list-badge">${window.HokutoText.copy.focus.membership}</span>`:''}</span><span class="row-update ${s.changed?'changed':''}"><i class="row-dot"></i>${s.update}</span></span>${spark(s)}<span class="row-price"><strong>${priceText(s.price)}${s.price==null?'':'<em> 엔</em>'}</strong><small class="${colorClass(s.change)}">${signed(s.change)}</small></span></button>`).join(''):`<div class="empty-list"><strong>일치하는 종목이 없어요.</strong>이름·코드·테마를 다시 확인해주세요.<br><button id="clear-search">검색과 필터 초기화</button></div>`;
     $$('#stock-filters button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.filter===state.filter));
     $('#stock-sort').value=state.sort;
     if(document.activeElement!==$('#stock-search'))$('#stock-search').value=state.query;
   }
   function renderBriefing(){
-    $('#briefing').innerHTML=`<div class="daily-brief-title"><h2>먼저 확인할 변화</h2><span>브리핑 3건 · 가상</span></div><div class="daily-brief-body"><button class="priority-brief" data-alert-room="holdings" data-alert-item="DEMO-B"><span class="priority-label"><i></i>보유종목 · 새 경고</span><strong>아오이 게임즈<br>이익 전망이 10% 낮아졌어요.</strong><span class="priority-fact">연간 영업이익 <b>120 → 108억 엔</b></span><span class="priority-next">다음 확인 · 하향 원인과 신작 판매 수량</span><span class="priority-action">보유 경고 확인 <span aria-hidden="true">→</span></span></button><div class="brief-followups"><button class="followup-brief" data-alert-room="decision" data-alert-item="DEMO-E"><span class="followup-label">새 매수대상</span><strong>세이운 소프트</strong><span>보류 → 매수대상 · 진입 신호는 아직 없음</span><span class="followup-action">결정실에서 근거 보기 <b aria-hidden="true">→</b></span></button><button class="followup-brief" data-alert-room="news" data-alert-item="contract"><span class="followup-label">지난 뉴스의 변화</span><strong>호쿠토 반도체</strong><span>수주 협의 → 계약 확인 · 이익 영향 미확인</span><span class="followup-action">후속 뉴스 확인 <b aria-hidden="true">→</b></span></button></div></div>`;
+    $('#briefing').innerHTML=focusViews.daily();
   }
   function overview(s){
     const r=latest(s);
@@ -179,7 +183,7 @@
     const past=state.round==='past'&&s.evaluation;
     const e=past?s.evaluation:null;
     const benchmark=state.benchmark==='market'?'시장(1306 ETF)':'같은 테마';
-    return `<p class="record-intro">판단한 회차와 평가가 시작된 날짜를 맞춰 봅니다.</p><label class="score-round-label">평가 회차<select id="score-round"><option value="current" ${!past?'selected':''}>10.16 최근 기록 · ${s.decision==='매수대상'?'평가 대기':'선정 평가 없음'}</option>${s.evaluation?`<option value="past" ${past?'selected':''}>09.08 과거 선정 · 20거래일 완료</option>`:''}</select></label><div class="benchmark-switch" role="group" aria-label="비교 기준"><button data-benchmark="theme" aria-pressed="${state.benchmark==='theme'}">같은 테마 대비</button><button data-benchmark="market" aria-pressed="${state.benchmark==='market'}">시장 대비</button></div>${e?`<div class="score-result"><small>20거래일 · ${benchmark} 대비</small><strong class="${colorClass(scoreDifference(s,state.benchmark))}">${signed(scoreDifference(s,state.benchmark),'')}<span>%p</span></strong><p>가상 평가 결과 · 실제 체결 수익 아님</p><div class="return-comparison"><div><span>종목 수익률</span><b class="${colorClass(e.stock)}">${signed(e.stock)}</b></div><div><span>${benchmark} 수익률</span><b>${signed(e[state.benchmark])}</b></div></div></div><div class="source-date-grid"><div><small>판단 기준일</small><strong>${e.recordDate}</strong></div><div><small>평가 시작 → 종료 · 예시</small><strong>${e.start.slice(5)} → ${e.end.slice(5)}</strong></div></div><button class="text-link" id="score-to-record">이 결과가 출발한 당시 분석 열기 <span>→</span></button>`:`<div class="result-pending"><strong>${s.price==null?'평가 시작 전':s.decision==='매수대상'?'20거래일 평가 대기':'이 회차의 선정 평가 없음'}</strong><p>${s.price==null?'가격과 판단 자료가 부족합니다.':s.decision==='매수대상'?'예시 기준일에 평가 기간이 아직 끝나지 않았습니다.':'이 날짜에는 매수대상 선정 기록이 없습니다. 이전 평가 회차가 있으면 위에서 선택할 수 있습니다.'}</p><span>결과가 없으므로 수익률을 0%로 채우지 않습니다.</span></div>`}<p class="metric-note">같은 테마 비교와 시장 비교는 기준이 다릅니다. 평가 시작일을 현재 판단일로 바꾸지 않습니다.</p><div class="account-result"><h3>실제 보유 손익</h3><p>이 시안에는 개인의 수량·평단·체결 자료가 없습니다.<br>실제 보유 손익은 위 선정성적과 별도로 표시할 영역입니다.</p></div>`;
+    return `<p class="record-intro">★6 · ~10/19 보존 기록 · 기존 20거래일 평가</p><label class="score-round-label">평가 회차<select id="score-round"><option value="current" ${!past?'selected':''}>10.16 최근 기록 · ${s.decision==='매수대상'?'평가 대기':'선정 평가 없음'}</option>${s.evaluation?`<option value="past" ${past?'selected':''}>09.08 과거 선정 · 20거래일 완료</option>`:''}</select></label><div class="benchmark-switch" role="group" aria-label="비교 기준"><button data-benchmark="theme" aria-pressed="${state.benchmark==='theme'}">같은 테마 대비</button><button data-benchmark="market" aria-pressed="${state.benchmark==='market'}">시장 대비</button></div>${e?`<div class="score-result"><small>20거래일 · ${benchmark} 대비</small><strong class="${colorClass(scoreDifference(s,state.benchmark))}">${signed(scoreDifference(s,state.benchmark),'')}<span>%p</span></strong><p>가상 평가 결과 · 실제 체결 수익 아님</p><div class="return-comparison"><div><span>종목 수익률</span><b class="${colorClass(e.stock)}">${signed(e.stock)}</b></div><div><span>${benchmark} 수익률</span><b>${signed(e[state.benchmark])}</b></div></div></div><div class="source-date-grid"><div><small>판단 기준일</small><strong>${e.recordDate}</strong></div><div><small>평가 시작 → 종료 · 예시</small><strong>${e.start.slice(5)} → ${e.end.slice(5)}</strong></div></div><button class="text-link" id="score-to-record">이 결과가 출발한 당시 분석 열기 <span>→</span></button>`:`<div class="result-pending"><strong>${s.price==null?'평가 시작 전':s.decision==='매수대상'?'20거래일 평가 대기':'이 회차의 선정 평가 없음'}</strong><p>${s.price==null?'가격과 판단 자료가 부족합니다.':s.decision==='매수대상'?'예시 기준일에 평가 기간이 아직 끝나지 않았습니다.':'이 날짜에는 매수대상 선정 기록이 없습니다. 이전 평가 회차가 있으면 위에서 선택할 수 있습니다.'}</p><span>결과가 없으므로 수익률을 0%로 채우지 않습니다.</span></div>`}<p class="metric-note">같은 테마 비교와 시장 비교는 기준이 다릅니다. 평가 시작일을 현재 판단일로 바꾸지 않습니다.</p><div class="account-result"><h3>실제 보유 손익</h3><p>이 시안에는 개인의 수량·평단·체결 자료가 없습니다.<br>실제 보유 손익은 위 선정성적과 별도로 표시할 영역입니다.</p></div>`;
   }
   function renderDetail(){
     const s=selectedStock();
@@ -188,12 +192,10 @@
     document.title=`${state.detail?s.name+' · ':''}${state.view==='scores'?'성적표':'종목의 오늘'} · 호쿠토증권 디자인 v2.0`;
   }
   function renderScores(){
-    const benchmark=state.benchmark==='market'?'시장(1306 ETF)':'같은 테마';
-    const avg=state.benchmark==='market'?.6:-.3;
-    $('#scores-view').innerHTML=`<div class="scores-header"><div><h2>선정 이후, 실제로 어떻게 움직였을까</h2><p>종목을 누르면 평가 회차의 분석까지 거슬러 올라갑니다.</p></div><div class="benchmark-switch" role="group" aria-label="전체 성적표 비교 기준"><button data-benchmark="theme" aria-pressed="${state.benchmark==='theme'}">같은 테마 대비</button><button data-benchmark="market" aria-pressed="${state.benchmark==='market'}">시장 대비</button></div></div><div class="scorecards"><div class="scorecard"><small>완료 회차 · 20거래일 평균 초과수익</small><strong class="${colorClass(avg)}">${signed(avg,'%p')}</strong><p>${benchmark} 대비 · 가상 완료 2건 기준</p></div><div class="scorecard"><small>평가 완료</small><strong>2<span class="muted"> 건</span></strong><p>같은 평가 기간의 결과만 집계</p></div><div class="scorecard"><small>아직 집계하지 않는 항목</small><strong>5<span class="muted"> 건</span></strong><p>평가 대기 2 · 선정 평가 없음 2 · 자료 부족 1</p></div></div><div class="score-table-wrap" tabindex="0" aria-label="종목별 성적표, 좁은 화면에서는 가로로 이동"><table class="score-table"><thead><tr><th>종목 / 평가 회차</th><th>종목 수익률</th><th>${benchmark}</th><th>차이</th><th>상태</th></tr></thead><tbody>${stocks.map(s=>`<tr><td><button data-score-stock="${s.id}">${s.name}<small>${s.evaluation?'09.08 선정 · 과거 회차':'10.16 최근 기록'}</small></button></td><td class="${colorClass(s.evaluation?.stock)}">${s.evaluation?signed(s.evaluation.stock):'—'}</td><td>${s.evaluation?signed(s.evaluation[state.benchmark]):'—'}</td><td class="${colorClass(scoreDifference(s,state.benchmark))}">${s.evaluation?signed(scoreDifference(s,state.benchmark),'%p'):'—'}</td><td>${badge(s.evaluation?'20일 완료':s.price==null?'자료 부족':s.decision==='매수대상'?'평가 대기':'선정 평가 없음',s.evaluation?'teal':'gray')}</td></tr>`).join('')}</tbody></table></div><p class="metric-note">모든 성과는 화면 동작을 위한 가상 값입니다. 실제 계좌 손익이 아니며, 호쿠토의 실제 성능을 나타내지 않습니다.</p>`;
+    $('#scores-view').innerHTML=focusViews.results('selection',true);
   }
   function render(){
-    if(state.view==='menu'){location.replace('menu.html?v=7-3-1');return;}
+    if(state.view==='menu'){location.replace('menu.html?v=8-focus3');return;}
     document.body.dataset.room=state.view==='room'?state.room:'';
     const inTopic=state.view==='room'||state.view==='scores'||!!state.from;
     document.body.classList.toggle('topic-focused',inTopic);
@@ -216,11 +218,11 @@
     const active=explore?(state.view==='room'&&state.room==='holdings'?'held':state.view==='room'&&state.room==='decision'?'candidate':state.view==='room'&&state.room==='news'?'news':'menu'):scores?'scores':'home';
     $$('[data-nav]').forEach(b=>{b.classList.toggle('active',b.dataset.nav===active);if(b.closest('nav'))b.setAttribute('aria-current',b.dataset.nav===active?'page':'false');});
     ['all-menu','mobile-all-menu'].forEach(id=>{const b=$('#'+id);b.classList.toggle('active',active==='menu');if(active==='menu')b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});
-    $('#page-heading h1').textContent=scores?'판단의 성적표':focused?'종목 분석':state.query?'종목 검색':state.filter==='held'?'내 주식의 오늘':state.filter==='candidate'?'새로 살펴볼 종목':'내 일본 주식의 중요한 변화';
-    $('#page-heading p').textContent=scores?'그때의 판단과, 그 뒤의 결과를 함께.':focused?rooms.menu(state.from).name+'에서 이어 보는 분석과 당시 기록':state.query?'이름·코드·테마가 일치하는 종목을 찾습니다.':'뉴스를 훑고, 보유 변화를 확인하고, 새 후보를 검토합니다.';
+    $('#page-heading h1').textContent=scores?'집중 종목 성적표':focused?'종목 분석':state.query?'종목 검색':state.filter==='held'?'내 주식의 오늘':state.filter==='candidate'?'새로 살펴볼 종목':'내 일본 주식의 중요한 변화';
+    $('#page-heading p').textContent=scores?window.HokutoText.copy.focus.homeScoreHelp:focused?rooms.menu(state.from).name+'에서 이어 보는 분석과 당시 기록':state.query?'이름·코드·테마가 일치하는 종목을 찾습니다.':'뉴스를 훑고, 보유 변화를 확인하고, 새 후보를 검토합니다.';
     $('#page-heading .eyebrow').textContent=scores?'기록과 결과':focused?'한 회사의 근거와 기록':'호쿠토 핵심 브리핑';
     const journey=$('#journey-bar');journey.hidden=!(explore||scores);
-    journey.innerHTML=`<span>전체 메뉴 <span aria-hidden="true">/</span> <strong>${scores?'종목별 성적표':rooms.menu(state.room).name}</strong></span>`;
+    journey.innerHTML=`<span>전체 메뉴 <span aria-hidden="true">/</span> <strong>${scores?'집중 종목 성적표':rooms.menu(state.room).name}</strong></span>`;
     renderBriefing();renderList();renderDetail();if(scores)renderScores();
     if(explore)rooms.render();
     $$('[data-icon]').forEach(el=>el.innerHTML=icon(el.dataset.icon));
@@ -257,8 +259,9 @@
     if(ev.target.closest('.skip')){ev.preventDefault();$('#workspace').focus();$('#workspace').scrollIntoView();return;}
     const b=ev.target.closest('button');if(!b)return;
     if(b.dataset.localRecord){showEvidence(b.dataset.recordDate,b.dataset.localRecord);return;}
+    if(focusViews.onClick(b))return;
     if(rooms.onClick(b))return;
-    if(b.dataset.nav){const n=b.dataset.nav;if(n==='held'||n==='candidate'||n==='news'){rooms.navigate(n==='held'?'holdings':n==='news'?'news':'decision');return;}route({view:n==='scores'?'scores':'home',filter:'all',detail:false,query:'',from:''});window.scrollTo({top:0});return;}
+    if(b.dataset.nav){const n=b.dataset.nav;if(n==='held'||n==='candidate'||n==='news'){rooms.navigate(n==='held'?'holdings':n==='news'?'news':'decision');return;}route({view:n==='scores'?'scores':'home',ruleVersion:'focus',resultScope:'all',filter:'all',detail:false,query:'',from:''});window.scrollTo({top:0});return;}
     if(b.id==='journey-back'){goBack();return;}
     if(b.dataset.stock){selectStock(b.dataset.stock);return;}
     if(b.dataset.open){selectStock(b.dataset.open,b.dataset.openTab||'overview');return;}
