@@ -32,7 +32,7 @@ const FMT_focus_views_js=typeof window==='undefined'?require('./display-format.j
         outside = event ? event.starAtSelection === false : t && !t.star;
       const period = event ? F.periodFor(event) : 'focus';
       const label = event && period!=='focus' ? periodLabel(period)+(lanes.length?' · '+lanes.join('·'):'') : abc.length && focused===true ? T.sourceABC+' '+abc.join('·') : lanes.includes('D') ? T.sourceD : T.sourceUnknown;
-      return `<div class="focus-source" aria-label="${T.candidateSource}">${badge(label,period==='focus'&&focused===true&&abc.length?'teal':'gray')}${focused===true&&outside?badge(T.outside,'gray'):''}</div>`;
+      return `<div class="focus-source" aria-label="${T.candidateSource}">${badge(label,period==='focus'&&focused===true&&abc.length?'teal':period==='focus'&&lanes.includes('D')?'blue':'gray')}${focused===true&&outside?badge(T.outside,'amber'):''}</div>`;
     };
     function operations() {
       return `<section class="focus-hero"><div class="focus-heading"><div><span class="focus-kicker">02 · ${T.fixture}</span><h2>${T.title}</h2><p>${T.rule}</p></div><span class="focus-count">3<span> / A·B·C</span></span></div><div class="focus-theme-grid">${F.focusIds.map((id, n) => {
