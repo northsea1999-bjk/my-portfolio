@@ -1,37 +1,46 @@
-# 문구표와 재검토 — 2026-10-20
+# 호쿠토증권 문구 검토 — v9-final1020b
 
-## 원본과 승인 상태
+모든 자료는 가상입니다. 운영 반영의 증거가 아님. 실행 문구의 유일한 원본은 ui-copy.js입니다. 이 문서는 검토용 목록이며 새 문구 승인 완료를 뜻하지 않습니다.
 
-**실행 문구의 유일한 원본은 ui-copy.js입니다.** copy(의미 있는 공통 키), entries(기존 고정 문구), templates(동적 HTML 문구와 자리표시자)를 한 파일에서 관리합니다. 이 문서는 검토용 색인이며 두 번째 실행 원본이 아닙니다.
+## 1. 확정 요청 문구와 위치
 
-사용자가 전달한 최종판을 시안에 반영했습니다. 새 문구·새 상태는 크기에 관계없이 범준 확인과 Claude 웹 재검토가 필요합니다. 해당 승인을 완료했다고 기록하지 않습니다. 이전 시안에서 이어받은 안내도 함께 검토합니다.
+| 위치 | 문구 |
+|---|---|
+| copy.focus.rule | 집중 3개 = 6개월 추세가 플러스인 테마 중, 최근 20거래일 수익이 큰 상위 3개 테마 |
+| copy.focus.starHelp | ★ 6개 = 테마별 종목들의 최근 20거래일 수익 평균 상위 6개 테마 |
+| copy.focus.title | 집중 테마 3개 |
+| copy.focus.notFocus | 집중 테마가 아님 |
+| copy.focus.notFocusHelp | ★ 테마이지만 집중 테마 3개에 속하지 않습니다. 나쁨·제외 판정이 아닙니다. |
+| copy.focus.legacy / transition / current | 옛 규칙 / 전환일 / 집중 규칙 |
+| copy.focus.homeScore | 집중 테마의 A·B·C 선정 종목 |
+| entries.text_f2578f32a03b | 집중 테마 선정성적 |
+| copy.focus.dailyExpand | 집중 테마 변화 |
+| templates.focus_waiting | 결과 기다리는 중 (남은 거래일 N일) |
+| copy.focus.beforeStart | 이 기간은 기록 시작 전 |
+| copy.focus.missingPrice | 가격을 못 구함 |
+| copy.focus.unverified | 확인 필요 |
+| copy.focus.sample / sampleUnit | 표본 N건 |
 
-| 검토 대상 | 문구표 위치 | 적용 |
-|---|---|---|
-| 집중 정의·대상 | copy.focus.rule / sourceHelp | 작전실·전략실 |
-| ★와 집중의 분리 | copy.focus.starTitle / outside / membership | 작전실·종목 목록·후보 |
-| 집중 아님 | copy.focus.notFocus / notFocusHelp | 결정실의 중립 안내 |
-| 선정 출처 | copy.focus.sourceABC / sourceD | 각 후보의 실제 레인 표시 |
-| 날짜별 규칙 | copy.focus.current / legacy / historicalHelp | 두 성과 화면 |
-| 1·2·3개월 및 대기 | copy.focus.month1~3 / pending / availableResults | 20·40·60거래일 및 추정 일정 |
-| 집중 명단 변화 | copy.focus.dailyChanged / dailyFirst / dailyUnchanged | 알림홈 최상단 |
-| 제목 버튼 | copy.titleKorean / titleOriginal | 지금 한국어 · 원문 보기 / 지금 원문 · 한국어 보기 |
-| 번역 상태 | copy.titleQueued / titleRejected / titleAI | 대기·검사 탈락·AI 번역 |
+‘집중 테마가 아님’은 중립 회색입니다. 집중 테마 변화와 종목의 선정 결과를 구분합니다. 후보 출처는 기록된 레인을 표시하며 테마 표시만으로 종목을 새로 선정하지 않습니다.
 
-## 호출 방식
+## 2. 날짜 안내의 단일 원본
 
-- JS: `HokutoText.text(key)`, `HokutoText.tpl(key, ...values)`, `HokutoText.copy`.
-- HTML: `data-copy` / `data-copy-attrs`. copy-dom.js가 화면 초기화 전에 채움. 메뉴 검색 속성과 접근성 이름도 같은 원본 사용.
-- CSS의 글자 content도 문구표에서 CSS 변수로 주입. 이전 화면에 영향을 주지 않도록 필요한 기본 스타일만 시안 안에 복사.
-- fixture의 원래 상태 문자열·판정 비교는 `raw(key)`로 보존. 번역된 표시 문구를 점수·분기·정렬 입력으로 사용하지 않음.
-- 향후 일본어 문구는 `HokutoTranslations`의 대응 키로 추가 가능. 원문과 번역의 동적 자리표시자 개수·순서를 유지. 현재 일본어 화면은 만들지 않음.
-- UI 고정 문구와 기사 콘텐츠는 구분. 현재 newsTitles에 들어 있는 원문·번역은 전환 시연용 가상 자료로 운영 이관 금지.
+- copy.focus.first40Estimate: ‘40일 첫 결과는 11/9 무렵(추정 · 확인 필요).’
+- copy.focus.first20FocusEstimate: ‘집중 규칙의 20일 첫 결과는 11월 중순(추정).’
+- copy.focus.estimateConflict: ‘40일 기록 시작 기준과 첫 결과 예상일은 서로 맞지 않아 확인 필요합니다.’
 
-## 제목 버튼
+위 예상일은 ui-copy.js에서만 바꿉니다. 전환 경계 시각은 문구가 아니라 display-policy.js의 설정값이며 화면에 직접 쓰지 않습니다. 실제 기록 확인 전에는 확정으로 표시하지 않습니다.
 
-- 한국어 페이지를 새로 열면 번역 기본. 이전 원문 보기 저장값은 초기 상태에 적용하지 않음.
-- 같은 페이지에서 사용자가 누른 선택은 화면 이동 중 유지. 사무실에는 버튼 없음.
-- 한국어 화면에서도 번역이 없으면 원문 유지. 최근 30~60분 번역 차례 대기와 검사 탈락을 구분. 약 3%는 전달받은 설명이며 개별 기사의 확률처럼 표시하지 않음.
-- 언어 설정이 일본어인 경우 원문 기본으로 연결할 준비만 함. 일본어 공개는 12월 이후 별도 일정·검토.
+## 3. 제목·한자·기존 안내
 
-기존 COPY-REVIEW의 ‘새로고침 후에도 원문 모드 유지’, ‘일부 문구만 통합’, ‘로봇 완료 후 디자인 반영’ 지침은 이 문서로 대체합니다.
+제목 버튼은 오늘·뉴스룸·테마뉴스·보유 네 곳에만 두고 새 페이지는 한국어로 시작합니다. ‘지금 한국어 · 원문 보기 / 지금 원문 · 한국어 보기’, 번역 차례 대기, 검사 탈락, AI 번역 표시는 유지합니다. 사무실에는 버튼이 없습니다.
+
+시안의 일본어 가상 제목은 회사명 원문 외 한자가 없도록 표시 문구만 고쳤습니다. 실제 기사 원문이나 번역 엔진을 변경한 것이 아닙니다. 실제 일본어 원문 제목에 회사명 외 한자가 있을 때의 표시 방식은 범준 확인이 필요하며 자동 변환을 추가하지 않습니다.
+
+가상 자료 및 ‘운영 반영의 증거가 아님’ 안내를 유지합니다. 새 문구·새 상태는 범준 확인과 Claude 웹 재검토 대상입니다.
+
+## 4. 호출과 범위
+
+JS는 copy·text·tpl, HTML은 data-copy·data-copy-attrs를 통해 같은 문구표를 사용합니다. 판정 비교에 쓰는 원래 값은 raw로 보존합니다. 번역된 표시 문구를 선정·점수·정렬 입력으로 쓰지 않습니다.
+
+검색·수정 범위는 현행 화면, ui-copy.js, REVIEW.md, APPLY-20261020.md, COPY-REVIEW.md 및 이전 검토 기록의 테마 표현입니다. 이전 검토 기록은 현행 지침이 아닙니다.

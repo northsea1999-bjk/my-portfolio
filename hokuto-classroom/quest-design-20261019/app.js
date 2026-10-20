@@ -254,7 +254,7 @@ const FMT_app_js=typeof window==='undefined'?require('./display-format.js'):wind
     return {
       view,
       stock,
-      ruleVersion: p.get('ruleVersion') === 'legacy' ? 'legacy' : 'focus',
+      ruleVersion: ['legacy','transition','focus'].includes(p.get('ruleVersion')) ? p.get('ruleVersion') : window.HokutoDisplayPolicy.defaultPeriod,
       resultScope: ['all', 'abc', 'd'].includes(p.get('resultScope')) ? p.get('resultScope') : 'all',
       resultMetric: ['stock', 'theme', 'market'].includes(p.get('resultMetric')) ? p.get('resultMetric') : 'stock',
       filter: ['all', 'held', 'candidate'].includes(p.get('filter')) ? p.get('filter') : 'all',
@@ -442,7 +442,7 @@ const FMT_app_js=typeof window==='undefined'?require('./display-format.js'):wind
   }
   function render() {
     if (state.view === 'menu') {
-      location.replace('menu.html?v=9-final1020');
+      location.replace('menu.html?v=9-final1020b');
       return;
     }
     document.body.dataset.room = state.view === 'room' ? state.room : '';

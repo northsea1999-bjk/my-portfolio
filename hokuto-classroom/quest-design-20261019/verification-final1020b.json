@@ -1,0 +1,24 @@
+{
+  "version": "v9-final1020b",
+  "date": "2026-10-20",
+  "fixtureOnly": true,
+  "baseline": "54cd5f0e71797a2404f83f4ca092c0a508900b85",
+  "passed": [
+    "Existing seven-stock prices, decisions, evaluations, OHLCV, article input, theme snapshots, candidate order and lanes unchanged",
+    "Exact theme-based definition, neutral nonfocus-theme label, no three-stock limit, overlapping lanes deduplicated for totals",
+    "Old / transition / focus groups isolate records without selection time; verified boundary handles before and at cutover, including timezone",
+    "Unverified configured cutover never classifies timestamped transition records as confirmed",
+    "Waiting with remaining trading days / before recording start / missing mature price distinguished; missing evidence is unverified",
+    "Realistic zero return preserved, injected return data rendered, per-period sample counts shown, short terms collapsed",
+    "All app routes and record details execute in non-rendering DOM; home excludes unconfirmed transition selections",
+    "Korean default title mode and four surfaces preserved; UI copy contains no Hanja outside Japanese company names"
+  ],
+  "notVerified": [
+    "Actual Chrome 360x800 and 130% font visual/touch measurements",
+    "Operating DB schema, records, selection timestamps and precise cutover",
+    "Operating exchange calendar, missing-price evidence, split-corrected return comparison",
+    "Conflicting 40-day start rule and November 9 first-result estimate",
+    "Production rollback command/path and Beomjun/Claude approval"
+  ],
+  "productionChanged": false
+}

@@ -6,8 +6,7 @@ const FMT_focus_rule_js=typeof window==='undefined'?require('./display-format.js
 (function (root) {
   'use strict';
 
-  const ruleId = 'focus3-20261020';
-  const previousRuleId = 'star6-through-20261019';
+  const P = typeof module==='object'&&module.exports ? require('./display-policy.js') : root.HokutoDisplayPolicy;
   // Six leading themes remain a separate classification. Grid is deliberately outside ★.
   const themes = [{
     id: 'chip',
@@ -173,9 +172,38 @@ const FMT_focus_rule_js=typeof window==='undefined'?require('./display-format.js
       60: null
     }
   }];
-  const dateGroup = date => /^\d{4}-\d{2}-\d{2}$/.test(date || '') ? date >= '2026-10-20' ? 'focus' : 'legacy' : 'unknown';
-  const isFocusABC = e => dateGroup(e.date) === 'focus' && e.focusAtSelection === true && e.lanes.some(l => ['A', 'B', 'C'].includes(l));
-  const rowsFor = (version = 'focus', scope = 'all', data = events) => data.filter(e => dateGroup(e.date) === (version === 'legacy' ? 'legacy' : 'focus') && (scope === 'all' || scope === 'abc' && isFocusABC(e) || scope === 'd' && e.lanes.includes('D')));
+  function dateGroup(date, selectedAt = null, policy = P.transition) {
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(date||'')||!Number.isFinite(Date.parse(date))||new Date(date).toISOString().slice(0,10)!==date)return 'unknown';
+    if(date<policy.date)return 'legacy';
+    if(date>=policy.nextDate)return 'focus';
+    if(!selectedAt||!policy.confirmed)return 'transition';
+    const clock=/^\d{2}:\d{2}(:\d{2})?$/.test(selectedAt);
+    const value=clock?date+'T'+selectedAt+(selectedAt.length===5?':00':'')+policy.cutoverAt.slice(-6):selectedAt;
+    if(!/(Z|[+-]\d{2}:\d{2})$/.test(value))return 'transition';
+    const stamp=Date.parse(value),cutover=Date.parse(policy.cutoverAt);
+    if(!Number.isFinite(stamp)||!Number.isFinite(cutover))return 'transition';
+    const parts=new Intl.DateTimeFormat('en-CA',{timeZone:policy.timeZone,year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(stamp);
+    const localDate=['year','month','day'].map(k=>parts.find(p=>p.type===k).value).join('-');
+    if(localDate!==date)return 'transition';
+    return stamp<cutover?'legacy':'focus';
+  }
+  const periodFor = (e, policy=P.transition) => dateGroup(e.date,e.selectedAt,policy);
+  const focusSnapshots = {'2026-10-20':focusIds}; // Synthetic theme snapshot, never current membership applied to history.
+  const focusForEvent = e => {
+    const ids=e.focusThemeIds??focusSnapshots[e.date];
+    return Array.isArray(ids)?ids.includes(e.themeId):null;
+  };
+  const isFocusABC = e => periodFor(e)==='focus'&&focusForEvent(e)===true&&e.lanes.some(l=>['A','B','C'].includes(l));
+  function uniqueRows(data){
+    const rows=new Map();
+    for(const e of data){
+      const key=[e.date,e.selectedAt||'',e.stockId].join('|');
+      if(rows.has(key)){const prior=rows.get(key);prior.lanes=[...new Set([...prior.lanes,...e.lanes])];}
+      else rows.set(key,{...e,lanes:[...e.lanes]});
+    }
+    return [...rows.values()];
+  }
+  const rowsFor = (version='focus',scope='all',data=events) => uniqueRows(data).filter(e=>periodFor(e)===version&&(scope==='all'||scope==='abc'&&isFocusABC(e)||scope==='d'&&e.lanes.includes('D')));
   const previousFocusIds = null; // No previous production snapshot was provided.
   const changeSummary = (current, previous) => previous == null ? {
     kind: 'initial',
@@ -197,8 +225,9 @@ const FMT_focus_rule_js=typeof window==='undefined'?require('./display-format.js
   const themeForStock = id => themes.find(t => t.id === stockTheme(id));
   const focusForStock = id => focusIds.includes(stockTheme(id));
   const api = {
-    ruleId,
-    previousRuleId,
+    periodFor,
+    focusForEvent,
+    uniqueRows,
     dateGroup,
     themes,
     focusIds,
