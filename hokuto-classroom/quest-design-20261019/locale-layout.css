@@ -1,0 +1,23 @@
+/* Korean-first layout, prepared for variable-length translated strings. */
+:root{font-family:'Noto Sans KR','Noto Sans JP','Noto Sans CJK KR','Noto Sans CJK JP','Malgun Gothic','Meiryo',sans-serif}
+body,button,input,select,textarea{font-family:inherit}
+button,.nav-item,.support-card,.step-card,.focus-switch button,.title-mode-button{white-space:normal;overflow-wrap:anywhere;word-break:normal}
+.title-mode-button{min-width:0;max-width:100%;width:auto;line-height:1.5}
+.title-origin-note{color:#63532d}.title-origin-note:empty{display:none}
+.focus-sample-note{font-size:12px;color:#667184;border-block:1px solid #e2ddd2;padding:12px 0;margin:12px 0;line-height:1.8}
+.focus-neutral{margin:20px 0;padding:18px;background:#f3f2ef;border:1px solid #c9c6bf;color:#526078}.focus-neutral h3{font-size:16px}.focus-neutral p{font-size:13px;line-height:1.8}
+.focus-result-table th,.focus-result-table td{white-space:normal;overflow-wrap:anywhere}.focus-results .metric-note{line-height:1.8}
+.home-navigation #main-nav{flex-wrap:wrap}.top-actions{min-width:0}.focus-theme-card,.star-theme-list>div{min-width:0}
+@media(max-width:760px){
+ body:has(#title-mode-button) .topbar{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+ body:has(#title-mode-button) .topbar .brand{min-width:0;gap:6px}
+ body:has(#title-mode-button) .topbar .brand>span{font-size:18px}
+ body:has(#title-mode-button) .title-mode-button{min-width:0;max-width:100%;padding:8px;font-size:12px;line-height:1.6}
+ .focus-result-table{min-width:0;table-layout:fixed;font-size:12px}.focus-result-table th,.focus-result-table td{padding:10px 5px}.focus-result-table th:first-child{width:29%}.focus-result-table td:first-child{min-width:0}
+ .focus-result-table .pill{font-size:10px;padding:3px;white-space:normal}.focus-result-table button{font-size:12px;line-height:1.6;max-width:100%}.focus-result-table small{font-size:10px}.focus-pending{white-space:normal;font-size:11px;line-height:1.6}
+ .focus-results{padding:13px}.focus-table-scroll{width:100%;min-width:0}.focus-source{gap:4px}.star-theme-list{grid-template-columns:1fr 1fr}
+ .focus-results-heading h2{font-size:21px}.focus-daily h3{font-size:21px}
+}
+
+/* Literal wrappers must not acquire existing span styles. */
+ui-copy{display:contents}

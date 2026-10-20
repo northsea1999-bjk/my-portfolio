@@ -1,0 +1,27 @@
+{
+  "version": "v9-final1020",
+  "date": "2026-10-20",
+  "fixtureOnly": true,
+  "passed": [
+    "All seven stock fixtures, prices, decisions, analyses, return evaluations and OHLCV preserved",
+    "Article input, original candidate order and A/B/C/D lane membership preserved",
+    "Leading six match top 20-day returns; focus three match eligible positive six-month trend; outside-star focus shown",
+    "Money-flow and conversion indicators retained; nonfocus leading themes use neutral section",
+    "Selection-date boundary used without DB rule_version column; contradictory rule ID ignored",
+    "D-only excluded from home ABC scorecard; A/D overlap shown once; D source still available",
+    "Legacy 20-day returns displayed unchanged; 40/60-day missing results wait; short terms collapsed",
+    "Application boot and room routes execute with complete copy-template arguments",
+    "Result menu contains only performance and selection; daily changes located on home",
+    "Korean initial title mode ignores stale storage; toggle restricted to four surfaces",
+    "Queued, rejected and completed translation states distinguished",
+    "Fixed Korean copy resides in one catalog, HTML copy keys resolve and hydration applies",
+    "Original text and candle rise/fall colors preserved in shared formatting module"
+  ],
+  "copyEntries": 646,
+  "copyTemplates": 67,
+  "limits": [
+    "Non-rendering DOM and fixture checks only; no real browser screenshots or 360px overflow verification",
+    "No production input comparison or live data integration; production deployment is not approved by these checks",
+    "New copy and states still require Beomjun confirmation and Claude web review"
+  ]
+}
