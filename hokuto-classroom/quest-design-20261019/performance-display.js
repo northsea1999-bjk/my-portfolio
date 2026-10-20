@@ -1,16 +1,20 @@
-/* Read-only presentation adapter. Production must supply existing DB results and
-   derived calendar/price evidence; these are not new database columns. */
+/* Read-only presentation adapter. Mark existence and calendar/price evidence are
+   read from existing records; they are not new database columns. */
 (function(root){'use strict';
   const P=typeof module==='object'&&module.exports?require('./display-policy.js'):root.HokutoDisplayPolicy;
-  function cell(record,days,metric='stock',policy=P){
-    if(policy.recordingStart[days]&&record.date<policy.recordingStart[days])return {kind:'before-start'};
+  function cell(record,days,metric='stock'){
+    if(record.sourceRecords?.length>1){
+      const states=record.sourceRecords.map(source=>cell(source,days,metric));
+      return states.every(s=>JSON.stringify(s)===JSON.stringify(states[0]))?states[0]:{kind:'unverified'};
+    }
+    const evidence=record.displayEvidence?.[days]||{};
     const result=record.returns?.[days];
     const value=result&&typeof result==='object'?result[metric]:metric==='stock'?result:null;
-    if(Number.isFinite(value))return {kind:'value',value};
-    const evidence=record.displayEvidence?.[days]||{};
+    if(Number.isFinite(value))return evidence.markExists===false?{kind:'unverified'}:{kind:'value',value};
+    if(evidence.markExists===false)return {kind:'before-start'};
+    if(evidence.markExists!==true)return {kind:'unverified'};
     if(Number.isInteger(evidence.remainingTradingDays)&&evidence.remainingTradingDays>0)return {kind:'waiting',remaining:evidence.remainingTradingDays};
-    if(evidence.remainingTradingDays===0&&evidence.priceMissing===true)return {kind:'missing-price'};
-    // An absent return does not prove a missing price or an unfinished period.
+    if((evidence.remainingTradingDays===0||evidence.periodElapsed===true)&&evidence.priceMissing===true)return {kind:'missing-price'};
     return {kind:'unverified'};
   }
   function fixtureRecords(events,stocks){
@@ -18,9 +22,9 @@
       const record={...e,returns:{...e.returns},displayEvidence:{}};
       const evaluation=stocks.find(s=>s.id===e.stockId)?.evaluation;
       if(evaluation?.recordDate===e.date)record.returns[20]={stock:evaluation.stock,theme:evaluation.stock-evaluation.theme,market:evaluation.stock-evaluation.market};
-      // All current fixture selections are on the fixture observation date.
-      // No exchange calendar or historical elapsed-day count is fabricated.
-      if(e.date===P.fixtureAsOf)for(const days of [1,5,20,40,60])record.displayEvidence[days]={remainingTradingDays:days};
+      // Fictional marks for demonstration only, including new 40-day marks on old signals.
+      // Historical elapsed trading days and entry identity are deliberately not invented.
+      for(const days of [1,5,20,40,60])record.displayEvidence[days]={markExists:true,...(e.date===P.fixtureAsOf?{remainingTradingDays:days}:{})};
       return record;
     });
   }

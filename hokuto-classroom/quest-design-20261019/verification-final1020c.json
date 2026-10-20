@@ -1,0 +1,25 @@
+{
+  "version": "v9-final1020c",
+  "date": "2026-10-20",
+  "fixtureOnly": true,
+  "baseline": "882762eddab8f4ac44e2639bee11b3be1a2476a3",
+  "passed": [
+    "Existing stock data, prices, judgments, themes, candidates, lanes and return fixtures remain unchanged",
+    "Three transition cohorts and unconfirmed cutover behavior retained",
+    "Mark-row evidence determines waiting, before-start and missing-price states; no 10/21 selection-date cutoff",
+    "Old September signals can carry pending 40-day marks; missing mark evidence stays unverified",
+    "Lane counts use signal identity; performance merges only identical stock, entry date and entry price",
+    "Different same-day entry prices produce separate rows and duplicate count labels; missing entry identity never merges",
+    "Conflicting results in a merged position display unverified rather than an invented value",
+    "Period sample counts, injected return data, room navigation, detail and title controls execute in non-rendering DOM",
+    "Japanese original titles restored to pre-v9b text; Korean UI and translated sentences have no Hanja"
+  ],
+  "notVerified": [
+    "Task 47 main integration and 40-day mark count after the October 21 17:30 batch",
+    "Actual selection timestamps, signal identity, same-day duplicate entry bases and prices",
+    "Corrected operating return values and exchange-calendar evidence",
+    "Chrome 360x800 / 130% font visual checks, same-input operating comparison and rollback rehearsal",
+    "Production paths, deployment commands and final owner approval"
+  ],
+  "productionChanged": false
+}

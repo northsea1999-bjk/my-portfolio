@@ -442,7 +442,7 @@ const FMT_app_js=typeof window==='undefined'?require('./display-format.js'):wind
   }
   function render() {
     if (state.view === 'menu') {
-      location.replace('menu.html?v=9-final1020b');
+      location.replace('menu.html?v=9-final1020c');
       return;
     }
     document.body.dataset.room = state.view === 'room' ? state.room : '';

@@ -194,16 +194,46 @@ const FMT_focus_rule_js=typeof window==='undefined'?require('./display-format.js
     return Array.isArray(ids)?ids.includes(e.themeId):null;
   };
   const isFocusABC = e => periodFor(e)==='focus'&&focusForEvent(e)===true&&e.lanes.some(l=>['A','B','C'].includes(l));
-  function uniqueRows(data){
-    const rows=new Map();
-    for(const e of data){
-      const key=[e.date,e.selectedAt||'',e.stockId].join('|');
-      if(rows.has(key)){const prior=rows.get(key);prior.lanes=[...new Set([...prior.lanes,...e.lanes])];}
-      else rows.set(key,{...e,lanes:[...e.lanes]});
-    }
-    return [...rows.values()];
+  function entryKey(e){
+    if(!e.stockId||!/^\d{4}-\d{2}-\d{2}$/.test(e.entryDate||'')||!Number.isFinite(e.entryPrice)||e.entryPrice<=0)return null;
+    return JSON.stringify([periodFor(e),e.stockId,e.entryDate,e.entryPrice]);
   }
-  const rowsFor = (version='focus',scope='all',data=events) => uniqueRows(data).filter(e=>periodFor(e)===version&&(scope==='all'||scope==='abc'&&isFocusABC(e)||scope==='d'&&e.lanes.includes('D')));
+  function uniqueRows(data){
+    const groups=new Map();
+    data.forEach((e,index)=>{
+      const identity=entryKey(e),key=identity||'unverified-'+index;
+      if(groups.has(key)){
+        const row=groups.get(key);row.lanes=[...new Set([...row.lanes,...e.lanes])];row.sourceRecords.push(e);
+        row.sourceEventIds=[...new Set([...row.sourceEventIds,e.signalId||e.id].filter(Boolean))];
+      } else groups.set(key,{...e,lanes:[...e.lanes],sourceRecords:[e],sourceEventIds:[e.signalId||e.id].filter(Boolean),entryVerified:!!identity});
+    });
+    const rows=[...groups.values()],days=new Map();
+    for(const row of rows){
+      if(!row.entryVerified)continue;
+      const key=JSON.stringify([periodFor(row),row.stockId,row.entryDate]);
+      if(!days.has(key))days.set(key,new Set());days.get(key).add(row.entryPrice);
+    }
+    for(const row of rows){
+      const count=days.get(JSON.stringify([periodFor(row),row.stockId,row.entryDate]))?.size||0;
+      row.sameDayDuplicate=row.entryVerified&&count>1?count:0;
+    }
+    return rows;
+  }
+  const signalRowsFor = (version='focus',scope='all',data=events) => data.filter(e=>periodFor(e)===version&&(scope==='all'||scope==='abc'&&isFocusABC(e)||scope==='d'&&e.lanes.includes('D')));
+  const rowsFor = (version='focus',scope='all',data=events) => uniqueRows(signalRowsFor(version,scope,data));
+  function laneCounts(version='focus',scope='all',data=events){
+    const signals=new Map();
+    for(const e of signalRowsFor(version,scope,data)){
+      const id=e.signalId||e.id;if(!id||!Array.isArray(e.lanes))return null;
+      if(!signals.has(id))signals.set(id,new Set());for(const lane of e.lanes)signals.get(id).add(lane);
+    }
+    const counts={total:signals.size,A:0,B:0,C:0,D:0,none:0};
+    for(const lanes of signals.values()){
+      for(const lane of ['A','B','C','D'])if(lanes.has(lane))counts[lane]++;
+      if(lanes.size===0)counts.none++;
+    }
+    return counts;
+  }
   const previousFocusIds = null; // No previous production snapshot was provided.
   const changeSummary = (current, previous) => previous == null ? {
     kind: 'initial',
@@ -228,6 +258,8 @@ const FMT_focus_rule_js=typeof window==='undefined'?require('./display-format.js
     periodFor,
     focusForEvent,
     uniqueRows,
+    signalRowsFor,
+    laneCounts,
     dateGroup,
     themes,
     focusIds,
