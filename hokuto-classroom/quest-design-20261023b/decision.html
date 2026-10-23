@@ -12,7 +12,7 @@
    폰: 띠 → 판정 거르개 → 후보 목록 → 어디서 왔나 → 주의 / PC: 왼쪽(거르개·목록) 오른쪽(어디서 왔나·읽는 법·주의) */
 .status{display:grid;grid-template-columns:minmax(0,1fr);gap:8px;padding:12px 14px;border:1px solid var(--line-2);background:#fff;box-shadow:var(--shadow-s)}
 @media (min-width:760px){.status{grid-template-columns:auto minmax(0,1fr);align-items:center;column-gap:28px}}
-@media (max-width:640px){main .heading{display:none}.status{margin-top:12px}}
+@media (max-width:640px){.heading .lede{font-size:14px}h1{font-size:24px}}
 .when-row{display:flex;flex-wrap:wrap;gap:2px 16px;font-size:15px;color:var(--muted)}
 .when-row b{color:var(--ink)}
 .temp{display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-areas:"lbl chip" "gauge gauge";gap:8px 10px;align-items:center}
@@ -148,7 +148,8 @@
     <section class="card navy" id="list" aria-labelledby="list-h">
       <div class="card-h"><h2 id="list-h">오늘 후보<span class="c" id="n-all">7</span></h2><small>누르면 그 판정만</small></div>
       <div class="tiles" role="group" aria-label="판정으로 거르기" id="tiles"></div>
-      <p class="types" id="types"></p>
+      <p class="types"><span class="chip jd"><i></i>판정</span> = 결정실이 고른 것 · <span class="chip blue"><i></i>결론</span> = 오늘 가격·밤사이 뉴스까지 본 결과 — 그래서 «매수대상 + 보류»가 함께 나올 수 있습니다.</p>
+      <p class="types" id="types" style="padding-top:0"></p>
       <div id="rows"></div>
       <p class="empty" id="empty" hidden>이 판정의 종목이 없습니다.</p>
     </section>
@@ -170,6 +171,7 @@
         <li><span class="chip jd"><i></i>매수대상</span><span>= <b>판정</b>. 실적·테마·뉴스로 결정실이 고른 것</span></li>
         <li><span class="chip blue"><i></i>월요일 시가 확인</span><span>= <b>결론</b>. 판정에 오늘 가격과 밤사이 뉴스까지 본 결과</span></li>
         <li class="mini">그래서 «매수대상 + 보류»가 함께 나올 수 있습니다(예: 밤사이 나쁜 뉴스).</li>
+        <li><span class="chip check"><i></i>확인 필요</span><span>= 자료가 멈췄거나 못 읽음. 이때는 결론을 믿지 않고 먼저 확인(차트 신호에도 같은 모양)</span></li>
       </ul></div>
     </section>
 
@@ -263,7 +265,7 @@ const EVN=['시장 움직임','실적','촉매(뉴스)','반대 근거'];
 C.forEach(c=>{
   if(c.jd!=='buy'){c.kind='hold';c.short='보류 · 판정이 매수대상 아님';c.text='보류 — 결정실 판정이 매수대상이 아님';c.small=c.why;return}
   const s=c.s=stats(c.c);
-  c.sig={brk:s.last>s.B,bb:c.cd==='DEMO-K'?'nodata':s.last>s.bbU,rec:false};
+  c.sig={brk:s.last>s.B,bb:c.cd==='DEMO-K'?'nodata':c.cd==='DEMO-Y'?'check':s.last>s.bbU,rec:false};
   if(c.hold){c.kind='hold';c.short='보류 · 밤사이 악재';c.text='보류 — 밤사이 중요 부정 뉴스';c.small=c.hold+' — 오늘은 사지 않고 기사 내용을 먼저 봅니다'}
   else if(s.last<=s.B){c.kind='wait';c.short='기다림 · 기준선 아래';c.text='기다림 — 종가 '+yen(s.last)+'엔이 기준선 '+yen(s.B)+'엔 아래';c.small='종가가 기준선 위로 마감하면 다시 봅니다'}
   else{c.kind='open';c.short='월요일 시가 확인';c.text='10/26(월) 시가가 '+yen(s.B)+'~'+yen(s.U)+'엔이면 매수 검토';c.small='10/23 종가 '+yen(s.last)+'엔 · 시가가 '+yen(s.U)+'엔보다 높으면 쫓아 사지 않고 기다림 · 첫 점검 30사례 중 0건(잠정 기준)'}
