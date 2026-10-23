@@ -13,7 +13,7 @@
   --yellow:#8c6104; --yellow-bg:#fff3d3; --yellow-line:#ebcf86; --yellow-dot:#d9a019;
   --green:#18703f; --green-bg:#e2f3e8; --green-line:#a9d6b9;
   --up:#cc434a; --down:#376fb8;
-  --shadow:4px 4px 0 #cfd8e2; --shadow-s:2px 2px 0 #cfd8e2;
+  --shadow:3px 3px 0 #d6dee6; --shadow-s:2px 2px 0 #dde4ea;
   --font:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
   --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
   color-scheme:light; font-size:16px;
@@ -68,10 +68,10 @@ button,select,input{font:inherit;color:inherit}
 
 .heading{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;padding-block:20px 12px}
 .eyebrow{font-size:13px;font-weight:800;color:var(--teal);letter-spacing:.06em}
-h1{font-size:clamp(26px,4vw,36px);line-height:1.25;margin:4px 0 6px;color:var(--navy);letter-spacing:-.02em;text-wrap:balance}
+h1{font-size:clamp(26px,4vw,34px);line-height:1.25;margin:4px 0 6px;color:var(--navy);letter-spacing:-.015em;font-weight:700;text-wrap:balance}
 .lede{margin:0;color:var(--muted);font-size:15px}
-.desk{width:220px;flex:none}
-@media (max-width:640px){.desk{display:none}.heading{padding-block:12px 8px}}
+.desk,.dipper{width:230px;flex:none}
+@media (max-width:640px){.desk,.dipper{display:none}.heading{padding-block:12px 8px}}
 
 .card{background:var(--paper);border:1px solid var(--line-2);border-radius:3px;box-shadow:var(--shadow);min-width:0}
 .card-h{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line);min-height:54px}
@@ -101,3 +101,12 @@ h1{font-size:clamp(26px,4vw,36px);line-height:1.25;margin:4px 0 6px;color:var(--
 
 /* 가+ : 화면 전체를 12% 키움 */
 html.big body{zoom:1.12}
+
+/* 2.2 다듬기: 여백 조금 더, 카드 머리띠는 옅게 */
+.card-b{padding:14px 18px 16px}
+.card-h{padding:12px 18px}
+.card.amber .card-h{background:#fff6dc}.card.violet .card-h{background:#f5f0fc}.card.sage .card-h{background:#f2f6f1}.card.blue .card-h{background:#eef3fc}
+.nav a .c{display:none}
+.more-row{display:flex;justify-content:flex-end;margin-top:18px}
+.more-row a{display:inline-flex;align-items:center;gap:6px;min-height:44px;font-weight:700;color:var(--blue);text-decoration:none;font-size:15px}
+.nav a.all.on{border-color:var(--navy);box-shadow:var(--shadow-s)}

@@ -7,7 +7,7 @@
 <title>호쿠토증권 전체메뉴 · 버전2.2 시안</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap">
-<link rel="stylesheet" href="v22.css?v=22a">
+<link rel="stylesheet" href="v22.css?v=22c">
 <style>
 /* 전체메뉴 2.2 — ① 기준 시각 ② 검토 순서 6단계(3묶음, 묶음 사이 ↓) — 칸마다 큰 숫자 + 볼 것 표시 ③ 판정 뒤 갈림길 3칩 ④ 자료와 전략 4 · 기록 4 */
 .asof{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:14.5px;color:var(--muted);padding:10px 14px;border:1px solid var(--line-2);background:#fff;box-shadow:var(--shadow-s)}
@@ -63,8 +63,7 @@
 .tile .room{display:block;font-size:13.5px;color:var(--muted)}
 .tile .today{display:block;font-size:14px;font-weight:700;color:var(--ink);margin-top:2px}
 .tile .ar{color:var(--muted);font-size:15px}
-.tile.wide{grid-column:1/-1}
-.tile-note{grid-column:1/-1;margin:2px 0 0;font-size:14px;color:var(--muted)}
+.tile-note{margin:0;padding:0 4px;align-self:center;font-size:14px;color:var(--muted)}
 .tile-note a{color:var(--blue);font-weight:700;display:inline-flex;align-items:center;min-height:44px}
 @media (max-width:560px){.tiles{grid-template-columns:minmax(0,1fr);gap:8px}.tile{min-height:58px;padding:10px 12px}.tile .today{font-size:13.5px}}
 .found{font-size:14.5px;color:var(--navy);font-weight:700;margin:14px 0 0}
@@ -72,24 +71,29 @@
 </style>
 </head>
 <body>
-<div class="demo gutter"><b>버전2.2 시안</b>모든 숫자는 가상입니다.<a href="./">바뀐 점 ↗</a></div>
+<div class="demo gutter"><b>버전2.2 시안</b>숫자는 모두 가상 · 4화면만 시안<a href="./">바뀐 점 ↗</a></div>
 
 <header class="top gutter"><div class="wrap">
   <a class="brand" href="home.html" aria-label="호쿠토증권 알림홈"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M13 0h6v7h4v6h9v6h-9v6h-4v7h-6v-7H9v-6H0v-6h9V7h4z" fill="currentColor"/></svg><span><b>HOKUTO</b><small>SECURITIES</small></span></a>
   <span class="place">전체 안내도</span>
   <label class="search"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="m13 13 4 4" stroke="currentColor" stroke-width="2"/></svg><span class="sr-only">메뉴 찾기</span><input id="q" type="search" placeholder="실적, 뉴스, 기록… 찾기" autocomplete="off"></label>
-  <a class="btn" href="home.html">← 알림홈</a>
 </div></header>
-
+<nav class="nav gutter" aria-label="주요 메뉴"><div class="wrap">
+  <a href="home.html">알림홈</a>
+  <a href="#" title="내 주식 방 (이번 시안 밖)">내 주식</a>
+  <a href="#" title="결정실 방 (이번 시안 밖)">결정실</a>
+  <a href="#" title="오늘 뉴스 방 (이번 시안 밖)">뉴스</a>
+  <a class="all on" href="menu.html" aria-current="page">전체 메뉴</a>
+</div></nav>
 <main class="gutter"><div class="wrap">
   <div class="heading">
-    <div><div class="eyebrow">호쿠토 전체메뉴</div><h1>어디서 시작할지, 한눈에.</h1><p class="lede">새 후보는 01 → 06 순서로, 자료와 기록은 아래에서.</p></div>
-    <svg aria-hidden="true" class="desk" focusable="false" shape-rendering="crispEdges" viewbox="0 0 244 98"><path d="M4 79h232v8H4zM15 88h222v3H15z" fill="#dfe8eb"></path><path d="M20 71h205v6H20zM30 77h6v15h-6zM209 77h6v15h-6z" fill="#29354b"></path><path d="M32 31h6v9h-6zM25 38h6v7h-6zM39 24h7v12h-7zM39 43h7v12h-7zM33 44h6v18h-6zM23 55h26v5H23z" fill="#42766b"></path><path d="M25 59h22v7H25zM29 66h14v5H29z" fill="#d89968"></path><path d="M67 13h103v5h5v49H62V18h5zM115 66h9v5h-9z" fill="#26344c"></path><path d="M68 20h101v40H68z" fill="#acc6eb"></path><path d="M74 25h45v29H74zM125 25h37v7h-37zM125 38h37v4h-37zM125 48h28v5h-28z" fill="#fffefa"></path><path d="M80 32h32v4H80zM80 42h19v5H80z" fill="#526fa5"></path><path d="M104 41h8v9h-8zM187 42h27v24h-27zM211 45h9v17h-9z" fill="#e9bf63"></path><path d="M214 49h3v9h-3z" fill="#fffefa"></path><path d="M186 66h29v5h-29zM80 68h31v3H80zM128 68h32v3h-32z" fill="#26344c"></path><path d="M189 12h4v4h4v4h-4v4h-4v-4h-4v-4h4zM50 8h3v5h-3zM47 11h9v2h-9z" fill="#d8a956"></path></svg>
+    <div><div class="eyebrow">전체메뉴</div><h1>전체 안내도</h1><p class="lede">신규 종목은 01 → 06 순서로 검토하고, 참고 자료와 기록은 아래에서 확인하세요.</p></div>
+    <svg class="dipper" viewBox="0 0 260 120" aria-hidden="true" focusable="false"><defs><radialGradient id="glow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#f2cf73" stop-opacity=".55"/><stop offset="1" stop-color="#f2cf73" stop-opacity="0"/></radialGradient></defs><g fill="#c9d6dd"><circle cx="20" cy="18" r="1"/><circle cx="244" cy="96" r="1"/><circle cx="132" cy="104" r="1"/><circle cx="210" cy="12" r="1"/><circle cx="34" cy="92" r="1"/><circle cx="160" cy="80" r="1"/></g><path d="M70 28 64 66 108 80 118 46Z M118 46 156 40 192 32 236 50" fill="none" stroke="#8fbfb1" stroke-width="1.4" stroke-linejoin="round"/><g><circle cx="70" cy="28" r="11" fill="url(#glow)"/><circle cx="64" cy="66" r="10" fill="url(#glow)"/><circle cx="108" cy="80" r="9" fill="url(#glow)"/><circle cx="118" cy="46" r="8" fill="url(#glow)"/><circle cx="156" cy="40" r="10" fill="url(#glow)"/><circle cx="192" cy="32" r="10" fill="url(#glow)"/><circle cx="236" cy="50" r="10" fill="url(#glow)"/></g><g fill="#b8862a"><path d="M70 22l1.6 4.4L76 28l-4.4 1.6L70 34l-1.6-4.4L64 28l4.4-1.6z"/><path d="M64 61l1.4 3.6L69 66l-3.6 1.4L64 71l-1.4-3.6L59 66l3.6-1.4z"/><path d="M108 76l1.2 2.8L112 80l-2.8 1.2L108 84l-1.2-2.8L104 80l2.8-1.2z"/><path d="M118 42l1 3L122 46l-3 1L118 50l-1-3L114 46l3-1z"/><path d="M156 35l1.4 3.6L161 40l-3.6 1.4L156 45l-1.4-3.6L151 40l3.6-1.4z"/><path d="M192 27l1.4 3.6L197 32l-3.6 1.4L192 37l-1.4-3.6L187 32l3.6-1.4z"/><path d="M236 45l1.4 3.6L241 50l-3.6 1.4L236 55l-1.4-3.6L231 50l3.6-1.4z"/></g></svg>
   </div>
   <div class="asof" role="note"><span>숫자 기준 <b>10/23(금) 17:30 배치</b></span><span>뉴스 <b class="num">13:48</b></span><span>노란 표시 = 먼저 볼 것</span></div>
 
   <section class="flow" aria-labelledby="flow-h">
-    <div class="flow-h"><small>새 종목을 찾고 있다면</small><h2 id="flow-h">이 순서로 검토하세요.</h2></div>
+    <div class="flow-h"><small>신규 종목</small><h2 id="flow-h">검토 순서</h2></div>
     <div class="groups">
       <div class="group g1"><div class="group-h"><span class="mono">01–02</span>시장과 테마</div>
         <div class="steps">
@@ -113,7 +117,7 @@
         </div></div>
     </div>
     <div class="routes">
-      <h3>결정실 판정 뒤에는</h3>
+      <h3>판정 이후</h3>
       <div class="route-row">
         <a class="route" href="#"><b>매수대상</b> → 06 진입 조건</a>
         <a class="route" href="home.html#hold"><b>이미 보유</b> → 내 주식</a>
@@ -125,7 +129,7 @@
 
   <div class="two">
     <section class="box sage" aria-labelledby="more-h">
-      <div class="box-h"><h2 id="more-h">더 살펴볼 자료와 전략</h2><small>필요할 때</small></div>
+      <div class="box-h"><h2 id="more-h">참고 자료와 전략</h2><small>필요할 때</small></div>
       <div class="tiles">
         <a class="tile" href="#" data-k="테마 뉴스 테마뉴스"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 5h15l5 5v17H6z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 13h12M10 18h12M10 23h8" stroke="currentColor" stroke-width="2"/></svg><span><b>테마별 뉴스</b><span class="room">테마뉴스</span><span class="today">오늘 278건</span></span><span class="ar">↗</span></a>
         <a class="tile" href="#" data-k="테마 구성 종목 북두테마 상세 리서치"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"/><rect x="18" y="5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"/><rect x="5" y="18" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M18 22h9M22.5 18v9" stroke="currentColor" stroke-width="2"/></svg><span><b>테마와 구성 종목</b><span class="room">북두테마 상세</span><span class="today">테마 28</span></span><span class="ar">↗</span></a>
@@ -134,11 +138,11 @@
       </div>
     </section>
     <section class="box peach" aria-labelledby="rec-h">
-      <div class="box-h"><h2 id="rec-h">판단 뒤의 결과와 기록</h2><small>돌아보기</small></div>
+      <div class="box-h"><h2 id="rec-h">결과와 기록</h2><small>돌아보기</small></div>
       <div class="tiles">
-        <a class="tile" href="performance.html" data-k="성과기록 판단 근거 결과 시장"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 4h14l4 4v20H7z" fill="none" stroke="currentColor" stroke-width="2"/><path d="m11 18 3 3 7-8" fill="none" stroke="currentColor" stroke-width="2"/></svg><span><b>성과기록</b><span class="room">판단이 시장보다 잘했나</span><span class="today">5일 뒤 +0.3%p · 480건</span></span><span class="ar">›</span></a>
-        <a class="tile" href="selection.html" data-k="선정성적 선정 후 성적 규칙 비교"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 27h22M8 27V17M14 27V11M20 27V14M26 27V7" fill="none" stroke="currentColor" stroke-width="2"/></svg><span><b>선정성적</b><span class="room">고르는 규칙끼리 비교</span><span class="today">옛 규칙 20일 +0.6%p</span></span><span class="ar">›</span></a>
-        <a class="tile wide" href="#" data-k="하루 변화 사장실 놀이공원"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 9v7l5 3" fill="none" stroke="currentColor" stroke-width="2"/></svg><span><b>하루 변화</b><span class="room">사장실 · 놀이공원</span><span class="today">전날 대비</span></span><span class="ar">↗</span></a>
+        <a class="tile" href="performance.html" data-k="성과기록 판단 근거 결과 시장"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 4h14l4 4v20H7z" fill="none" stroke="currentColor" stroke-width="2"/><path d="m11 18 3 3 7-8" fill="none" stroke="currentColor" stroke-width="2"/></svg><span><b>성과기록</b><span class="room">판단이 시장보다 잘했나</span><span class="today">5일 뒤 · 시장보다 +0.3%p</span></span><span class="ar">›</span></a>
+        <a class="tile" href="selection.html" data-k="선정성적 선정 후 성적 규칙 비교"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 27h22M8 27V17M14 27V11M20 27V14M26 27V7" fill="none" stroke="currentColor" stroke-width="2"/></svg><span><b>선정성적</b><span class="room">고르는 규칙끼리 비교</span><span class="today">20일 뒤 · 테마보다 +0.6%p</span></span><span class="ar">›</span></a>
+        <a class="tile" href="#" data-k="하루 변화 사장실 놀이공원"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 9v7l5 3" fill="none" stroke="currentColor" stroke-width="2"/></svg><span><b>하루 변화</b><span class="room">사장실 · 놀이공원</span><span class="today">전날 대비</span></span><span class="ar">↗</span></a>
         <p class="tile-note">성적표는 <a href="home.html#scores">알림홈</a>에서 봅니다.</p>
       </div>
     </section>
@@ -149,9 +153,9 @@
 
 <nav class="mnav" aria-label="아래 메뉴">
   <a href="home.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11 12 4l9 7v9h-6v-6H9v6H3z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>알림홈</a>
-  <a href="home.html#hold"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="1" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M16 14h2" stroke="currentColor" stroke-width="1.8"/></svg>내 주식</a>
-  <a href="home.html#cand"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 5 5M8.5 11h5M11 8.5v5" stroke="currentColor" stroke-width="1.8"/></svg>결정실</a>
-  <a href="home.html#news"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h10l4 4v14H5z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 11h8M8 15h8M8 7h4" stroke="currentColor" stroke-width="1.8"/></svg>뉴스</a>
+  <a href="#" title="내 주식 방 (이번 시안 밖)"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="1" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M16 14h2" stroke="currentColor" stroke-width="1.8"/></svg>내 주식</a>
+  <a href="#" title="결정실 방 (이번 시안 밖)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 5 5M8.5 11h5M11 8.5v5" stroke="currentColor" stroke-width="1.8"/></svg>결정실</a>
+  <a href="#" title="뉴스 방 (이번 시안 밖)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h10l4 4v14H5z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 11h8M8 15h8M8 7h4" stroke="currentColor" stroke-width="1.8"/></svg>뉴스</a>
   <a class="on" href="menu.html" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>전체</a>
 </nav>
 <script>

@@ -7,11 +7,11 @@
 <title>호쿠토증권 성과기록 · 버전2.2 시안</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap">
-<link rel="stylesheet" href="v22.css?v=22b">
+<link rel="stylesheet" href="v22.css?v=22c">
 <style>
-/* 성과기록 — ① 한 줄 답 + 기간별 4칸 ② 단계별(5일 뒤) 막대표 ③ 종목별 기록(누르면 고른 길) ④ 잘한·못한 판단. 숫자는 «시장 대비 %p» 하나로 통일 */
+/* 성과기록 — ① 요약 + 기간별 4칸 ② 단계별(5일 뒤) 막대표 ③ 종목별 기록(누르면 고른 길, 성적 순 정렬). 기준은 «시장보다 %p» 하나 */
 .crumb{display:flex;gap:6px;align-items:center;font-size:14px;color:var(--muted);padding-top:14px}
-.crumb a{color:var(--blue);font-weight:700;display:inline-block;padding:10px 0}
+.crumb a{color:var(--blue);font-weight:700;display:inline-block;padding:12px 0}
 .answer{margin-top:6px;border:1px solid var(--navy);background:#fff;box-shadow:var(--shadow)}
 .answer-h{background:var(--navy);color:#fff;padding:14px 16px}
 .answer-h small{display:block;color:#cdd7e8;font-size:13.5px;font-weight:700}
@@ -31,7 +31,7 @@ section.sec{margin-top:24px}
 .sec-h{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 12px;margin-bottom:10px}
 .sec-h h2{margin:0;font-size:20px;color:var(--navy)}
 .sec-h p{margin:0;font-size:14px;color:var(--muted)}
-.sec-h a{font-size:14.5px;font-weight:700;color:var(--blue);display:inline-block;padding:10px 0}
+.sec-h a{font-size:14.5px;font-weight:700;color:var(--blue);display:inline-block;padding:12px 0}
 .stages{background:#fff;border:1px solid var(--line-2);box-shadow:var(--shadow-s)}
 .stage{display:grid;grid-template-columns:minmax(0,1.3fr) 54px minmax(90px,1fr) 64px;gap:10px;align-items:center;padding:11px 14px;font-size:15px}
 .stage+.stage{border-top:1px solid var(--line)}
@@ -47,6 +47,10 @@ section.sec{margin-top:24px}
 .filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
 .filters button{min-height:44px;padding:0 14px;border:1px solid var(--line-2);background:#fff;font-weight:700;font-size:15px;border-radius:3px;cursor:pointer}
 .filters button[aria-pressed=true]{background:var(--navy);color:#fff;border-color:var(--navy)}
+.filters .sort{margin-left:auto;border-style:dashed}
+.filters .sort::before{content:"↓ ";color:var(--muted)}
+.filters .sort[aria-pressed=true]{border-style:solid}.filters .sort[aria-pressed=true]::before{color:#fff}
+@media (max-width:560px){.filters .sort{margin-left:0}}
 .recs{background:#fff;border:1px solid var(--line-2);box-shadow:var(--shadow-s)}
 .rec+.rec{border-top:1px solid var(--line)}
 .rec>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:minmax(0,1fr) 18px;gap:8px 10px;padding:12px 14px;min-height:56px}
@@ -71,52 +75,44 @@ section.sec{margin-top:24px}
 .path .what small{display:block;color:var(--muted);font-size:13.5px}
 .path a{font-size:14px;font-weight:700;color:var(--blue);white-space:nowrap;display:inline-flex;align-items:center;min-height:44px;margin-top:-10px}
 .p-res{color:var(--blue)}.p-str{color:var(--violet)}.p-dec{color:var(--amber)}.p-buy{color:var(--green)}.p-hold{color:var(--teal)}.p-after{color:var(--navy)}
-.best{display:grid;gap:14px}
-@media (min-width:760px){.best{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.best .card-b{padding:4px 16px 8px}
-.best ol{margin:0;padding:0;list-style:none}
-.best li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;padding:10px 0;border-top:1px solid var(--line);font-size:15px}
-.best li:first-child{border-top:0}
-.best li small{grid-column:1/-1;color:var(--muted);font-size:13.5px}
-.best li a{font-weight:700;text-decoration:none;display:inline-flex;align-items:center;min-height:44px}
-.best li{align-items:center}
-.best li b{font-family:var(--mono)}
 .note{font-size:13.5px;color:var(--muted);margin:12px 0 0;line-height:1.6}
 </style>
 </head>
 <body>
-<div class="demo gutter"><b>버전2.2 시안</b>모든 종목·숫자는 가상입니다.<a href="./">바뀐 점 ↗</a></div>
+<div class="demo gutter"><b>버전2.2 시안</b>종목·숫자는 모두 가상<a href="./">바뀐 점 ↗</a></div>
 <header class="top gutter"><div class="wrap">
   <a class="brand" href="home.html" aria-label="호쿠토증권 알림홈"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M13 0h6v7h4v6h9v6h-9v6h-4v7h-6v-7H9v-6H0v-6h9V7h4z" fill="currentColor"/></svg><span><b>HOKUTO</b><small>SECURITIES</small></span></a>
   <span class="place">성과기록</span>
   <label class="search"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="m13 13 4 4" stroke="currentColor" stroke-width="2"/></svg><span class="sr-only">종목 찾기</span><input id="q" type="search" placeholder="종목 이름이나 코드" autocomplete="off"></label>
-  <a class="btn" href="menu.html">전체</a>
 </div></header>
-
+<nav class="nav gutter" aria-label="주요 메뉴"><div class="wrap">
+  <a href="home.html">알림홈</a>
+  <a href="#" title="내 주식 방 (이번 시안 밖)">내 주식</a>
+  <a href="#" title="결정실 방 (이번 시안 밖)">결정실</a>
+  <a href="#" title="오늘 뉴스 방 (이번 시안 밖)">뉴스</a>
+  <a class="all on" href="menu.html">전체 메뉴</a>
+</div></nav>
 <main class="gutter"><div class="wrap">
-  <nav class="crumb" aria-label="위치"><a href="menu.html">전체메뉴</a><span aria-hidden="true">›</span><span>판단 뒤의 결과와 기록</span><span aria-hidden="true">›</span><b style="color:var(--ink)">성과기록</b></nav>
-  <div class="heading" style="padding-top:4px"><div><h1>성과기록</h1><p class="lede">북두의 판단이 시장(1306 ETF)보다 잘했는지 봅니다. 숫자는 모두 «시장 대비 %p» 하나로 셉니다.</p></div></div>
+  <nav class="crumb" aria-label="위치"><a href="menu.html">전체메뉴</a><span aria-hidden="true">›</span><span>결과와 기록</span><span aria-hidden="true">›</span><b style="color:var(--ink)">성과기록</b></nav>
+  <div class="heading" style="padding-top:4px"><div><h1>성과기록</h1><p class="lede">북두의 판단이 시장(1306 ETF)보다 나았는지 봅니다. 기준은 «시장보다 몇 %p» 하나입니다.</p></div></div>
 
   <section class="answer" aria-labelledby="ans-h">
-    <div class="answer-h"><small>지금까지 한 줄 답</small><b id="ans-h">아직은 시장과 비슷합니다.</b><span class="chip"><i style="background:var(--yellow-dot)"></i>운영 51거래일 · 판단하기엔 이릅니다</span></div>
+    <div class="answer-h"><small>요약</small><b id="ans-h">아직은 시장과 비슷합니다.</b><span class="chip"><i style="background:var(--yellow-dot)"></i>운영 51거래일 · 판단하기엔 이릅니다</span></div>
     <div class="periods" id="periods"></div>
     <p class="answer-f">판단 532건 · 기간이 지나 결과가 나온 것만 셉니다 · 실제 체결 수익이 아닙니다</p>
   </section>
 
   <section class="sec" aria-labelledby="st-h">
-    <div class="sec-h"><div><h2 id="st-h">어느 단계가 잘했나</h2><p>5일 뒤 시장 대비 · 30건이 안 되면 회색(표본 적음)</p></div><a href="selection.html">규칙끼리 비교는 선정성적 →</a></div>
+    <div class="sec-h"><div><h2 id="st-h">단계별 성과</h2><p>5일 뒤 · 시장보다 · 30건 미만은 회색(표본 적음)</p></div><a href="selection.html">규칙끼리 비교는 선정성적 →</a></div>
     <div class="stages" id="stages"></div>
   </section>
 
   <section class="sec" aria-labelledby="rec-h">
-    <div class="sec-h"><div><h2 id="rec-h">종목별 기록</h2><p>누르면 고른 길(리서치 → 전략실 → 결정실 → 신규매수 → 보유)이 열립니다</p></div></div>
-    <div class="filters" role="group" aria-label="거르기"><button type="button" data-f="all" aria-pressed="true">전체</button><button type="button" data-f="cand" aria-pressed="false">지금 후보</button><button type="button" data-f="hold" aria-pressed="false">보유</button><button type="button" data-f="past" aria-pressed="false">지난 기록</button></div>
+    <div class="sec-h"><div><h2 id="rec-h">종목별 기록</h2><p>누르면 고른 길(리서치 → 전략실 → 결정실 → 신규매수 → 보유)</p></div></div>
+    <div class="filters" role="group" aria-label="거르기"><button type="button" data-f="all" aria-pressed="true">전체</button><button type="button" data-f="cand" aria-pressed="false">지금 후보</button><button type="button" data-f="hold" aria-pressed="false">보유</button><button type="button" data-f="past" aria-pressed="false">지난 기록</button><button type="button" class="sort" id="sort" aria-pressed="false">5일 성적 순</button></div>
     <div class="recs" id="recs"></div>
   </section>
 
-  <section class="sec" aria-labelledby="b-h">
-    <div class="sec-h"><div><h2 id="b-h">잘한 판단 · 못한 판단</h2><p>5일 뒤 시장 대비 · 각 3개</p></div></div>
-    <div class="best" id="best"></div>
     <p class="note">성과기록은 관찰 전용이며 판정에 쓰이지 않습니다. 시장 = TOPIX 를 따라가는 1306 ETF(지수 자체는 무료로 받을 수 없어 가장 가까운 것).</p>
   </section>
   <footer class="foot"><b>호쿠토증권 디자인 v2.2 시안</b> · 성과기록 · 모든 숫자는 가상 자료</footer>
@@ -124,9 +120,9 @@ section.sec{margin-top:24px}
 
 <nav class="mnav" aria-label="아래 메뉴">
   <a href="home.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11 12 4l9 7v9h-6v-6H9v6H3z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>알림홈</a>
-  <a href="home.html#hold"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="1" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M16 14h2" stroke="currentColor" stroke-width="1.8"/></svg>내 주식</a>
-  <a href="home.html#cand"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 5 5M8.5 11h5M11 8.5v5" stroke="currentColor" stroke-width="1.8"/></svg>결정실</a>
-  <a href="home.html#news"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h10l4 4v14H5z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 11h8M8 15h8M8 7h4" stroke="currentColor" stroke-width="1.8"/></svg>뉴스</a>
+  <a href="#" title="내 주식 방 (이번 시안 밖)"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="1" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M16 14h2" stroke="currentColor" stroke-width="1.8"/></svg>내 주식</a>
+  <a href="#" title="결정실 방 (이번 시안 밖)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 5 5M8.5 11h5M11 8.5v5" stroke="currentColor" stroke-width="1.8"/></svg>결정실</a>
+  <a href="#" title="뉴스 방 (이번 시안 밖)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h10l4 4v14H5z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 11h8M8 15h8M8 7h4" stroke="currentColor" stroke-width="1.8"/></svg>뉴스</a>
   <a class="on" href="menu.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>전체</a>
 </nav>
 <script>
@@ -142,7 +138,7 @@ document.getElementById('periods').innerHTML=P.map(([k,v,win,n])=>`<div class="p
 
 /* 단계별 */
 const S=[['관심종목으로 뽑음','리서치센터',245,0.0],['A 후보','전략실',25,-0.4],['B 후보','전략실',43,-0.2],['C 후보','전략실',22,-0.4],['결정실 매수대상','결정실',61,0.4],['신규매수 후보','신규매수실',38,0.0],['신규매수 대기','신규매수실',40,0.1],['내 주식 점검 노랑','내 주식',6,0.3],['내 주식 점검 빨강','내 주식',1,1.2]];
-document.getElementById('stages').innerHTML='<div class="stage stage-head"><span>단계</span><span style="text-align:right">건수</span><span></span><span style="text-align:right">시장 대비</span></div>'+S.map(([k,room,n,v])=>`<div class="stage${n<30?' few':''}"><span class="nm">${k}<small>${room}<span class="cnt"> · ${n}건</span>${n<30?' · 표본 적음':''}</small></span><span class="n">${n}</span>${bar(n<30?null:v,1.5)}<span class="v" style="${n<30?'':'color:'+col(v)}">${sgn(v)}</span></div>`).join('');
+document.getElementById('stages').innerHTML='<div class="stage stage-head"><span>단계</span><span style="text-align:right">건수</span><span></span><span style="text-align:right">시장보다</span></div>'+S.map(([k,room,n,v])=>`<div class="stage${n<30?' few':''}"><span class="nm">${k}<small>${room}<span class="cnt"> · ${n}건</span>${n<30?' · 표본 적음':''}</small></span><span class="n">${n}</span>${bar(n<30?null:v,1.5)}<span class="v" style="${n<30?'':'color:'+col(v)}">${sgn(v)}</span></div>`).join('');
 
 /* 종목별 기록 — 고른 길 */
 const R=[
@@ -164,21 +160,20 @@ document.getElementById('recs').innerHTML=R.map(r=>`<details class="rec" id="sto
   <span class="meta">${KIND[r.kind]}<span>${r.day} 첫 판단 · 지금 ${r.last}</span></span>
   <span class="cells">${cell('다음날',r.c[0])}${cell('5일 뒤',r.c[1])}${cell('20일 뒤',r.c[2])}</span></summary>
   <ol class="path">${r.path.map(([cls,room,what,pg])=>`<li><i style="background:currentColor" class="${cls}"></i><span><span class="room ${cls}">${room}</span><div class="what">${what}</div></span><a href="${PAGE[pg]}">보기 →</a></li>`).join('')}
-  <li><i class="p-after" style="background:currentColor"></i><span><span class="room p-after">이후 성적</span><div class="what">시장 대비 ${r.c.filter(v=>v!=null).map(sgn).join(' → ')||'아직 없음'}<small>판단일 종가 기준 · 실제 체결 수익 아님</small></div></span><span></span></li></ol></details>`).join('');
+  <li><i class="p-after" style="background:currentColor"></i><span><span class="room p-after">이후 성적</span><div class="what">시장보다 ${r.c.filter(v=>v!=null).map(sgn).join(' → ')||'아직 없음'}<small>판단일 종가 기준 · 실제 체결 수익 아님</small></div></span><span></span></li></ol></details>`).join('');
 
-/* 잘한·못한 */
-const scored=R.filter(r=>r.c[1]!=null).sort((a,b)=>b.c[1]-a.c[1]);
-const li=r=>`<li><a href="#stock-${r.id}" data-open="${r.id}">${r.nm}</a><b style="color:${col(r.c[1])}">${sgn(r.c[1])}</b><small>${r.day} · ${r.last}</small></li>`;
-const good=scored.filter(r=>r.c[1]>0).slice(0,3),bad=scored.filter(r=>r.c[1]<0).slice(-3).reverse();
-document.getElementById('best').innerHTML=`<section class="card sage"><div class="card-h"><h2>시장보다 잘함</h2><small>5일 뒤</small></div><div class="card-b"><ol>${good.map(li).join('')}</ol></div></section><section class="card" style="border-color:var(--peach-line)"><div class="card-h" style="background:var(--peach-bg)"><h2>시장보다 못함</h2><small>5일 뒤</small></div><div class="card-b"><ol>${bad.map(li).join('')}</ol></div></section>`;
+/* 5일 성적 순 정렬 (기다림은 맨 아래) */
+const box=document.getElementById('recs'),orig=[...box.children];
+document.getElementById('sort').addEventListener('click',e=>{const on=e.currentTarget.getAttribute('aria-pressed')!=='true';e.currentTarget.setAttribute('aria-pressed',String(on));
+ const k=d=>{const r=R.find(x=>'stock-'+x.id===d.id);return r.c[1]==null?-1e9:r.c[1]};
+ (on?[...orig].sort((x,y)=>k(y)-k(x)):orig).forEach(d=>box.appendChild(d))});
 
 /* 거르기 · 찾기 · 주소(#stock-…)로 열기 */
 let F='all';const q=document.getElementById('q');
 function apply(){const v=q.value.trim().toLowerCase();document.querySelectorAll('.rec').forEach(d=>{const ok=(F==='all'||d.dataset.kind===F)&&(!v||d.dataset.k.toLowerCase().includes(v));d.hidden=!ok})}
-document.querySelectorAll('.filters button').forEach(b=>b.addEventListener('click',()=>{F=b.dataset.f;document.querySelectorAll('.filters button').forEach(o=>o.setAttribute('aria-pressed',String(o===b)));apply()}));
+document.querySelectorAll('.filters button[data-f]').forEach(b=>b.addEventListener('click',()=>{F=b.dataset.f;document.querySelectorAll('.filters button[data-f]').forEach(o=>o.setAttribute('aria-pressed',String(o===b)));apply()}));
 q.addEventListener('input',apply);
 function openHash(){const id=(location.hash||'').slice(1);const d=id&&document.getElementById(id);if(d&&d.tagName==='DETAILS'){d.open=true;d.scrollIntoView({block:'start'})}}
-document.querySelectorAll('[data-open]').forEach(a=>a.addEventListener('click',()=>setTimeout(openHash,0)));
 window.addEventListener('hashchange',openHash);openHash();
 })();
 </script>

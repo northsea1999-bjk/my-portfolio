@@ -7,7 +7,7 @@
 <title>호쿠토증권 알림홈 · 버전2.2 시안</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap">
-<link rel="stylesheet" href="v22.css?v=22a">
+<link rel="stylesheet" href="v22.css?v=22c">
 <style>
 /* 알림홈 2.2 — 폰: 할 일 → 내 주식 → 살 후보 → 차트 → 결정실 오늘 → 테마 → 뉴스 / PC: 왼쪽(할 일·살 후보·차트) 오른쪽(시장·결정실 오늘·내 주식·테마·뉴스) */
 .grid{display:flex;flex-direction:column;gap:18px;margin-top:14px}
@@ -85,7 +85,8 @@
 .cand .cd{font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-left:6px;font-weight:500}
 .cand .ar{color:var(--muted);font-size:18px;transition:transform .15s;justify-self:end}
 .cand[open] .ar{transform:rotate(90deg)}
-.cand .meta{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px}
+.cand .meta{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
+.cand .mtxt{font-size:14px;color:var(--muted)}
 .cand-b{padding:0 16px 16px}
 .verdict{margin:0;padding:12px 14px;border-left:5px solid var(--navy);background:var(--blue-bg);font-weight:800;font-size:17px;line-height:1.45}
 .verdict small{display:block;font-weight:500;font-size:14px;color:var(--muted);margin-top:4px;line-height:1.5}
@@ -192,7 +193,7 @@
 </style>
 </head>
 <body>
-<div class="demo gutter"><b>버전2.2 시안</b>모든 종목·가격·판정은 가상입니다.<a href="./">바뀐 점 ↗</a></div>
+<div class="demo gutter"><b>버전2.2 시안</b>숫자는 모두 가상 · 4화면만 시안<a href="./">바뀐 점 ↗</a></div>
 
 <header class="top gutter"><div class="wrap">
   <a class="brand" href="home.html" aria-label="호쿠토증권 알림홈"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M13 0h6v7h4v6h9v6h-9v6h-4v7h-6v-7H9v-6H0v-6h9V7h4z" fill="currentColor"/></svg><span><b>HOKUTO</b><small>SECURITIES</small></span></a>
@@ -202,16 +203,16 @@
 
 <nav class="nav gutter" aria-label="주요 메뉴"><div class="wrap">
   <a class="on" href="home.html" aria-current="page">알림홈</a>
-  <a href="#news">오늘 뉴스</a>
-  <a href="#hold">내 주식 <span class="c">6</span></a>
-  <a href="#cand">결정실 <span class="c">3</span></a>
+  <a href="#" title="내 주식 방 (이번 시안 밖)">내 주식</a>
+  <a href="#" title="결정실 방 (이번 시안 밖)">결정실</a>
+  <a href="#" title="오늘 뉴스 방 (이번 시안 밖)">뉴스</a>
   <a class="all" href="menu.html">전체 메뉴</a>
 </div></nav>
 
 <main class="gutter"><div class="wrap">
   <div class="heading">
-    <div><div class="eyebrow">알림홈</div><h1>오늘 볼 것만 먼저.</h1><p class="lede">할 일 → 내 주식 → 살 후보 순서로 보면 됩니다.</p></div>
-    <svg aria-hidden="true" class="desk" focusable="false" shape-rendering="crispEdges" viewbox="0 0 244 98"><path d="M4 79h232v8H4zM15 88h222v3H15z" fill="#dfe8eb"></path><path d="M20 71h205v6H20zM30 77h6v15h-6zM209 77h6v15h-6z" fill="#29354b"></path><path d="M32 31h6v9h-6zM25 38h6v7h-6zM39 24h7v12h-7zM39 43h7v12h-7zM33 44h6v18h-6zM23 55h26v5H23z" fill="#42766b"></path><path d="M25 59h22v7H25zM29 66h14v5H29z" fill="#d89968"></path><path d="M67 13h103v5h5v49H62V18h5zM115 66h9v5h-9z" fill="#26344c"></path><path d="M68 20h101v40H68z" fill="#acc6eb"></path><path d="M74 25h45v29H74zM125 25h37v7h-37zM125 38h37v4h-37zM125 48h28v5h-28z" fill="#fffefa"></path><path d="M80 32h32v4H80zM80 42h19v5H80z" fill="#526fa5"></path><path d="M104 41h8v9h-8zM187 42h27v24h-27zM211 45h9v17h-9z" fill="#e9bf63"></path><path d="M214 49h3v9h-3z" fill="#fffefa"></path><path d="M186 66h29v5h-29zM80 68h31v3H80zM128 68h32v3h-32z" fill="#26344c"></path><path d="M189 12h4v4h4v4h-4v4h-4v-4h-4v-4h4zM50 8h3v5h-3zM47 11h9v2h-9z" fill="#d8a956"></path></svg>
+    <div><div class="eyebrow">알림홈</div><h1>오늘의 점검</h1><p class="lede">확인할 일, 보유 종목, 매수 후보를 중요한 순서로 정리했습니다.</p></div>
+    <svg class="dipper" viewBox="0 0 260 120" aria-hidden="true" focusable="false"><defs><radialGradient id="glow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#f2cf73" stop-opacity=".55"/><stop offset="1" stop-color="#f2cf73" stop-opacity="0"/></radialGradient></defs><g fill="#c9d6dd"><circle cx="20" cy="18" r="1"/><circle cx="244" cy="96" r="1"/><circle cx="132" cy="104" r="1"/><circle cx="210" cy="12" r="1"/><circle cx="34" cy="92" r="1"/><circle cx="160" cy="80" r="1"/></g><path d="M70 28 64 66 108 80 118 46Z M118 46 156 40 192 32 236 50" fill="none" stroke="#8fbfb1" stroke-width="1.4" stroke-linejoin="round"/><g><circle cx="70" cy="28" r="11" fill="url(#glow)"/><circle cx="64" cy="66" r="10" fill="url(#glow)"/><circle cx="108" cy="80" r="9" fill="url(#glow)"/><circle cx="118" cy="46" r="8" fill="url(#glow)"/><circle cx="156" cy="40" r="10" fill="url(#glow)"/><circle cx="192" cy="32" r="10" fill="url(#glow)"/><circle cx="236" cy="50" r="10" fill="url(#glow)"/></g><g fill="#b8862a"><path d="M70 22l1.6 4.4L76 28l-4.4 1.6L70 34l-1.6-4.4L64 28l4.4-1.6z"/><path d="M64 61l1.4 3.6L69 66l-3.6 1.4L64 71l-1.4-3.6L59 66l3.6-1.4z"/><path d="M108 76l1.2 2.8L112 80l-2.8 1.2L108 84l-1.2-2.8L104 80l2.8-1.2z"/><path d="M118 42l1 3L122 46l-3 1L118 50l-1-3L114 46l3-1z"/><path d="M156 35l1.4 3.6L161 40l-3.6 1.4L156 45l-1.4-3.6L151 40l3.6-1.4z"/><path d="M192 27l1.4 3.6L197 32l-3.6 1.4L192 37l-1.4-3.6L187 32l3.6-1.4z"/><path d="M236 45l1.4 3.6L241 50l-3.6 1.4L236 55l-1.4-3.6L231 50l3.6-1.4z"/></g></svg>
   </div>
 
   <div class="status" role="note" aria-label="자료 기준과 시장온도">
@@ -222,19 +223,19 @@
   <div class="grid">
    <div class="col l">
     <section class="card amber g-todo" aria-labelledby="todo-h">
-      <div class="card-h"><h2 id="todo-h">오늘 할 일<span class="c">3</span></h2><small>14:00 기준</small></div>
+      <div class="card-h"><h2 id="todo-h">오늘 확인할 일<span class="c">3</span></h2><small>14:00 기준</small></div>
       <div class="card-b" style="padding-block:2px"><ol class="todo" id="todo"></ol></div>
     </section>
 
     <section class="card violet g-cand" id="cand" aria-labelledby="cand-h">
-      <div class="card-h"><h2 id="cand-h">살 후보<span class="c">3</span></h2><small>매수 검토 먼저</small></div>
+      <div class="card-h"><h2 id="cand-h">매수 후보<span class="c">3</span></h2><small>매수 검토 우선</small></div>
       <div id="cands"></div>
       <p class="cand-note">진입 기준은 잠정입니다(첫 점검 30사례 중 0건). 신호와 결론은 판단을 돕는 표시이고 매수 지시가 아닙니다.</p>
       <a class="more" href="#">신규매수실에서 자세히 <span aria-hidden="true">→</span></a>
     </section>
 
     <section class="card navy g-chart" aria-labelledby="chart-h">
-      <div class="card-h"><h2 id="chart-h">가격 흐름</h2><small>종가 기준 · 예시</small></div>
+      <div class="card-h"><h2 id="chart-h">가격 차트</h2><small>종가 기준 · 예시</small></div>
       <div class="chart-tools">
         <label class="sr-only" for="pick">종목 고르기</label><select id="pick"></select>
         <div class="seg" role="group" aria-label="기간"><button type="button" data-n="22" aria-pressed="false">1개월</button><button type="button" data-n="65" aria-pressed="true">3개월</button><button type="button" data-n="130" aria-pressed="false">6개월</button></div>
@@ -245,29 +246,16 @@
       <p class="chart-note">오른쪽 꼬리표 = 선의 오늘 값. 선과 띠는 판단을 돕는 표시입니다.</p>
     </section>
 
-    <section class="card g-score" id="scores" aria-labelledby="sc-h">
-      <div class="card-h"><h2 id="sc-h">성적표</h2><small>집중 규칙 종목 · 20·40·60일</small></div>
-      <div class="score-sum"><b>첫 20일 결과 11월 중순(추정)</b><span>지금은 진행만 봅니다 · 같은 테마 평균 대비</span></div>
-      <ul class="scores" id="scorelist"></ul>
-      <div class="score-links"><a href="performance.html">판단 기록 전체 · 성과기록 →</a><a href="selection.html">규칙끼리 비교 · 선정성적 →</a></div>
-    </section>
    </div>
 
    <div class="col r">
-    <section class="card g-day" aria-labelledby="day-h">
-      <div class="card-h"><h2 id="day-h">결정실 오늘</h2><small>10/23 17:30 판정</small></div>
-      <div class="card-b day">
-        <a href="#cand"><b>매수대상</b><span>3</span></a><a href="#cand"><b>보류 · 제외</b><span>2 · 0</span></a>
-        <a href="#cand"><b>오늘 결론 매수 검토</b><span>1</span></a><a href="#cand"><b>기다림 · 보류</b><span>1 · 1</span></a>
-      </div>
-    </section>
 
     <section class="card sage g-hold" id="hold" aria-labelledby="hold-h">
-      <div class="card-h"><h2 id="hold-h">내 주식<span class="c">6</span></h2><small>다시 볼 선 기준</small></div>
+      <div class="card-h"><h2 id="hold-h">내 주식<span class="c">6</span></h2><small>점검선 기준</small></div>
       <div class="mix" id="mix" aria-hidden="true"></div>
       <div class="mix-l" id="mix-l"></div>
       <ul class="hold" id="holdings"></ul>
-      <p class="tip"><b>다시 보기</b>는 한 달 바닥이나 평소 범위 아래끝 아래로 마감, <b>주의</b>는 한 달 평균선 아래이거나 선이 하루 움직임만큼 가까움. 손절 주문이 아닙니다.</p>
+      <p class="tip"><b>다시 보기</b> 한 달 바닥·평소 범위 아래끝 아래 마감 · <b>주의</b> 한 달 평균선 아래 또는 근접 · 손절 주문 아님</p>
       <a class="more" href="#">내 주식 전체 보기 <span aria-hidden="true">→</span></a>
     </section>
 
@@ -284,7 +272,7 @@
     </section>
 
     <section class="card blue g-news" id="news" aria-labelledby="news-h">
-      <div class="card-h"><h2 id="news-h">내 종목 뉴스<span class="c">5</span></h2>
+      <div class="card-h"><h2 id="news-h">보유·후보 뉴스<span class="c">5</span></h2>
         <div class="lang" role="group" aria-label="제목 언어"><button type="button" aria-pressed="true">한국어</button><button type="button" aria-pressed="false">원문</button></div></div>
       <ul class="news">
         <li><time>13:20</time><div><div class="tt">세이운 소프트, 대형 은행과 AI 상담 시스템 계약</div><div class="tg"><span class="chip violet">후보</span>세이운 소프트 · 직접 <span class="dir up">▲ 긍정</span></div></div></li>
@@ -295,21 +283,24 @@
       </ul>
       <a class="more" href="#">오늘 뉴스 전체 보기 <span aria-hidden="true">→</span></a>
     </section>
+    <section class="card g-score" id="scores" aria-labelledby="sc-h">
+      <div class="card-h"><h2 id="sc-h">성적표</h2><small>집중 규칙 선정 종목</small></div>
+      <div class="score-sum"><b>첫 20일 결과 11월 중순(추정)</b><span>지금은 진행 상황만 · 같은 테마 평균보다</span></div>
+      <ul class="scores" id="scorelist"></ul>
+      <div class="score-links"><a href="performance.html">판단 기록 전체 · 성과기록 →</a><a href="selection.html">규칙끼리 비교 · 선정성적 →</a></div>
+    </section>
    </div>
   </div>
 
-  <section class="guide" aria-label="전체메뉴 안내">
-    <div><small>다른 방이 궁금하면</small><h2>전체메뉴에서 검토 순서대로</h2><p>시장·테마 → 후보·실적 → 판정·가격, 그리고 기록까지.</p></div>
-    <a class="btn" href="menu.html">전체메뉴 열기 →</a>
-  </section>
+  <div class="more-row"><a href="menu.html">다른 화면은 전체 안내도에서 <span aria-hidden="true">→</span></a></div>
   <footer class="foot"><b>호쿠토증권 디자인 v2.2 시안</b> · 2.1 배치 + 가독성 개선 · 모든 숫자는 가상 자료</footer>
 </div></main>
 
 <nav class="mnav" aria-label="아래 메뉴">
   <a class="on" href="home.html" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11 12 4l9 7v9h-6v-6H9v6H3z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>알림홈</a>
-  <a href="#hold"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="1" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M16 14h2" stroke="currentColor" stroke-width="1.8"/></svg>내 주식</a>
-  <a href="#cand"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 5 5M8.5 11h5M11 8.5v5" stroke="currentColor" stroke-width="1.8"/></svg>결정실</a>
-  <a href="#news"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h10l4 4v14H5z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 11h8M8 15h8M8 7h4" stroke="currentColor" stroke-width="1.8"/></svg>뉴스</a>
+  <a href="#" title="내 주식 방 (이번 시안 밖)"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="1" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M16 14h2" stroke="currentColor" stroke-width="1.8"/></svg>내 주식</a>
+  <a href="#" title="결정실 방 (이번 시안 밖)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 5 5M8.5 11h5M11 8.5v5" stroke="currentColor" stroke-width="1.8"/></svg>결정실</a>
+  <a href="#" title="뉴스 방 (이번 시안 밖)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h10l4 4v14H5z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 11h8M8 15h8M8 7h4" stroke="currentColor" stroke-width="1.8"/></svg>뉴스</a>
   <a href="menu.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>전체</a>
 </nav>
 
@@ -365,8 +356,8 @@ CAND.sort((a,b)=>({buy:0,wait:1,hold:2}[a.kind]-{buy:0,wait:1,hold:2}[b.kind]));
 /* 오늘 할 일 — 한 줄 제목(종목 · 할 일) + 둘째 줄 숫자 */
 const todo=[];
 HOLD.filter(h=>h.color==='red').forEach(h=>todo.push({cls:'k-red',k:'내 주식 점검',t:h.nm+' · '+h.tag,s:'10/23 종가 <b>'+yen(h.s.last)+'</b>엔 · 손절 주문 아님, 다시 보기',go:'#hold'}));
-CAND.filter(c=>c.kind==='buy').forEach(c=>todo.push({cls:'k-green',k:'살 후보 확인',t:c.nm+' · 월요일 시가 확인',s:'<b>'+yen(c.s.B)+'~'+yen(c.s.U)+'</b>엔이면 매수 검토 · '+c.strong,go:'#cand'}));
-todo.push({cls:'k-blue',k:'실적 임박',t:'호쿠토 반도체 · 실적 발표 D-3',s:'<b>10/28(수)</b> · 발표 전후로 흔들릴 수 있음',go:'#hold'});
+CAND.filter(c=>c.kind==='buy').forEach(c=>todo.push({cls:'k-green',k:'매수 후보 확인',t:c.nm+' · 월요일 시가 확인',s:'<b>'+yen(c.s.B)+'~'+yen(c.s.U)+'</b>엔이면 매수 검토 · '+c.strong,go:'#cand'}));
+todo.push({cls:'k-blue',k:'실적 발표 임박',t:'호쿠토 반도체 · 실적 발표 D-3',s:'<b>10/28(수)</b> · 발표 전후로 흔들릴 수 있음',go:'#hold'});
 document.getElementById('todo').innerHTML=todo.slice(0,3).map((x,i)=>`<li class="${x.cls}"><a href="${x.go}"><span class="n">${i+1}</span><span><span class="k">${x.k}</span><div class="t">${x.t}</div><div class="s">${x.s}</div></span><span class="ar" aria-hidden="true">›</span></a></li>`).join('');
 
 /* 내 주식 */
@@ -387,7 +378,7 @@ const PILL={buy:'green',wait:'yellow',hold:'red'};
 document.getElementById('cands').innerHTML=CAND.map(c=>{const s=c.s;
   const lo=s.B-2.2*s.W,hi=s.U+1.6*s.W,P=v=>Math.max(1,Math.min(99,(v-lo)/(hi-lo)*100)),pB=P(s.B),pU=P(s.U),pC=P(s.last);
   return `<details class="cand${c.kind==='hold'?' dim':''}"${c.kind==='buy'?' open':''}><summary><div><span class="nm">${c.nm}</span><span class="cd">${c.cd}</span></div><span class="ar" aria-hidden="true">›</span>
-   <span class="meta"><span class="chip ${PILL[c.kind]}"><i></i>${c.short}</span><span class="chip">${c.theme}</span><span class="chip blue">${c.strong}</span></span></summary>
+   <span class="meta"><span class="chip ${PILL[c.kind]}"><i></i>${c.short}</span><span class="mtxt">${c.theme} · ${c.strong}</span></span></summary>
   <div class="cand-b"><p class="verdict ${c.kind}">${c.text}<small>${c.small}</small></p>
   <p class="why"><b>왜 지금</b>${c.why}</p>
   <div class="ladder" role="img" aria-label="가격 사다리: 기준선 ${yen(s.B)}엔, 추격 주의 ${yen(s.U)}엔, 종가 ${yen(s.last)}엔">
@@ -401,7 +392,7 @@ document.getElementById('cands').innerHTML=CAND.map(c=>{const s=c.s;
 
 /* 성적표 — 집중 규칙 선정분(가상): 선정일 10/21, 20거래일 중 진행 */
 const SC=[['세이운 소프트','DEMO-S','AI 소프트웨어 · A',2,1.8],['키타 전력설비','DEMO-K','반도체 소재·기판 · D',2,-0.9],['유키 메디컬','DEMO-Y','게임·콘텐츠 · B',2,-1.4],['호쿠토 반도체','DEMO-A','반도체 소재·기판 · A · 보유',2,0.7]];
-document.getElementById('scorelist').innerHTML=SC.map(([nm,cd,th,d,v])=>`<li><a href="performance.html#stock-${cd}"><span class="nm">${nm}<small>${th} · 10/21 선정</small></span><span class="v" style="color:${v>0?'var(--up)':'var(--down)'}">${(v>0?'+':'−')+Math.abs(v).toFixed(1)}%p<small>테마 대비 지금까지</small></span><span class="ar" aria-hidden="true">›</span><span class="pg"><i><u style="width:${d/20*100}%"></u></i>20일까지 D+${d}</span></a></li>`).join('');
+document.getElementById('scorelist').innerHTML=SC.map(([nm,cd,th,d,v])=>`<li><a href="performance.html#stock-${cd}"><span class="nm">${nm}<small>${th} · 10/21 선정</small></span><span class="v" style="color:${v>0?'var(--up)':'var(--down)'}">${(v>0?'+':'−')+Math.abs(v).toFixed(1)}%p<small>테마보다</small></span><span class="ar" aria-hidden="true">›</span><span class="pg"><i><u style="width:${d/20*100}%"></u></i>20일까지 D+${d}</span></a></li>`).join('');
 /* 차트 */
 const ALL=[...CAND.filter(c=>c.kind!=='hold').map(c=>({...c,role:'후보'})),...HOLD.map(h=>({...h,role:'보유'}))];
 const pick=document.getElementById('pick');pick.innerHTML=ALL.map((x,i)=>`<option value="${i}">${x.role} · ${x.nm}</option>`).join('');

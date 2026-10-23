@@ -7,7 +7,7 @@
 <title>호쿠토증권 버전2.2 시안 검토</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap">
-<link rel="stylesheet" href="v22.css?v=22a">
+<link rel="stylesheet" href="v22.css?v=22c">
 <style>
 .open-row{display:grid;gap:14px;margin-top:8px}
 @media (min-width:760px){.open-row{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -34,33 +34,47 @@ td.fix{background:#f6fbf8}
 </style>
 </head>
 <body>
-<div class="demo gutter"><b>버전2.2 시안</b>모든 종목·가격·판정은 가상입니다.</div>
+<div class="demo gutter"><b>버전2.2 시안</b>숫자는 모두 가상</div>
 <header class="top gutter"><div class="wrap">
   <a class="brand" href="home.html"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M13 0h6v7h4v6h9v6h-9v6h-4v7h-6v-7H9v-6H0v-6h9V7h4z" fill="currentColor"/></svg><span><b>HOKUTO</b><small>SECURITIES</small></span></a>
   <span class="place">버전2.2 시안 검토</span>
 </div></header>
 <main class="gutter"><div class="wrap">
-  <div class="heading"><div><div class="eyebrow">2026-10-23 · 웹 Claude</div><h1>알림홈 · 전체메뉴 · 기록 방, 버전2.2</h1><p class="lede">2.1 배치를 그대로 두고, 전수 점검에서 찾은 «읽기 어려운 곳»을 고쳤습니다.</p></div></div>
+  <div class="heading"><div><div class="eyebrow">2026-10-23 · 웹 Claude</div><h1>버전2.2 기준 시안</h1><p class="lede">10/23 12:50 요청 5가지(기록 겹침 · 비움 · 그림 · 문구 · 위 메뉴)를 반영했습니다. 배치는 그대로입니다.</p></div></div>
   <div class="open-row">
-    <a href="home.html"><b>알림홈 보기 →</b><span>오늘 할 일 · 살 후보 · 내 주식 · 가격 흐름 · 뉴스 · 성적표</span></a>
+    <a href="home.html"><b>알림홈 보기 →</b><span>오늘 확인할 일 · 매수 후보 · 내 주식 · 가격 차트 · 뉴스 · 성적표</span></a>
     <a href="menu.html"><b>전체메뉴 보기 →</b><span>검토 순서 01→06 · 자료와 전략 · 결과와 기록</span></a>
   </div>
   <div class="open-row" style="margin-top:14px">
-    <a href="performance.html" style="background:#fff;border-color:var(--line-2)"><b>성과기록 보기 →</b><span>판단이 시장보다 잘했나 · 단계별 · 종목별 고른 길</span></a>
-    <a href="selection.html" style="background:#fff;border-color:var(--line-2)"><b>선정성적 보기 →</b><span>고르는 규칙끼리 비교 · 전환 효과 · 기록 상태</span></a>
+    <a href="performance.html" style="background:#fff;border-color:var(--line-2)"><b>성과기록 보기 →</b><span>판단이 시장보다 나았나 · 단계별 · 종목별 고른 길</span></a>
+    <a href="selection.html" style="background:#fff;border-color:var(--line-2)"><b>선정성적 보기 →</b><span>고르는 규칙끼리 비교 · 전환 효과</span></a>
   </div>
 
   <section class="block">
-    <h2>기록 방 정리 (범준님 10/23 12:25)</h2>
+    <h2>10/23 12:50 요청 → 바꾼 것</h2>
     <div class="tw"><table>
-      <thead><tr><th>곳</th><th>지금 서버(버전1)</th><th>2.2</th></tr></thead>
+      <thead><tr><th>요청</th><th>바꾼 것</th></tr></thead>
       <tbody>
-        <tr><td>성적표</td><td>전체메뉴의 방 하나</td><td class="fix">알림홈 안의 칸 하나로(내용은 그대로: 집중 규칙 선정 종목의 20·40·60거래일). 전체메뉴·위 메뉴에서는 뺌</td></tr>
-        <tr><td>성과기록</td><td>폰 길이 약 12,300px · 532·1,045·1,615 같은 «판단×기간 칸» 숫자 · 종목마다 5단계 글이 길게 · 규칙별 표가 «결과 기다리는 중»으로 가득</td><td class="fix">한 줄 답 → 기간별 4칸(시장 대비 %p · 이긴 비율 · 건수) → 단계별 막대표(30건 미만은 회색) → 종목별 한 줄(누르면 고른 길) → 잘한·못한 3개씩</td></tr>
-        <tr><td>선정성적</td><td>100·69·18·51·31·0 숫자 상자 6개, 규칙별 칸이 성적표와 겹침</td><td class="fix">한 줄 답 → 규칙 3칸(옛 · 전환일 · 집중) → 전환 효과 막대 2줄 → 20일 결과 나온 종목 → 기록 상태 막대 하나. 집중 규칙 종목은 알림홈 성적표로 보냄(겹침 없앰)</td></tr>
-        <tr><td>숫자 세는 법</td><td>방마다 «시장보다 n% 더 좋음», «테마 평균보다 n%p» 등 섞임</td><td class="fix">성과기록은 «시장 대비 %p», 선정성적·성적표는 «테마 평균 대비 %p» 하나씩</td></tr>
+        <tr><td>1. 기록 3곳 겹침</td><td class="fix">선정성적의 «20일 결과가 나온 종목» 목록 삭제(성과기록 종목 기록과 같은 종목·다른 숫자라 헷갈림) · 선정성적 집중 규칙 칸은 날짜 3칸을 빼고 «알림홈 성적표로» 한 줄만 · 기록 상태 막대 → 맨 아래 한 줄 · 성과기록 «잘한·못한 판단» 삭제 → 종목별 기록에 «5일 성적 순» 단추</td></tr>
+        <tr><td>2. 놀이공원(하루 변화) 큼 · 비움</td><td class="fix">가로 전체 칸 → 다른 칸과 같은 작은 칸 · 알림홈 «결정실 오늘» 칸 삭제(할 일·매수 후보와 같은 내용) · 아래 큰 보라 안내 띠 → 글 링크 한 줄 · 매수 후보 꼬리표 3개 → 상태 1개 + 글 한 줄 · 위 시안 띠 짧게 · 머리의 «← 알림홈»/«전체» 단추 삭제(위 메뉴와 겹침)</td></tr>
+        <tr><td>3. 그림·모양</td><td class="fix">2D 픽셀 컴퓨터 그림 → 북두칠성 일곱 별 선 그림(호쿠토 = 북두) · 그림자 4px → 3px 옅게 · 카드 머리띠 색 옅게 · 카드 안 여백 조금 넓게 · 제목 굵기 한 단계 낮춤</td></tr>
+        <tr><td>4. 머리 문구</td><td class="fix">오늘 볼 것만 먼저 → <b>오늘의 점검</b> · 어디서 시작할지, 한눈에 → <b>전체 안내도</b> · 오늘 할 일 → 오늘 확인할 일 · 살 후보 → 매수 후보 · 가격 흐름 → 가격 차트 · 내 종목 뉴스 → 보유·후보 뉴스 · 어느 단계가 잘했나 → 단계별 성과 · 테마가 ★로 바뀐 뒤 고르면 더 나은가 → 주도 테마 전환 효과 · 지금까지 한 줄 답 → 요약</td></tr>
+        <tr><td>5. 위 메뉴에 다른 방 이름</td><td class="fix">그 줄은 «이 화면의 목차»가 아니라 «사이트 전체 방 메뉴»입니다. 그런데 2.2 는 숫자(6·3)를 붙이고 이 화면 안 칸으로 내려가게 해서 목차처럼 보였습니다 → 숫자 빼고, 폰 아래 메뉴와 같은 5개(알림홈 · 내 주식 · 결정실 · 뉴스 · 전체 메뉴)로 맞추고, 4화면 모두 같은 줄을 둠. 지금 있는 화면만 테두리로 표시</td></tr>
       </tbody>
     </table></div>
+  </section>
+
+  <section class="block">
+    <h2>기록 3곳 — 묻는 질문이 하나씩</h2>
+    <div class="tw"><table>
+      <thead><tr><th>곳</th><th>묻는 질문</th><th>기준</th><th>여기에만 있는 것</th></tr></thead>
+      <tbody>
+        <tr><td>성적표 (알림홈)</td><td>지금 규칙으로 고른 종목이 잘 가고 있나</td><td>같은 테마 평균보다 %p</td><td>집중 규칙 종목별 20·40·60일 진행</td></tr>
+        <tr><td>성과기록</td><td>북두의 판단이 시장보다 나았나</td><td>시장(1306)보다 %p</td><td>기간별 · 단계별 성과 · 종목별 고른 길(유일한 종목 목록)</td></tr>
+        <tr><td>선정성적</td><td>어느 고르는 규칙이 나은가</td><td>같은 테마 평균보다 %p</td><td>옛 규칙 · 전환일 · 집중 규칙 합계 · 주도 테마 전환 효과</td></tr>
+      </tbody>
+    </table></div>
+    <p class="old" style="color:var(--muted)">기준이 둘(시장 · 같은 테마)인 것은 운영과 같습니다. 대신 숫자 옆에 «시장보다» «테마보다»를 항상 붙였습니다. 성적표 숫자의 기준(같은 테마 평균)은 서버 반영 때 운영 계산과 한 번 더 맞춰 볼 것(확인 필요).</p>
   </section>
 
   <section class="block">
@@ -68,7 +82,7 @@ td.fix{background:#f6fbf8}
     <div class="tw"><table style="min-width:520px">
       <thead><tr><th>어디서</th><th>어디로</th><th>왜</th></tr></thead>
       <tbody>
-        <tr><td>알림홈 살 후보</td><td>성과기록 그 종목 «고른 길»</td><td>왜 올라왔는지 한 번에</td></tr>
+        <tr><td>알림홈 매수 후보</td><td>성과기록 그 종목 «고른 길»</td><td>왜 올라왔는지 한 번에</td></tr>
         <tr><td>알림홈 내 주식(빨강·노랑)</td><td>성과기록 그 종목</td><td>점검선이 깨졌을 때 산 이유를 다시 보기</td></tr>
         <tr><td>알림홈 성적표 줄</td><td>성과기록 그 종목</td><td>성적 뒤의 판단 근거</td></tr>
         <tr><td>성과기록 고른 길 단계</td><td>그 단계의 방</td><td>당시 판정을 그 방에서 확인</td></tr>
@@ -78,13 +92,13 @@ td.fix{background:#f6fbf8}
     </table></div>
   </section>
   <div class="metrics">
-    <div class="metric"><small>12px 이하 작은 글자 (알림홈, 로고 글자 포함)</small><b>135 → 14</b> <span>곳 · 본문 16px</span></div>
-    <div class="metric"><small>44px 안 되는 누르는 곳</small><b>13 → 1</b> <span>개 (맨 위 시안 띠 링크)</span></div>
-    <div class="metric"><small>폰 알림홈 길이 (390px)</small><b>5,256 → 5,177</b> <span>px · 글자는 더 커짐</span></div>
+    <div class="metric"><small>알림홈 칸</small><b>8 → 7</b> <span>개 («결정실 오늘» 삭제)</span></div>
+    <div class="metric"><small>기록 3곳의 종목 목록</small><b>3 → 1</b> <span>곳 (성과기록에만)</span></div>
+    <div class="metric"><small>44px 안 되는 누르는 곳 (4화면)</small><b>0</b> <span>개</span></div>
   </div>
 
   <section class="block">
-    <h2>2.1 전수 점검 → 2.2 에서 고친 것</h2>
+    <h2>(앞 단계) 2.1 전수 점검 → 2.2 에서 고친 것</h2>
     <div class="tw"><table>
       <thead><tr><th>곳</th><th>2.1 에서 찾은 것</th><th>2.2</th></tr></thead>
       <tbody>
@@ -103,7 +117,7 @@ td.fix{background:#f6fbf8}
     </table></div>
     <p class="old"><a href="../quest-design-20261023/">버전2.1 보기</a><a href="../quest-design-20261019/?v=9-final1020c&amp;palette=classic">버전2 (10/20) 보기</a></p>
   </section>
-  <footer class="foot"><b>호쿠토증권 디자인 v2.2 시안</b> · 숫자는 모두 가상이며, 화면 숫자(25일선 · 20일 최저 · 볼린저 · 기준선 · 참고 상한)는 운영과 같은 정의로 가상 종가에서 계산합니다.</footer>
+  <footer class="foot"><b>호쿠토증권 디자인 v2.2 기준 시안 (10/23 13시 수정)</b> · 숫자는 모두 가상이며, 화면 숫자(25일선 · 20일 최저 · 볼린저 · 기준선 · 참고 상한)는 운영과 같은 정의로 가상 종가에서 계산합니다.</footer>
 </div></main>
 </body>
 </html>
