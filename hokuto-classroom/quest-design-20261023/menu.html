@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#24344f">
+<title>호쿠토증권 전체메뉴 · 버전2.1 시안</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap">
+<link rel="stylesheet" href="v21.css?v=21a">
+<style>
+/* 전체메뉴 배치: ① 검토 순서 6단계(3묶음) ② 자료와 전략 4 · 기록 4 (2×2 씩, 빈 칸 없음). 칸마다 오늘 숫자 한 줄. */
+.flow{padding:16px 18px 18px;border:1px solid var(--navy);background:#fff;box-shadow:var(--shadow);margin-top:6px}
+.flow-h{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:8px 16px}
+.flow-h small{display:block;font-size:12px;font-weight:700;color:var(--muted)}
+.flow-h h2{margin:2px 0 0;font-size:21px;color:var(--navy)}
+.flow-h .range{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted)}
+.flow-h .range b{background:var(--navy);color:#fff;font-family:var(--mono);padding:5px 9px;font-size:13px}
+.groups{display:grid;gap:14px;margin-top:14px}
+@media (min-width:980px){.groups{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.group{min-width:0}
+.group-h{display:flex;align-items:center;gap:8px;padding:7px 10px;font-size:12.5px;font-weight:800;border-left:4px solid}
+.group-h .mono{font-size:12px}
+.g1 .group-h{background:var(--blue-bg);border-color:var(--blue);color:var(--blue)}
+.g2 .group-h{background:var(--violet-bg);border-color:var(--violet);color:var(--violet)}
+.g3 .group-h{background:var(--amber-bg);border-color:#c08b25;color:var(--amber)}
+.steps{display:grid;grid-template-columns:minmax(0,1fr) 18px minmax(0,1fr);align-items:stretch;margin-top:8px}
+.arrow{display:grid;place-items:center;color:var(--muted);font-weight:700}
+.step{display:flex;flex-direction:column;gap:3px;padding:11px 12px 12px;text-decoration:none;border:1px solid var(--line-2);box-shadow:var(--shadow-s);min-width:0;min-height:44px}
+.g1 .step{background:#f3f7fe;border-color:var(--blue-line)} .g2 .step{background:#f7f3fd;border-color:var(--violet-line)} .g3 .step{background:#fffaeb;border-color:var(--amber-line)}
+.step .no{align-self:flex-start;font-family:var(--mono);font-size:12.5px;font-weight:700;color:#fff;padding:3px 7px}
+.g1 .no{background:var(--blue)} .g2 .no{background:var(--violet)} .g3 .no{background:#8c5a06}
+.step b{font-size:16px;line-height:1.35;color:var(--navy);margin-top:4px}
+.step .room{font-size:13px;font-weight:700}
+.g1 .room{color:var(--blue)} .g2 .room{color:var(--violet)} .g3 .room{color:var(--amber)}
+.step .today{margin-top:auto;padding-top:6px;font-size:12.5px;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
+@media (min-width:980px){.step{min-height:158px}}
+.step .what{font-size:12px;color:var(--muted)}
+.after-d{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center;margin-top:14px;padding-top:12px;border-top:1px dashed var(--line-2);font-size:13px}
+.after-d b{color:var(--navy)}
+.after-d .note{margin-left:auto;color:var(--muted);font-size:12px}
+.two{display:grid;gap:18px;margin-top:20px}
+@media (min-width:860px){.two{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.box{padding:14px 16px 16px;border:1px solid;border-top-width:4px;box-shadow:var(--shadow);min-width:0}
+.box.sage{background:var(--sage-bg);border-color:var(--sage-line);border-top-color:#5d7f5a}
+.box.peach{background:var(--peach-bg);border-color:var(--peach-line);border-top-color:#b8653f}
+.box-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:10px}
+.box-h h2{margin:0;font-size:18px;color:var(--navy)}
+.box-h small{font-size:12px;color:var(--muted)}
+.tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (max-width:560px){.tiles{grid-template-columns:minmax(0,1fr)}}
+.tile{display:grid;grid-template-columns:34px minmax(0,1fr) 14px;gap:4px 10px;align-items:start;padding:12px;background:#fff;border:1px solid var(--line-2);box-shadow:var(--shadow-s);text-decoration:none;min-height:44px}
+.tile svg{width:30px;height:30px}
+.box.sage .tile svg{color:#4e7a5b} .box.peach .tile svg{color:#b0562f}
+.tile b{font-size:14.5px;line-height:1.35;color:var(--navy)}
+.tile span{display:block;font-size:12px;color:var(--muted)}
+.tile .today{font-size:12.5px;font-weight:700;color:var(--ink);margin-top:3px;font-variant-numeric:tabular-nums}
+.tile .ar{color:var(--muted);font-size:13px}
+.found{font-size:13px;color:var(--muted);margin:14px 0 0}
+[data-hide="1"]{display:none!important}
+@media (max-width:600px){.top .place{display:none}}
+</style>
+</head>
+<body>
+<div class="demo gutter"><b>버전2.1 시안</b>모든 숫자는 가상입니다. 운영 화면이 아닙니다.<a href="./">바뀐 점 보기 ↗</a></div>
+
+<header class="top gutter"><div class="wrap">
+  <a class="brand" href="home.html" aria-label="호쿠토증권 알림홈"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M13 0h6v7h4v6h9v6h-9v6h-4v7h-6v-7H9v-6H0v-6h9V7h4z" fill="currentColor"/></svg><span><b>HOKUTO</b><small>SECURITIES</small></span></a>
+  <span class="place">전체 안내도</span>
+  <label class="search"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="m13 13 4 4" stroke="currentColor" stroke-width="2"/></svg><span class="sr-only">메뉴 찾기</span><input id="q" type="search" placeholder="테마, 실적, 기록… 메뉴 찾기" autocomplete="off"></label>
+  <a class="btn" href="home.html">← 알림홈</a>
+</div></header>
+
+<main class="gutter"><div class="wrap">
+  <div class="heading">
+    <div>
+      <div class="eyebrow">호쿠토 전체메뉴</div>
+      <h1>어디서 시작할지, 한눈에.</h1>
+      <p class="lede">새 후보는 01 → 06 순서로, 자료와 기록은 아래에서 찾으세요.</p>
+    </div>
+    <svg aria-hidden="true" class="desk" focusable="false" shape-rendering="crispEdges" viewbox="0 0 244 98"><path d="M4 79h232v8H4zM15 88h222v3H15z" fill="#dfe8eb"></path><path d="M20 71h205v6H20zM30 77h6v15h-6zM209 77h6v15h-6z" fill="#29354b"></path><path d="M32 31h6v9h-6zM25 38h6v7h-6zM39 24h7v12h-7zM39 43h7v12h-7zM33 44h6v18h-6zM23 55h26v5H23z" fill="#42766b"></path><path d="M25 59h22v7H25zM29 66h14v5H29z" fill="#d89968"></path><path d="M67 13h103v5h5v49H62V18h5zM115 66h9v5h-9z" fill="#26344c"></path><path d="M68 20h101v40H68z" fill="#acc6eb"></path><path d="M74 25h45v29H74zM125 25h37v7h-37zM125 38h37v4h-37zM125 48h28v5h-28z" fill="#fffefa"></path><path d="M80 32h32v4H80zM80 42h19v5H80z" fill="#526fa5"></path><path d="M104 41h8v9h-8zM187 42h27v24h-27zM211 45h9v17h-9z" fill="#e9bf63"></path><path d="M214 49h3v9h-3z" fill="#fffefa"></path><path d="M186 66h29v5h-29zM80 68h31v3H80zM128 68h32v3h-32z" fill="#26344c"></path><path d="M189 12h4v4h4v4h-4v4h-4v-4h-4v-4h4zM50 8h3v5h-3zM47 11h9v2h-9z" fill="#d8a956"></path></svg>
+  </div>
+
+  <section class="flow" aria-labelledby="flow-h">
+    <div class="flow-h"><div><small>새 종목을 찾고 있다면</small><h2 id="flow-h">이 순서로 검토하세요.</h2></div><div class="range"><b>01 → 06</b>칸마다 오늘 숫자 · 10/23 기준</div></div>
+    <div class="groups">
+      <div class="group g1"><div class="group-h"><span class="mono">01–02</span>시장과 테마</div>
+        <div class="steps">
+          <a class="step" href="#" data-k="시장 흐름 회의실 테마"><span class="no">01</span><b>시장 흐름 보기</b><span class="room">회의실</span><span class="what">어느 테마가 강한지</span><span class="today">시장온도 64.5</span></a>
+          <span class="arrow" aria-hidden="true">→</span>
+          <a class="step" href="#" data-k="집중 테마 작전실 주도"><span class="no">02</span><b>집중 테마 확인</b><span class="room">작전실</span><span class="what">★ 주도 6 · 집중 3</span><span class="today">바뀐 날 10/21</span></a>
+        </div></div>
+      <div class="group g2"><div class="group-h"><span class="mono">03–04</span>후보와 실적</div>
+        <div class="steps">
+          <a class="step" href="#" data-k="종목 후보 전략실 레인"><span class="no">03</span><b>종목 후보 보기</b><span class="room">전략실</span><span class="what">집중 → A·B·C / 레인 D</span><span class="today">후보 7</span></a>
+          <span class="arrow" aria-hidden="true">→</span>
+          <a class="step" href="#" data-k="회사 실적 종목검증실 EPS"><span class="no">04</span><b>회사 실적 확인</b><span class="room">종목검증실</span><span class="what">EPS·실적 개선</span><span class="today">개선 3 · 악화 1</span></a>
+        </div></div>
+      <div class="group g3"><div class="group-h"><span class="mono">05–06</span>판정과 가격</div>
+        <div class="steps">
+          <a class="step" href="#" data-k="판정 이유 결정실 매수대상 보류"><span class="no">05</span><b>판정과 이유 보기</b><span class="room">결정실</span><span class="what">매수대상·보류·제외 근거</span><span class="today">매수대상 3 · 보류 2</span></a>
+          <span class="arrow" aria-hidden="true">→</span>
+          <a class="step" href="#" data-k="진입 조건 신규매수실 가격 시가"><span class="no">06</span><b>진입 조건 확인</b><span class="room">신규매수실</span><span class="what">기준선 · 참고 구간 · 시가</span><span class="today">매수 검토 1 · 기다림 1 · 보류 1</span></a>
+        </div></div>
+    </div>
+    <div class="after-d"><b>결정실 판정 뒤</b><span>신규매수 확인 대상 → 06</span><span>이미 보유 → <a href="home.html#hold">내 주식</a></span><span>보류·제외 → 근거 확인</span><span class="note">숫자는 검토 순서입니다. 매수 지시가 아닙니다.</span></div>
+  </section>
+
+  <div class="two">
+    <section class="box sage" aria-labelledby="more-h">
+      <div class="box-h"><h2 id="more-h">더 살펴볼 자료와 전략</h2><small>필요할 때 따로</small></div>
+      <div class="tiles">
+        <a class="tile" href="#" data-k="테마 뉴스 테마뉴스"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 5h15l5 5v17H6z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 13h12M10 18h12M10 23h8" stroke="currentColor" stroke-width="2"/></svg><div><b>테마별 뉴스 모아보기</b><span>테마뉴스</span><div class="today">오늘 278건</div></div><span class="ar">↗</span></a>
+        <a class="tile" href="#" data-k="테마 구성 종목 북두테마 상세 리서치"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"/><rect x="18" y="5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"/><rect x="5" y="18" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M18 22h9M22.5 18v9" stroke="currentColor" stroke-width="2"/></svg><div><b>테마와 구성 종목</b><span>북두테마 상세</span><div class="today">테마 28</div></div><span class="ar">↗</span></a>
+        <a class="tile" href="#" data-k="BNF 신호실 전략"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 22l7-8 6 5 11-12" fill="none" stroke="currentColor" stroke-width="2"/><path d="M22 7h6v6" fill="none" stroke="currentColor" stroke-width="2"/></svg><div><b>BNF 전략 따로 보기</b><span>BNF 신호실</span><div class="today">신호 2</div></div><span class="ar">↗</span></a>
+        <a class="tile" href="#" data-k="매매 기준 전략 규칙"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 4v24M6 10h20M6 10l-3 8h6zM26 10l-3 8h6z" fill="none" stroke="currentColor" stroke-width="2"/></svg><div><b>매매 기준 살펴보기</b><span>매매 전략·규칙</span><div class="today">규칙 v1 · 10/01</div></div><span class="ar">↗</span></a>
+      </div>
+    </section>
+    <section class="box peach" aria-labelledby="rec-h">
+      <div class="box-h"><h2 id="rec-h">판단 뒤의 결과와 기록</h2><small>이전 판단을 돌아보기</small></div>
+      <div class="tiles">
+        <a class="tile" href="#" data-k="성과기록 판단 근거 결과"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 4h14l4 4v20H7z" fill="none" stroke="currentColor" stroke-width="2"/><path d="m11 18 3 3 7-8" fill="none" stroke="currentColor" stroke-width="2"/></svg><div><b>성과기록</b><span>판단·근거와 이후 결과</span><div class="today">새 신호 2</div></div><span class="ar">↗</span></a>
+        <a class="tile" href="#" data-k="선정성적 선정 후 성적"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 27h22M8 27V17M14 27V11M20 27V14M26 27V7" fill="none" stroke="currentColor" stroke-width="2"/></svg><div><b>선정성적</b><span>규칙별 1·2·3개월 성적</span><div class="today">집중 규칙 20일: 기다리는 중</div></div><span class="ar">↗</span></a>
+        <a class="tile" href="#" data-k="하루 변화 사장실 놀이공원"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 9v7l5 3" fill="none" stroke="currentColor" stroke-width="2"/></svg><div><b>하루 변화</b><span>사장실 · 놀이공원</span><div class="today">전 거래일 대비</div></div><span class="ar">↗</span></a>
+        <a class="tile" href="#" data-k="성적표 집중 규칙 선정 종목"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="6" y="5" width="20" height="23" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 11h12M10 16h12M10 21h7" stroke="currentColor" stroke-width="2"/></svg><div><b>성적표</b><span>집중 규칙 종목의 20·40·60거래일</span><div class="today">첫 결과 11월 중순(추정)</div></div><span class="ar">↗</span></a>
+      </div>
+    </section>
+  </div>
+  <p class="found" id="found" hidden></p>
+
+  <footer class="foot"><b>호쿠토증권 디자인 v2.1 시안</b> · 색은 메뉴 구분용이며 투자 판정을 뜻하지 않습니다 · 모든 숫자는 가상 자료</footer>
+</div></main>
+
+<nav class="mnav" aria-label="아래 메뉴">
+  <a href="home.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11 12 4l9 7v9h-6v-6H9v6H3z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>알림홈</a>
+  <a href="home.html#hold"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="1" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M16 14h2" stroke="currentColor" stroke-width="1.8"/></svg>내 주식</a>
+  <a href="home.html#cand"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 5 5M8.5 11h5M11 8.5v5" stroke="currentColor" stroke-width="1.8"/></svg>결정실</a>
+  <a href="home.html#news"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h10l4 4v14H5z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 11h8M8 15h8M8 7h4" stroke="currentColor" stroke-width="1.8"/></svg>뉴스</a>
+  <a class="on" href="menu.html" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>전체</a>
+</nav>
+<script>
+(function(){
+  const q=document.getElementById('q'), found=document.getElementById('found');
+  const items=[...document.querySelectorAll('[data-k]')];
+  q.addEventListener('input',()=>{const v=q.value.trim().toLowerCase();let n=0;
+    items.forEach(el=>{const hit=!v||(el.dataset.k+' '+el.textContent).toLowerCase().includes(v);el.dataset.hide=hit?'0':'1';if(hit)n++});
+    document.querySelectorAll('.steps').forEach(s=>{s.querySelectorAll('.arrow').forEach(a=>a.dataset.hide=v?'1':'0')});
+    found.hidden=!v;found.textContent=v?('«'+q.value.trim()+'» 메뉴 '+n+'곳'):'';});
+})();
+</script>
+</body>
+</html>
