@@ -62,6 +62,9 @@
 .mix i{display:block;height:100%}
 .mix-l{display:flex;flex-wrap:wrap;gap:4px 14px;padding:8px 16px 6px;font-size:14px;color:var(--muted)}
 .mix-l b{color:var(--ink);font-family:var(--mono)}
+.bundle{margin:0;padding:0 16px 8px;font-size:14px;color:var(--muted)}
+.bundle b{color:var(--ink)}
+.bundle small{font-size:13px}
 .hold{list-style:none;margin:6px 0 0;padding:0;border-top:1px solid var(--line)}
 .hold li+li{border-top:1px solid var(--line)}
 .hold summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 10px;padding:12px 16px;min-height:44px}
@@ -273,6 +276,7 @@
       <div class="card-h"><h2 id="hold-h">내 주식<span class="c">6</span></h2><small>점검선 기준</small></div>
       <div class="mix" id="mix" aria-hidden="true"></div>
       <div class="mix-l" id="mix-l"></div>
+      <p class="bundle" id="bundle"></p>
       <ul class="hold" id="holdings"></ul>
       <p class="tip"><b>다시 보기</b> = 한 달 바닥이나 평소 범위 아래로 마감 · <b>주의</b> = 한 달 평균선 아래이거나 가까움 · 손절 주문이 아닙니다</p>
       <a class="more" href="#">내 주식 전체 보기 <span aria-hidden="true">→</span></a>
@@ -347,12 +351,12 @@ function tradingDates(n){const out=[];let d=new Date(2026,9,23);while(out.length
 const DATES=tradingDates(130);
 
 const HOLD=[
-  {nm:'아오이 게임즈',cd:'DEMO-B',pnl:-17.8,alert:['violet','물타기 검토','산 값보다 −17.8% · 효과 검증 전 · 더 사라는 뜻 아님'],judge:'주의',co:'10/23 11:05 신작 출시 연기(나쁜 소식)',c:fit(walk(11,130,5200,.0012,.036),s=>s.low20-0.6*s.W,-3.4),buy:'3개월 이상',earn:'실적 11/06 (D-10)'},
-  {nm:'호쿠토 반도체',cd:'DEMO-A',pnl:18.4,judge:'정상',c:fit(walk(7,130,6400,.0022,.034),s=>s.ma25+0.45*s.W,1.2),buy:'3개월 이상',earn:'실적 10/28 (D-3)'},
-  {nm:'하루카 전자',cd:'DEMO-D',pnl:-3.0,judge:'주의',c:fit(walk(23,130,8800,.0006,.03),s=>Math.max(s.ma25-0.35*s.W,Math.max(s.low20,s.bbL)+0.6*s.W),-0.8),buy:'2개월째',earn:'실적일 자료 준비 중'},
-  {nm:'미나토 중공업',cd:'DEMO-C',pnl:9.1,c:fit(walk(5,130,3100,.0016,.03),s=>s.ma25+3.2*s.W,1.1),buy:'3개월 이상',earn:'실적 11/12 (D-14)'},
-  {nm:'시라카와 소재',cd:'DEMO-E',pnl:4.4,c:fit(walk(31,130,1300,.0012,.028),s=>s.ma25+2.6*s.W,-0.4),buy:'1개월째 · 최소 보유 1개월까지 D-3',earn:'실적 11/05 (D-9)'},
-  {nm:'나기사 통신',cd:'DEMO-F',pnl:12.7,alert:['blue','100주 추가 매수 검토','회복 신호 10/22 · 효과 검증 전'],judge:'정상',c:fit(walk(43,130,2050,.0013,.026),s=>s.ma25+3.5*s.W,0.6),buy:'3개월 이상',earn:'실적 11/04 (D-8)'}
+  {nm:'아오이 게임즈',th:'게임·콘텐츠',cd:'DEMO-B',pnl:-17.8,alert:['violet','물타기 검토','산 값보다 −17.8% · 효과 검증 전 · 더 사라는 뜻 아님'],judge:'주의',co:'10/23 11:05 신작 출시 연기(나쁜 소식)',c:fit(walk(11,130,5200,.0012,.036),s=>s.low20-0.6*s.W,-3.4),buy:'3개월 이상',earn:'실적 11/06 (D-10)'},
+  {nm:'호쿠토 반도체',th:'반도체 소재·기판',cd:'DEMO-A',pnl:18.4,judge:'정상',c:fit(walk(7,130,6400,.0022,.034),s=>s.ma25+0.45*s.W,1.2),buy:'3개월 이상',earn:'실적 10/28 (D-3)'},
+  {nm:'하루카 전자',th:'반도체 소재·기판',cd:'DEMO-D',pnl:-3.0,judge:'주의',c:fit(walk(23,130,8800,.0006,.03),s=>Math.max(s.ma25-0.35*s.W,Math.max(s.low20,s.bbL)+0.6*s.W),-0.8),buy:'2개월째',earn:'실적일 자료 준비 중'},
+  {nm:'미나토 중공업',th:'전력망',cd:'DEMO-C',pnl:9.1,c:fit(walk(5,130,3100,.0016,.03),s=>s.ma25+3.2*s.W,1.1),buy:'3개월 이상',earn:'실적 11/12 (D-14)'},
+  {nm:'시라카와 소재',th:'반도체 소재·기판',cd:'DEMO-E',pnl:4.4,c:fit(walk(31,130,1300,.0012,.028),s=>s.ma25+2.6*s.W,-0.4),buy:'1개월째 · 최소 보유 1개월까지 D-3',earn:'실적 11/05 (D-9)'},
+  {nm:'나기사 통신',th:'통신',cd:'DEMO-F',pnl:12.7,alert:['blue','100주 추가 매수 검토','회복 신호 10/22 · 효과 검증 전'],judge:'정상',c:fit(walk(43,130,2050,.0013,.026),s=>s.ma25+3.5*s.W,0.6),buy:'3개월 이상',earn:'실적 11/04 (D-8)'}
 ];
 const CAND=[
   {nm:'세이운 소프트',cd:'DEMO-S',theme:'AI 소프트웨어 ★',strong:'강한 근거 2/3',why:'실적 전망 상향 · 은행권 수주 기사',c:fit(walk(3,130,5100,.0024,.036),s=>s.B+0.8*s.W)},
@@ -387,6 +391,9 @@ document.getElementById('todo').innerHTML=todo.slice(0,3).map((x,i)=>`<li class=
 
 /* 내 주식 */
 const cnt={red:0,yellow:0,green:0};HOLD.forEach(h=>cnt[h.color]++);
+/* 같은 테마 묶음 — 보유 종목을 테마 이름으로 묶어 «사실상 몇 개의 내기인가» 한 줄(비중 지시 아님) */
+const TB={};HOLD.forEach(h=>{TB[h.th]=(TB[h.th]||0)+1});const tb=Object.entries(TB).sort((a,b)=>b[1]-a[1]);
+document.getElementById('bundle').innerHTML=`같은 테마로 묶으면 <b>${tb.length}묶음</b> · 가장 큰 묶음 <b>${tb[0][0]} ${tb[0][1]}종목</b> <small>(테마 이름 기준 · 비중 지시 아님)</small>`;
 document.getElementById('mix').innerHTML=['red','yellow','green'].map(k=>cnt[k]?`<i style="flex:${cnt[k]};background:${DOT[k]}"></i>`:'').join('');
 document.getElementById('mix-l').innerHTML=['red','yellow','green'].map(k=>`<span><i class="chip-dot" style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${DOT[k]};margin-right:5px;vertical-align:-1px"></i>${WORD[k]} <b>${cnt[k]}</b></span>`).join('');
 const rowH=h=>{const s=h.s;return `<li><details${h.color==='red'?' open':''}><summary>
