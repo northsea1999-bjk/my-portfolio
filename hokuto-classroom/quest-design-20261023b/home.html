@@ -12,6 +12,7 @@
 /* 알림홈 2.2 — 폰: 할 일 → 내 주식 → 살 후보 → 차트 → 결정실 오늘 → 테마 → 뉴스 / PC: 왼쪽(할 일·살 후보·차트) 오른쪽(시장·결정실 오늘·내 주식·테마·뉴스) */
 .grid{display:flex;flex-direction:column;gap:18px;margin-top:14px}
 .col{display:contents}
+@media (max-width:640px){main .heading{display:none}.status{margin-top:12px}}
 .g-todo{order:1}.g-hold{order:2}.g-cand{order:3}.g-chart{order:4}.g-day{order:5}.g-side{order:6}.g-news{order:7}
 @media (min-width:980px){.grid{flex-direction:row;align-items:flex-start}.col{display:flex;flex-direction:column;gap:18px;min-width:0}.col.l{flex:7 1 0}.col.r{flex:5 1 0}}
 
