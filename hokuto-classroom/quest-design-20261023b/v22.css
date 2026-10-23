@@ -70,7 +70,7 @@ button,select,input{font:inherit;color:inherit}
 .eyebrow{font-size:13px;font-weight:800;color:var(--teal);letter-spacing:.06em}
 h1{font-size:clamp(26px,4vw,34px);line-height:1.25;margin:4px 0 6px;color:var(--navy);letter-spacing:-.015em;font-weight:700;text-wrap:balance}
 .lede{margin:0;color:var(--muted);font-size:15px}
-.desk,.dipper{width:230px;flex:none}
+.desk,.dipper{width:240px;flex:none}
 @media (max-width:640px){.desk,.dipper{display:none}.heading{padding-block:12px 8px}}
 
 .card{background:var(--paper);border:1px solid var(--line-2);border-radius:3px;box-shadow:var(--shadow);min-width:0}
@@ -119,3 +119,11 @@ html.big body{zoom:1.12}
 .built{margin-top:10px;font-size:13.5px;color:var(--muted)}
 .built b{color:var(--ink);font-family:var(--mono);font-weight:600}
 .honest{font-size:13.5px;color:var(--muted);margin:10px 0 0}
+
+/* 15:40 픽셀 그림: 북두칠성 밤하늘 배지 · 칸 그림 — 선명한 네모 점, 북극성·작은 별만 천천히 반짝 */
+.dipper.px{height:auto;border:1px solid var(--navy);box-shadow:var(--shadow);background:#1b2638;border-radius:3px}
+.px,.pi,.pic{image-rendering:pixelated}
+.px .tw1{animation:tw 2.6s steps(2,end) infinite}
+.px .tw2{animation:tw 3.4s steps(2,end) .9s infinite}
+@keyframes tw{50%{opacity:.35}}
+@media (prefers-reduced-motion:reduce){.px .tw1,.px .tw2{animation:none}}
