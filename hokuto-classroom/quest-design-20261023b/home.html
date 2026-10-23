@@ -13,7 +13,7 @@
 .grid{display:flex;flex-direction:column;gap:18px;margin-top:14px}
 .col{display:contents}
 @media (max-width:640px){main .heading{display:none}.status{margin-top:12px}}
-.g-todo{order:1}.g-hold{order:2}.g-cand{order:3}.g-chart{order:4}.g-day{order:5}.g-side{order:6}.g-news{order:7}
+.g-todo{order:1}.g-hold{order:2}.g-cand{order:3}.g-chart{order:4}.g-day{order:5}.g-side{order:6}.g-news{order:7}.g-score{order:8}
 @media (min-width:980px){.grid{flex-direction:row;align-items:flex-start}.col{display:flex;flex-direction:column;gap:18px;min-width:0}.col.l{flex:7 1 0}.col.r{flex:5 1 0}}
 
 /* 맨 위 띠 */
@@ -135,6 +135,26 @@
 .legend i.f{height:12px;border:0}
 .chart-note{font-size:13.5px;color:var(--muted);padding:0 16px 14px;margin:0}
 
+
+/* 성적표 */
+.score-sum{padding:12px 16px 6px}
+.score-sum b{display:block;font-size:16px;color:var(--navy)}
+.score-sum span{font-size:14px;color:var(--muted)}
+.scores{list-style:none;margin:0;padding:0}
+.scores li{border-top:1px solid var(--line)}
+.scores a{display:grid;grid-template-columns:minmax(0,1fr) 86px 18px;gap:4px 12px;align-items:center;padding:11px 16px;text-decoration:none;min-height:56px}
+.scores .nm{font-weight:800;font-size:16px}
+.scores .nm small{display:block;font-weight:500;font-size:13px;color:var(--muted)}
+.scores .pg{grid-column:1/2;display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+.scores .pg i{flex:1;height:7px;background:#eef2f4;position:relative;max-width:180px}
+.scores .pg i u{position:absolute;left:0;top:0;bottom:0;background:var(--teal)}
+.scores .v{grid-row:1/3;grid-column:2;text-align:right;font-family:var(--mono);font-weight:700;font-size:15px}
+.scores .v small{display:block;font-family:var(--font);font-size:12.5px;font-weight:500;color:var(--muted)}
+.scores .ar{grid-row:1/3;grid-column:3;color:var(--muted)}
+.score-links{display:flex;flex-wrap:wrap;border-top:1px solid var(--line)}
+.score-links a{flex:1 1 200px;display:flex;align-items:center;min-height:50px;padding:0 16px;font-weight:700;color:var(--blue);text-decoration:none;font-size:15px}
+.score-links a+a{border-left:1px solid var(--line)}
+.link{display:inline-flex;align-items:center;min-height:44px;margin-top:6px;font-weight:700;color:var(--blue);font-size:15px;text-decoration:none}
 /* 결정실 오늘 */
 .day{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .day a{display:block;padding:10px 12px;border:1px solid var(--line-2);background:#fff;text-decoration:none;box-shadow:var(--shadow-s);min-height:44px}
@@ -185,7 +205,6 @@
   <a href="#news">오늘 뉴스</a>
   <a href="#hold">내 주식 <span class="c">6</span></a>
   <a href="#cand">결정실 <span class="c">3</span></a>
-  <a href="#">성적표</a>
   <a class="all" href="menu.html">전체 메뉴</a>
 </div></nav>
 
@@ -224,6 +243,13 @@
       <div class="chart-box" id="chart"></div>
       <div class="legend" id="legend"></div>
       <p class="chart-note">오른쪽 꼬리표 = 선의 오늘 값. 선과 띠는 판단을 돕는 표시입니다.</p>
+    </section>
+
+    <section class="card g-score" id="scores" aria-labelledby="sc-h">
+      <div class="card-h"><h2 id="sc-h">성적표</h2><small>집중 규칙 종목 · 20·40·60일</small></div>
+      <div class="score-sum"><b>첫 20일 결과 11월 중순(추정)</b><span>지금은 진행만 봅니다 · 같은 테마 평균 대비</span></div>
+      <ul class="scores" id="scorelist"></ul>
+      <div class="score-links"><a href="performance.html">판단 기록 전체 · 성과기록 →</a><a href="selection.html">규칙끼리 비교 · 선정성적 →</a></div>
     </section>
    </div>
 
@@ -352,7 +378,7 @@ const rowH=h=>{const s=h.s;return `<li><details${h.color==='red'?' open':''}><su
   <div class="tagline"><span class="chip ${h.color}"><i></i>${WORD[h.color]}</span><span>${h.tag}</span></div>
   <div class="chg"><span>오늘 <b class="${s.chg>=0?'up':'down'}">${pct(s.chg)}</b></span><span>손익 <b class="${h.pnl>=0?'up':'down'}">${pct(h.pnl)}</b></span></div>
   </summary><div class="open"><ul class="lines">${h.lines.map(l=>{const c=l.below?(l.red?'red':'yellow'):(l.near?'yellow':'green');return `<li><i style="background:${DOT[c]}"></i><span><b>${l.k}</b> <small>${l.sub}</small><br>${l.below?(l.red?'아래로 마감 · 다시 보기':'아래 · 주의'):'위 · '+l.gap.toFixed(1)+'% 여유'}</span><span class="v">${yen(l.v)}엔</span></li>`}).join('')}</ul>
-  <p class="when">언제까지 · ${h.buy} · ${h.earn}</p></div></details></li>`};
+  <p class="when">언제까지 · ${h.buy} · ${h.earn}</p>${h.color!=='green'?`<a class="link" href="performance.html#stock-${h.cd}">산 이유와 기록 다시 보기 →</a>`:''}</div></details></li>`};
 const warn=HOLD.filter(h=>h.color!=='green'),ok=HOLD.filter(h=>h.color==='green');
 document.getElementById('holdings').innerHTML=warn.map(rowH).join('')+(ok.length?`<li><details class="okgrp"><summary><span><span class="chip green"><i></i>괜찮음 ${ok.length}</span> <span class="names">${ok.map(h=>h.nm).join(' · ')}</span></span><span class="ar" aria-hidden="true">›</span></summary><ul class="hold">${ok.map(rowH).join('')}</ul></details></li>`:'');
 
@@ -370,8 +396,12 @@ document.getElementById('cands').innerHTML=CAND.map(c=>{const s=c.s;
     <span class="zl" style="left:8px;color:var(--muted)">기다림</span><span class="zl" style="right:8px;color:var(--red)">추격 주의</span><span class="mk" style="left:${pC}%"><b></b></span></div>
    <div class="ticks"><span class="tb" style="left:${pB}%">${yen(s.B)}<small>기준선</small></span><span class="tu" style="left:${pU}%">${yen(s.U)}<small>추격 주의 선</small></span></div></div>
   <div class="sig" aria-label="차트 신호"><span class="chip ${c.sig.brk?'green on':'gray'}"><i></i>돌파 ${c.sig.brk?'켜짐':'꺼짐'}</span><span class="chip ${c.sig.rec?'green on':'gray'}"><i></i>회복 ${c.sig.rec?'켜짐':'꺼짐'}</span><span class="chip ${c.sig.bb?'green on':'gray'}"><i></i>볼린저 ${c.sig.bb?'켜짐':'꺼짐'} · 검증 중</span></div>
-  <dl class="facts"><dt>산 뒤 다시 볼 선</dt><dd>기준선 <b>${yen(s.B)}</b>엔 아래 마감이면 다시 보기 (손절 주문 아님)</dd><dt>언제까지</dt><dd>1~3개월 · 첫 점검 11/20</dd></dl></div></details>`}).join('');
+  <dl class="facts"><dt>산 뒤 다시 볼 선</dt><dd>기준선 <b>${yen(s.B)}</b>엔 아래 마감이면 다시 보기 (손절 주문 아님)</dd><dt>언제까지</dt><dd>1~3개월 · 첫 점검 11/20</dd></dl>
+  <a class="link" href="performance.html#stock-${c.cd}">고른 이유와 기록 보기 →</a></div></details>`}).join('');
 
+/* 성적표 — 집중 규칙 선정분(가상): 선정일 10/21, 20거래일 중 진행 */
+const SC=[['세이운 소프트','DEMO-S','AI 소프트웨어 · A',2,1.8],['키타 전력설비','DEMO-K','반도체 소재·기판 · D',2,-0.9],['유키 메디컬','DEMO-Y','게임·콘텐츠 · B',2,-1.4],['호쿠토 반도체','DEMO-A','반도체 소재·기판 · A · 보유',2,0.7]];
+document.getElementById('scorelist').innerHTML=SC.map(([nm,cd,th,d,v])=>`<li><a href="performance.html#stock-${cd}"><span class="nm">${nm}<small>${th} · 10/21 선정</small></span><span class="v" style="color:${v>0?'var(--up)':'var(--down)'}">${(v>0?'+':'−')+Math.abs(v).toFixed(1)}%p<small>테마 대비 지금까지</small></span><span class="ar" aria-hidden="true">›</span><span class="pg"><i><u style="width:${d/20*100}%"></u></i>20일까지 D+${d}</span></a></li>`).join('');
 /* 차트 */
 const ALL=[...CAND.filter(c=>c.kind!=='hold').map(c=>({...c,role:'후보'})),...HOLD.map(h=>({...h,role:'보유'}))];
 const pick=document.getElementById('pick');pick.innerHTML=ALL.map((x,i)=>`<option value="${i}">${x.role} · ${x.nm}</option>`).join('');

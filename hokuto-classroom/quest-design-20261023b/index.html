@@ -40,11 +40,43 @@ td.fix{background:#f6fbf8}
   <span class="place">버전2.2 시안 검토</span>
 </div></header>
 <main class="gutter"><div class="wrap">
-  <div class="heading"><div><div class="eyebrow">2026-10-23 · 웹 Claude</div><h1>알림홈과 전체메뉴, 버전2.2</h1><p class="lede">2.1 배치를 그대로 두고, 전수 점검에서 찾은 «읽기 어려운 곳»을 고쳤습니다.</p></div></div>
+  <div class="heading"><div><div class="eyebrow">2026-10-23 · 웹 Claude</div><h1>알림홈 · 전체메뉴 · 기록 방, 버전2.2</h1><p class="lede">2.1 배치를 그대로 두고, 전수 점검에서 찾은 «읽기 어려운 곳»을 고쳤습니다.</p></div></div>
   <div class="open-row">
-    <a href="home.html"><b>알림홈 보기 →</b><span>오늘 할 일 · 살 후보 · 내 주식 · 가격 흐름 · 뉴스</span></a>
+    <a href="home.html"><b>알림홈 보기 →</b><span>오늘 할 일 · 살 후보 · 내 주식 · 가격 흐름 · 뉴스 · 성적표</span></a>
     <a href="menu.html"><b>전체메뉴 보기 →</b><span>검토 순서 01→06 · 자료와 전략 · 결과와 기록</span></a>
   </div>
+  <div class="open-row" style="margin-top:14px">
+    <a href="performance.html" style="background:#fff;border-color:var(--line-2)"><b>성과기록 보기 →</b><span>판단이 시장보다 잘했나 · 단계별 · 종목별 고른 길</span></a>
+    <a href="selection.html" style="background:#fff;border-color:var(--line-2)"><b>선정성적 보기 →</b><span>고르는 규칙끼리 비교 · 전환 효과 · 기록 상태</span></a>
+  </div>
+
+  <section class="block">
+    <h2>기록 방 정리 (범준님 10/23 12:25)</h2>
+    <div class="tw"><table>
+      <thead><tr><th>곳</th><th>지금 서버(버전1)</th><th>2.2</th></tr></thead>
+      <tbody>
+        <tr><td>성적표</td><td>전체메뉴의 방 하나</td><td class="fix">알림홈 안의 칸 하나로(내용은 그대로: 집중 규칙 선정 종목의 20·40·60거래일). 전체메뉴·위 메뉴에서는 뺌</td></tr>
+        <tr><td>성과기록</td><td>폰 길이 약 12,300px · 532·1,045·1,615 같은 «판단×기간 칸» 숫자 · 종목마다 5단계 글이 길게 · 규칙별 표가 «결과 기다리는 중»으로 가득</td><td class="fix">한 줄 답 → 기간별 4칸(시장 대비 %p · 이긴 비율 · 건수) → 단계별 막대표(30건 미만은 회색) → 종목별 한 줄(누르면 고른 길) → 잘한·못한 3개씩</td></tr>
+        <tr><td>선정성적</td><td>100·69·18·51·31·0 숫자 상자 6개, 규칙별 칸이 성적표와 겹침</td><td class="fix">한 줄 답 → 규칙 3칸(옛 · 전환일 · 집중) → 전환 효과 막대 2줄 → 20일 결과 나온 종목 → 기록 상태 막대 하나. 집중 규칙 종목은 알림홈 성적표로 보냄(겹침 없앰)</td></tr>
+        <tr><td>숫자 세는 법</td><td>방마다 «시장보다 n% 더 좋음», «테마 평균보다 n%p» 등 섞임</td><td class="fix">성과기록은 «시장 대비 %p», 선정성적·성적표는 «테마 평균 대비 %p» 하나씩</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="block">
+    <h2>꼭 필요한 연결만 (6곳)</h2>
+    <div class="tw"><table style="min-width:520px">
+      <thead><tr><th>어디서</th><th>어디로</th><th>왜</th></tr></thead>
+      <tbody>
+        <tr><td>알림홈 살 후보</td><td>성과기록 그 종목 «고른 길»</td><td>왜 올라왔는지 한 번에</td></tr>
+        <tr><td>알림홈 내 주식(빨강·노랑)</td><td>성과기록 그 종목</td><td>점검선이 깨졌을 때 산 이유를 다시 보기</td></tr>
+        <tr><td>알림홈 성적표 줄</td><td>성과기록 그 종목</td><td>성적 뒤의 판단 근거</td></tr>
+        <tr><td>성과기록 고른 길 단계</td><td>그 단계의 방</td><td>당시 판정을 그 방에서 확인</td></tr>
+        <tr><td>성과기록 단계별 표</td><td>선정성적</td><td>규칙끼리 비교는 한 곳에서</td></tr>
+        <tr><td>선정성적 집중 규칙</td><td>알림홈 성적표</td><td>같은 내용을 두 번 싣지 않기</td></tr>
+      </tbody>
+    </table></div>
+  </section>
   <div class="metrics">
     <div class="metric"><small>12px 이하 작은 글자 (알림홈, 로고 글자 포함)</small><b>135 → 14</b> <span>곳 · 본문 16px</span></div>
     <div class="metric"><small>44px 안 되는 누르는 곳</small><b>13 → 1</b> <span>개 (맨 위 시안 띠 링크)</span></div>

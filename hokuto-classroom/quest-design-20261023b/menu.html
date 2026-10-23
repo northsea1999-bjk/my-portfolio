@@ -63,6 +63,9 @@
 .tile .room{display:block;font-size:13.5px;color:var(--muted)}
 .tile .today{display:block;font-size:14px;font-weight:700;color:var(--ink);margin-top:2px}
 .tile .ar{color:var(--muted);font-size:15px}
+.tile.wide{grid-column:1/-1}
+.tile-note{grid-column:1/-1;margin:2px 0 0;font-size:14px;color:var(--muted)}
+.tile-note a{color:var(--blue);font-weight:700;display:inline-flex;align-items:center;min-height:44px}
 @media (max-width:560px){.tiles{grid-template-columns:minmax(0,1fr);gap:8px}.tile{min-height:58px;padding:10px 12px}.tile .today{font-size:13.5px}}
 .found{font-size:14.5px;color:var(--navy);font-weight:700;margin:14px 0 0}
 [data-hide="1"]{display:none!important}
@@ -133,10 +136,10 @@
     <section class="box peach" aria-labelledby="rec-h">
       <div class="box-h"><h2 id="rec-h">판단 뒤의 결과와 기록</h2><small>돌아보기</small></div>
       <div class="tiles">
-        <a class="tile" href="#" data-k="성과기록 판단 근거 결과"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 4h14l4 4v20H7z" fill="none" stroke="currentColor" stroke-width="2"/><path d="m11 18 3 3 7-8" fill="none" stroke="currentColor" stroke-width="2"/></svg><span><b>성과기록</b><span class="room">판단·근거와 이후 결과</span><span class="today">새 신호 2</span></span><span class="ar">↗</span></a>
-        <a class="tile" href="#" data-k="선정성적 선정 후 성적"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 27h22M8 27V17M14 27V11M20 27V14M26 27V7" fill="none" stroke="currentColor" stroke-width="2"/></svg><span><b>선정성적</b><span class="room">규칙별 1·2·3개월</span><span class="today">20일 결과 기다리는 중</span></span><span class="ar">↗</span></a>
-        <a class="tile" href="#" data-k="하루 변화 사장실 놀이공원"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 9v7l5 3" fill="none" stroke="currentColor" stroke-width="2"/></svg><span><b>하루 변화</b><span class="room">사장실 · 놀이공원</span><span class="today">전날 대비</span></span><span class="ar">↗</span></a>
-        <a class="tile" href="#" data-k="성적표 집중 규칙 선정 종목"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="6" y="5" width="20" height="23" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 11h12M10 16h12M10 21h7" stroke="currentColor" stroke-width="2"/></svg><span><b>성적표</b><span class="room">20·40·60거래일</span><span class="today">11월 중순(추정)</span></span><span class="ar">↗</span></a>
+        <a class="tile" href="performance.html" data-k="성과기록 판단 근거 결과 시장"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 4h14l4 4v20H7z" fill="none" stroke="currentColor" stroke-width="2"/><path d="m11 18 3 3 7-8" fill="none" stroke="currentColor" stroke-width="2"/></svg><span><b>성과기록</b><span class="room">판단이 시장보다 잘했나</span><span class="today">5일 뒤 +0.3%p · 480건</span></span><span class="ar">›</span></a>
+        <a class="tile" href="selection.html" data-k="선정성적 선정 후 성적 규칙 비교"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 27h22M8 27V17M14 27V11M20 27V14M26 27V7" fill="none" stroke="currentColor" stroke-width="2"/></svg><span><b>선정성적</b><span class="room">고르는 규칙끼리 비교</span><span class="today">옛 규칙 20일 +0.6%p</span></span><span class="ar">›</span></a>
+        <a class="tile wide" href="#" data-k="하루 변화 사장실 놀이공원"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 9v7l5 3" fill="none" stroke="currentColor" stroke-width="2"/></svg><span><b>하루 변화</b><span class="room">사장실 · 놀이공원</span><span class="today">전날 대비</span></span><span class="ar">↗</span></a>
+        <p class="tile-note">성적표는 <a href="home.html#scores">알림홈</a>에서 봅니다.</p>
       </div>
     </section>
   </div>
