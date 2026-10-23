@@ -225,7 +225,7 @@ const C=[
  {nm:'유키 메디컬',cd:'DEMO-Y',theme:'게임·콘텐츠 ★',strong:'강한 근거 2/3',type:'동행형',why:'실적 개선 · 신약 기대',hold:'10/23 07:40 «주력 약 임상 3상 일정 지연»',ret:'1개월 +8.1% · 3개월 +12.0% · 60일 고점 대비 −2.4%',
   news:['직접 뉴스 2건','▼ 주력 약 임상 3상 일정 지연 (10/23 07:40)'],first:'—',earn:'실적 11/06',c:fit(walk(29,130,4100,.002,.034),s=>s.B+0.4*s.W)}
 ];
-C.forEach(c=>{const s=c.s=stats(c.c);const pre=stats(c.c.slice(0,129));c.sig={brk:s.last>s.B,rec:pre.last<=pre.ma25&&s.last>s.ma25,bb:c.cd==='DEMO-K'?'nodata':s.last>s.bbU}});
+C.forEach(c=>{const s=c.s=stats(c.c);const pre=stats(c.c.slice(0,129));c.sig={brk:s.last>s.B,rec:pre.last<=pre.ma25&&s.last>s.ma25,bb:c.cd==='DEMO-K'?'nodata':c.cd==='DEMO-Y'?'check':s.last>s.bbU}});
 const ST={fri:{now:'10/23 17:42',at:'17:42',news:'—'},m840:{now:'10/26 08:40',at:'08:40',news:'08:30'},m905:{now:'10/26 09:05',at:'09:05',news:'08:30'},stale:{now:'10/26 08:40',at:'08:40',news:'—'}};
 let S='fri';
 
