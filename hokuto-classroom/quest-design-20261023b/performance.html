@@ -5,9 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#24344f">
 <title>호쿠토증권 성과기록 · 버전2.2 시안</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap">
-<link rel="stylesheet" href="v22.css?v=22c">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="v22.css?v=22d">
 <style>
 /* 성과기록 — ① 요약 + 기간별 4칸 ② 단계별(5일 뒤) 막대표 ③ 종목별 기록(누르면 고른 길, 성적 순 정렬). 기준은 «시장보다 %p» 하나 */
 .crumb{display:flex;gap:6px;align-items:center;font-size:14px;color:var(--muted);padding-top:14px}
@@ -76,10 +75,14 @@ section.sec{margin-top:24px}
 .path a{font-size:14px;font-weight:700;color:var(--blue);white-space:nowrap;display:inline-flex;align-items:center;min-height:44px;margin-top:-10px}
 .p-res{color:var(--blue)}.p-str{color:var(--violet)}.p-dec{color:var(--amber)}.p-buy{color:var(--green)}.p-hold{color:var(--teal)}.p-after{color:var(--navy)}
 .note{font-size:13.5px;color:var(--muted);margin:12px 0 0;line-height:1.6}
+.more-rec{margin-top:14px;background:#fff;border:1px solid var(--line-2);padding:0 14px}
+.more-rec>summary{cursor:pointer;min-height:48px;display:flex;align-items:center;font-weight:700;color:var(--navy);font-size:15px}
+.tw2{overflow-x:auto}.mini{border-collapse:collapse;width:100%;min-width:420px;font-size:14px;margin:4px 0 10px}.mini th,.mini td{text-align:left;padding:7px 8px;border-top:1px solid var(--line)}.mini th{font-size:13px;color:var(--muted);border-top:0}.mini td small{color:var(--muted)}
+.mini-l{margin:0 0 12px;padding-left:18px;font-size:14px;color:var(--muted)}
 </style>
 </head>
 <body>
-<div class="demo gutter"><b>버전2.2 시안</b>종목·숫자는 모두 가상<a href="./">바뀐 점 ↗</a></div>
+<div class="demo gutter"><b>버전2.2 최종 시안</b>종목·숫자는 모두 가상<a href="./">바뀐 점 ↗</a></div>
 <header class="top gutter"><div class="wrap">
   <a class="brand" href="home.html" aria-label="호쿠토증권 알림홈"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M13 0h6v7h4v6h9v6h-9v6h-4v7h-6v-7H9v-6H0v-6h9V7h4z" fill="currentColor"/></svg><span><b>HOKUTO</b><small>SECURITIES</small></span></a>
   <span class="place">성과기록</span>
@@ -97,9 +100,9 @@ section.sec{margin-top:24px}
   <div class="heading" style="padding-top:4px"><div><h1>성과기록</h1><p class="lede">북두의 판단이 시장(1306 ETF)보다 나았는지 봅니다. 기준은 «시장보다 몇 %p» 하나입니다.</p></div></div>
 
   <section class="answer" aria-labelledby="ans-h">
-    <div class="answer-h"><small>요약</small><b id="ans-h">아직은 시장과 비슷합니다.</b><span class="chip"><i style="background:var(--yellow-dot)"></i>운영 51거래일 · 판단하기엔 이릅니다</span></div>
+    <div class="answer-h"><small>요약 · 결정실 «매수대상» 판단이 그 뒤 시장보다 어땠나</small><b id="ans-h">표본이 적어 아직 판단할 수 없습니다.</b><span class="chip"><i style="background:var(--yellow-dot)"></i>운영 51거래일 · 30건 미만 기간은 회색</span></div>
     <div class="periods" id="periods"></div>
-    <p class="answer-f">판단 532건 · 기간이 지나 결과가 나온 것만 셉니다 · 실제 체결 수익이 아닙니다</p>
+    <p class="answer-f">결정실 매수대상 61건 · 기간이 지나 결과가 나온 것만 셉니다 · 실제 체결 수익이 아닙니다 · 다른 단계는 아래 «단계별 성과»</p>
   </section>
 
   <section class="sec" aria-labelledby="st-h">
@@ -108,14 +111,23 @@ section.sec{margin-top:24px}
   </section>
 
   <section class="sec" aria-labelledby="rec-h">
-    <div class="sec-h"><div><h2 id="rec-h">종목별 기록</h2><p>누르면 고른 길(리서치 → 전략실 → 결정실 → 신규매수 → 보유)</p></div></div>
+    <div class="sec-h"><div><h2 id="rec-h">종목별 기록</h2><p>누르면 고른 길(리서치 → 후보 선정 → 결정실 → 신규매수 → 보유)</p></div></div>
     <div class="filters" role="group" aria-label="거르기"><button type="button" data-f="all" aria-pressed="true">전체</button><button type="button" data-f="cand" aria-pressed="false">지금 후보</button><button type="button" data-f="hold" aria-pressed="false">보유</button><button type="button" data-f="past" aria-pressed="false">지난 기록</button><button type="button" class="sort" id="sort" aria-pressed="false">5일 성적 순</button></div>
     <div class="recs" id="recs"></div>
   </section>
 
+    <details class="more-rec"><summary>자세히 — 규칙 시기별 · 20·40·60일 · 관찰 종목 · 분할 · 기록 참고</summary>
+      <div class="tw2"><table class="mini"><thead><tr><th>단계 (시장보다)</th><th>20일</th><th>40일</th><th>60일</th></tr></thead><tbody>
+        <tr><td>결정실 매수대상 · 옛 규칙</td><td>−0.3%p <small>24건</small></td><td>기다리는 중</td><td>기다리는 중</td></tr>
+        <tr><td>결정실 매수대상 · 집중 규칙</td><td>기다리는 중</td><td>기다리는 중</td><td>기다리는 중</td></tr>
+        <tr><td>신규매수 대기 · 옛 규칙</td><td>+0.2%p <small>18건</small></td><td>기다리는 중</td><td>기다리는 중</td></tr>
+      </tbody></table></div>
+      <ul class="mini-l"><li>관찰 종목 · 매수 추천 아님 42개 — 종목별 기록 «지난 기록»에 들어 있음</li><li>주식 분할로 2건은 집계에서 뺐습니다</li><li>기록 참고 · 10/14 자료 1건 불일치</li><li>전환일(10/20) 선정분은 하루 전체를 전환일로 둡니다(경계 잠정값)</li></ul>
+    </details>
     <p class="note">성과기록은 관찰 전용이며 판정에 쓰이지 않습니다. 시장 = TOPIX 를 따라가는 1306 ETF(지수 자체는 무료로 받을 수 없어 가장 가까운 것).</p>
   </section>
-  <footer class="foot"><b>호쿠토증권 디자인 v2.2 시안</b> · 성과기록 · 모든 숫자는 가상 자료</footer>
+  <p class="built">화면 만든 시각 <b>10/23 17:44</b> · 마지막 판단일 <b>10/23</b></p>
+  <footer class="foot"><b>호쿠토증권 디자인 v2.2 최종 시안</b> · 성과기록 · 모든 숫자는 가상 자료</footer>
 </div></main>
 
 <nav class="mnav" aria-label="아래 메뉴">
@@ -133,30 +145,30 @@ const col=v=>v>0?'var(--up)':v<0?'var(--down)':'var(--muted)';
 const bar=(v,max)=>{if(v==null)return '<span class="dbar"></span>';const w=Math.min(50,Math.abs(v)/max*50);return `<span class="dbar"><i style="${v>=0?'left:50%':'right:50%'};width:${w}%;background:${col(v)}"></i></span>`};
 
 /* 기간별 */
-const P=[['다음날',0.1,51,532],['5일 뒤',0.3,53,480],['20일 뒤',-0.4,47,180],['60일 뒤',null,null,0]];
-document.getElementById('periods').innerHTML=P.map(([k,v,win,n])=>`<div class="period"><small>${k}</small>${v==null?'<span class="v" style="font-size:17px;color:var(--muted);font-family:var(--font)">기다리는 중</span><span class="s">첫 결과 11월 초(추정)</span>':`<span class="v" style="color:${col(v)}">${sgn(v)}</span><span class="s">이긴 비율 ${win}% · ${n}건</span>${bar(v,2)}`}</div>`).join('');
+const P=[['다음날',0.2,61],['5일 뒤',0.4,61],['20일 뒤',-0.3,24],['60일 뒤',null,0]];
+document.getElementById('periods').innerHTML=P.map(([k,v,n])=>`<div class="period"><small>${k}</small>${v==null?'<span class="v" style="font-size:17px;color:var(--muted);font-family:var(--font)">기다리는 중</span><span class="s">첫 결과 11월 초(추정)</span>':`<span class="v" style="${n<30?'color:var(--muted)':'color:'+col(v)}">${sgn(v)}</span><span class="s">시장보다 · ${n}건${n<30?' · 표본 적음':''}</span>${bar(n<30?null:v,2)}`}</div>`).join('');
 
 /* 단계별 */
-const S=[['관심종목으로 뽑음','리서치센터',245,0.0],['A 후보','전략실',25,-0.4],['B 후보','전략실',43,-0.2],['C 후보','전략실',22,-0.4],['결정실 매수대상','결정실',61,0.4],['신규매수 후보','신규매수실',38,0.0],['신규매수 대기','신규매수실',40,0.1],['내 주식 점검 노랑','내 주식',6,0.3],['내 주식 점검 빨강','내 주식',1,1.2]];
+const S=[['관심종목으로 뽑음','리서치센터',245,0.0],['A 후보','후보 선정',25,-0.4],['B 후보','후보 선정',43,-0.2],['C 후보','후보 선정',22,-0.4],['결정실 매수대상','결정실',61,0.4],['신규매수 후보','신규매수실',38,0.0],['신규매수 대기','신규매수실',40,0.1],['내 주식 점검 노랑','내 주식',6,0.3],['내 주식 점검 빨강','내 주식',1,1.2]];
 document.getElementById('stages').innerHTML='<div class="stage stage-head"><span>단계</span><span style="text-align:right">건수</span><span></span><span style="text-align:right">시장보다</span></div>'+S.map(([k,room,n,v])=>`<div class="stage${n<30?' few':''}"><span class="nm">${k}<small>${room}<span class="cnt"> · ${n}건</span>${n<30?' · 표본 적음':''}</small></span><span class="n">${n}</span>${bar(n<30?null:v,1.5)}<span class="v" style="${n<30?'':'color:'+col(v)}">${sgn(v)}</span></div>`).join('');
 
 /* 종목별 기록 — 고른 길 */
 const R=[
- {id:'DEMO-S',nm:'세이운 소프트',kind:'cand',day:'10/21',last:'결정실 매수대상',c:[0.8,null,null],path:[['p-res','리서치센터','10/16 AI 소프트웨어 TOP6 진입 → 10/19 주도 확인','research'],['p-str','전략실','후보 유형 A · 테마 1등, 과열 아님','strategy'],['p-dec','결정실','매수대상 · 실적주도형 · 강함 2/3','decision'],['p-buy','신규매수실','10/23 돌파 신호 · 10/26(월) 시가 확인','newbuy']]},
- {id:'DEMO-K',nm:'키타 전력설비',kind:'cand',day:'10/21',last:'결정실 매수대상',c:[-0.3,null,null],path:[['p-str','전략실','레인 D · 거래량 2.7배, 가격 제자리','strategy'],['p-dec','결정실','매수대상 · 시장행동형','decision'],['p-buy','신규매수실','기다림 · 종가가 기준선 아래','newbuy']]},
- {id:'DEMO-A',nm:'호쿠토 반도체',kind:'hold',day:'9/24',last:'보유 중',c:[0.9,2.7,-1.1],path:[['p-res','리서치센터','9/22 반도체 소재·기판 TOP6 진입','research'],['p-str','전략실','후보 유형 B · 2등','strategy'],['p-dec','결정실','매수대상 · 추세주도형','decision'],['p-buy','신규매수실','9/25 회복 신호 · 시가 참고 구간 안','newbuy'],['p-hold','내 주식','9/26 매수 · 지금 점검선 노랑(한 달 평균선까지 0.5%)','holdings']]},
+ {id:'DEMO-S',nm:'세이운 소프트',kind:'cand',day:'10/21',last:'결정실 매수대상',c:[0.8,null,null],path:[['p-res','리서치센터','10/16 AI 소프트웨어 TOP6 진입 → 10/19 주도 확인','research'],['p-str','후보 선정','후보 유형 A · 테마 1등, 과열 아님','strategy'],['p-dec','결정실','매수대상 · 실적주도형 · 강함 2/3','decision'],['p-buy','신규매수실','10/23 돌파 신호 · 10/26(월) 시가 확인','newbuy']]},
+ {id:'DEMO-K',nm:'키타 전력설비',kind:'cand',day:'10/21',last:'결정실 매수대상',c:[-0.3,null,null],path:[['p-str','후보 선정','레인 D · 거래량 2.7배, 가격 제자리','strategy'],['p-dec','결정실','매수대상 · 시장행동형','decision'],['p-buy','신규매수실','기다림 · 종가가 기준선 아래','newbuy']]},
+ {id:'DEMO-A',nm:'호쿠토 반도체',kind:'hold',day:'9/24',last:'보유 중',c:[0.9,2.7,-1.1],path:[['p-res','리서치센터','9/22 반도체 소재·기판 TOP6 진입','research'],['p-str','후보 선정','후보 유형 B · 2등','strategy'],['p-dec','결정실','매수대상 · 추세주도형','decision'],['p-buy','신규매수실','9/25 회복 신호 · 시가 참고 구간 안','newbuy'],['p-hold','내 주식','9/26 매수 · 지금 점검선 노랑(한 달 평균선까지 0.5%)','holdings']]},
  {id:'DEMO-B',nm:'아오이 게임즈',kind:'hold',day:'9/16',last:'보유 중',c:[1.2,-0.8,-3.4],path:[['p-res','리서치센터','9/12 게임·콘텐츠 TOP6 진입','research'],['p-dec','결정실','매수대상 · 실적주도형','decision'],['p-hold','내 주식','9/18 매수 · 지금 점검선 빨강(한 달 바닥 아래 마감)','holdings']]},
  {id:'DEMO-Y',nm:'유키 메디컬',kind:'cand',day:'10/21',last:'오늘 보류(밤사이 악재)',c:[-0.6,null,null],path:[['p-res','리서치센터','10/20 TOP6 진입','research'],['p-dec','결정실','매수대상 · 실적주도형','decision'],['p-buy','신규매수실','10/23 보류 · 07:40 임상 일정 지연 기사','newbuy']]},
- {id:'DEMO-I',nm:'이로하 식품',kind:'past',day:'9/07',last:'관심종목으로 뽑음',c:[2.9,-3.0,-12.5],path:[['p-res','리서치센터','9/05 식품 TOP6 진입','research'],['p-str','전략실','후보 아님 · 테마 3등 밖','strategy']]},
- {id:'DEMO-T',nm:'츠키 로보틱스',kind:'past',day:'9/24',last:'관심종목으로 뽑음',c:[2.4,-1.5,null],path:[['p-res','리서치센터','9/22 로봇 TOP6 진입','research'],['p-str','전략실','C 후보 · 1등 과열로 차선','strategy'],['p-dec','결정실','보류 · 강한 근거 없음','decision']]},
+ {id:'DEMO-I',nm:'이로하 식품',kind:'past',day:'9/07',last:'관심종목으로 뽑음',c:[2.9,-3.0,-12.5],path:[['p-res','리서치센터','9/05 식품 TOP6 진입','research'],['p-str','후보 선정','후보 아님 · 테마 3등 밖','strategy']]},
+ {id:'DEMO-T',nm:'츠키 로보틱스',kind:'past',day:'9/24',last:'관심종목으로 뽑음',c:[2.4,-1.5,null],path:[['p-res','리서치센터','9/22 로봇 TOP6 진입','research'],['p-str','후보 선정','C 후보 · 1등 과열로 차선','strategy'],['p-dec','결정실','보류 · 강한 근거 없음','decision']]},
  {id:'DEMO-F',nm:'나기사 통신',kind:'hold',day:'9/10',last:'보유 중',c:[1.6,4.1,2.2],path:[['p-res','리서치센터','9/08 통신 TOP6 진입','research'],['p-dec','결정실','매수대상 · 시장행동형','decision'],['p-hold','내 주식','9/12 매수 · 지금 점검선 초록','holdings']]},
- {id:'DEMO-C',nm:'미나토 중공업',kind:'hold',day:'9/03',last:'보유 중',c:[0.4,1.9,3.0],path:[['p-res','리서치센터','9/01 전력망 TOP6 진입','research'],['p-str','전략실','후보 유형 A','strategy'],['p-dec','결정실','매수대상 · 추세주도형','decision'],['p-hold','내 주식','9/05 매수 · 지금 점검선 초록','holdings']]},
+ {id:'DEMO-C',nm:'미나토 중공업',kind:'hold',day:'9/03',last:'보유 중',c:[0.4,1.9,3.0],path:[['p-res','리서치센터','9/01 전력망 TOP6 진입','research'],['p-str','후보 선정','후보 유형 A','strategy'],['p-dec','결정실','매수대상 · 추세주도형','decision'],['p-hold','내 주식','9/05 매수 · 지금 점검선 초록','holdings']]},
  {id:'DEMO-M',nm:'메구로 소재',kind:'past',day:'9/07',last:'관심종목으로 뽑음',c:[-8.2,-6.9,null],path:[['p-res','리서치센터','9/05 화학 TOP6 진입','research']]}
 ];
 const PAGE={research:'menu.html',strategy:'menu.html',decision:'home.html#cand',newbuy:'home.html#cand',holdings:'home.html#hold'};
 const KIND={cand:'<span class="chip violet">지금 후보</span>',hold:'<span class="chip teal">보유</span>',past:'<span class="chip gray">지난 기록</span>'};
 const cell=(k,v)=>v==null?`<span class="cell wait"><small>${k}</small><b>기다림</b></span>`:`<span class="cell"><small>${k}</small><b style="color:${col(v)}">${sgn(v)}</b></span>`;
-document.getElementById('recs').innerHTML=R.map(r=>`<details class="rec" id="stock-${r.id}" data-kind="${r.kind}" data-k="${r.nm} ${r.id}"><summary><span class="nm">${r.nm}<small>${r.id}</small></span><span class="ar" aria-hidden="true">›</span>
+document.getElementById('recs').innerHTML=R.map(r=>`<details class="rec" id="journey-${r.id}" data-kind="${r.kind}" data-k="${r.nm} ${r.id}"><summary><span class="nm">${r.nm}<small>${r.id}</small></span><span class="ar" aria-hidden="true">›</span>
   <span class="meta">${KIND[r.kind]}<span>${r.day} 첫 판단 · 지금 ${r.last}</span></span>
   <span class="cells">${cell('다음날',r.c[0])}${cell('5일 뒤',r.c[1])}${cell('20일 뒤',r.c[2])}</span></summary>
   <ol class="path">${r.path.map(([cls,room,what,pg])=>`<li><i style="background:currentColor" class="${cls}"></i><span><span class="room ${cls}">${room}</span><div class="what">${what}</div></span><a href="${PAGE[pg]}">보기 →</a></li>`).join('')}
@@ -165,10 +177,10 @@ document.getElementById('recs').innerHTML=R.map(r=>`<details class="rec" id="sto
 /* 5일 성적 순 정렬 (기다림은 맨 아래) */
 const box=document.getElementById('recs'),orig=[...box.children];
 document.getElementById('sort').addEventListener('click',e=>{const on=e.currentTarget.getAttribute('aria-pressed')!=='true';e.currentTarget.setAttribute('aria-pressed',String(on));
- const k=d=>{const r=R.find(x=>'stock-'+x.id===d.id);return r.c[1]==null?-1e9:r.c[1]};
+ const k=d=>{const r=R.find(x=>'journey-'+x.id===d.id);return r.c[1]==null?-1e9:r.c[1]};
  (on?[...orig].sort((x,y)=>k(y)-k(x)):orig).forEach(d=>box.appendChild(d))});
 
-/* 거르기 · 찾기 · 주소(#stock-…)로 열기 */
+/* 거르기 · 찾기 · 주소(#journey-…)로 열기 — 다른 방 «기록» 링크 6곳과 같은 주소 */
 let F='all';const q=document.getElementById('q');
 function apply(){const v=q.value.trim().toLowerCase();document.querySelectorAll('.rec').forEach(d=>{const ok=(F==='all'||d.dataset.kind===F)&&(!v||d.dataset.k.toLowerCase().includes(v));d.hidden=!ok})}
 document.querySelectorAll('.filters button[data-f]').forEach(b=>b.addEventListener('click',()=>{F=b.dataset.f;document.querySelectorAll('.filters button[data-f]').forEach(o=>o.setAttribute('aria-pressed',String(o===b)));apply()}));

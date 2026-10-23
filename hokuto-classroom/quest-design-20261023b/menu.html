@@ -5,9 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#24344f">
 <title>호쿠토증권 전체메뉴 · 버전2.2 시안</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap">
-<link rel="stylesheet" href="v22.css?v=22c">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="v22.css?v=22d">
 <style>
 /* 전체메뉴 2.2 — ① 기준 시각 ② 검토 순서 6단계(3묶음, 묶음 사이 ↓) — 칸마다 큰 숫자 + 볼 것 표시 ③ 판정 뒤 갈림길 3칩 ④ 자료와 전략 4 · 기록 4 */
 .asof{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:14.5px;color:var(--muted);padding:10px 14px;border:1px solid var(--line-2);background:#fff;box-shadow:var(--shadow-s)}
@@ -27,6 +26,7 @@
 .g2 .group-h{background:var(--violet-bg);border-color:var(--violet);color:var(--violet)}
 .g3 .group-h{background:var(--amber-bg);border-color:#bd8a22;color:var(--amber)}
 .steps{display:grid;grid-template-columns:minmax(0,1fr) 16px minmax(0,1fr);margin-top:8px;flex:1}
+.steps.one{grid-template-columns:minmax(0,1fr)}
 .arrow{display:grid;place-items:center;color:var(--muted);font-weight:700}
 .step{position:relative;display:flex;flex-direction:column;gap:2px;padding:11px 12px 12px;text-decoration:none;border:1px solid var(--line-2);box-shadow:var(--shadow-s);min-width:0}
 .g1 .step{background:#f3f7fe;border-color:var(--blue-line)} .g2 .step{background:#f7f3fd;border-color:var(--violet-line)} .g3 .step{background:#fffaeb;border-color:var(--amber-line)}
@@ -63,7 +63,7 @@
 .tile .room{display:block;font-size:13.5px;color:var(--muted)}
 .tile .today{display:block;font-size:14px;font-weight:700;color:var(--ink);margin-top:2px}
 .tile .ar{color:var(--muted);font-size:15px}
-.tile-note{margin:0;padding:0 4px;align-self:center;font-size:14px;color:var(--muted)}
+.tile-note{grid-column:1/-1;margin:2px 0 0;padding:0 4px;font-size:14px;color:var(--muted)}
 .tile-note a{color:var(--blue);font-weight:700;display:inline-flex;align-items:center;min-height:44px}
 @media (max-width:560px){.tiles{grid-template-columns:minmax(0,1fr);gap:8px}.tile{min-height:58px;padding:10px 12px}.tile .today{font-size:13.5px}}
 .found{font-size:14.5px;color:var(--navy);font-weight:700;margin:14px 0 0}
@@ -71,7 +71,7 @@
 </style>
 </head>
 <body>
-<div class="demo gutter"><b>버전2.2 시안</b>숫자는 모두 가상 · 4화면만 시안<a href="./">바뀐 점 ↗</a></div>
+<div class="demo gutter"><b>버전2.2 최종 시안</b>숫자는 모두 가상 · 4화면만 시안<a href="./">바뀐 점 ↗</a></div>
 
 <header class="top gutter"><div class="wrap">
   <a class="brand" href="home.html" aria-label="호쿠토증권 알림홈"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M13 0h6v7h4v6h9v6h-9v6h-4v7h-6v-7H9v-6H0v-6h9V7h4z" fill="currentColor"/></svg><span><b>HOKUTO</b><small>SECURITIES</small></span></a>
@@ -87,40 +87,34 @@
 </div></nav>
 <main class="gutter"><div class="wrap">
   <div class="heading">
-    <div><div class="eyebrow">전체메뉴</div><h1>전체 안내도</h1><p class="lede">신규 종목은 01 → 06 순서로 검토하고, 참고 자료와 기록은 아래에서 확인하세요.</p></div>
+    <div><div class="eyebrow">전체메뉴</div><h1>전체 안내도</h1><p class="lede">신규 종목은 01 → 03 순서로 검토하고, 참고 자료와 기록은 아래에서 확인하세요.</p></div>
     <svg class="dipper" viewBox="0 0 260 120" aria-hidden="true" focusable="false"><defs><radialGradient id="glow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#f2cf73" stop-opacity=".55"/><stop offset="1" stop-color="#f2cf73" stop-opacity="0"/></radialGradient></defs><g fill="#c9d6dd"><circle cx="20" cy="18" r="1"/><circle cx="244" cy="96" r="1"/><circle cx="132" cy="104" r="1"/><circle cx="210" cy="12" r="1"/><circle cx="34" cy="92" r="1"/><circle cx="160" cy="80" r="1"/></g><path d="M70 28 64 66 108 80 118 46Z M118 46 156 40 192 32 236 50" fill="none" stroke="#8fbfb1" stroke-width="1.4" stroke-linejoin="round"/><g><circle cx="70" cy="28" r="11" fill="url(#glow)"/><circle cx="64" cy="66" r="10" fill="url(#glow)"/><circle cx="108" cy="80" r="9" fill="url(#glow)"/><circle cx="118" cy="46" r="8" fill="url(#glow)"/><circle cx="156" cy="40" r="10" fill="url(#glow)"/><circle cx="192" cy="32" r="10" fill="url(#glow)"/><circle cx="236" cy="50" r="10" fill="url(#glow)"/></g><g fill="#b8862a"><path d="M70 22l1.6 4.4L76 28l-4.4 1.6L70 34l-1.6-4.4L64 28l4.4-1.6z"/><path d="M64 61l1.4 3.6L69 66l-3.6 1.4L64 71l-1.4-3.6L59 66l3.6-1.4z"/><path d="M108 76l1.2 2.8L112 80l-2.8 1.2L108 84l-1.2-2.8L104 80l2.8-1.2z"/><path d="M118 42l1 3L122 46l-3 1L118 50l-1-3L114 46l3-1z"/><path d="M156 35l1.4 3.6L161 40l-3.6 1.4L156 45l-1.4-3.6L151 40l3.6-1.4z"/><path d="M192 27l1.4 3.6L197 32l-3.6 1.4L192 37l-1.4-3.6L187 32l3.6-1.4z"/><path d="M236 45l1.4 3.6L241 50l-3.6 1.4L236 55l-1.4-3.6L231 50l3.6-1.4z"/></g></svg>
   </div>
-  <div class="asof" role="note"><span>숫자 기준 <b>10/23(금) 17:30 배치</b></span><span>뉴스 <b class="num">13:48</b></span><span>노란 표시 = 먼저 볼 것</span></div>
+  <div class="asof" role="note"><span>숫자 기준 <b>10/23(금) 17:30 배치</b></span><span>뉴스 <b class="num">17:18</b></span></div>
 
   <section class="flow" aria-labelledby="flow-h">
     <div class="flow-h"><small>신규 종목</small><h2 id="flow-h">검토 순서</h2></div>
     <div class="groups">
-      <div class="group g1"><div class="group-h"><span class="mono">01–02</span>시장과 테마</div>
-        <div class="steps">
-          <a class="step" href="#" data-k="시장 흐름 회의실 테마 온도"><span class="no">01</span><b>시장 흐름</b><span class="room">회의실</span><span class="what">어느 테마가 강한지</span><span class="figs"><span><b>64.5</b>시장온도</span></span></a>
-          <span class="arrow" aria-hidden="true">→</span>
-          <a class="step" href="#" data-k="집중 테마 작전실 주도"><span class="no">02</span><b>집중 테마</b><span class="room">작전실</span><span class="what">★ 주도 6 중 집중 3</span><span class="figs"><span><b>3</b>집중</span><span>10/21 바뀜</span></span></a>
+      <div class="group g1"><div class="group-h"><span class="mono">01</span>테마 고르기</div>
+        <div class="steps one">
+          <a class="step" href="#" data-k="테마 고르기 작전실 시장온도 집중 주도 순위 회의실"><b>시장과 테마</b><span class="room">작전실</span><span class="what">★ 주도 6 · 집중 3 · 테마 순위</span><span class="figs"><span><b>64.5</b>시장온도</span><span><b>3</b>집중</span><span>10/21 바뀜</span></span></a>
         </div></div>
       <div class="gap" aria-hidden="true"><span class="v">↓</span><span class="h">→</span></div>
-      <div class="group g2"><div class="group-h"><span class="mono">03–04</span>후보와 실적</div>
-        <div class="steps">
-          <a class="step" href="#" data-k="종목 후보 전략실 레인"><span class="no">03</span><b>종목 후보</b><span class="room">전략실</span><span class="what">집중 → A·B·C / 레인 D</span><span class="figs"><span><b>7</b>후보</span></span></a>
-          <span class="arrow" aria-hidden="true">→</span>
-          <a class="step" href="#" data-k="회사 실적 종목검증실 EPS 자료 부족"><span class="flag y">볼 것 2</span><span class="no">04</span><b>회사 실적</b><span class="room">종목검증실</span><span class="what">EPS·실적 개선</span><span class="figs"><span><b>3</b>개선</span><span><b>2</b>자료 부족</span></span></a>
+      <div class="group g2"><div class="group-h"><span class="mono">02</span>판정</div>
+        <div class="steps one">
+          <a class="step" href="#" data-k="판정 이유 결정실 매수대상 보류 제외 후보 전략실 레인"><b>판정과 이유</b><span class="room">결정실</span><span class="what">집중 테마의 후보 · 매수대상·보류·제외 근거</span><span class="figs"><span><b>3</b>매수대상</span><span><b>2</b>보류</span><span><b>2</b>제외</span></span></a>
         </div></div>
       <div class="gap" aria-hidden="true"><span class="v">↓</span><span class="h">→</span></div>
-      <div class="group g3"><div class="group-h"><span class="mono">05–06</span>판정과 가격</div>
-        <div class="steps">
-          <a class="step" href="#" data-k="판정 이유 결정실 매수대상 보류"><span class="no">05</span><b>판정과 이유</b><span class="room">결정실</span><span class="what">매수대상·보류·제외 근거</span><span class="figs"><span><b>3</b>매수대상</span><span><b>2</b>보류</span></span></a>
-          <span class="arrow" aria-hidden="true">→</span>
-          <a class="step" href="#" data-k="진입 조건 신규매수실 가격 시가"><span class="flag y">볼 것 1</span><span class="no">06</span><b>진입 조건</b><span class="room">신규매수실</span><span class="what">기준선 · 참고 구간 · 시가</span><span class="figs"><span><b>1</b>매수 검토</span><span><b>2</b>기다림·보류</span></span></a>
+      <div class="group g3"><div class="group-h"><span class="mono">03</span>진입 조건</div>
+        <div class="steps one">
+          <a class="step" href="#" data-k="진입 조건 신규매수실 가격 시가 기준선 장바구니"><b>가격 확인</b><span class="room">신규매수실</span><span class="what">기준선 · 참고 구간 · 시가</span><span class="figs"><span><b>3</b>장바구니</span></span></a>
         </div></div>
     </div>
     <div class="routes">
       <h3>판정 이후</h3>
       <div class="route-row">
-        <a class="route" href="#"><b>매수대상</b> → 06 진입 조건</a>
-        <a class="route" href="home.html#hold"><b>이미 보유</b> → 내 주식</a>
+        <a class="route" href="#"><b>매수대상</b> → 03 진입 조건</a>
+        <a class="route" href="#"><b>이미 보유</b> → 내 주식</a>
         <a class="route" href="#"><b>보류·제외</b> → 근거 확인</a>
       </div>
       <p class="note">번호는 검토 순서입니다. 매수 지시가 아닙니다.</p>
@@ -131,24 +125,26 @@
     <section class="box sage" aria-labelledby="more-h">
       <div class="box-h"><h2 id="more-h">참고 자료와 전략</h2><small>필요할 때</small></div>
       <div class="tiles">
-        <a class="tile" href="#" data-k="테마 뉴스 테마뉴스"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 5h15l5 5v17H6z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 13h12M10 18h12M10 23h8" stroke="currentColor" stroke-width="2"/></svg><span><b>테마별 뉴스</b><span class="room">테마뉴스</span><span class="today">오늘 278건</span></span><span class="ar">↗</span></a>
-        <a class="tile" href="#" data-k="테마 구성 종목 북두테마 상세 리서치"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"/><rect x="18" y="5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"/><rect x="5" y="18" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M18 22h9M22.5 18v9" stroke="currentColor" stroke-width="2"/></svg><span><b>테마와 구성 종목</b><span class="room">북두테마 상세</span><span class="today">테마 28</span></span><span class="ar">↗</span></a>
-        <a class="tile" href="#" data-k="BNF 신호실 전략"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 22l7-8 6 5 11-12" fill="none" stroke="currentColor" stroke-width="2"/><path d="M22 7h6v6" fill="none" stroke="currentColor" stroke-width="2"/></svg><span><b>BNF 전략</b><span class="room">BNF 신호실</span><span class="today">신호 2</span></span><span class="ar">↗</span></a>
-        <a class="tile" href="#" data-k="매매 기준 전략 규칙"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 4v24M6 10h20M6 10l-3 8h6zM26 10l-3 8h6z" fill="none" stroke="currentColor" stroke-width="2"/></svg><span><b>매매 기준</b><span class="room">매매 전략·규칙</span><span class="today">규칙 v1</span></span><span class="ar">↗</span></a>
+        <a class="tile" href="#" data-k="뉴스룸 오늘 뉴스 테마별 테마뉴스"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 5h15l5 5v17H6z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 13h12M10 18h12M10 23h8" stroke="currentColor" stroke-width="2"/></svg><span><b>오늘 뉴스</b><span class="room">뉴스룸</span><span class="today">시각순 · 테마별 보기</span></span><span class="ar">›</span></a>
+        <a class="tile" href="#" data-k="테마 구성 종목 북두테마 상세 리서치"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"/><rect x="18" y="5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"/><rect x="5" y="18" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M18 22h9M22.5 18v9" stroke="currentColor" stroke-width="2"/></svg><span><b>테마와 구성 종목</b><span class="room">북두테마 상세</span><span class="today">테마별 종목·대장주</span></span><span class="ar">›</span></a>
+        <a class="tile" href="#" data-k="회사 실적 종목검증실 EPS"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 27h22M8 27V17M14 27V11M20 27V14M26 27V7" fill="none" stroke="currentColor" stroke-width="2"/></svg><span><b>회사 실적</b><span class="room">종목검증실</span><span class="today">EPS·실적 개선 자료</span></span><span class="ar">›</span></a>
+        <a class="tile" href="#" data-k="BNF 신호실 전략"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 22l7-8 6 5 11-12" fill="none" stroke="currentColor" stroke-width="2"/><path d="M22 7h6v6" fill="none" stroke="currentColor" stroke-width="2"/></svg><span><b>BNF 전략</b><span class="room">BNF 신호실</span><span class="today">별도 전략 · 3조건</span></span><span class="ar">›</span></a>
       </div>
     </section>
     <section class="box peach" aria-labelledby="rec-h">
       <div class="box-h"><h2 id="rec-h">결과와 기록</h2><small>돌아보기</small></div>
       <div class="tiles">
-        <a class="tile" href="performance.html" data-k="성과기록 판단 근거 결과 시장"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 4h14l4 4v20H7z" fill="none" stroke="currentColor" stroke-width="2"/><path d="m11 18 3 3 7-8" fill="none" stroke="currentColor" stroke-width="2"/></svg><span><b>성과기록</b><span class="room">판단이 시장보다 잘했나</span><span class="today">5일 뒤 · 시장보다 +0.3%p</span></span><span class="ar">›</span></a>
-        <a class="tile" href="selection.html" data-k="선정성적 선정 후 성적 규칙 비교"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 27h22M8 27V17M14 27V11M20 27V14M26 27V7" fill="none" stroke="currentColor" stroke-width="2"/></svg><span><b>선정성적</b><span class="room">고르는 규칙끼리 비교</span><span class="today">20일 뒤 · 테마보다 +0.6%p</span></span><span class="ar">›</span></a>
-        <a class="tile" href="#" data-k="하루 변화 사장실 놀이공원"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 9v7l5 3" fill="none" stroke="currentColor" stroke-width="2"/></svg><span><b>하루 변화</b><span class="room">사장실 · 놀이공원</span><span class="today">전날 대비</span></span><span class="ar">↗</span></a>
-        <p class="tile-note">성적표는 <a href="home.html#scores">알림홈</a>에서 봅니다.</p>
+        <a class="tile" href="performance.html" data-k="성과기록 판단 근거 결과 시장"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 4h14l4 4v20H7z" fill="none" stroke="currentColor" stroke-width="2"/><path d="m11 18 3 3 7-8" fill="none" stroke="currentColor" stroke-width="2"/></svg><span><b>성과기록</b><span class="room">판단이 시장보다 나았나</span><span class="today">단계별 · 종목별 고른 길</span></span><span class="ar">›</span></a>
+        <a class="tile" href="selection.html" data-k="선정성적 선정 후 성적 규칙 비교"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 27h22M8 27V17M14 27V11M20 27V14M26 27V7" fill="none" stroke="currentColor" stroke-width="2"/></svg><span><b>선정성적</b><span class="room">고르는 규칙끼리 비교</span><span class="today">옛 규칙 · 전환일 · 집중 규칙</span></span><span class="ar">›</span></a>
+        <p class="tile-note">성적표와 «어제 → 오늘»은 <a href="home.html#scores">알림홈</a>에서 봅니다.</p>
       </div>
     </section>
   </div>
+    </section>
+  </div>
   <p class="found" id="found" hidden></p>
-  <footer class="foot"><b>호쿠토증권 디자인 v2.2 시안</b> · 색은 메뉴 구분용이며 투자 판정을 뜻하지 않습니다 · 모든 숫자는 가상 자료</footer>
+  <p class="built">화면 만든 시각 <b>10/23 17:44</b> · 숫자 기준 <b>17:30 배치</b></p>
+  <footer class="foot"><b>호쿠토증권 디자인 v2.2 최종 시안</b> · 색은 메뉴 구분용이며 투자 판정을 뜻하지 않습니다 · 모든 숫자는 가상 자료</footer>
 </div></main>
 
 <nav class="mnav" aria-label="아래 메뉴">

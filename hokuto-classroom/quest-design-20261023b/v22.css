@@ -14,7 +14,7 @@
   --green:#18703f; --green-bg:#e2f3e8; --green-line:#a9d6b9;
   --up:#cc434a; --down:#376fb8;
   --shadow:3px 3px 0 #d6dee6; --shadow-s:2px 2px 0 #dde4ea;
-  --font:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --font:"Pretendard Variable",Pretendard,"Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
   --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
   color-scheme:light; font-size:16px;
 }
@@ -110,3 +110,12 @@ html.big body{zoom:1.12}
 .more-row{display:flex;justify-content:flex-end;margin-top:18px}
 .more-row a{display:inline-flex;align-items:center;gap:6px;min-height:44px;font-weight:700;color:var(--blue);text-decoration:none;font-size:15px}
 .nav a.all.on{border-color:var(--navy);box-shadow:var(--shadow-s)}
+
+/* 최종: 상태 모양 규칙(정직 표시) */
+.chip.blue i{background:var(--blue)} .chip.violet i{background:var(--violet)}
+.chip.nodata{background:#fff;border-style:dashed;color:var(--muted)} .chip.nodata i{background:transparent;border:1.5px dashed #8b96a3}
+.chip.check{background:var(--red-bg);border-color:var(--red-line);color:var(--red);border-style:dashed} .chip.check i{background:var(--red)}
+.stale{display:flex;gap:8px;align-items:flex-start;margin:10px 0 0;padding:10px 14px;background:var(--red-bg);border:1px solid var(--red-line);border-left:5px solid var(--red);color:var(--red);font-weight:700;font-size:15px}
+.built{margin-top:10px;font-size:13.5px;color:var(--muted)}
+.built b{color:var(--ink);font-family:var(--mono);font-weight:600}
+.honest{font-size:13.5px;color:var(--muted);margin:10px 0 0}
