@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#24344f">
+<title>호쿠토증권 신규매수실 · 버전2.2 시안</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="v22.css?v=22e">
+<style>
+/* 신규매수실 2.2 (82a) — 질문 하나: «결정실 매수대상, 얼마에 사나 · 아침에 무엇을 확인하나».
+   폰: 띠 → 아침 확인 → 장바구니(종목 카드) → 차트 / PC: 왼쪽(아침 확인·종목 카드) 오른쪽(차트·읽는 법) */
+.demo .seg2{display:inline-flex;gap:4px;margin-left:10px;flex-wrap:wrap;justify-content:center}
+.demo .seg2 button{border:1px solid #6f83a3;background:transparent;color:#e8edf5;font-size:13px;min-height:32px;padding:0 9px;border-radius:3px;cursor:pointer}
+.demo .seg2 button[aria-pressed=true]{background:#f5d27a;border-color:#f5d27a;color:#1f2b40;font-weight:700}
+.status{display:grid;grid-template-columns:minmax(0,1fr);gap:8px;padding:12px 14px;border:1px solid var(--line-2);background:#fff;box-shadow:var(--shadow-s)}
+@media (min-width:760px){.status{grid-template-columns:auto minmax(0,1fr);align-items:center;column-gap:28px}}
+@media (max-width:640px){main .heading{display:none}.status{margin-top:12px}}
+.when-row{display:flex;flex-wrap:wrap;gap:2px 16px;font-size:15px;color:var(--muted)}
+.when-row b{color:var(--ink)}
+.temp{display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-areas:"lbl chip" "gauge gauge";gap:8px 10px;align-items:center}
+.temp .lbl{grid-area:lbl}.temp .chip{grid-area:chip;justify-self:end;font-size:13.5px}.temp .gwrap{grid-area:gauge;padding-bottom:16px}
+@media (min-width:760px){.temp{grid-template-columns:auto minmax(160px,1fr) auto;grid-template-areas:"lbl gauge chip"}.temp .gwrap{margin-top:14px}}
+.temp .lbl{font-size:15px;color:var(--muted);white-space:nowrap}.temp .lbl b{font-family:var(--mono);font-size:18px;color:var(--ink);margin-left:4px}
+.gauge{position:relative;display:block;height:10px;background:linear-gradient(90deg,#d8ebe2 0 75%,#f6d9bf 75% 100%);border:1px solid var(--line-2)}
+.gauge i{position:absolute;top:-5px;width:4px;height:18px;background:var(--navy);transform:translateX(-50%)}
+.gauge u{position:absolute;top:13px;font-size:11.5px;color:var(--muted);text-decoration:none;transform:translateX(-50%);white-space:nowrap}
+
+.grid{display:flex;flex-direction:column;gap:18px;margin-top:14px}
+.col{display:flex;flex-direction:column;gap:18px;min-width:0}
+@media (min-width:980px){.grid{flex-direction:row;align-items:flex-start}.col.l{flex:7 1 0}.col.r{flex:5 1 0;position:sticky;top:12px}}
+
+/* 아침 확인 */
+.mc-sum{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;font-size:15px}
+.mc{list-style:none;margin:10px 0 0;padding:0}
+.mc li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 10px;align-items:center;padding:10px 0;border-top:1px dashed var(--amber-line)}
+.mc li b{font-size:16px}
+.mc li small{grid-column:1/-1;color:var(--muted);font-size:14px}
+.mc-note{margin:10px 0 0;font-size:14px;color:var(--muted)}
+.mc-note b{color:var(--ink)}
+
+/* 장바구니 */
+.basket{display:flex;flex-wrap:wrap;gap:6px;padding:12px 16px 10px}
+.cand{border-top:1px solid var(--line)}
+.cand>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:minmax(0,1fr) 20px;gap:8px 10px;align-items:center;padding:13px 16px;min-height:56px}
+.cand>summary::-webkit-details-marker{display:none}
+.cand .nm{font-weight:800;font-size:18px}
+.cand .cd{font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-left:6px;font-weight:500}
+@media (max-width:480px){.cand .cd{display:none}}
+.cand .ar{color:var(--muted);font-size:18px;transition:transform .15s;justify-self:end}
+.cand[open]>summary .ar{transform:rotate(90deg)}
+.cand .meta{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
+.cand .mtxt{font-size:14px;color:var(--muted)}
+.cand.hit{outline:3px solid var(--blue);outline-offset:-3px}
+.cand-b{padding:0 16px 16px}
+.verdict{margin:0;padding:12px 14px;border-left:5px solid var(--navy);background:var(--blue-bg);font-weight:800;font-size:17px;line-height:1.45}
+.verdict small{display:block;font-weight:500;font-size:14px;color:var(--muted);margin-top:4px;line-height:1.5}
+.verdict .at{display:inline-block;font-weight:600;font-size:13.5px;color:var(--muted);margin-left:6px;font-family:var(--mono)}
+.verdict.buy{border-color:var(--green);background:var(--green-bg)}
+.verdict.wait{border-color:var(--yellow-dot);background:var(--yellow-bg)}
+.verdict.hold{border-color:#a3adb8;background:#f1f4f6}
+.verdict.open{border-color:var(--blue);background:var(--blue-bg)}
+.verdict.check{border-color:var(--red);background:var(--red-bg);border-left-style:dashed}
+.why{margin:10px 0 0;font-size:15px}
+.why b{color:var(--muted);font-weight:700;margin-right:8px}
+.ladder{margin-top:14px}
+.ladder .head{display:flex;justify-content:space-between;gap:8px;font-size:14px;color:var(--muted);margin-bottom:6px}
+.ladder .head b{color:var(--ink);font-family:var(--mono)}
+.track{position:relative;height:34px;border:1px solid var(--line-2);background:#f3f5f7;margin-top:12px}
+.track .zl{position:absolute;top:50%;transform:translateY(-50%);font-size:12.5px;font-weight:800;white-space:nowrap;pointer-events:none}
+.track .z{position:absolute;top:0;bottom:0}
+.z-wait{background:repeating-linear-gradient(135deg,#eef1f4 0 6px,#e3e8ed 6px 12px)}
+.z-ok{background:#cbe8d6;border-left:2px solid var(--green);border-right:2px solid var(--red)}
+.z-chase{background:#f8dcdb}
+.mk{position:absolute;top:-12px;bottom:-1px;width:0;transform:translateX(-50%)}
+.mk b{position:absolute;top:0;left:-8px;width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:11px solid var(--navy)}
+.mk::after{content:"";position:absolute;top:11px;bottom:0;left:-1.5px;width:3px;background:var(--navy)}
+.op{position:absolute;top:50%;width:14px;height:14px;border-radius:50%;background:#fff;border:3px solid var(--blue);transform:translate(-50%,-50%)}
+.ticks{position:relative;height:38px;font-size:13px;font-family:var(--mono);font-weight:700}
+.ticks span{position:absolute;top:5px;white-space:nowrap;line-height:1.25}
+.ticks .tb{transform:translateX(calc(-100% + 2px));text-align:right;padding-right:6px;border-right:2px solid var(--green)}
+.ticks .tu{transform:translateX(-2px);text-align:left;padding-left:6px;border-left:2px solid var(--red)}
+.ticks span small{display:block;font-family:var(--font);font-weight:500;color:var(--muted);font-size:12.5px}
+.sig{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.live{margin-top:12px;padding:10px 12px;border:1px solid var(--blue-line);background:#f6f9fe;font-size:14.5px}
+.live b{font-family:var(--mono);font-size:16px}
+.live small{display:block;color:var(--muted);font-size:13.5px;margin-top:2px}
+.live.off{border-color:var(--line-2);background:#f7f9fa;color:var(--muted)}
+.facts{display:grid;grid-template-columns:auto minmax(0,1fr);gap:7px 12px;margin:14px 0 0;font-size:14.5px}
+.facts dt{color:var(--muted);font-weight:700;white-space:nowrap}
+.facts dd{margin:0}
+.facts dd b{font-family:var(--mono)}
+@media (max-width:420px){.facts{grid-template-columns:minmax(0,1fr)}.facts dt{margin-top:4px}}
+.dim .ladder,.dim .sig,.dim .live{opacity:.5}
+.deep{margin-top:12px;border:1px solid var(--line-2);background:#fafcfc}
+.deep>summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:8px;padding:0 12px;min-height:46px;font-weight:700;color:var(--navy);font-size:15px}
+.deep>summary::-webkit-details-marker{display:none}
+.deep>summary .ar{color:var(--muted);transition:transform .15s}
+.deep[open]>summary .ar{transform:rotate(90deg)}
+.deep ul{margin:0;padding:8px 12px 10px 30px;border-top:1px solid var(--line);font-size:14.5px}
+.deep li+li{margin-top:5px}
+.deep li small{color:var(--muted);font-size:13px}
+.acts{display:flex;flex-wrap:wrap;gap:4px 18px;margin-top:8px}
+.link{display:inline-flex;align-items:center;min-height:44px;font-weight:700;color:var(--blue);font-size:15px;text-decoration:none}
+.cand-note{font-size:13.5px;color:var(--muted);padding:10px 16px 12px;border-top:1px solid var(--line);margin:0}
+
+/* 차트 */
+.chart-tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:12px 16px 4px}
+.chart-tools select{min-height:44px;border:1px solid var(--line-2);background:#fff;padding:0 10px;font-weight:700;font-size:15px;max-width:100%}
+.chart-sig{display:flex;flex-wrap:wrap;gap:6px;padding:8px 16px 0}
+.chart-box{padding:6px 8px 0 12px}
+.chart-box svg{display:block;width:100%;height:auto}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;padding:8px 16px 12px;font-size:14px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+.legend i{display:inline-block;width:20px;height:0;border-top:3px solid}
+.legend i.f{height:12px;border:0}
+.legend i.o{width:12px;height:12px;border:3px solid var(--blue);border-radius:50%}
+.chart-note{font-size:13.5px;color:var(--muted);padding:0 16px 14px;margin:0}
+.side-b{padding:12px 16px 14px;font-size:15px}
+.side-b p{margin:0}.side-b p+p{margin-top:8px}
+.side-b ul{margin:0;padding-left:18px;font-size:14.5px}
+.side-b li+li{margin-top:5px}
+.stale[hidden]{display:none}
+.philo{margin:18px 0 0;padding:12px 16px;border-left:4px solid var(--navy);background:#fff;font-weight:700;color:var(--navy);font-size:15px}
+</style>
+</head>
+<body>
+<div class="demo gutter"><b>버전2.2 시안 · 82a</b>숫자는 모두 가상 · 시각 예시<span class="seg2" role="group" aria-label="시각 예시 고르기"><button type="button" data-s="fri" aria-pressed="true">금 17:42</button><button type="button" data-s="m840" aria-pressed="false">월 08:40</button><button type="button" data-s="m905" aria-pressed="false">월 09:05</button><button type="button" data-s="stale" aria-pressed="false">자료 멈춤</button></span><a href="./">바뀐 점 ↗</a></div>
+
+<header class="top gutter"><div class="wrap">
+  <a class="brand" href="home.html" aria-label="호쿠토증권 알림홈"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M13 0h6v7h4v6h9v6h-9v6h-4v7h-6v-7H9v-6H0v-6h9V7h4z" fill="currentColor"/></svg><span><b>HOKUTO</b><small>SECURITIES</small></span></a>
+  <span class="place">신규매수실</span>
+  <button style="margin-left:auto" class="btn ghost type-btn" type="button" id="type-btn" aria-pressed="false" aria-label="글자 크게">가+</button>
+</div></header>
+
+<nav class="nav gutter" aria-label="주요 메뉴"><div class="wrap">
+  <a href="home.html">알림홈</a>
+  <a href="#" title="내 주식 방 (이번 시안 밖)">내 주식</a>
+  <a href="decision.html">결정실</a>
+  <a href="#" title="오늘 뉴스 방 (이번 시안 밖)">뉴스</a>
+  <a class="all" href="menu.html">전체 메뉴</a>
+</div></nav>
+
+<main class="gutter"><div class="wrap">
+  <div class="heading">
+    <div><div class="eyebrow">03 진입 조건 · 신규매수실</div><h1>얼마에 사나</h1><p class="lede">결정실 매수대상의 가격 기준과 아침 확인입니다. 계좌·보유 확인은 따로 하고, 매수 지시가 아닙니다.</p></div>
+    <svg class="dipper px" viewBox="0 0 64 30" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><path fill="#1b2638" d="M0 0h50v1h-50zM51 0h13v1h-13zM0 1h27v1h-27zM28 1h22v1h-22zM51 1h13v1h-13zM0 2h11v1h-11zM12 2h35v1h-35zM48 2h1v1h-1zM52 2h12v1h-12zM0 3h3v1h-3zM4 3h32v1h-32zM37 3h9v1h-9zM55 3h9v1h-9zM0 4h14v1h-14zM15 4h34v1h-34zM52 4h9v1h-9zM62 4h2v1h-2zM0 5h20v1h-20zM21 5h29v1h-29zM51 5h13v1h-13zM0 6h49v1h-49zM51 6h13v1h-13zM0 7h1v1h-1zM2 7h1v1h-1zM4 7h1v1h-1zM6 7h1v1h-1zM8 7h1v1h-1zM10 7h1v1h-1zM12 7h1v1h-1zM14 7h1v1h-1zM16 7h1v1h-1zM18 7h1v1h-1zM20 7h1v1h-1zM22 7h1v1h-1zM24 7h1v1h-1zM26 7h1v1h-1zM28 7h1v1h-1zM30 7h1v1h-1zM32 7h1v1h-1zM34 7h1v1h-1zM36 7h1v1h-1zM38 7h1v1h-1zM40 7h1v1h-1zM42 7h1v1h-1zM44 7h1v1h-1zM46 7h1v1h-1zM48 7h1v1h-1zM52 7h1v1h-1zM54 7h1v1h-1zM56 7h1v1h-1zM58 7h1v1h-1zM60 7h1v1h-1zM62 7h1v1h-1z"/><path fill="#20304a" d="M1 7h1v1h-1zM3 7h1v1h-1zM5 7h1v1h-1zM7 7h1v1h-1zM9 7h1v1h-1zM11 7h1v1h-1zM13 7h1v1h-1zM15 7h1v1h-1zM17 7h1v1h-1zM19 7h1v1h-1zM21 7h1v1h-1zM23 7h1v1h-1zM25 7h1v1h-1zM27 7h1v1h-1zM29 7h1v1h-1zM31 7h1v1h-1zM33 7h1v1h-1zM35 7h1v1h-1zM37 7h1v1h-1zM39 7h1v1h-1zM43 7h1v1h-1zM45 7h1v1h-1zM47 7h1v1h-1zM49 7h1v1h-1zM51 7h1v1h-1zM53 7h1v1h-1zM55 7h1v1h-1zM57 7h1v1h-1zM59 7h1v1h-1zM61 7h1v1h-1zM63 7h1v1h-1zM0 8h5v1h-5zM6 8h16v1h-16zM23 8h23v1h-23zM47 8h1v1h-1zM49 8h15v1h-15zM0 9h22v1h-22zM23 9h10v1h-10zM34 9h12v1h-12zM47 9h17v1h-17zM0 10h21v1h-21zM25 10h20v1h-20zM48 10h10v1h-10zM59 10h5v1h-5zM0 11h14v1h-14zM15 11h4v1h-4zM26 11h4v1h-4zM31 11h9v1h-9zM41 11h1v1h-1zM50 11h14v1h-14zM0 12h8v1h-8zM9 12h4v1h-4zM17 12h1v1h-1zM19 12h2v1h-2zM24 12h2v1h-2zM27 12h1v1h-1zM33 12h1v1h-1zM35 12h1v1h-1zM37 12h1v1h-1zM39 12h6v1h-6zM48 12h16v1h-16zM0 13h12v1h-12zM17 13h5v1h-5zM23 13h7v1h-7zM31 13h15v1h-15zM47 13h8v1h-8zM56 13h8v1h-8zM1 14h1v1h-1zM3 14h1v1h-1zM5 14h1v1h-1zM7 14h1v1h-1zM9 14h1v1h-1zM11 14h1v1h-1zM17 14h1v1h-1zM19 14h1v1h-1zM21 14h1v1h-1zM23 14h1v1h-1zM25 14h1v1h-1zM27 14h1v1h-1zM29 14h1v1h-1zM33 14h1v1h-1zM35 14h1v1h-1zM37 14h1v1h-1zM39 14h1v1h-1zM41 14h1v1h-1zM43 14h1v1h-1zM45 14h1v1h-1zM47 14h1v1h-1zM49 14h1v1h-1zM51 14h1v1h-1zM53 14h1v1h-1zM55 14h1v1h-1zM57 14h1v1h-1zM59 14h1v1h-1zM61 14h1v1h-1zM63 14h1v1h-1z"/><path fill="#26395a" d="M0 14h1v1h-1zM2 14h1v1h-1zM4 14h1v1h-1zM6 14h1v1h-1zM8 14h1v1h-1zM10 14h1v1h-1zM16 14h1v1h-1zM18 14h1v1h-1zM20 14h1v1h-1zM24 14h1v1h-1zM26 14h1v1h-1zM28 14h1v1h-1zM30 14h1v1h-1zM32 14h1v1h-1zM34 14h1v1h-1zM36 14h1v1h-1zM38 14h1v1h-1zM40 14h1v1h-1zM42 14h1v1h-1zM48 14h1v1h-1zM50 14h1v1h-1zM52 14h1v1h-1zM54 14h1v1h-1zM56 14h1v1h-1zM58 14h1v1h-1zM60 14h1v1h-1zM62 14h1v1h-1zM0 15h14v1h-14zM15 15h15v1h-15zM31 15h14v1h-14zM46 15h18v1h-18zM0 16h6v1h-6zM7 16h3v1h-3zM11 16h20v1h-20zM32 16h20v1h-20zM53 16h11v1h-11zM0 17h2v1h-2zM3 17h3v1h-3zM7 17h1v1h-1zM9 17h36v1h-36zM46 17h18v1h-18zM0 18h5v1h-5zM8 18h9v1h-9zM18 18h14v1h-14zM33 18h31v1h-31zM0 19h3v1h-3zM10 19h21v1h-21zM34 19h5v1h-5zM40 19h4v1h-4zM45 19h17v1h-17zM63 19h1v1h-1zM1 20h1v1h-1zM3 20h1v1h-1zM9 20h1v1h-1zM11 20h1v1h-1zM13 20h1v1h-1zM15 20h1v1h-1zM17 20h1v1h-1zM19 20h1v1h-1zM21 20h1v1h-1zM23 20h1v1h-1zM25 20h1v1h-1zM27 20h1v1h-1zM29 20h1v1h-1zM35 20h1v1h-1zM37 20h1v1h-1zM39 20h1v1h-1zM41 20h1v1h-1zM47 20h1v1h-1zM49 20h1v1h-1zM51 20h1v1h-1zM53 20h1v1h-1zM55 20h1v1h-1zM57 20h1v1h-1zM59 20h1v1h-1zM61 20h1v1h-1zM63 20h1v1h-1z"/><path fill="#2d4468" d="M0 20h1v1h-1zM2 20h1v1h-1zM4 20h1v1h-1zM8 20h1v1h-1zM10 20h1v1h-1zM12 20h1v1h-1zM14 20h1v1h-1zM16 20h1v1h-1zM18 20h1v1h-1zM20 20h1v1h-1zM22 20h1v1h-1zM24 20h1v1h-1zM26 20h1v1h-1zM28 20h1v1h-1zM38 20h1v1h-1zM40 20h1v1h-1zM42 20h1v1h-1zM46 20h1v1h-1zM48 20h1v1h-1zM50 20h1v1h-1zM52 20h1v1h-1zM54 20h1v1h-1zM56 20h1v1h-1zM58 20h1v1h-1zM60 20h1v1h-1zM62 20h1v1h-1zM0 21h6v1h-6zM7 21h24v1h-24zM34 21h4v1h-4zM39 21h1v1h-1zM41 21h1v1h-1zM47 21h17v1h-17zM0 22h6v1h-6zM7 22h25v1h-25zM33 22h10v1h-10zM46 22h18v1h-18zM0 23h44v1h-44zM45 23h10v1h-10zM59 23h5v1h-5zM0 24h54v1h-54zM60 24h4v1h-4zM0 25h28v1h-28zM34 25h19v1h-19zM61 25h3v1h-3zM0 26h25v1h-25zM40 26h2v1h-2zM47 26h5v1h-5zM62 26h2v1h-2zM8 27h3v1h-3zM18 27h3v1h-3zM51 27h1v1h-1z"/><path fill="#6f83a3" d="M27 1h1v1h-1zM11 2h1v1h-1zM47 2h1v1h-1zM3 3h1v1h-1zM36 3h1v1h-1zM61 4h1v1h-1zM20 5h1v1h-1zM41 7h1v1h-1zM24 10h1v1h-1zM58 10h1v1h-1zM8 12h1v1h-1zM30 15h1v1h-1zM52 16h1v1h-1zM2 17h1v1h-1zM17 18h1v1h-1zM39 19h1v1h-1zM62 19h1v1h-1z"/><path class="tw2" fill="#a9bbd6" d="M14 4h1v1h-1zM5 8h1v1h-1zM33 9h1v1h-1zM55 13h1v1h-1zM44 14h1v1h-1z"/><path fill="#5e8f8a" d="M40 11h1v1h-1zM42 11h1v1h-1zM16 12h1v1h-1zM18 12h1v1h-1zM26 12h1v1h-1zM28 12h1v1h-1zM32 12h1v1h-1zM34 12h1v1h-1zM36 12h1v1h-1zM38 12h1v1h-1zM12 14h1v1h-1zM31 14h1v1h-1zM45 15h1v1h-1zM10 16h1v1h-1zM31 16h1v1h-1zM8 17h1v1h-1zM45 17h1v1h-1zM36 20h1v1h-1zM38 21h1v1h-1zM40 21h1v1h-1z"/><path fill="#9c8a57" d="M49 6h1v1h-1zM48 8h1v1h-1z"/><path fill="#173033" d="M28 25h6v1h-6zM25 26h15v1h-15zM42 26h5v1h-5zM11 27h7v1h-7zM21 27h10v1h-10zM40 27h11v1h-11zM62 27h1v1h-1zM14 28h11v1h-11zM46 28h6v1h-6z"/><path fill="#11262a" d="M0 27h8v1h-8zM31 27h9v1h-9zM63 27h1v1h-1zM0 28h14v1h-14zM25 28h21v1h-21zM62 28h2v1h-2zM0 29h52v1h-52zM62 29h2v1h-2z"/><path fill="#a87a26" d="M22 8h1v1h-1zM46 8h1v1h-1zM14 11h1v1h-1zM19 11h1v1h-1zM25 11h1v1h-1zM43 11h1v1h-1zM49 11h1v1h-1zM12 13h1v1h-1zM16 13h1v1h-1zM22 14h1v1h-1zM46 14h1v1h-1zM14 15h1v1h-1zM6 16h1v1h-1zM32 18h1v1h-1zM3 19h1v1h-1zM9 19h1v1h-1zM44 19h1v1h-1zM30 20h1v1h-1zM34 20h1v1h-1zM42 21h1v1h-1zM46 21h1v1h-1zM6 22h1v1h-1zM32 22h1v1h-1zM44 23h1v1h-1z"/><path fill="#f2cf73" d="M22 9h1v1h-1zM46 9h1v1h-1zM21 10h1v1h-1zM23 10h1v1h-1zM45 10h1v1h-1zM47 10h1v1h-1zM20 11h1v1h-1zM24 11h1v1h-1zM30 11h1v1h-1zM44 11h1v1h-1zM48 11h1v1h-1zM13 12h1v1h-1zM15 12h1v1h-1zM21 12h1v1h-1zM23 12h1v1h-1zM29 12h1v1h-1zM31 12h1v1h-1zM45 12h1v1h-1zM47 12h1v1h-1zM22 13h1v1h-1zM30 13h1v1h-1zM46 13h1v1h-1zM13 14h1v1h-1zM15 14h1v1h-1zM6 17h1v1h-1zM5 18h1v1h-1zM7 18h1v1h-1zM4 19h1v1h-1zM8 19h1v1h-1zM31 19h1v1h-1zM33 19h1v1h-1zM5 20h1v1h-1zM7 20h1v1h-1zM43 20h1v1h-1zM45 20h1v1h-1zM6 21h1v1h-1zM31 21h1v1h-1zM33 21h1v1h-1zM43 22h1v1h-1zM45 22h1v1h-1z"/><path fill="#fff6d6" d="M22 10h1v1h-1zM46 10h1v1h-1zM21 11h3v1h-3zM45 11h3v1h-3zM14 12h1v1h-1zM22 12h1v1h-1zM30 12h1v1h-1zM46 12h1v1h-1zM13 13h3v1h-3zM14 14h1v1h-1zM6 18h1v1h-1zM5 19h3v1h-3zM32 19h1v1h-1zM6 20h1v1h-1zM31 20h3v1h-3zM44 20h1v1h-1zM32 21h1v1h-1zM43 21h3v1h-3zM44 22h1v1h-1z"/><path class="tw1" fill="#7d98c4" d="M50 0h1v1h-1zM46 3h2v1h-2zM53 3h2v1h-2zM50 6h1v1h-1zM50 7h1v1h-1z"/><path fill="#c5d6f0" d="M50 1h1v1h-1zM49 2h1v1h-1zM51 2h1v1h-1zM48 3h1v1h-1zM52 3h1v1h-1zM49 4h1v1h-1zM51 4h1v1h-1zM50 5h1v1h-1z"/><path fill="#ffffff" d="M50 2h1v1h-1zM49 3h3v1h-3zM50 4h1v1h-1z"/><path fill="#7f8ea3" d="M55 23h4v1h-4zM54 24h1v1h-1zM59 24h1v1h-1zM53 25h1v1h-1zM60 25h1v1h-1zM52 26h1v1h-1zM61 26h1v1h-1z"/><path fill="#c9d3df" d="M55 24h2v1h-2zM58 24h1v1h-1zM54 25h3v1h-3zM58 25h2v1h-2zM53 26h4v1h-4zM58 26h3v1h-3z"/><path fill="#1b2638" d="M57 24h1v1h-1zM57 25h1v1h-1zM57 26h1v1h-1z"/><path fill="#3a4a5e" d="M52 27h10v1h-10zM52 28h2v1h-2zM56 28h6v1h-6zM52 29h2v1h-2zM56 29h6v1h-6z"/><path fill="#f5d27a" d="M54 28h2v1h-2zM54 29h2v1h-2z"/></svg>
+  </div>
+
+  <div class="status" role="note" aria-label="자료 기준과 시장온도">
+    <div class="when-row"><span>신규매수 기준 <b id="asof">10/23(금)</b> 종가</span><span>뉴스 확인 <b class="num" id="newsat">—</b></span><span>지금 <b class="num" id="now">10/23 17:42</b></span></div>
+    <div class="temp"><span class="lbl">시장온도<b>64.5</b></span><span class="gwrap"><span class="gauge" aria-hidden="true"><i style="left:64.5%"></i><u style="left:0;transform:none">0</u><u style="left:75%">75↑ 신중</u><u style="right:0;left:auto;transform:none">100</u></span></span><span class="chip green">신규매수 평소대로</span></div>
+  </div>
+  <p class="stale" id="stale" role="alert" hidden>자료가 오래됨 — 신규매수 기준일 10/22 (직전 거래일 10/23). 아래 결론을 믿지 말고 먼저 확인하세요.</p>
+
+  <div class="grid">
+   <div class="col l">
+    <section class="card amber" id="morning" aria-labelledby="mc-h">
+      <div class="card-h"><h2 id="mc-h">10/26(월) 아침 확인</h2><small id="mc-at">08:30 밤사이 뉴스</small></div>
+      <div class="card-b" id="mc-b"></div>
+    </section>
+
+    <section class="card violet" id="cart" aria-labelledby="cart-h">
+      <div class="card-h"><h2 id="cart-h">오늘 장바구니<span class="c">3</span></h2><small>살 만한 것부터</small></div>
+      <div class="basket" id="basket"></div>
+      <div id="cards"></div>
+      <p class="cand-note">가격 기준은 아직 시험 중입니다(첫 점검 30사례 중 0건 · 잠정 기준). 이미 가진 종목은 장바구니에 넣지 않고 내 주식에서 봅니다.</p>
+    </section>
+   </div>
+
+   <div class="col r">
+    <section class="card navy" aria-labelledby="chart-h">
+      <div class="card-h"><h2 id="chart-h">가격 차트</h2><small>종가 기준 · 3개월</small></div>
+      <div class="chart-tools"><label class="sr-only" for="pick">종목 고르기</label><select id="pick"></select></div>
+      <div class="chart-sig" id="chart-sig"></div>
+      <div class="chart-box" id="chart"></div>
+      <div class="legend" id="legend"></div>
+      <p class="chart-note">오른쪽 이름표 = 각 선의 오늘 값 · 종가만으로 그린 그림입니다.</p>
+    </section>
+
+    <section class="card" aria-labelledby="read-h">
+      <div class="card-h"><h2 id="read-h">사다리 읽는 법</h2></div>
+      <div class="side-b"><ul>
+        <li><b>기준선</b> = 직전 60거래일 가장 높은 종가. 이 위로 마감해야 «돌파»</li>
+        <li><b>추격 주의 선</b> = 기준선 + 하루 평균 움직임. 이보다 높게 시작하면 쫓아 사지 않음</li>
+        <li><b>▼</b> = 종가 · <b>○</b> = 다음 날 시가(들어온 뒤에만)</li>
+      </ul></div>
+    </section>
+   </div>
+  </div>
+
+  <p class="philo">많이 올라 시작했다고 쫓지 않고, 많이 내려 시작했다고 싸다고 사지 않습니다.</p>
+  <p class="built" id="built">화면 만든 시각 <b>10/23 17:42</b> · 신규매수 기준일 <b>10/23</b> · 보유원장 <b>10/20</b> 증권사 대조</p>
+  <footer class="foot"><b>호쿠토증권 디자인 v2.2 · 82a 시안</b> · 모든 숫자는 가상 자료 · 결론과 신호는 판단을 돕는 표시이고 매수 지시가 아닙니다 · 실제 주문 기능은 없습니다</footer>
+</div></main>
+
+<nav class="mnav" aria-label="아래 메뉴">
+  <a href="home.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11 12 4l9 7v9h-6v-6H9v6H3z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>알림홈</a>
+  <a href="#" title="내 주식 방 (이번 시안 밖)"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="1" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M16 14h2" stroke="currentColor" stroke-width="1.8"/></svg>내 주식</a>
+  <a href="decision.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 5 5M8.5 11h5M11 8.5v5" stroke="currentColor" stroke-width="1.8"/></svg>결정실</a>
+  <a href="#" title="뉴스 방 (이번 시안 밖)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h10l4 4v14H5z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 11h8M8 15h8M8 7h4" stroke="currentColor" stroke-width="1.8"/></svg>뉴스</a>
+  <a href="menu.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>전체</a>
+</nav>
+
+<script>
+(function(){
+'use strict';
+/* 가상 자료 — 알림홈·결정실 시안과 같은 씨앗·같은 정의 */
+function rng(seed){let s=seed>>>0;return()=>{s=(s*1664525+1013904223)>>>0;return s/4294967296}}
+function walk(seed,n,start,drift,vol){const r=rng(seed),a=[start];for(let i=1;i<n;i++){const g=(r()+r()+r()-1.5)*vol;a.push(Math.max(10,a[i-1]*(1+drift+g)))}return a.map(Math.round)}
+const mean=a=>a.reduce((x,y)=>x+y,0)/a.length;
+function stats(c){const n=c.length,last=c[n-1],ma25=mean(c.slice(n-25)),w=c.slice(n-20),m=mean(w),sd=Math.sqrt(mean(w.map(x=>(x-m)**2)));
+  let d=0;for(let i=n-25;i<n;i++)d+=Math.abs(c[i]-c[i-1]);const W=d/25,B=Math.max(...c.slice(n-61,n-1));
+  return{last,ma25,bbU:m+2*sd,B,W,U:B+W}}
+function fit(c,fn){const n=c.length;for(let k=0;k<6;k++)c[n-1]=Math.round(fn(stats(c)));return c}
+const yen=v=>Math.round(v).toLocaleString('ko-KR');
+function tradingDates(n){const out=[];let d=new Date(2026,9,23);while(out.length<n){const w=d.getDay();if(w&&w<6)out.unshift(new Date(d));d.setDate(d.getDate()-1)}return out}
+const DATES=tradingDates(130);
+
+const C=[
+ {nm:'세이운 소프트',cd:'DEMO-S',theme:'AI 소프트웨어 ★',strong:'강한 근거 2/3',type:'실적주도형',why:'실적 전망 상향 · 은행권 수주 기사',ret:'1개월 +9.8% · 3개월 +21.5% · 60일 고점 대비 −0.8%',
+  news:['직접 뉴스 1건','▲ 대형 은행과 AI 상담 시스템 계약 (10/23 13:20)'],first:'11/20',earn:'실적 11/12',c:fit(walk(3,130,5100,.0024,.036),s=>s.B+0.8*s.W)},
+ {nm:'키타 전력설비',cd:'DEMO-K',theme:'반도체 소재·기판 · 유형 D',strong:'강한 근거 1/3',type:'촉매주도형',why:'거래량이 늘었는데 가격은 아직 제자리',ret:'1개월 +0.6% · 3개월 +4.1% · 60일 고점 대비 −6.2%',
+  news:['직접 뉴스 0건','업종 참고 2건 · ⏳ 분석 대기 1건'],first:'—',earn:'실적일 자료 준비 중',c:fit(walk(19,130,2700,.0012,.032),s=>s.B-1.4*s.W)},
+ {nm:'유키 메디컬',cd:'DEMO-Y',theme:'게임·콘텐츠 ★',strong:'강한 근거 2/3',type:'동행형',why:'실적 개선 · 신약 기대',hold:'10/23 07:40 «주력 약 임상 3상 일정 지연»',ret:'1개월 +8.1% · 3개월 +12.0% · 60일 고점 대비 −2.4%',
+  news:['직접 뉴스 2건','▼ 주력 약 임상 3상 일정 지연 (10/23 07:40)'],first:'—',earn:'실적 11/06',c:fit(walk(29,130,4100,.002,.034),s=>s.B+0.4*s.W)}
+];
+C.forEach(c=>{const s=c.s=stats(c.c);const pre=stats(c.c.slice(0,129));c.sig={brk:s.last>s.B,rec:pre.last<=pre.ma25&&s.last>s.ma25,bb:c.cd==='DEMO-K'?'nodata':s.last>s.bbU}});
+const ST={fri:{now:'10/23 17:42',at:'17:42',news:'—'},m840:{now:'10/26 08:40',at:'08:40',news:'08:30'},m905:{now:'10/26 09:05',at:'09:05',news:'08:30'},stale:{now:'10/26 08:40',at:'08:40',news:'—'}};
+let S='fri';
+
+function judge(c){const s=c.s,st=ST[S];
+  if(S==='stale')return{kind:'check',chip:'check',short:'확인 필요 · 자료 멈춤',text:'확인 필요 — 신규매수 자료가 10/22 기준에 멈춤',small:'자료가 다시 들어올 때까지 이 결론을 믿지 않습니다'};
+  if(c.hold)return{kind:'hold',chip:'gray',short:'보류 · 밤사이 악재',text:'보류 — 밤사이 중요 부정 뉴스',small:c.hold+' · 기억된 악재 10/30까지 · 오늘은 사지 않고 기사 내용을 먼저 봅니다'};
+  if(s.last<=s.B)return{kind:'wait',chip:'yellow',short:'기다림 · 기준선 아래',text:'기다림 — 종가 '+yen(s.last)+'엔이 기준선 '+yen(s.B)+'엔 아래',small:'종가가 기준선 위로 마감하면 다시 봅니다 · 시가 확인 대상 아님'};
+  if(S==='m905'){c.open=Math.round(s.B+0.55*s.W);return{kind:'buy',chip:'green',short:'매수 검토 · 시가 참고 구간 안',text:'매수 검토 — 10/26 시가 '+yen(c.open)+'엔, 참고 구간 안',small:'기준선 '+yen(s.B)+'엔 ~ 추격 주의 선 '+yen(s.U)+'엔 사이 · 지연 시세 · 수신 09:01 · 평가용 아님 · 증권사 앱에서 확인한 뒤 직접 판단'}}
+  return{kind:'open',chip:'blue',short:'월요일 시가 확인',text:'10/26(월) 시가가 '+yen(s.B)+'~'+yen(s.U)+'엔이면 매수 검토',
+    small:(S==='m840'?'08:30 밤사이 뉴스 확인 · 이상 없음 · 시가는 09:00 뒤에 들어옵니다':'10/23 종가 '+yen(s.last)+'엔 · 월요일 08:30에 밤사이 뉴스부터 확인')+' · 시가가 '+yen(s.U)+'엔보다 높으면 쫓아 사지 않고 기다림'}}
+const ORD={buy:0,open:1,wait:2,hold:3,check:4};
+const SIGW={true:['green','켜짐'],false:['gray','꺼짐'],nodata:['nodata','자료 부족'],check:['check','확인 필요']};
+const sigChip=(n,v,t='')=>{const[k,w]=SIGW[v];return `<span class="chip ${k}"><i></i>${n} ${w}${t}</span>`};
+
+function morning(J){const b=document.getElementById('mc-b'),h=document.getElementById('mc-h'),at=document.getElementById('mc-at');
+  const tg=C.filter(c=>!c.hold&&c.s.last>c.s.B);
+  if(S==='stale'){h.textContent='10/23(금) 아침 확인 — 지난 기록';at.textContent='지난 기록';
+    b.innerHTML=`<div class="mc-sum"><span class="chip check"><i></i>지난 기록</span><span>위 빨간 줄을 먼저 보세요. 오늘 몫의 확인은 자료가 들어온 뒤에 나옵니다.</span></div>`;return}
+  h.textContent='10/26(월) 아침 확인';at.textContent='08:30 밤사이 뉴스';
+  const before=S==='fri';
+  b.innerHTML=`<div class="mc-sum">${before?'<span class="chip gray"><i></i>확인 전</span><span>아직 전날입니다. 월요일 08:30에 밤사이 뉴스를 확인합니다.</span>':'<span class="chip green"><i></i>08:30 확인 끝</span><span>시가 확인 대상 '+tg.length+'종목</span>'}</div>
+   <ul class="mc">${tg.map(c=>`<li><b>${c.nm}</b>${before?'<span class="chip gray"><i></i>확인 전</span>':'<span class="chip green"><i></i>밤사이 나쁜 뉴스 없음</span>'}<small>${before?'월요일 08:30 확인 대상 · 시가 확인':'뉴스 확인 08:30 · 다음은 09:00 뒤 시가'}</small></li>`).join('')}</ul>
+   <p class="mc-note">08:30 확인은 <b>가격 갱신이 아니라 뉴스·보유 확인</b>입니다. 증권사 앱에서 시가와 보유 여부를 본 뒤 100주 주문 여부는 직접 판단하세요.</p>`}
+
+function card(c){const s=c.s,j=c.j;
+  const lo=s.B-2.2*s.W,hi=s.U+1.6*s.W,P=v=>Math.max(1,Math.min(99,(v-lo)/(hi-lo)*100)),pB=P(s.B),pU=P(s.U),pC=P(s.last);
+  const op=S==='m905'&&c.open?`<span class="op" style="left:${P(c.open)}%" title="10/26 시가"></span>`:'';
+  const live=c.hold||s.last<=s.B?'':(S==='m905'?`<div class="live">지연 시세 <b>${yen(c.open+6)}</b>엔 <small>수신 09:04 · 1분마다 바뀜 · 평가용 아님 · 15:30에 확인 끝</small></div>`
+     :S==='stale'?`<div class="live off">자료가 멈춰 지연 시세를 보여 주지 않습니다.</div>`
+     :`<div class="live off">지연 시세 · 10/26(월) 09:00부터 1분마다 보여 줍니다 <small>평가용 아님 · 15:30에 확인 끝</small></div>`);
+  const block=c.hold?`<li><b>막힌 조건</b> · 밤사이 중요 부정 뉴스 · 기억된 악재 10/30까지</li>`:'';
+  return `<details class="cand${j.kind==='hold'||j.kind==='check'?' dim':''}${c.hit?' hit':''}" id="code-${c.cd}"${(j.kind==='buy'||j.kind==='open'||c.hit)?' open':''}><summary><div><span class="nm">${c.nm}</span><span class="cd">${c.cd}</span></div><span class="ar" aria-hidden="true">›</span>
+   <span class="meta"><span class="chip ${j.chip}"><i></i>${j.short}</span><span class="mtxt">${c.theme} · ${c.strong}</span></span></summary>
+  <div class="cand-b"><p class="verdict ${j.kind}">${j.text}<span class="at">${ST[S].at} 기준</span><small>${j.small}</small></p>
+  <p class="why"><b>왜 지금</b>${c.why}</p>
+  <div class="ladder" role="img" aria-label="가격 사다리: 기준선 ${yen(s.B)}엔, 추격 주의 ${yen(s.U)}엔, 종가 ${yen(s.last)}엔">
+   <div class="head"><span>얼마에 사나</span><span>▼ 10/23 종가 <b>${yen(s.last)}</b>엔</span></div>
+   <div class="track"><span class="z z-wait" style="left:0;width:${pB}%"></span><span class="z z-ok" style="left:${pB}%;width:${pU-pB}%"></span><span class="z z-chase" style="left:${pU}%;right:0"></span>
+    <span class="zl" style="left:8px;color:var(--muted)">기다림</span><span class="zl" style="right:8px;color:var(--red)">추격 주의</span><span class="mk" style="left:${pC}%"><b></b></span>${op}</div>
+   <div class="ticks"><span class="tb" style="left:${pB}%">${yen(s.B)}<small>기준선</small></span><span class="tu" style="left:${pU}%">${yen(s.U)}<small>추격 주의 선</small></span></div></div>
+  <div class="sig" aria-label="차트 신호">${sigChip('돌파',S==='stale'?'check':c.sig.brk)}${sigChip('회복',S==='stale'?'check':c.sig.rec)}${sigChip('볼린저',S==='stale'?'check':c.sig.bb,' · 검증 중')}</div>
+  ${live}
+  <dl class="facts"><dt>산 뒤 다시 볼 선</dt><dd>기준선 <b>${yen(s.B)}</b>엔 아래 마감이면 다시 보기 (손절 주문 아님)</dd><dt>얼마나 들고</dt><dd>1~3개월 · 첫 점검 ${c.first} · ${c.earn}</dd><dt>가격 흐름</dt><dd>${c.ret}</dd></dl>
+  <details class="deep"><summary>매수 전 뉴스 확인 — ${c.news[0]}<span class="ar" aria-hidden="true">›</span></summary><ul><li>${c.news[1]} <small>· 원문 ↗</small></li><li><small>분석이 안 끝난 기사는 판단에 넣지 않았습니다.</small></li></ul></details>
+  <details class="deep"><summary>자세히 — 계산 기준 · 계좌<span class="ar" aria-hidden="true">›</span></summary><ul>
+   ${block}<li>기준선 = 직전 60거래일 가장 높은 종가 <b>${yen(s.B)}</b>엔</li><li>하루 평균 움직임 = 최근 25일 <b>${yen(s.W)}</b>엔 → 추격 주의 선 = 기준선 + 이 값</li>
+   <li>다른 방식(회복) · 한 달 평균선 <b>${yen(s.ma25)}</b>엔 위로 다시 올라오면 — 지금 ${c.sig.rec?'켜짐':'꺼짐'}</li>
+   <li>타이밍 한 줄 · 다음 거래일 가격 확인 후보 — 매수 신호는 아닙니다</li>
+   <li>판정 유형 · ${c.type}</li><li>계좌 · 보유원장 10/20 증권사 대조(이후 거래는 보고분만) · 미보유 · 잔고·예산은 따로 확인 · 주문 가능 여부는 판단하지 않습니다</li></ul></details>
+  <div class="acts"><a class="link" href="decision.html#candidate-${c.cd}">결정실에서 판정 보기 →</a><a class="link" href="performance.html#journey-${c.cd}">고른 이유와 기록 보기 →</a></div></div></details>`}
+
+function render(){const st=ST[S];
+  document.getElementById('now').textContent=st.now;document.getElementById('newsat').textContent=st.news;
+  document.getElementById('asof').textContent=S==='stale'?'10/22(목)':'10/23(금)';
+  document.getElementById('stale').hidden=S!=='stale';
+  document.getElementById('built').innerHTML=`화면 만든 시각 <b>${st.now}</b> · 신규매수 기준일 <b>${S==='stale'?'10/22':'10/23'}</b> · 보유원장 <b>10/20</b> 증권사 대조`;
+  C.forEach(c=>{c.open=null;c.j=judge(c)});
+  morning();
+  const L=[...C].sort((a,b)=>ORD[a.j.kind]-ORD[b.j.kind]);
+  const n={buy:0,open:0,wait:0,hold:0,check:0};L.forEach(c=>n[c.j.kind]++);
+  document.getElementById('basket').innerHTML=`<span class="chip"><i style="background:var(--navy)"></i>후보 ${L.length}</span>`+
+    [['buy','green','매수 검토'],['open','blue','시가 확인'],['wait','yellow','기다림'],['hold','gray','보류'],['check','check','확인 필요']].filter(([k])=>n[k]).map(([k,cl,w])=>`<span class="chip ${cl}"><i></i>${w} ${n[k]}</span>`).join('')+
+    `<span class="chip nodata"><i></i>이미 보유 0</span>`;
+  document.getElementById('cards').innerHTML=L.map(card).join('');
+  draw()}
+
+/* 차트(알림홈 차트와 같은 그리기) — 후보만, 3개월 */
+const pick=document.getElementById('pick');pick.innerHTML=C.map((x,i)=>`<option value="${i}">${x.nm}</option>`).join('');
+const N=65;
+function roll(c,fn,len){const o=[];for(let i=c.length-len;i<c.length;i++)o.push(fn(c.slice(0,i+1)));return o}
+const ma=a=>mean(a.slice(-25)),bb=(a,k)=>{const w=a.slice(-20),m=mean(w),sd=Math.sqrt(mean(w.map(x=>(x-m)**2)));return m+k*2*sd};
+function draw(){
+  const x=C[+pick.value],c=x.c,s=x.s,box=document.getElementById('chart');
+  const Wd=Math.max(300,box.clientWidth||600),narrow=Wd<560,H=narrow?280:320,padR=narrow?92:112,padT=14,padB=30,pw=Wd-padR-22,ph=H-padT-padB;
+  const cl=c.slice(-N),m25=roll(c,ma,N),up=roll(c,a=>bb(a,1),N),lo=roll(c,a=>bb(a,-1),N),dts=DATES.slice(-N);
+  const lv=[{n:'돌파',v:s.B,col:'#18703f',dash:'6 4'},{n:'추격',v:s.U,col:'#bb2f36',dash:'6 4'},{n:'평균',v:s.ma25,col:'#a66f0a'},{n:'위끝',v:s.bbU,col:'#376fb8',dash:'2 3'}];
+  let mn=Math.min(...cl,...lo,...lv.map(l=>l.v)),mx=Math.max(...cl,...up,...lv.map(l=>l.v));const pd=(mx-mn)*.06;mn-=pd;mx+=pd;
+  const X=i=>8+i*(pw/(N-1)),Y=v=>padT+(mx-v)/(mx-mn)*ph,path=a=>a.map((v,i)=>(i?'L':'M')+X(i).toFixed(1)+' '+Y(v).toFixed(1)).join('');
+  const band=(a,b)=>path(a)+b.map((_,i)=>'L'+X(b.length-1-i).toFixed(1)+' '+Y(b[b.length-1-i]).toFixed(1)).join('')+'Z';
+  const F='font-family="Pretendard Variable,Pretendard,sans-serif"';let g='';
+  dts.forEach((d,i)=>{const p=dts[i-1];if(p&&p.getMonth()!==d.getMonth()&&i>2&&i<N-4){g+=`<line x1="${X(i)}" x2="${X(i)}" y1="${padT}" y2="${padT+ph}" stroke="#eef2f4"/><text x="${X(i)}" y="${H-9}" font-size="12.5" fill="#5d6a7c" text-anchor="middle" ${F}>${d.getMonth()+1}/${d.getDate()}</text>`}});
+  g+=`<text x="${X(N-1)}" y="${H-9}" font-size="12.5" fill="#1c2839" font-weight="700" text-anchor="end" ${F}>10/23</text>`;
+  g+=`<path d="${band(up,lo)}" fill="#376fb8" fill-opacity=".08"/>`;
+  g+=`<rect x="8" width="${pw+14}" y="${Y(s.U)}" height="${Math.max(2,Y(s.B)-Y(s.U))}" fill="#18703f" fill-opacity=".15"/>`;
+  g+=`<path d="${path(m25)}" fill="none" stroke="#a66f0a" stroke-width="2"/>`;
+  lv.forEach(l=>{if(l.n!=='평균')g+=`<line x1="8" x2="${8+pw+14}" y1="${Y(l.v)}" y2="${Y(l.v)}" stroke="${l.col}" stroke-width="1.6" stroke-dasharray="${l.dash||''}"/>`});
+  g+=`<path d="${path(cl)}" fill="none" stroke="#24344f" stroke-width="2.4" stroke-linejoin="round"/>`;
+  if(x.sig.brk&&S!=='stale'){const xi=X(N-1),yi=Y(s.last);g+=`<path d="M${xi-7} ${yi+17}L${xi+7} ${yi+17}L${xi} ${yi+6}Z" fill="#18703f"/>`}
+  g+=`<circle cx="${X(N-1)}" cy="${Y(s.last)}" r="4" fill="#24344f" stroke="#fff" stroke-width="1.5"/>`;
+  const tags=[{n:'종가',v:s.last,col:'#24344f'},...lv];
+  if(S==='m905'&&x.open){g+=`<circle cx="${8+pw+10}" cy="${Y(x.open)}" r="6" fill="#fff" stroke="#2a5294" stroke-width="3"/>`;tags.push({n:'시가',v:x.open,col:'#2a5294'})}
+  const T=tags.map(t=>({...t,y:Y(t.v)})).sort((a,b)=>a.y-b.y);
+  for(let i=1;i<T.length;i++)if(T[i].y-T[i-1].y<21)T[i].y=T[i-1].y+21;
+  const ov=T[T.length-1].y-(padT+ph+6);if(ov>0)T.forEach(t=>t.y-=ov);
+  for(let i=T.length-2;i>=0;i--)if(T[i+1].y-T[i].y<21)T[i].y=T[i+1].y-21;
+  T.forEach(t=>{const x0=pw+28,w=padR-8;g+=`<line x1="${8+pw+14}" x2="${x0}" y1="${Y(t.v)}" y2="${t.y}" stroke="${t.col}" stroke-width="1.2"/><rect x="${x0}" y="${t.y-10}" width="${w}" height="20" rx="2" fill="${t.col}"/><text x="${x0+6}" y="${t.y+4.5}" font-size="12.5" font-weight="700" fill="#fff" ${F}>${t.n} ${yen(t.v)}</text>`});
+  box.innerHTML=`<svg viewBox="0 0 ${Wd} ${H}" role="img" aria-label="${x.nm} 3개월 종가 차트">${g}</svg>`;
+  document.getElementById('chart-sig').innerHTML=S==='stale'?sigChip('신호',"check"):sigChip('돌파',x.sig.brk,x.sig.brk===true?' ▲':'')+sigChip('회복',x.sig.rec)+sigChip('볼린저',x.sig.bb);
+  const Lg=[['#18703f','돌파선 (3개월 최고 종가)','6 4'],['#bb2f36','추격 주의 선','6 4'],['#18703f','참고 구간','f'],['#a66f0a','한 달 평균선',''],['#376fb8','평소 범위 (볼린저 20일)','f']];
+  document.getElementById('legend').innerHTML=Lg.map(([col,t,d])=>d==='f'?`<span><i class="f" style="background:${col};opacity:.3"></i>${t}</span>`:`<span><i style="border-color:${col};border-top-style:${d?'dashed':'solid'}"></i>${t}</span>`).join('')+(S==='m905'?'<span><i class="o"></i>다음 날 시가</span>':'');
+}
+pick.addEventListener('change',draw);
+let t;window.addEventListener('resize',()=>{clearTimeout(t);t=setTimeout(draw,120)});
+document.querySelectorAll('.seg2 button').forEach(b=>b.addEventListener('click',()=>{S=b.dataset.s;document.querySelectorAll('.seg2 button').forEach(o=>o.setAttribute('aria-pressed',String(o===b)));render()}));
+/* 주소로 들어오기: #code=코드 (결정실 «신규매수실에서 가격 확인»이 쓰는 주소) */
+function go(){const m=decodeURIComponent(location.hash).match(/^#code=(.+)$/);C.forEach(c=>c.hit=!!m&&c.cd===m[1]);render();
+  if(m){const el=document.getElementById('code-'+m[1]);if(el){el.scrollIntoView({block:'start'});const i=C.findIndex(c=>c.cd===m[1]);pick.value=String(i);draw()}}}
+window.addEventListener('hashchange',go);go();
+document.getElementById('type-btn').addEventListener('click',e=>{const on=e.currentTarget.getAttribute('aria-pressed')!=='true';e.currentTarget.setAttribute('aria-pressed',String(on));document.documentElement.classList.toggle('big',on);draw()});
+})();
+</script>
+</body>
+</html>

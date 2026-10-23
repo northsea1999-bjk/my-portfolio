@@ -92,7 +92,7 @@ section.sec{margin-top:24px}
 <nav class="nav gutter" aria-label="주요 메뉴"><div class="wrap">
   <a href="home.html">알림홈</a>
   <a href="#" title="내 주식 방 (이번 시안 밖)">내 주식</a>
-  <a href="#" title="결정실 방 (이번 시안 밖)">결정실</a>
+  <a href="decision.html">결정실</a>
   <a href="#" title="오늘 뉴스 방 (이번 시안 밖)">뉴스</a>
   <a class="all on" href="menu.html">전체 메뉴</a>
 </div></nav>
@@ -135,7 +135,7 @@ section.sec{margin-top:24px}
 <nav class="mnav" aria-label="아래 메뉴">
   <a href="home.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11 12 4l9 7v9h-6v-6H9v6H3z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>알림홈</a>
   <a href="#" title="내 주식 방 (이번 시안 밖)"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="1" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M16 14h2" stroke="currentColor" stroke-width="1.8"/></svg>내 주식</a>
-  <a href="#" title="결정실 방 (이번 시안 밖)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 5 5M8.5 11h5M11 8.5v5" stroke="currentColor" stroke-width="1.8"/></svg>결정실</a>
+  <a href="decision.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 5 5M8.5 11h5M11 8.5v5" stroke="currentColor" stroke-width="1.8"/></svg>결정실</a>
   <a href="#" title="뉴스 방 (이번 시안 밖)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h10l4 4v14H5z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 11h8M8 15h8M8 7h4" stroke="currentColor" stroke-width="1.8"/></svg>뉴스</a>
   <a class="on" href="menu.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>전체</a>
 </nav>
@@ -176,7 +176,7 @@ const R=[
  {id:'DEMO-C',nm:'미나토 중공업',kind:'hold',day:'9/03',last:'보유 중',c:[0.4,1.9,3.0],path:[['p-res','리서치센터','9/01 전력망 TOP6 진입','research'],['p-str','후보 선정','후보 유형 A','strategy'],['p-dec','결정실','매수대상 · 추세주도형','decision'],['p-hold','내 주식','9/05 매수 · 지금 괜찮음','holdings']]},
  {id:'DEMO-M',nm:'메구로 소재',kind:'past',day:'9/07',last:'관심종목으로 뽑음',c:[-8.2,-6.9,null],path:[['p-res','리서치센터','9/05 화학 TOP6 진입','research']]}
 ];
-const PAGE={research:'menu.html',strategy:'menu.html',decision:'home.html#cand',newbuy:'home.html#cand',holdings:'home.html#hold'};
+const PAGE={research:'menu.html',strategy:'menu.html',decision:'decision.html',newbuy:'newbuy.html',holdings:'home.html#hold'};
 const KIND={cand:'<span class="chip violet">지금 후보</span>',hold:'<span class="chip teal">보유</span>',past:'<span class="chip gray">지난 기록</span>'};
 const cell=(k,v)=>v==null?`<span class="cell wait"><small>${k}</small><b>기다림</b></span>`:`<span class="cell"><small>${k}</small><b style="color:${col(v)}">${sgn(v)}</b></span>`;
 document.getElementById('recs').innerHTML=R.map(r=>`<details class="rec" id="journey-${r.id}" data-kind="${r.kind}" data-k="${r.nm} ${r.id}"><summary><span class="nm">${r.nm}<small>${r.id}</small></span><span class="ar" aria-hidden="true">›</span>
