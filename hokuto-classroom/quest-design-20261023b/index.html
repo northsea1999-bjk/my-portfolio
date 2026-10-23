@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#24344f">
+<title>호쿠토증권 버전2.2 시안 검토</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap">
+<link rel="stylesheet" href="v22.css?v=22a">
+<style>
+.open-row{display:grid;gap:14px;margin-top:8px}
+@media (min-width:760px){.open-row{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.open-row a{display:block;padding:16px 18px;background:#fff;border:1px solid var(--navy);box-shadow:var(--shadow);text-decoration:none;min-height:44px}
+.open-row b{display:block;font-size:20px;color:var(--navy)}
+.open-row span{display:block;font-size:15px;color:var(--muted);margin-top:2px}
+.open-row a:first-child{background:var(--amber-bg);border-color:var(--amber-line)}
+.open-row a:last-child{background:var(--blue-bg);border-color:var(--blue-line)}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:20px}
+.metric{background:#fff;border:1px solid var(--line-2);padding:12px 14px;box-shadow:var(--shadow-s)}
+.metric small{display:block;color:var(--muted);font-size:13.5px;font-weight:700}
+.metric b{font-family:var(--mono);font-size:22px;color:var(--navy)}
+.metric span{font-size:14px;color:var(--muted)}
+section.block{margin-top:24px}
+section.block h2{font-size:20px;color:var(--navy);margin:0 0 10px}
+.tw{overflow-x:auto;border:1px solid var(--line-2);background:#fff;box-shadow:var(--shadow-s)}
+table{border-collapse:collapse;width:100%;min-width:620px;font-size:15px}
+th,td{text-align:left;vertical-align:top;padding:10px 12px;border-top:1px solid var(--line)}
+th{background:#f1f5f7;font-size:13.5px;color:var(--muted);border-top:0;white-space:nowrap}
+td:first-child{font-weight:700;color:var(--navy);white-space:nowrap}
+td.fix{background:#f6fbf8}
+.old{margin-top:12px;font-size:15px;display:flex;flex-wrap:wrap;gap:6px 18px}
+.old a{display:inline-block;padding:8px 0}
+</style>
+</head>
+<body>
+<div class="demo gutter"><b>버전2.2 시안</b>모든 종목·가격·판정은 가상입니다.</div>
+<header class="top gutter"><div class="wrap">
+  <a class="brand" href="home.html"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M13 0h6v7h4v6h9v6h-9v6h-4v7h-6v-7H9v-6H0v-6h9V7h4z" fill="currentColor"/></svg><span><b>HOKUTO</b><small>SECURITIES</small></span></a>
+  <span class="place">버전2.2 시안 검토</span>
+</div></header>
+<main class="gutter"><div class="wrap">
+  <div class="heading"><div><div class="eyebrow">2026-10-23 · 웹 Claude</div><h1>알림홈과 전체메뉴, 버전2.2</h1><p class="lede">2.1 배치를 그대로 두고, 전수 점검에서 찾은 «읽기 어려운 곳»을 고쳤습니다.</p></div></div>
+  <div class="open-row">
+    <a href="home.html"><b>알림홈 보기 →</b><span>오늘 할 일 · 살 후보 · 내 주식 · 가격 흐름 · 뉴스</span></a>
+    <a href="menu.html"><b>전체메뉴 보기 →</b><span>검토 순서 01→06 · 자료와 전략 · 결과와 기록</span></a>
+  </div>
+  <div class="metrics">
+    <div class="metric"><small>12px 이하 작은 글자 (알림홈, 로고 글자 포함)</small><b>135 → 14</b> <span>곳 · 본문 16px</span></div>
+    <div class="metric"><small>44px 안 되는 누르는 곳</small><b>13 → 1</b> <span>개 (맨 위 시안 띠 링크)</span></div>
+    <div class="metric"><small>폰 알림홈 길이 (390px)</small><b>5,256 → 5,177</b> <span>px · 글자는 더 커짐</span></div>
+  </div>
+
+  <section class="block">
+    <h2>2.1 전수 점검 → 2.2 에서 고친 것</h2>
+    <div class="tw"><table>
+      <thead><tr><th>곳</th><th>2.1 에서 찾은 것</th><th>2.2</th></tr></thead>
+      <tbody>
+        <tr><td>글자 크기</td><td>작은 글(11~12px)이 134곳, 보조 설명이 읽기 힘듦</td><td class="fix">본문 16px · 작은 글 13px 이상 · 핵심 숫자 굵고 크게 · «가+»는 화면 전체 12% 키움</td></tr>
+        <tr><td>누르는 곳</td><td>«보기» 단추·기간 단추·한국어/원문이 40px 이하</td><td class="fix">44px 이상 · 오늘 할 일은 줄 전체를 누름</td></tr>
+        <tr><td>시장온도</td><td>막대에 눈금이 없어 75 기준을 모름, 폰에서 숫자가 끊김</td><td class="fix">0 · 75↑ 신중 · 100 눈금, 폰에서는 막대를 한 줄 전체로</td></tr>
+        <tr><td>오늘 할 일</td><td>제목이 길게 2~3줄, 종류가 색으로 안 갈림</td><td class="fix">«종목 · 할 일» 한 줄 + 숫자 한 줄 · 점검 빨강 / 후보 초록 / 실적 파랑</td></tr>
+        <tr><td>살 후보</td><td>3장 모두 펼쳐져 길고, 같은 주석이 3번</td><td class="fix">매수 검토만 펼침, 기다림·보류는 한 줄(누르면 펼침) · 주석은 칸 아래 한 번 · 산 뒤 다시 볼 선·언제까지는 2칸 표</td></tr>
+        <tr><td>가격 사다리</td><td>참고 구간이 좁아 숫자·이름이 겹침, 범례 줄 따로</td><td class="fix">기준선 숫자는 왼쪽, 추격 주의 선 숫자는 오른쪽으로 벌림 · 구간 이름은 막대 안 · 종가는 세로 막대 + ▼</td></tr>
+        <tr><td>내 주식</td><td>«−16.1% · 손익 −6.2%»처럼 두 % 가 붙어 헷갈림, 6종목 모두 줄</td><td class="fix">«오늘 −3.4%» «손익 −6.2%» 이름 붙임 · 맨 위 색 막대(다시 보기 1 · 주의 2 · 괜찮음 3) · 괜찮음 종목은 한 줄로 묶음</td></tr>
+        <tr><td>차트</td><td>날짜 눈금 없음, 신호가 차트에 안 보임</td><td class="fix">달이 바뀌는 날 눈금 · 차트 위에 신호 3칩(보유는 색 칩) · 꼬리표 글자 12.5px</td></tr>
+        <tr><td>전체메뉴 숫자</td><td>«매수대상 3 · 보류 2»가 작은 글자 한 줄</td><td class="fix">큰 숫자 + 이름 · 먼저 볼 곳에 노란 «볼 것 N» 표시(예: 종목검증실 자료 부족 2)</td></tr>
+        <tr><td>검토 흐름</td><td>폰에서 묶음 사이 순서가 끊겨 보임</td><td class="fix">묶음 사이 ↓ (PC 는 →) · 맨 위 «숫자 기준 10/23 17:30 배치 · 뉴스 13:48» 한 줄</td></tr>
+        <tr><td>판정 뒤 길</td><td>작은 글 한 줄</td><td class="fix">누를 수 있는 3갈래 단추(매수대상 → 06 / 이미 보유 → 내 주식 / 보류·제외 → 근거)</td></tr>
+      </tbody>
+    </table></div>
+    <p class="old"><a href="../quest-design-20261023/">버전2.1 보기</a><a href="../quest-design-20261019/?v=9-final1020c&amp;palette=classic">버전2 (10/20) 보기</a></p>
+  </section>
+  <footer class="foot"><b>호쿠토증권 디자인 v2.2 시안</b> · 숫자는 모두 가상이며, 화면 숫자(25일선 · 20일 최저 · 볼린저 · 기준선 · 참고 상한)는 운영과 같은 정의로 가상 종가에서 계산합니다.</footer>
+</div></main>
+</body>
+</html>
