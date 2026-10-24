@@ -240,6 +240,12 @@
 .phil{margin:18px 0 0;padding:12px 16px;border-left:4px solid var(--navy);background:#fff;font-weight:700;font-size:15.5px}
 .g-list{order:1}.g-chart{order:2}.g-read{order:3}.g-bund{order:4}
 .chip.amber{background:var(--amber-bg);border-color:var(--amber-line);color:var(--amber)} .chip.amber i{background:#c98a10}
+.chip.jd{border-color:var(--navy);color:var(--navy);background:#fff}
+.chip.jd i{border-radius:1px;background:var(--navy)}
+.noadd{margin:12px 0 0;font-size:14.5px;color:var(--muted)}
+.noadd b{color:var(--ink)}
+.mix.held{background:repeating-linear-gradient(135deg,#eef1f4 0 6px,#e3e8ed 6px 12px)}
+@media (max-width:480px){.hold summary{grid-template-columns:minmax(0,1fr) auto}.hold .tagline{grid-column:1/-1}.hold .chg{grid-column:1/-1;justify-content:flex-start}}
 
 </style>
 </head>
@@ -253,7 +259,7 @@
 
 <nav class="nav gutter" aria-label="주요 메뉴"><div class="wrap">
   <a href="home.html">알림홈</a>
-  <a class="on" href="holdings.html" aria-current="page">내 주식</a>
+  <a href="holdings.html">내 주식</a>
   <a href="decision.html">결정실</a>
   <a href="news.html">뉴스</a>
   <a class="all" href="menu.html">전체 메뉴</a>
@@ -267,7 +273,7 @@
   </div>
 
   <div class="status" role="note" aria-label="자료 기준">
-    <div class="when-row"><span>가격 <b>10/23(금)</b> 종가 기준</span><span>보유원장 <b>10/6</b> 증권사 대조</span><span>만든 시각 <b class="num">17:42</b></span></div>
+    <div class="when-row"><span>가격 <b data-day>10/23(금)</b> 종가 기준</span><span>보유원장 <b>10/6</b> 증권사 대조</span><span>만든 시각 <b class="num">17:42</b></span></div>
     <div class="when-row"><span id="tstate"><span class="chip green">점검 정상</span></span></div>
   </div>
   <p class="stale" id="stale" role="alert" hidden>자료가 오래됨 — 가격 기준일 10/22 (직전 거래일 10/23). 아래 점검선과 색은 믿지 말고 먼저 확인하세요.</p>
@@ -308,7 +314,7 @@
         <li><span class="chip red"><i></i>회사 악재</span><span>위험 알림이나 기억된 악재가 있는 종목</span></li>
         <li><span class="chip amber"><i></i>흔들림 경고</span><span>최근 흔들림이 평소보다 크게 커짐 — 텔레그램으로도 알림</span></li>
         <li><span class="chip check"><i></i>확인 필요</span><span>자료가 멈췄거나 못 읽음 — 색을 믿지 말고 먼저 확인</span></li>
-      </ul><p class="note" style="padding:10px 0 0">결정실 판정(5가지 기준)과 점검선(가격)은 서로 다른 기준이라 색이 다를 수 있습니다.</p></div>
+      </ul><p class="note" style="padding:10px 0 0">보유 상태(5가지 기준)와 점검선(가격)은 서로 다른 기준이라 색이 다를 수 있습니다. <span class="chip jd"><i></i>결정실 매수대상</span>은 새로 살 후보로도 뽑혔다는 결정실 판정입니다.</p></div>
     </section>
 
     <section class="card sage g-bund" aria-labelledby="bund-h">
@@ -319,13 +325,13 @@
   </div>
 
   <p class="phil">많이 올랐다고 쫓지 않고, 많이 내렸다고 싸다고 더 사지 않습니다. 다시 볼 선은 «다시 생각할 때»이지 파는 신호가 아닙니다.</p>
-  <p class="built">화면 만든 시각 <b>10/23 17:42</b> · 가격 기준일 <b>10/23</b> · 보유원장 <b>10/6</b> 증권사 대조</p>
+  <p class="built">화면 만든 시각 <b>10/23 17:42</b> · 가격 기준일 <b data-day2>10/23</b> · 보유원장 <b>10/6</b> 증권사 대조</p>
   <footer class="foot"><b>호쿠토증권 디자인 v2.2 시안 · 82d 내 주식</b> · 모든 숫자는 가상 자료 · 금액·주식 수·비중은 보이지 않습니다 · 실제 주문 기능은 없습니다</footer>
 </div></main>
 
 <nav class="mnav" aria-label="아래 메뉴">
   <a href="home.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11 12 4l9 7v9h-6v-6H9v6H3z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>알림홈</a>
-  <a class="on" href="holdings.html" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="1" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M16 14h2" stroke="currentColor" stroke-width="1.8"/></svg>내 주식</a>
+  <a href="holdings.html"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="1" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M16 14h2" stroke="currentColor" stroke-width="1.8"/></svg>내 주식</a>
   <a href="decision.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 5 5M8.5 11h5M11 8.5v5" stroke="currentColor" stroke-width="1.8"/></svg>결정실</a>
   <a href="news.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h10l4 4v14H5z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 11h8M8 15h8M8 7h4" stroke="currentColor" stroke-width="1.8"/></svg>뉴스</a>
   <a href="menu.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>전체</a>
@@ -362,8 +368,9 @@ const HOLD=[
   {nm:'도쿄 로지스',th:'해운',cd:'DEMO-H',pnl:21.3,judge:'정상',cause:[],vol:[1.02,null,0],c:fit(walk(101,130,4500,.0021,.028),s=>s.ma25+2.9*s.W,0.9),buy:'3개월 이상',earn:['11/07(금)',11]},
   {nm:'쓰바사 전기',th:'반도체 소재·기판',cd:'DEMO-N',pnl:7.9,judge:'정상',dec:1,cause:[],vol:[0.83,52,0],c:fit(walk(113,130,6100,.0017,.03),s=>s.ma25+2.4*s.W,1.6),buy:'2개월째',earn:['10/27(화)',2]}
 ];
+const NA={'DEMO-A':'이미 산 값보다 많이 오름(+18.4%)','DEMO-C':'회복 신호 없음','DEMO-E':'최소 보유 1개월 전','DEMO-H':'이미 산 값보다 많이 오름(+21.3%)','DEMO-N':'회복 신호 없음','DEMO-D':'한 달 평균선 아래 — 추가 매수 검토 대상 아님','DEMO-M':'흔들림 경고 중 — 대상 아님','DEMO-G':'회복 신호 없음','DEMO-J':'회복 신호 없음','DEMO-L':'회복 신호 없음'};
 const ORDER={red:0,yellow:1,green:2}, WORD={red:'다시 보기',yellow:'주의',green:'괜찮음'}, DOT={red:'var(--red)',yellow:'var(--yellow-dot)',green:'var(--green)'};
-HOLD.forEach(h=>{const s=h.s=stats(h.c);
+function prep(){HOLD.forEach(h=>{const cc=S==='stale'?h.c0.slice(0,-1):h.c0;h.c=cc;const s=h.s=stats(cc);
   h.lines=[{k:'한 달 평균선',sub:'25일선',v:s.ma25,red:false},{k:'한 달 바닥',sub:'20일 최저',v:s.low20,red:true},{k:'평소 범위 아래끝',sub:'볼린저 하단',v:s.bbL,red:true}]
     .map(l=>({...l,gap:(s.last/l.v-1)*100,below:s.last<l.v,near:s.last>=l.v&&(s.last-l.v)<=s.W}));
   const L=h.lines, red=L.some(l=>l.red&&l.below), yel=!red&&(L[0].below||L.some(l=>l.near));
@@ -371,15 +378,15 @@ HOLD.forEach(h=>{const s=h.s=stats(h.c);
   const f=L.find(l=>l.red&&l.below)||L.find(l=>l.below)||L.filter(l=>l.near).sort((a,b)=>a.gap-b.gap)[0];
   h.tag=red?f.k+' 아래 마감':yel?(f.below?f.k+' 아래':f.k+'까지 '+f.gap.toFixed(1)+'%'):'세 선 모두 여유';
 });
-HOLD.sort((a,b)=>ORDER[a.color]-ORDER[b.color]||(b.bad||0)-(a.bad||0));
-let S='ok';
+HOLD.sort((a,b)=>ORDER[a.color]-ORDER[b.color]||(b.bad||0)-(a.bad||0));}
+let S='ok';const DAY=()=>S==='stale'?'10/22':'10/23';HOLD.forEach(h=>h.c0=h.c);
 const VERD={red:['다시 보기','산 이유가 아직 맞는지 다시 볼 때입니다. 손절 주문이 아닙니다.'],yellow:['주의','한 달 평균선 아래이거나 가까움 — 지켜봅니다.'],green:['괜찮음','점검선 기준으로는 문제없음.']};
 function chips(h){let o=`<span class="chip ${S==='stale'?'check':h.color}"><i></i>${S==='stale'?'확인 필요 · 자료 멈춤':WORD[h.color]}</span>`;
   if(h.bad)o+=`<span class="chip red"><i></i>회사 악재</span>`;
   if(h.alert)o+=`<span class="chip ${h.alert[0]}"><i></i>${h.alert[1]}</span>`;
   if(h.vol&&h.vol[2])o+=`<span class="chip amber"><i></i>흔들림 경고</span>`;
   if(h.earn&&h.earn[1]<=3)o+=`<span class="chip blue"><i></i>실적 ${h.earn[0]} · ${h.earn[1]}거래일 뒤</span>`;
-  if(h.dec)o+=`<span class="chip gray"><i></i>결정실 매수대상</span>`;
+  if(h.dec)o+=`<span class="chip jd"><i></i>결정실 매수대상</span>`;
   return o}
 const rowH=h=>{const s=h.s;const v=VERD[h.color];return `<li id="holding-${h.cd}"><details${h.color==='red'?' open':''}><summary>
   <div><span class="nm">${h.nm}</span><span class="cd">${h.cd}</span></div><div class="px">${yen(s.last)}<small>엔</small></div>
@@ -387,11 +394,11 @@ const rowH=h=>{const s=h.s;const v=VERD[h.color];return `<li id="holding-${h.cd}
   <div class="chg"><span>오늘 <b class="${s.chg>=0?'up':'down'}">${pct(s.chg)}</b></span><span>손익 <b class="${h.pnl>=0?'up':'down'}">${pct(h.pnl)}</b></span></div>
   </summary><div class="open">
   ${S==='stale'?`<p class="verdict" style="border-color:var(--red);background:var(--red-bg)">확인 필요 — 가격 자료가 멈춤<small>자료가 다시 들어올 때까지 이 종목의 색과 점검선을 믿지 않습니다.</small></p>`:`<p class="verdict ${h.color}">${v[0]} — ${h.tag}<small>${v[1]}</small></p>`}
-  <div class="sec"><b>다시 볼 선 · 10/23 종가 기준</b><ul class="lines">${h.lines.map(l=>{const c=l.below?(l.red?'red':'yellow'):(l.near?'yellow':'green');return `<li><i style="background:${DOT[c]}"></i><span><b>${l.k}</b> <small>${l.sub}</small><br>${l.below?(l.red?'아래로 마감 · 다시 보기':'아래 · 주의'):'위 · '+l.gap.toFixed(1)+'% 여유'}</span><span class="v">${yen(l.v)}엔</span></li>`}).join('')}</ul></div>
-  ${h.alert?`<div class="chk ${h.alert[0]}"><b>${h.alert[1]}</b>${h.alert[2]}</div>`:''}
+  <div class="sec"><b>다시 볼 선 · ${DAY()} 종가 기준${S==='stale'?' (지난 기록 · 판단 보류)':''}</b><ul class="lines">${h.lines.map(l=>{const c=l.below?(l.red?'red':'yellow'):(l.near?'yellow':'green');return `<li><i style="background:${DOT[c]}"></i><span><b>${l.k}</b> <small>${l.sub}</small><br>${l.below?(l.red?'아래로 마감 · 다시 보기':'아래 · 주의'):'위 · '+l.gap.toFixed(1)+'% 여유'}</span><span class="v">${yen(l.v)}엔</span></li>`}).join('')}</ul></div>
+  ${h.alert?`<div class="chk ${h.alert[0]}"><b>${h.alert[1]}</b>${h.alert[2]}</div>`:`<p class="noadd"><b>추가 매수 검토 없음</b> — ${NA[h.cd]||'<span class="chip nodata"><i></i>이유 자료 없음</span>'}</p>`}
   <p class="vline">흔들림 평소의 <b>${h.vol[0].toFixed(2)}</b>배 · ${h.vol[1]==null?'시장 비교 자료 없음':'시장 상위 <b>'+h.vol[1]+'</b>%'}${h.vol[2]?' — <b style="font-family:var(--font);color:var(--amber)">흔들림 경고 켜짐</b>':''}</p>
   <dl class="facts">
-   <dt>결정실 판정</dt><dd>${h.judge} <small style="color:var(--muted);font-size:13px">(점검선과 따로, 5가지 기준)</small></dd>
+   <dt>보유 상태</dt><dd>${h.judge} <small style="color:var(--muted);font-size:13px">(5가지 기준 · 점검선과 따로)</small></dd>${h.dec?`<dt>결정실 판정</dt><dd><span class="chip jd"><i></i>매수대상</span> <small style="color:var(--muted);font-size:13px">(새로 살 후보로도 뽑힘 — 이미 보유라 신규매수실 카드 없음)</small></dd>`:''}
    ${h.cause.length?`<dt>원인</dt><dd>${h.cause.map(c=>`<span class="chip gray" style="margin-right:4px">${c}</span>`).join('')}</dd>`:''}
    <dt>회사 소식</dt><dd>${h.co||'위험 알림·기억된 악재 없음'}</dd>
    <dt>보유 기간</dt><dd>${h.buy}</dd>
@@ -399,12 +406,13 @@ const rowH=h=>{const s=h.s;const v=VERD[h.color];return `<li id="holding-${h.cd}
   </dl>
   <div class="acts"><button type="button" data-chart="${h.cd}">차트로 보기 →</button><a class="link" href="performance.html#journey-${h.cd}">산 이유와 기록 다시 보기 →</a>${h.dec?`<a class="link" href="decision.html#candidate-${h.cd}">결정실 판정 보기 →</a>`:''}</div>
   </div></details></li>`};
-function render(){
+function render(){prep();
+  document.querySelectorAll('[data-day]').forEach(e=>e.textContent=S==='stale'?'10/22(목)':'10/23(금)');document.querySelectorAll('[data-day2]').forEach(e=>e.textContent=DAY());
   const cnt={red:0,yellow:0,green:0};HOLD.forEach(h=>cnt[h.color]++);
   document.getElementById('stale').hidden=S!=='stale';
   document.getElementById('tstate').innerHTML=S==='stale'?'<span class="chip check"><i></i>자료 멈춤 · 판단 보류</span>':'<span class="chip green"><i></i>점검 정상</span>';
-  document.getElementById('mix').innerHTML=['red','yellow','green'].map(k=>cnt[k]?`<i style="flex:${cnt[k]};background:${DOT[k]}"></i>`:'').join('');
-  document.getElementById('mix-l').innerHTML=['red','yellow','green'].map(k=>`<span><i style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${DOT[k]};margin-right:5px;vertical-align:-1px"></i>${WORD[k]} <b>${cnt[k]}</b></span>`).join('');
+  const mx=document.getElementById('mix');mx.classList.toggle('held',S==='stale');mx.innerHTML=S==='stale'?'':['red','yellow','green'].map(k=>cnt[k]?`<i style="flex:${cnt[k]};background:${DOT[k]}"></i>`:'').join('');
+  document.getElementById('mix-l').innerHTML=S==='stale'?'<span><span class="chip check"><i></i>판단 보류 12</span> 색은 10/22 지난 기록 — 자료가 다시 들어올 때까지 믿지 않음</span>':['red','yellow','green'].map(k=>`<span><i style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${DOT[k]};margin-right:5px;vertical-align:-1px"></i>${WORD[k]} <b>${cnt[k]}</b></span>`).join('');
   const n=(f)=>HOLD.filter(f).length, sc=[];
   if(n(h=>h.bad))sc.push(`<span class="chip red"><i></i>회사 악재 ${n(h=>h.bad)}</span>`);
   if(n(h=>h.vol[2]))sc.push(`<span class="chip amber"><i></i>흔들림 경고 ${n(h=>h.vol[2])}</span>`);
@@ -415,13 +423,14 @@ function render(){
   const TB={};HOLD.forEach(h=>{(TB[h.th]=TB[h.th]||[]).push(h.nm)});const tb=Object.entries(TB).sort((a,b)=>b[1].length-a[1].length);
   document.getElementById('bundle').innerHTML=`같은 테마로 묶으면 <b>${tb.length}묶음</b> · 가장 큰 묶음 <b>${tb[0][0]} ${tb[0][1].length}종목</b> <small>(테마 이름 기준 · 비중 지시 아님)</small>`;
   document.getElementById('bund').innerHTML=tb.map(([t,a])=>`<li><b>${t}</b><span class="n">${a.length}종목</span><small>${a.join(' · ')}</small></li>`).join('');
-  const warn=HOLD.filter(h=>h.color!=='green'),ok=HOLD.filter(h=>h.color==='green');
+  const calm=h=>S!=='stale'&&h.color==='green'&&!h.bad&&!(h.vol&&h.vol[2])&&/^정상/.test(h.judge);const warn=HOLD.filter(h=>!calm(h)),ok=HOLD.filter(calm);
   document.getElementById('holdings').innerHTML=warn.map(rowH).join('')+(ok.length?`<li><details class="okgrp" id="okgrp"><summary><span><span class="chip ${S==='stale'?'check':'green'}"><i></i>${S==='stale'?'확인 필요':'괜찮음'} ${ok.length}</span> <span class="names">${ok.map(h=>h.nm).join(' · ')}</span>${(()=>{const a=ok.filter(h=>h.alert&&h.alert[0]==='blue').length,e=ok.filter(h=>h.earn&&h.earn[1]<=3).length;return (a?` <span class="chip blue"><i></i>100주 추가 매수 검토 ${a}</span>`:'')+(e?` <span class="chip blue"><i></i>실적 3거래일 안 ${e}</span>`:'')})()}</span><span class="ar" aria-hidden="true">›</span></summary><ul class="hold">${ok.map(rowH).join('')}</ul></details></li>`:'');
   go();
 }
 /* 차트 — 알림홈과 같은 그리기(보유 종목만) */
 const SIGW={true:['green','켜짐'],false:['gray','꺼짐'],nodata:['nodata','자료 부족'],check:['check','확인 필요']};
 const sigChip=(n,v,t='')=>{const[k,w]=SIGW[v];return `<span class="chip ${k}"><i></i>${n} ${w}${t}</span>`};
+prep();
 const ALL=HOLD.map(h=>({...h,role:'보유'}));
 const pick=document.getElementById('pick');pick.innerHTML=ALL.map((x,i)=>`<option value="${i}">${x.nm} ${x.cd}</option>`).join('');
 let N=65;
@@ -430,7 +439,7 @@ const ma=a=>mean(a.slice(-25)), bb=(a,k)=>{const w=a.slice(-20),m=mean(w),sd=Mat
 function draw(){
   const x=ALL[+pick.value],c=x.c,s=x.s,box=document.getElementById('chart'),cand=x.role==='후보';
   const Wd=Math.max(300,box.clientWidth||600),narrow=Wd<560,H=narrow?280:320,padR=narrow?92:112,padT=14,padB=30,pw=Wd-padR-8,ph=H-padT-padB;
-  const cl=c.slice(-N),m25=roll(c,ma,N),up=roll(c,a=>bb(a,1),N),lo=roll(c,a=>bb(a,-1),N),dts=DATES.slice(-N);
+  const cl=c.slice(-N),m25=roll(c,ma,N),up=roll(c,a=>bb(a,1),N),lo=roll(c,a=>bb(a,-1),N),dts=(S==='stale'?DATES.slice(0,-1):DATES).slice(-N);
   const lv=cand?[{n:'돌파',v:s.B,col:'#18703f',dash:'6 4'},{n:'추격',v:s.U,col:'#bb2f36',dash:'6 4'},{n:'평균',v:s.ma25,col:'#a66f0a'},{n:'위끝',v:s.bbU,col:'#376fb8',dash:'2 3'}]
               :[{n:'평균',v:s.ma25,col:'#a66f0a'},{n:'바닥',v:s.low20,col:'#bb2f36',dash:'6 4'},{n:'아래끝',v:s.bbL,col:'#376fb8',dash:'2 3'}];
   let mn=Math.min(...cl,...lo,...lv.map(l=>l.v)),mx=Math.max(...cl,...up,...lv.map(l=>l.v));const pd=(mx-mn)*.06;mn-=pd;mx+=pd;
@@ -439,7 +448,7 @@ function draw(){
   const F='font-family="Pretendard Variable,Pretendard,sans-serif"';let g='';
   /* 날짜 눈금: 달이 바뀌는 첫 거래일(1개월이면 매주 월요일) */
   dts.forEach((d,i)=>{const p=dts[i-1];const mark=N<=22?(d.getDay()===1):(p&&p.getMonth()!==d.getMonth());if(mark&&i>2&&i<N-4){g+=`<line x1="${X(i)}" x2="${X(i)}" y1="${padT}" y2="${padT+ph}" stroke="#eef2f4"/><text x="${X(i)}" y="${H-9}" font-size="12" fill="#5d6a7c" text-anchor="middle" ${F}>${d.getMonth()+1}/${d.getDate()}</text>`}});
-  g+=`<text x="${X(N-1)}" y="${H-9}" font-size="12" fill="#1c2839" font-weight="700" text-anchor="end" ${F}>10/23</text>`;
+  g+=`<text x="${X(N-1)}" y="${H-9}" font-size="12" fill="#1c2839" font-weight="700" text-anchor="end" ${F}>${DAY()}</text>`;
   g+=`<path d="${band(up,lo)}" fill="#376fb8" fill-opacity=".08"/>`;
   if(cand)g+=`<rect x="8" width="${pw}" y="${Y(s.U)}" height="${Math.max(2,Y(s.B)-Y(s.U))}" fill="#18703f" fill-opacity=".15"/>`;
   else{const top=Math.max(s.low20,s.bbL);g+=`<rect x="8" width="${pw}" y="${Y(top)}" height="${Math.max(0,padT+ph-Y(top))}" fill="#bb2f36" fill-opacity=".08"/>`;if(s.ma25>top)g+=`<rect x="8" width="${pw}" y="${Y(s.ma25)}" height="${Y(top)-Y(s.ma25)}" fill="#d9a019" fill-opacity=".12"/>`}
@@ -455,7 +464,7 @@ function draw(){
   tags.forEach(t=>{const x0=pw+14,w=padR-8;g+=`<line x1="${8+pw}" x2="${x0}" y1="${Y(t.v)}" y2="${t.y}" stroke="${t.col}" stroke-width="1.2"/><rect x="${x0}" y="${t.y-10}" width="${w}" height="20" rx="2" fill="${t.col}"/><text x="${x0+6}" y="${t.y+4.5}" font-size="12.5" font-weight="700" fill="#fff" ${F}>${t.n} ${yen(t.v)}</text>`});
   box.innerHTML=`<svg viewBox="0 0 ${Wd} ${H}" role="img" aria-label="${x.nm} ${N}거래일 종가 차트">${g}</svg>`;
   document.getElementById('chart-sig').innerHTML=cand?sigChip('돌파',x.sig.brk,x.sig.brk===true?' ▲':'')+sigChip('회복',x.sig.rec)+sigChip('볼린저',x.sig.bb)
-     :`<span class="chip ${x.color}"><i></i>${WORD[x.color]} · ${x.tag}</span>`;
+     :(S==='stale'?`<span class="chip check"><i></i>지난 기록 10/22 · 판단 보류</span>`:`<span class="chip ${x.color}"><i></i>${WORD[x.color]} · ${x.tag}</span>`);
   const L=cand?[['#18703f','돌파선 (3개월 최고 종가)','6 4'],['#bb2f36','추격 주의 선','6 4'],['#18703f','참고 구간','f'],['#a66f0a','한 달 평균선',''],['#376fb8','평소 범위 (볼린저 20일)','f']]
               :[['#a66f0a','한 달 평균선',''],['#bb2f36','한 달 바닥 (20일 최저)','6 4'],['#376fb8','평소 범위 아래끝','2 3'],['#d9a019','주의 영역','f'],['#bb2f36','다시 보기 영역','f']];
   document.getElementById('legend').innerHTML=L.map(([col,t,d])=>d==='f'?`<span><i class="f" style="background:${col};opacity:.3"></i>${t}</span>`:`<span><i style="border-color:${col};border-top-style:${d?'dashed':'solid'}"></i>${t}</span>`).join('');
@@ -471,7 +480,7 @@ function go(){const m=/^#holding-(.+)$/.exec(decodeURIComponent(location.hash));
   document.querySelectorAll('.hold li.hit').forEach(x=>x.classList.remove('hit'));li.classList.add('hit');
   const grp=li.closest('#okgrp');if(grp)grp.open=true;li.querySelector('details').open=true;li.scrollIntoView({block:'start'})}
 window.addEventListener('hashchange',go);
-document.querySelectorAll('.seg2 button').forEach(b=>b.addEventListener('click',()=>{S=b.dataset.s;document.querySelectorAll('.seg2 button').forEach(o=>o.setAttribute('aria-pressed',String(o===b)));render()}));
+document.querySelectorAll('.seg2 button').forEach(b=>b.addEventListener('click',()=>{S=b.dataset.s;document.querySelectorAll('.seg2 button').forEach(o=>o.setAttribute('aria-pressed',String(o===b)));render();ALL.splice(0,ALL.length,...HOLD.map(h=>({...h,role:'보유'})));draw()}));
 render();draw();
 document.getElementById('type-btn').addEventListener('click',e=>{const on=e.currentTarget.getAttribute('aria-pressed')!=='true';e.currentTarget.setAttribute('aria-pressed',String(on));document.documentElement.classList.toggle('big',on);draw()});
 })();
