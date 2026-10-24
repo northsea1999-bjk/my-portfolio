@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#24344f">
+<title>호쿠토증권 뉴스 · 버전2.2 시안</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="v22.css?v=22e">
+<link rel="stylesheet" href="rooms.css?v=82c">
+<style>
+
+.top3{list-style:none;margin:0;padding:0}
+.top3 li{padding:12px 16px;border-top:1px solid var(--line)}
+.top3 li:first-child{border-top:0}
+.top3 .th{font-size:13.5px;font-weight:800;color:var(--teal)}
+.top3 b{display:block;font-size:17px;line-height:1.45;margin:2px 0}
+.top3 p{margin:2px 0 0;font-size:14.5px}
+.top3 small{color:var(--muted);font-size:13.5px}
+.thr>summary{grid-template-columns:34px minmax(0,1fr) 18px}
+.thr .no{font-family:var(--mono);font-size:14px;color:var(--muted);font-weight:700;padding-top:2px}
+.facts1{margin:0 0 8px;font-size:14px;color:var(--muted)}
+.evs{margin:0;padding:0;list-style:none}
+.evs li{padding:6px 0;border-top:1px dashed var(--line-2);font-size:14.5px}
+.card.navy .card-h .seg3 button{background:transparent;color:#fff;border-color:#8ea0bd;min-height:40px}
+.card.navy .card-h .seg3 button[aria-pressed=true]{background:#fff;color:var(--navy);border-color:#fff}
+.evs h4{margin:8px 0 2px;font-size:14px;color:var(--navy)}
+
+</style>
+</head>
+<body>
+<div class="demo gutter"><b>버전2.2 시안 · 82c</b>숫자는 모두 가상 · 뉴스<a href="./">바뀐 점 ↗</a></div>
+
+<header class="top gutter"><div class="wrap">
+  <a class="brand" href="home.html" aria-label="호쿠토증권 알림홈"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M13 0h6v7h4v6h9v6h-9v6h-4v7h-6v-7H9v-6H0v-6h9V7h4z" fill="currentColor"/></svg><span><b>HOKUTO</b><small>SECURITIES</small></span></a>
+  <span class="place">뉴스</span>
+  <button style="margin-left:auto" class="btn ghost type-btn" type="button" id="type-btn" aria-pressed="false" aria-label="글자 크게">가+</button>
+</div></header>
+
+<nav class="nav gutter" aria-label="주요 메뉴"><div class="wrap">
+  <a href="home.html">알림홈</a><a href="#" title="내 주식 방 (이번 시안 밖)">내 주식</a><a href="decision.html">결정실</a><a class="on" href="news.html" aria-current="page">뉴스</a><a class="all" href="menu.html">전체 메뉴</a>
+</div></nav>
+
+<main class="gutter"><div class="wrap">
+  <nav class="crumb" aria-label="위치"><a href="menu.html">전체메뉴</a><span aria-hidden="true">›</span><b style="color:var(--ink)">뉴스</b></nav>
+  <div class="heading" style="padding-top:6px">
+    <div><div class="eyebrow">참고 · 뉴스룸</div><h1>오늘 뉴스</h1><p class="lede">전체 제목을 훑고, 필요한 기사의 사실과 회사 연결 근거를 확인합니다.</p></div>
+    <svg class="dipper px" viewBox="0 0 64 30" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><path fill="#1b2638" d="M0 0h50v1h-50zM51 0h13v1h-13zM0 1h27v1h-27zM28 1h22v1h-22zM51 1h13v1h-13zM0 2h11v1h-11zM12 2h35v1h-35zM48 2h1v1h-1zM52 2h12v1h-12zM0 3h3v1h-3zM4 3h32v1h-32zM37 3h9v1h-9zM55 3h9v1h-9zM0 4h14v1h-14zM15 4h34v1h-34zM52 4h9v1h-9zM62 4h2v1h-2zM0 5h20v1h-20zM21 5h29v1h-29zM51 5h13v1h-13zM0 6h49v1h-49zM51 6h13v1h-13zM0 7h1v1h-1zM2 7h1v1h-1zM4 7h1v1h-1zM6 7h1v1h-1zM8 7h1v1h-1zM10 7h1v1h-1zM12 7h1v1h-1zM14 7h1v1h-1zM16 7h1v1h-1zM18 7h1v1h-1zM20 7h1v1h-1zM22 7h1v1h-1zM24 7h1v1h-1zM26 7h1v1h-1zM28 7h1v1h-1zM30 7h1v1h-1zM32 7h1v1h-1zM34 7h1v1h-1zM36 7h1v1h-1zM38 7h1v1h-1zM40 7h1v1h-1zM42 7h1v1h-1zM44 7h1v1h-1zM46 7h1v1h-1zM48 7h1v1h-1zM52 7h1v1h-1zM54 7h1v1h-1zM56 7h1v1h-1zM58 7h1v1h-1zM60 7h1v1h-1zM62 7h1v1h-1z"/><path fill="#20304a" d="M1 7h1v1h-1zM3 7h1v1h-1zM5 7h1v1h-1zM7 7h1v1h-1zM9 7h1v1h-1zM11 7h1v1h-1zM13 7h1v1h-1zM15 7h1v1h-1zM17 7h1v1h-1zM19 7h1v1h-1zM21 7h1v1h-1zM23 7h1v1h-1zM25 7h1v1h-1zM27 7h1v1h-1zM29 7h1v1h-1zM31 7h1v1h-1zM33 7h1v1h-1zM35 7h1v1h-1zM37 7h1v1h-1zM39 7h1v1h-1zM43 7h1v1h-1zM45 7h1v1h-1zM47 7h1v1h-1zM49 7h1v1h-1zM51 7h1v1h-1zM53 7h1v1h-1zM55 7h1v1h-1zM57 7h1v1h-1zM59 7h1v1h-1zM61 7h1v1h-1zM63 7h1v1h-1zM0 8h5v1h-5zM6 8h16v1h-16zM23 8h23v1h-23zM47 8h1v1h-1zM49 8h15v1h-15zM0 9h22v1h-22zM23 9h10v1h-10zM34 9h12v1h-12zM47 9h17v1h-17zM0 10h21v1h-21zM25 10h20v1h-20zM48 10h10v1h-10zM59 10h5v1h-5zM0 11h14v1h-14zM15 11h4v1h-4zM26 11h4v1h-4zM31 11h9v1h-9zM41 11h1v1h-1zM50 11h14v1h-14zM0 12h8v1h-8zM9 12h4v1h-4zM17 12h1v1h-1zM19 12h2v1h-2zM24 12h2v1h-2zM27 12h1v1h-1zM33 12h1v1h-1zM35 12h1v1h-1zM37 12h1v1h-1zM39 12h6v1h-6zM48 12h16v1h-16zM0 13h12v1h-12zM17 13h5v1h-5zM23 13h7v1h-7zM31 13h15v1h-15zM47 13h8v1h-8zM56 13h8v1h-8zM1 14h1v1h-1zM3 14h1v1h-1zM5 14h1v1h-1zM7 14h1v1h-1zM9 14h1v1h-1zM11 14h1v1h-1zM17 14h1v1h-1zM19 14h1v1h-1zM21 14h1v1h-1zM23 14h1v1h-1zM25 14h1v1h-1zM27 14h1v1h-1zM29 14h1v1h-1zM33 14h1v1h-1zM35 14h1v1h-1zM37 14h1v1h-1zM39 14h1v1h-1zM41 14h1v1h-1zM43 14h1v1h-1zM45 14h1v1h-1zM47 14h1v1h-1zM49 14h1v1h-1zM51 14h1v1h-1zM53 14h1v1h-1zM55 14h1v1h-1zM57 14h1v1h-1zM59 14h1v1h-1zM61 14h1v1h-1zM63 14h1v1h-1z"/><path fill="#26395a" d="M0 14h1v1h-1zM2 14h1v1h-1zM4 14h1v1h-1zM6 14h1v1h-1zM8 14h1v1h-1zM10 14h1v1h-1zM16 14h1v1h-1zM18 14h1v1h-1zM20 14h1v1h-1zM24 14h1v1h-1zM26 14h1v1h-1zM28 14h1v1h-1zM30 14h1v1h-1zM32 14h1v1h-1zM34 14h1v1h-1zM36 14h1v1h-1zM38 14h1v1h-1zM40 14h1v1h-1zM42 14h1v1h-1zM48 14h1v1h-1zM50 14h1v1h-1zM52 14h1v1h-1zM54 14h1v1h-1zM56 14h1v1h-1zM58 14h1v1h-1zM60 14h1v1h-1zM62 14h1v1h-1zM0 15h14v1h-14zM15 15h15v1h-15zM31 15h14v1h-14zM46 15h18v1h-18zM0 16h6v1h-6zM7 16h3v1h-3zM11 16h20v1h-20zM32 16h20v1h-20zM53 16h11v1h-11zM0 17h2v1h-2zM3 17h3v1h-3zM7 17h1v1h-1zM9 17h36v1h-36zM46 17h18v1h-18zM0 18h5v1h-5zM8 18h9v1h-9zM18 18h14v1h-14zM33 18h31v1h-31zM0 19h3v1h-3zM10 19h21v1h-21zM34 19h5v1h-5zM40 19h4v1h-4zM45 19h17v1h-17zM63 19h1v1h-1zM1 20h1v1h-1zM3 20h1v1h-1zM9 20h1v1h-1zM11 20h1v1h-1zM13 20h1v1h-1zM15 20h1v1h-1zM17 20h1v1h-1zM19 20h1v1h-1zM21 20h1v1h-1zM23 20h1v1h-1zM25 20h1v1h-1zM27 20h1v1h-1zM29 20h1v1h-1zM35 20h1v1h-1zM37 20h1v1h-1zM39 20h1v1h-1zM41 20h1v1h-1zM47 20h1v1h-1zM49 20h1v1h-1zM51 20h1v1h-1zM53 20h1v1h-1zM55 20h1v1h-1zM57 20h1v1h-1zM59 20h1v1h-1zM61 20h1v1h-1zM63 20h1v1h-1z"/><path fill="#2d4468" d="M0 20h1v1h-1zM2 20h1v1h-1zM4 20h1v1h-1zM8 20h1v1h-1zM10 20h1v1h-1zM12 20h1v1h-1zM14 20h1v1h-1zM16 20h1v1h-1zM18 20h1v1h-1zM20 20h1v1h-1zM22 20h1v1h-1zM24 20h1v1h-1zM26 20h1v1h-1zM28 20h1v1h-1zM38 20h1v1h-1zM40 20h1v1h-1zM42 20h1v1h-1zM46 20h1v1h-1zM48 20h1v1h-1zM50 20h1v1h-1zM52 20h1v1h-1zM54 20h1v1h-1zM56 20h1v1h-1zM58 20h1v1h-1zM60 20h1v1h-1zM62 20h1v1h-1zM0 21h6v1h-6zM7 21h24v1h-24zM34 21h4v1h-4zM39 21h1v1h-1zM41 21h1v1h-1zM47 21h17v1h-17zM0 22h6v1h-6zM7 22h25v1h-25zM33 22h10v1h-10zM46 22h18v1h-18zM0 23h44v1h-44zM45 23h10v1h-10zM59 23h5v1h-5zM0 24h54v1h-54zM60 24h4v1h-4zM0 25h28v1h-28zM34 25h19v1h-19zM61 25h3v1h-3zM0 26h25v1h-25zM40 26h2v1h-2zM47 26h5v1h-5zM62 26h2v1h-2zM8 27h3v1h-3zM18 27h3v1h-3zM51 27h1v1h-1z"/><path fill="#6f83a3" d="M27 1h1v1h-1zM11 2h1v1h-1zM47 2h1v1h-1zM3 3h1v1h-1zM36 3h1v1h-1zM61 4h1v1h-1zM20 5h1v1h-1zM41 7h1v1h-1zM24 10h1v1h-1zM58 10h1v1h-1zM8 12h1v1h-1zM30 15h1v1h-1zM52 16h1v1h-1zM2 17h1v1h-1zM17 18h1v1h-1zM39 19h1v1h-1zM62 19h1v1h-1z"/><path class="tw2" fill="#a9bbd6" d="M14 4h1v1h-1zM5 8h1v1h-1zM33 9h1v1h-1zM55 13h1v1h-1zM44 14h1v1h-1z"/><path fill="#5e8f8a" d="M40 11h1v1h-1zM42 11h1v1h-1zM16 12h1v1h-1zM18 12h1v1h-1zM26 12h1v1h-1zM28 12h1v1h-1zM32 12h1v1h-1zM34 12h1v1h-1zM36 12h1v1h-1zM38 12h1v1h-1zM12 14h1v1h-1zM31 14h1v1h-1zM45 15h1v1h-1zM10 16h1v1h-1zM31 16h1v1h-1zM8 17h1v1h-1zM45 17h1v1h-1zM36 20h1v1h-1zM38 21h1v1h-1zM40 21h1v1h-1z"/><path fill="#9c8a57" d="M49 6h1v1h-1zM48 8h1v1h-1z"/><path fill="#173033" d="M28 25h6v1h-6zM25 26h15v1h-15zM42 26h5v1h-5zM11 27h7v1h-7zM21 27h10v1h-10zM40 27h11v1h-11zM62 27h1v1h-1zM14 28h11v1h-11zM46 28h6v1h-6z"/><path fill="#11262a" d="M0 27h8v1h-8zM31 27h9v1h-9zM63 27h1v1h-1zM0 28h14v1h-14zM25 28h21v1h-21zM62 28h2v1h-2zM0 29h52v1h-52zM62 29h2v1h-2z"/><path fill="#a87a26" d="M22 8h1v1h-1zM46 8h1v1h-1zM14 11h1v1h-1zM19 11h1v1h-1zM25 11h1v1h-1zM43 11h1v1h-1zM49 11h1v1h-1zM12 13h1v1h-1zM16 13h1v1h-1zM22 14h1v1h-1zM46 14h1v1h-1zM14 15h1v1h-1zM6 16h1v1h-1zM32 18h1v1h-1zM3 19h1v1h-1zM9 19h1v1h-1zM44 19h1v1h-1zM30 20h1v1h-1zM34 20h1v1h-1zM42 21h1v1h-1zM46 21h1v1h-1zM6 22h1v1h-1zM32 22h1v1h-1zM44 23h1v1h-1z"/><path fill="#f2cf73" d="M22 9h1v1h-1zM46 9h1v1h-1zM21 10h1v1h-1zM23 10h1v1h-1zM45 10h1v1h-1zM47 10h1v1h-1zM20 11h1v1h-1zM24 11h1v1h-1zM30 11h1v1h-1zM44 11h1v1h-1zM48 11h1v1h-1zM13 12h1v1h-1zM15 12h1v1h-1zM21 12h1v1h-1zM23 12h1v1h-1zM29 12h1v1h-1zM31 12h1v1h-1zM45 12h1v1h-1zM47 12h1v1h-1zM22 13h1v1h-1zM30 13h1v1h-1zM46 13h1v1h-1zM13 14h1v1h-1zM15 14h1v1h-1zM6 17h1v1h-1zM5 18h1v1h-1zM7 18h1v1h-1zM4 19h1v1h-1zM8 19h1v1h-1zM31 19h1v1h-1zM33 19h1v1h-1zM5 20h1v1h-1zM7 20h1v1h-1zM43 20h1v1h-1zM45 20h1v1h-1zM6 21h1v1h-1zM31 21h1v1h-1zM33 21h1v1h-1zM43 22h1v1h-1zM45 22h1v1h-1z"/><path fill="#fff6d6" d="M22 10h1v1h-1zM46 10h1v1h-1zM21 11h3v1h-3zM45 11h3v1h-3zM14 12h1v1h-1zM22 12h1v1h-1zM30 12h1v1h-1zM46 12h1v1h-1zM13 13h3v1h-3zM14 14h1v1h-1zM6 18h1v1h-1zM5 19h3v1h-3zM32 19h1v1h-1zM6 20h1v1h-1zM31 20h3v1h-3zM44 20h1v1h-1zM32 21h1v1h-1zM43 21h3v1h-3zM44 22h1v1h-1z"/><path class="tw1" fill="#7d98c4" d="M50 0h1v1h-1zM46 3h2v1h-2zM53 3h2v1h-2zM50 6h1v1h-1zM50 7h1v1h-1z"/><path fill="#c5d6f0" d="M50 1h1v1h-1zM49 2h1v1h-1zM51 2h1v1h-1zM48 3h1v1h-1zM52 3h1v1h-1zM49 4h1v1h-1zM51 4h1v1h-1zM50 5h1v1h-1z"/><path fill="#ffffff" d="M50 2h1v1h-1zM49 3h3v1h-3zM50 4h1v1h-1z"/><path fill="#7f8ea3" d="M55 23h4v1h-4zM54 24h1v1h-1zM59 24h1v1h-1zM53 25h1v1h-1zM60 25h1v1h-1zM52 26h1v1h-1zM61 26h1v1h-1z"/><path fill="#c9d3df" d="M55 24h2v1h-2zM58 24h1v1h-1zM54 25h3v1h-3zM58 25h2v1h-2zM53 26h4v1h-4zM58 26h3v1h-3z"/><path fill="#1b2638" d="M57 24h1v1h-1zM57 25h1v1h-1zM57 26h1v1h-1z"/><path fill="#3a4a5e" d="M52 27h10v1h-10zM52 28h2v1h-2zM56 28h6v1h-6zM52 29h2v1h-2zM56 29h6v1h-6z"/><path fill="#f5d27a" d="M54 28h2v1h-2zM54 29h2v1h-2z"/></svg>
+  </div>
+
+  <div class="status" role="note" aria-label="뉴스 기준">
+    <div class="when-row"><span>뉴스 최신 <b class="num">17:18</b></span><span>오늘 기사 <b>12</b>개(가상)</span><span>만든 시각 <b class="num">17:21</b></span></div>
+    <div class="when-row" style="justify-content:flex-end"><span class="lang" role="group" aria-label="제목 언어"><button type="button" data-l="ko" aria-pressed="true">한국어</button><button type="button" data-l="jp" aria-pressed="false">원문</button></span></div>
+  </div>
+
+  <div class="grid">
+   <div class="col l">
+    <section class="card navy" aria-labelledby="n-h">
+      <div class="card-h"><h2 id="n-h">오늘 뉴스</h2><div class="seg3" id="views" role="group" aria-label="보기"><button type="button" data-v="time" aria-pressed="true" >시각순</button><button type="button" data-v="theme" aria-pressed="false">테마별</button></div></div>
+      <div id="v-time">
+        <div class="tabs" id="zones" role="group" aria-label="칸으로 거르기"></div>
+        <div class="tools"><span class="lbl">나라</span><span class="seg3" id="ctry" role="group" aria-label="나라"><button type="button" data-c="all" aria-pressed="true">전체</button><button type="button" data-c="jp" aria-pressed="false">일본</button><button type="button" data-c="us" aria-pressed="false">미국</button><button type="button" data-c="etc" aria-pressed="false">기타·미확인</button></span>
+          <label class="find"><span class="sr-only">검색</span><input id="q" type="search" placeholder="제목 · 회사 · 테마 찾기"></label></div>
+        <p class="note" id="cnt"></p>
+        <ul class="rows" id="list"></ul>
+        <button type="button" class="morebtn" id="more">기사 더 보기</button>
+      </div>
+      <div id="v-theme" hidden>
+        <p class="note" style="padding-top:12px">테마마다 오늘 생긴 일입니다. 변화가 큰 테마부터 · 테마뉴스 방은 이 보기로 합쳤습니다.</p>
+        <ul class="rows" id="themes"></ul>
+      </div>
+    </section>
+   </div>
+   <div class="col r">
+    <section class="card blue" id="market-topics" aria-labelledby="t-h">
+      <div class="card-h"><h2 id="t-h">오늘의 핵심 시장 주제<span class="c">3</span></h2></div>
+      <ul class="top3" id="top3"></ul>
+    </section>
+    <section class="card" aria-labelledby="h-h">
+      <div class="card-h"><h2 id="h-h">읽는 법</h2></div>
+      <div class="card-b"><ul style="margin:0;padding-left:18px;font-size:14.5px">
+        <li><b>직접</b> = 기사 주인공이 그 회사 · <b>테마 관련</b> = 같은 테마라서 이어 붙임</li>
+        <li><b>분석 대기</b> = AI가 아직 못 읽은 기사, 판단에 넣지 않음</li>
+        <li>한국 회사 기사는 목록에서 빼고 건수만 보여 줍니다</li>
+      </ul></div>
+    </section>
+   </div>
+  </div>
+  <p class="built">화면 만든 시각 <b>10/23 17:21</b> · 뉴스 최신 <b>17:18</b> · 기사는 가상</p>
+  <footer class="foot"><b>호쿠토증권 디자인 v2.2 · 82c 시안</b> · 모든 숫자는 가상 자료 · 판단을 돕는 표시이고 매수 지시가 아닙니다</footer>
+
+</div></main>
+
+<nav class="mnav" aria-label="아래 메뉴">
+  <a href="home.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11 12 4l9 7v9h-6v-6H9v6H3z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>알림홈</a><a href="#" title="내 주식 방 (이번 시안 밖)"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="1" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M16 14h2" stroke="currentColor" stroke-width="1.8"/></svg>내 주식</a><a href="decision.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 5 5M8.5 11h5M11 8.5v5" stroke="currentColor" stroke-width="1.8"/></svg>결정실</a><a class="on" aria-current="page" href="news.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h10l4 4v14H5z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 11h8M8 15h8M8 7h4" stroke="currentColor" stroke-width="1.8"/></svg>뉴스</a><a href="menu.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>전체</a>
+</nav>
+
+<script>
+(function(){
+'use strict';
+const esc=s=>String(s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+
+const N=[["17:18", "세이운 소프트, 대형 은행과 AI 상담 시스템 계약", "セイウンソフト、大手銀行とAI相談システム契約", "cand", "jp", "세이운 소프트", "직접", "up", "은행 3곳 도입 · 내년 4월 가동", "회사 이름이 제목에 · 공시와 같은 날", "계약 금액 미공개", "AI 소프트웨어"], ["16:31", "미네베아미츠미, 소형 모터 증산 투자 발표", "ミネベアミツミ、小型モーター増産投資", "hold", "jp", "미네베아미츠미", "직접", "up", "국내 2공장 증설 · 2027년 가동", "회사 공시", "수요 둔화 시 부담", "반도체 소재·기판"], ["15:02", "엔화 약세 이어져 — 수출주 강세", "円安続く、輸出株に買い", "mkt", "jp", "", "—", "flat", "달러당 151엔대", "시장 전체", "정부 개입 가능성", "—"], ["14:40", "미국 반도체 장비 수출 규제 추가 검토", "US weighs more chip-equipment export curbs", "mkt", "us", "반도체 소재·기판", "테마 관련", "down", "상무부 검토 단계 보도", "테마 종목 일부가 장비 공급", "확정 아님 · 보도 단계", "반도체 소재·기판"], ["13:55", "아오이 게임즈, 신작 출시를 내년 2월로 연기", "アオイゲームズ、新作発売を来年2月に延期", "hold", "jp", "아오이 게임즈", "직접", "down", "출시일 11월 → 2월", "회사 공시", "개발비 늘어날 수 있음", "게임·콘텐츠"], ["13:20", "데이터센터 전력 수요 전망 상향 — 송전 설비 발주 늘어", "データセンター電力需要見通し上方修正", "hold", "jp", "미나토 중공업", "테마 관련", "up", "전력 회사 3곳 투자 계획 상향", "전력망 테마 종목", "회사별 수주 확인 안 됨", "전력망"], ["11:48", "키타 전력설비 거래량 급증 — 이유 확인 안 됨", "", "wait", "jp", "키타 전력설비", "직접", "flat", "", "", "", "반도체 소재·기판"], ["11:05", "유키 메디컬, 주력 약 임상 3상 일정 지연", "ユキメディカル、主力薬の第3相試験日程延期", "cand", "jp", "유키 메디컬", "직접", "down", "결과 발표 내년 상반기 → 하반기", "회사 공시", "일정만 바뀜 · 실패 아님", "게임·콘텐츠"], ["10:12", "방산 예산 증액안 국회 제출", "防衛予算増額案を国会提出", "mkt", "jp", "방산", "테마 관련", "up", "내년 예산 +8%", "방산 테마 전체", "국회 통과 전", "방산"], ["09:40", "호쿠토 반도체, 3분기 실적 발표일 10/28 확정", "ホクト半導体、第3四半期決算発表日を10月28日に決定", "hold", "jp", "호쿠토 반도체", "직접", "flat", "발표일 공지만", "회사 공지", "—", "반도체 소재·기판"], ["08:15", "유럽 해운 운임 하락 이어져", "European container rates keep falling", "mkt", "etc", "해운", "테마 관련", "down", "주간 운임 −4%", "해운 테마", "계절 요인", "해운"], ["07:30", "아침 시장 요약 — 원문만 들어옴(분석 대기)", "", "wait", "etc", "", "—", "flat", "", "", "", "—"]];
+const Z={"hold": ["teal", "보유"], "cand": ["violet", "후보"], "mkt": ["blue", "시장"], "wait": ["nodata", "분석 대기"]};
+const TOP=[["AI 소프트웨어", "은행권 AI 도입이 늘어남", "세이운 소프트, 대형 은행과 AI 상담 시스템 계약", "같은 날 2곳 더 도입 기사 — 테마 수요가 넓어지는 신호", "계약 금액 미공개 · 실적 반영은 내년", "17:18"], ["반도체 소재·기판", "미국 장비 수출 규제 추가 검토", "US weighs more chip-equipment export curbs", "테마 종목 일부가 장비를 공급 — 수출 줄 수 있음", "보도 단계 · 확정 아님", "14:40"], ["전력망", "데이터센터 전력 수요 전망 상향", "데이터센터 전력 수요 전망 상향", "송전 설비 발주가 늘 수 있음", "회사별 수주는 아직 확인 안 됨", "13:20"]];
+const TH=[["AI 소프트웨어", 1, 0, 1, 14.7, 22.1, 1.9, 14, "★ 12일째"], ["전력망", 1, 0, 0, 9.1, 18.4, 1.4, 11, "★ 5일째"], ["게임·콘텐츠", 1, 0, 1, 3.8, 9.7, 1.1, 12, "★ 21일째"], ["반도체 소재·기판", 0, 1, 1, 2.3, 4.0, 1.6, 15, ""], ["방산", 1, 0, 0, 2.0, 12.5, 1.0, 9, "★ 3일째"], ["은행", 1, 0, 0, 1.6, 7.2, 0.9, 10, "🟢 전환"], ["로봇", 0, 1, 0, 0.7, 3.3, 1.3, 8, ""], ["해운", 0, 0, 0, -0.4, -5.1, 0.7, 6, "🔴 이탈"]];
+const G={"AI 소프트웨어": ["green", "강한 변화", "▲ 3 · ▼ 0", 9], "전력망": ["green", "변화 있음", "▲ 2 · ▼ 0", 6], "게임·콘텐츠": ["yellow", "변화 있음", "▲ 0 · ▼ 2", 7], "반도체 소재·기판": ["yellow", "변화 있음", "▲ 1 · ▼ 1", 11], "방산": ["green", "변화 있음", "▲ 1 · ▼ 0", 4], "해운": ["gray", "조용", "▼ 1", 2], "은행": ["gray", "조용", "■ 1", 3], "로봇": ["nodata", "사건 판단 없음", "원문만", 2]};
+const KR=7;
+let zone='all',ctry='all',q='',view='time',limit=8;
+const DIR={up:['up','▲ 긍정'],down:['down','▼ 부정'],flat:['flat','■ 중립']};
+function row(n){const[t,ko,jp,z,c,stk,link,d,fact,why,con]=n;const[zc,zw]=Z[z];const[dc,dw]=DIR[d];
+  const title=jp?`<span class="ko">${esc(ko)}</span><span class="jp">${esc(jp)}</span>`:esc(ko);
+  const body=z==='wait'?`<p style="margin:0;color:var(--muted)">AI가 아직 읽지 못한 기사입니다. 판단 근거에 넣지 않았습니다.</p>`
+   :`<dl><dt>확인한 사실</dt><dd>${esc(fact)}</dd><dt>종목 연결</dt><dd>${esc(why)}</dd><dt>아직 모르는 것</dt><dd>${esc(con)}</dd></dl><a class="link" href="#">원문 보기 ↗</a>`;
+  return `<li><details class="row"><summary><time>${t}</time><div><div class="tt">${title}</div><div class="tg"><span class="chip ${zc}"><i></i>${zw}</span>${stk?esc(stk)+' · '+link:''}${z==='wait'?'':`<span class="dir ${dc}">${dw}</span>`}${jp?'<span>AI 번역</span>':''}</div></div><span class="ar" aria-hidden="true">›</span></summary><div class="body">${body}</div></details></li>`}
+function draw(){
+  const L=N.filter(n=>(zone==='all'||n[3]===zone)&&(ctry==='all'||n[4]===ctry)&&(!q||(n[1]+n[2]+n[5]+n[11]).toLowerCase().includes(q)));
+  document.getElementById('list').innerHTML=L.slice(0,q?99:limit).map(row).join('')||'<li><p class="empty"><b>맞는 기사가 없습니다</b>거르개를 «전체»로 바꿔 보세요.</p></li>';
+  const mb=document.getElementById('more');mb.hidden=q||L.length<=limit;mb.textContent='기사 더 보기 ('+(L.length-limit)+')';
+  document.getElementById('cnt').innerHTML=`<b>${L.length}</b>개 표시 / 오늘 ${N.length}개 · 최신순 · 한국 회사 기사 <b>${KR}</b>건은 빼고 보여 줍니다(건수만)`}
+const cz={all:N.length};N.forEach(n=>cz[n[3]]=(cz[n[3]]||0)+1);
+document.getElementById('zones').innerHTML=[['all','전체'],['hold','내 주식'],['cand','매수 후보'],['mkt','시장'],['wait','분석 대기']].map(([k,w])=>`<button type="button" data-z="${k}" aria-pressed="${k==='all'}">${w}<span class="c">${cz[k]||0}</span></button>`).join('');
+document.getElementById('zones').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;zone=b.dataset.z;limit=8;document.querySelectorAll('#zones button').forEach(o=>o.setAttribute('aria-pressed',String(o===b)));draw()});
+document.getElementById('ctry').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;ctry=b.dataset.c;document.querySelectorAll('#ctry button').forEach(o=>o.setAttribute('aria-pressed',String(o===b)));draw()});
+document.getElementById('q').addEventListener('input',e=>{q=e.target.value.trim().toLowerCase();draw()});
+document.getElementById('more').addEventListener('click',()=>{limit=99;draw()});
+document.getElementById('top3').innerHTML=TOP.map(([th,ch,src,why,con,t])=>`<li><span class="th">${esc(th)}</span><b>${esc(ch)}</b><p>→ ${esc(why)}</p><p><small>원문 «${esc(src)}» · ${t} · 반대 근거: ${esc(con)}</small> <a class="link" style="min-height:0" href="#">원문 ↗</a></p></li>`).join('');
+const pct=v=>(v>0?'+':v<0?'−':'')+Math.abs(v).toFixed(1)+'%';
+document.getElementById('themes').innerHTML=TH.map((t,i)=>{const[gc,gw,dir,raw]=G[t[0]];const ev=N.filter(n=>n[11]===t[0]&&n[3]!=='wait');
+  return `<li id="theme-${esc(t[0])}"><details class="row thr"><summary><span class="no">${i+1}</span><div><div class="tt">${esc(t[0])} ${t[1]?'<span class="chip teal" style="padding:3px 6px">★</span>':''}${t[2]?' <span class="chip blue" style="padding:3px 6px">↗</span>':''}</div><div class="tg"><span class="chip ${gc}"><i></i>${gw}</span><span>${dir}</span><span>원문 ${raw}건 · 24시간</span></div></div><span class="ar" aria-hidden="true">›</span></summary>
+  <div class="body" style="padding-left:16px"><p class="facts1">1개월 ${pct(t[4])} · 3개월 ${pct(t[5])} · ${t[8]||(t[1]?'★':'★ 밖')} · ${t[3]?'집중 테마':'집중 아님'} · 10/23 기준</p>
+  ${ev.length?`<h4 style="margin:4px 0;font-size:14px;color:var(--navy)">핵심 사건 ${ev.length}건</h4><ul class="evs">${ev.map(n=>`<li><b>${esc(n[5]||n[11])}</b> · ${esc(n[1])} <span class="dir ${DIR[n[7]][0]}">${DIR[n[7]][1]}</span></li>`).join('')}</ul>`:'<p class="facts1">판단된 핵심 사건 없음</p>'}
+  <details class="fold" style="margin-top:10px;box-shadow:none"><summary>전체 뉴스 보기 <small>${raw}건</small><span class="ar" aria-hidden="true">›</span></summary><div class="in"><p style="margin:0;color:var(--muted)">원문 제목 목록(시각 · 채널 · 제목) — 30건까지, 나머지는 시각순 보기에서.</p></div></details></div></details></li>`}).join('');
+function setView(v){view=v;document.querySelectorAll('#views button').forEach(o=>o.setAttribute('aria-pressed',String(o.dataset.v===v)));
+  document.getElementById('v-time').hidden=v!=='time';document.getElementById('v-theme').hidden=v!=='theme'}
+document.getElementById('views').addEventListener('click',e=>{const b=e.target.closest('button');if(b)setView(b.dataset.v)});
+document.querySelectorAll('.lang button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.lang button').forEach(o=>o.setAttribute('aria-pressed',String(o===b)));document.documentElement.classList.toggle('tt-jp',b.dataset.l==='jp')}));
+if(/^#theme-/.test(location.hash)){setView('theme');const el=document.getElementById(decodeURIComponent(location.hash.slice(1)));if(el){el.querySelector('details').open=true;el.scrollIntoView()}}
+draw();
+
+document.getElementById('type-btn').addEventListener('click',e=>{const on=e.currentTarget.getAttribute('aria-pressed')!=='true';e.currentTarget.setAttribute('aria-pressed',String(on));document.documentElement.classList.toggle('big',on)});
+})();
+</script>
+</body>
+</html>

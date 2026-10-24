@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#24344f">
+<title>호쿠토증권 작전실 · 버전2.2 시안</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="v22.css?v=22e">
+<link rel="stylesheet" href="rooms.css?v=82c">
+<style>
+
+.fl{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media (max-width:640px){.fl{grid-template-columns:minmax(0,1fr)}}
+.fl li{border:1px solid var(--line-2);border-top:4px solid var(--teal);background:#fff;padding:10px 12px;display:grid;gap:4px}
+.fl .no{font-family:var(--mono);font-size:13px;color:var(--muted);font-weight:700}
+.fl .nm{font-weight:800;font-size:18px;color:var(--navy)}
+.fl .v{font-family:var(--mono);font-weight:700;font-size:20px}
+.fl .v small{display:block;font-family:var(--font);font-size:13px;color:var(--muted);font-weight:500}
+.rule{margin:0 0 12px;font-size:15px}
+.rule small{display:block;color:var(--muted);font-size:14px;margin-top:2px}
+.lane{margin:12px 0 0;padding:10px 12px;background:var(--sage-bg);border:1px solid var(--sage-line);font-size:14.5px}
+.sl{list-style:none;margin:0;padding:0}
+.sl li{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.sl li:first-child{border-top:0}
+.sl .nm{font-weight:800;font-size:16px;min-width:110px}
+.sl small{font-size:13.5px;color:var(--muted)}
+.sl .why{flex-basis:100%;margin-top:-2px}
+.sum3{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.sum3 div{border:1px solid var(--line-2);background:#fff;padding:10px 12px}
+.sum3 b{display:block;font-size:13.5px;color:var(--muted)}
+.sum3 span{display:block;font-weight:800;font-size:16px;margin-top:2px}
+.sum3 small{display:block;font-size:13.5px;color:var(--muted)}
+.gloss{margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 14px;font-size:14.5px}
+.gloss dt{font-weight:700;white-space:nowrap}.gloss dd{margin:0;color:var(--muted)}
+
+</style>
+</head>
+<body>
+<div class="demo gutter"><b>버전2.2 시안 · 82c</b>숫자는 모두 가상 · 작전실<a href="./">바뀐 점 ↗</a></div>
+
+<header class="top gutter"><div class="wrap">
+  <a class="brand" href="home.html" aria-label="호쿠토증권 알림홈"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M13 0h6v7h4v6h9v6h-9v6h-4v7h-6v-7H9v-6H0v-6h9V7h4z" fill="currentColor"/></svg><span><b>HOKUTO</b><small>SECURITIES</small></span></a>
+  <span class="place">작전실</span>
+  <button style="margin-left:auto" class="btn ghost type-btn" type="button" id="type-btn" aria-pressed="false" aria-label="글자 크게">가+</button>
+</div></header>
+
+<nav class="nav gutter" aria-label="주요 메뉴"><div class="wrap">
+  <a href="home.html">알림홈</a><a href="#" title="내 주식 방 (이번 시안 밖)">내 주식</a><a href="decision.html">결정실</a><a href="news.html">뉴스</a><a class="all on" href="menu.html" aria-current="page">전체 메뉴</a>
+</div></nav>
+
+<main class="gutter"><div class="wrap">
+  <nav class="crumb" aria-label="위치"><a href="menu.html">전체메뉴</a><span aria-hidden="true">›</span><span>검토 순서</span><span aria-hidden="true">›</span><b style="color:var(--ink)">작전실</b></nav>
+  <div class="heading" style="padding-top:6px">
+    <div><div class="eyebrow">01 테마 고르기 · 작전실</div><h1>오늘 집중할 테마</h1><p class="lede">시장 분위기와 집중할 테마 3개, 그리고 전체 테마 순위입니다.</p></div>
+    <svg class="dipper px" viewBox="0 0 64 30" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><path fill="#1b2638" d="M0 0h50v1h-50zM51 0h13v1h-13zM0 1h27v1h-27zM28 1h22v1h-22zM51 1h13v1h-13zM0 2h11v1h-11zM12 2h35v1h-35zM48 2h1v1h-1zM52 2h12v1h-12zM0 3h3v1h-3zM4 3h32v1h-32zM37 3h9v1h-9zM55 3h9v1h-9zM0 4h14v1h-14zM15 4h34v1h-34zM52 4h9v1h-9zM62 4h2v1h-2zM0 5h20v1h-20zM21 5h29v1h-29zM51 5h13v1h-13zM0 6h49v1h-49zM51 6h13v1h-13zM0 7h1v1h-1zM2 7h1v1h-1zM4 7h1v1h-1zM6 7h1v1h-1zM8 7h1v1h-1zM10 7h1v1h-1zM12 7h1v1h-1zM14 7h1v1h-1zM16 7h1v1h-1zM18 7h1v1h-1zM20 7h1v1h-1zM22 7h1v1h-1zM24 7h1v1h-1zM26 7h1v1h-1zM28 7h1v1h-1zM30 7h1v1h-1zM32 7h1v1h-1zM34 7h1v1h-1zM36 7h1v1h-1zM38 7h1v1h-1zM40 7h1v1h-1zM42 7h1v1h-1zM44 7h1v1h-1zM46 7h1v1h-1zM48 7h1v1h-1zM52 7h1v1h-1zM54 7h1v1h-1zM56 7h1v1h-1zM58 7h1v1h-1zM60 7h1v1h-1zM62 7h1v1h-1z"/><path fill="#20304a" d="M1 7h1v1h-1zM3 7h1v1h-1zM5 7h1v1h-1zM7 7h1v1h-1zM9 7h1v1h-1zM11 7h1v1h-1zM13 7h1v1h-1zM15 7h1v1h-1zM17 7h1v1h-1zM19 7h1v1h-1zM21 7h1v1h-1zM23 7h1v1h-1zM25 7h1v1h-1zM27 7h1v1h-1zM29 7h1v1h-1zM31 7h1v1h-1zM33 7h1v1h-1zM35 7h1v1h-1zM37 7h1v1h-1zM39 7h1v1h-1zM43 7h1v1h-1zM45 7h1v1h-1zM47 7h1v1h-1zM49 7h1v1h-1zM51 7h1v1h-1zM53 7h1v1h-1zM55 7h1v1h-1zM57 7h1v1h-1zM59 7h1v1h-1zM61 7h1v1h-1zM63 7h1v1h-1zM0 8h5v1h-5zM6 8h16v1h-16zM23 8h23v1h-23zM47 8h1v1h-1zM49 8h15v1h-15zM0 9h22v1h-22zM23 9h10v1h-10zM34 9h12v1h-12zM47 9h17v1h-17zM0 10h21v1h-21zM25 10h20v1h-20zM48 10h10v1h-10zM59 10h5v1h-5zM0 11h14v1h-14zM15 11h4v1h-4zM26 11h4v1h-4zM31 11h9v1h-9zM41 11h1v1h-1zM50 11h14v1h-14zM0 12h8v1h-8zM9 12h4v1h-4zM17 12h1v1h-1zM19 12h2v1h-2zM24 12h2v1h-2zM27 12h1v1h-1zM33 12h1v1h-1zM35 12h1v1h-1zM37 12h1v1h-1zM39 12h6v1h-6zM48 12h16v1h-16zM0 13h12v1h-12zM17 13h5v1h-5zM23 13h7v1h-7zM31 13h15v1h-15zM47 13h8v1h-8zM56 13h8v1h-8zM1 14h1v1h-1zM3 14h1v1h-1zM5 14h1v1h-1zM7 14h1v1h-1zM9 14h1v1h-1zM11 14h1v1h-1zM17 14h1v1h-1zM19 14h1v1h-1zM21 14h1v1h-1zM23 14h1v1h-1zM25 14h1v1h-1zM27 14h1v1h-1zM29 14h1v1h-1zM33 14h1v1h-1zM35 14h1v1h-1zM37 14h1v1h-1zM39 14h1v1h-1zM41 14h1v1h-1zM43 14h1v1h-1zM45 14h1v1h-1zM47 14h1v1h-1zM49 14h1v1h-1zM51 14h1v1h-1zM53 14h1v1h-1zM55 14h1v1h-1zM57 14h1v1h-1zM59 14h1v1h-1zM61 14h1v1h-1zM63 14h1v1h-1z"/><path fill="#26395a" d="M0 14h1v1h-1zM2 14h1v1h-1zM4 14h1v1h-1zM6 14h1v1h-1zM8 14h1v1h-1zM10 14h1v1h-1zM16 14h1v1h-1zM18 14h1v1h-1zM20 14h1v1h-1zM24 14h1v1h-1zM26 14h1v1h-1zM28 14h1v1h-1zM30 14h1v1h-1zM32 14h1v1h-1zM34 14h1v1h-1zM36 14h1v1h-1zM38 14h1v1h-1zM40 14h1v1h-1zM42 14h1v1h-1zM48 14h1v1h-1zM50 14h1v1h-1zM52 14h1v1h-1zM54 14h1v1h-1zM56 14h1v1h-1zM58 14h1v1h-1zM60 14h1v1h-1zM62 14h1v1h-1zM0 15h14v1h-14zM15 15h15v1h-15zM31 15h14v1h-14zM46 15h18v1h-18zM0 16h6v1h-6zM7 16h3v1h-3zM11 16h20v1h-20zM32 16h20v1h-20zM53 16h11v1h-11zM0 17h2v1h-2zM3 17h3v1h-3zM7 17h1v1h-1zM9 17h36v1h-36zM46 17h18v1h-18zM0 18h5v1h-5zM8 18h9v1h-9zM18 18h14v1h-14zM33 18h31v1h-31zM0 19h3v1h-3zM10 19h21v1h-21zM34 19h5v1h-5zM40 19h4v1h-4zM45 19h17v1h-17zM63 19h1v1h-1zM1 20h1v1h-1zM3 20h1v1h-1zM9 20h1v1h-1zM11 20h1v1h-1zM13 20h1v1h-1zM15 20h1v1h-1zM17 20h1v1h-1zM19 20h1v1h-1zM21 20h1v1h-1zM23 20h1v1h-1zM25 20h1v1h-1zM27 20h1v1h-1zM29 20h1v1h-1zM35 20h1v1h-1zM37 20h1v1h-1zM39 20h1v1h-1zM41 20h1v1h-1zM47 20h1v1h-1zM49 20h1v1h-1zM51 20h1v1h-1zM53 20h1v1h-1zM55 20h1v1h-1zM57 20h1v1h-1zM59 20h1v1h-1zM61 20h1v1h-1zM63 20h1v1h-1z"/><path fill="#2d4468" d="M0 20h1v1h-1zM2 20h1v1h-1zM4 20h1v1h-1zM8 20h1v1h-1zM10 20h1v1h-1zM12 20h1v1h-1zM14 20h1v1h-1zM16 20h1v1h-1zM18 20h1v1h-1zM20 20h1v1h-1zM22 20h1v1h-1zM24 20h1v1h-1zM26 20h1v1h-1zM28 20h1v1h-1zM38 20h1v1h-1zM40 20h1v1h-1zM42 20h1v1h-1zM46 20h1v1h-1zM48 20h1v1h-1zM50 20h1v1h-1zM52 20h1v1h-1zM54 20h1v1h-1zM56 20h1v1h-1zM58 20h1v1h-1zM60 20h1v1h-1zM62 20h1v1h-1zM0 21h6v1h-6zM7 21h24v1h-24zM34 21h4v1h-4zM39 21h1v1h-1zM41 21h1v1h-1zM47 21h17v1h-17zM0 22h6v1h-6zM7 22h25v1h-25zM33 22h10v1h-10zM46 22h18v1h-18zM0 23h44v1h-44zM45 23h10v1h-10zM59 23h5v1h-5zM0 24h54v1h-54zM60 24h4v1h-4zM0 25h28v1h-28zM34 25h19v1h-19zM61 25h3v1h-3zM0 26h25v1h-25zM40 26h2v1h-2zM47 26h5v1h-5zM62 26h2v1h-2zM8 27h3v1h-3zM18 27h3v1h-3zM51 27h1v1h-1z"/><path fill="#6f83a3" d="M27 1h1v1h-1zM11 2h1v1h-1zM47 2h1v1h-1zM3 3h1v1h-1zM36 3h1v1h-1zM61 4h1v1h-1zM20 5h1v1h-1zM41 7h1v1h-1zM24 10h1v1h-1zM58 10h1v1h-1zM8 12h1v1h-1zM30 15h1v1h-1zM52 16h1v1h-1zM2 17h1v1h-1zM17 18h1v1h-1zM39 19h1v1h-1zM62 19h1v1h-1z"/><path class="tw2" fill="#a9bbd6" d="M14 4h1v1h-1zM5 8h1v1h-1zM33 9h1v1h-1zM55 13h1v1h-1zM44 14h1v1h-1z"/><path fill="#5e8f8a" d="M40 11h1v1h-1zM42 11h1v1h-1zM16 12h1v1h-1zM18 12h1v1h-1zM26 12h1v1h-1zM28 12h1v1h-1zM32 12h1v1h-1zM34 12h1v1h-1zM36 12h1v1h-1zM38 12h1v1h-1zM12 14h1v1h-1zM31 14h1v1h-1zM45 15h1v1h-1zM10 16h1v1h-1zM31 16h1v1h-1zM8 17h1v1h-1zM45 17h1v1h-1zM36 20h1v1h-1zM38 21h1v1h-1zM40 21h1v1h-1z"/><path fill="#9c8a57" d="M49 6h1v1h-1zM48 8h1v1h-1z"/><path fill="#173033" d="M28 25h6v1h-6zM25 26h15v1h-15zM42 26h5v1h-5zM11 27h7v1h-7zM21 27h10v1h-10zM40 27h11v1h-11zM62 27h1v1h-1zM14 28h11v1h-11zM46 28h6v1h-6z"/><path fill="#11262a" d="M0 27h8v1h-8zM31 27h9v1h-9zM63 27h1v1h-1zM0 28h14v1h-14zM25 28h21v1h-21zM62 28h2v1h-2zM0 29h52v1h-52zM62 29h2v1h-2z"/><path fill="#a87a26" d="M22 8h1v1h-1zM46 8h1v1h-1zM14 11h1v1h-1zM19 11h1v1h-1zM25 11h1v1h-1zM43 11h1v1h-1zM49 11h1v1h-1zM12 13h1v1h-1zM16 13h1v1h-1zM22 14h1v1h-1zM46 14h1v1h-1zM14 15h1v1h-1zM6 16h1v1h-1zM32 18h1v1h-1zM3 19h1v1h-1zM9 19h1v1h-1zM44 19h1v1h-1zM30 20h1v1h-1zM34 20h1v1h-1zM42 21h1v1h-1zM46 21h1v1h-1zM6 22h1v1h-1zM32 22h1v1h-1zM44 23h1v1h-1z"/><path fill="#f2cf73" d="M22 9h1v1h-1zM46 9h1v1h-1zM21 10h1v1h-1zM23 10h1v1h-1zM45 10h1v1h-1zM47 10h1v1h-1zM20 11h1v1h-1zM24 11h1v1h-1zM30 11h1v1h-1zM44 11h1v1h-1zM48 11h1v1h-1zM13 12h1v1h-1zM15 12h1v1h-1zM21 12h1v1h-1zM23 12h1v1h-1zM29 12h1v1h-1zM31 12h1v1h-1zM45 12h1v1h-1zM47 12h1v1h-1zM22 13h1v1h-1zM30 13h1v1h-1zM46 13h1v1h-1zM13 14h1v1h-1zM15 14h1v1h-1zM6 17h1v1h-1zM5 18h1v1h-1zM7 18h1v1h-1zM4 19h1v1h-1zM8 19h1v1h-1zM31 19h1v1h-1zM33 19h1v1h-1zM5 20h1v1h-1zM7 20h1v1h-1zM43 20h1v1h-1zM45 20h1v1h-1zM6 21h1v1h-1zM31 21h1v1h-1zM33 21h1v1h-1zM43 22h1v1h-1zM45 22h1v1h-1z"/><path fill="#fff6d6" d="M22 10h1v1h-1zM46 10h1v1h-1zM21 11h3v1h-3zM45 11h3v1h-3zM14 12h1v1h-1zM22 12h1v1h-1zM30 12h1v1h-1zM46 12h1v1h-1zM13 13h3v1h-3zM14 14h1v1h-1zM6 18h1v1h-1zM5 19h3v1h-3zM32 19h1v1h-1zM6 20h1v1h-1zM31 20h3v1h-3zM44 20h1v1h-1zM32 21h1v1h-1zM43 21h3v1h-3zM44 22h1v1h-1z"/><path class="tw1" fill="#7d98c4" d="M50 0h1v1h-1zM46 3h2v1h-2zM53 3h2v1h-2zM50 6h1v1h-1zM50 7h1v1h-1z"/><path fill="#c5d6f0" d="M50 1h1v1h-1zM49 2h1v1h-1zM51 2h1v1h-1zM48 3h1v1h-1zM52 3h1v1h-1zM49 4h1v1h-1zM51 4h1v1h-1zM50 5h1v1h-1z"/><path fill="#ffffff" d="M50 2h1v1h-1zM49 3h3v1h-3zM50 4h1v1h-1z"/><path fill="#7f8ea3" d="M55 23h4v1h-4zM54 24h1v1h-1zM59 24h1v1h-1zM53 25h1v1h-1zM60 25h1v1h-1zM52 26h1v1h-1zM61 26h1v1h-1z"/><path fill="#c9d3df" d="M55 24h2v1h-2zM58 24h1v1h-1zM54 25h3v1h-3zM58 25h2v1h-2zM53 26h4v1h-4zM58 26h3v1h-3z"/><path fill="#1b2638" d="M57 24h1v1h-1zM57 25h1v1h-1zM57 26h1v1h-1z"/><path fill="#3a4a5e" d="M52 27h10v1h-10zM52 28h2v1h-2zM56 28h6v1h-6zM52 29h2v1h-2zM56 29h6v1h-6z"/><path fill="#f5d27a" d="M54 28h2v1h-2zM54 29h2v1h-2z"/></svg>
+  </div>
+
+  <div class="status" role="note" aria-label="자료 기준과 시장온도">
+    <div class="when-row"><span>자료 기준일 <b>10/23(금)</b> · 오늘 자료</span><span>만든 시각 <b class="num">17:46</b></span></div>
+    <div class="temp"><span class="lbl">시장온도<b>64.5</b></span><span class="gwrap"><span class="gauge" aria-hidden="true"><i style="left:64.5%"></i><u style="left:0;transform:none">0</u><u style="left:75%">75↑ 신중</u><u style="right:0;left:auto;transform:none">100</u></span></span><span class="chip green">신규매수 평소대로</span></div>
+  </div>
+  <p class="note" style="padding:10px 0 0">이 화면은 <b>테마 순위표</b>입니다. 종목별 매수·보류 판정은 <a class="link" style="min-height:0;display:inline" href="decision.html">결정실</a>에서 봅니다.</p>
+
+  <div class="grid">
+   <div class="col l">
+    <section class="card sage" aria-labelledby="f-h">
+      <div class="card-h"><h2 id="f-h">집중 테마<span class="c">3</span></h2><small>10/21 교체</small></div>
+      <div class="card-b">
+        <p class="rule">A·B·C 후보는 이 3개 테마에서만 나옵니다.<small>20일 수익이 더 높은데 집중이 아닌 테마: 전력망 +9.1% — 6개월 추세가 플러스가 아님</small></p>
+        <ul class="fl"><li><span class="no">01</span><span class="nm">AI 소프트웨어</span><span class="tg"><span class="chip teal">★ 주도</span></span><span class="v up">+14.7%<small>최근 20거래일</small></span></li><li><span class="no">02</span><span class="nm">게임·콘텐츠</span><span class="tg"><span class="chip teal">★ 주도</span></span><span class="v up">+3.8%<small>최근 20거래일</small></span></li><li><span class="no">03</span><span class="nm">반도체 소재·기판</span><span class="tg"><span class="chip gray">★ 밖 집중 테마</span></span><span class="v up">+2.3%<small>최근 20거래일</small></span></li></ul>
+        <p class="lane"><b>후보가 나오는 길</b> · 집중 테마 3개 → A·B·C / 유형 D(거래량 폭증·가격 정체)는 ★ 주도 6개 + 돈몰림 테마 + 순위 상위 10에서 · 테마 선정은 매수 신호가 아닙니다</p>
+      </div>
+    </section>
+
+    <section class="card navy" aria-labelledby="r-h">
+      <div class="card-h"><h2 id="r-h">테마 순위<span class="c">12</span></h2><small>최근 20거래일 오른 순</small></div>
+      <div class="tw"><table class="t">
+        <thead><tr><th class="n">순위</th><th>테마</th><th class="n">1개월</th><th class="n">3개월</th><th class="n">돈 몰림</th><th class="n">종목</th><th>요즘</th></tr></thead>
+        <tbody><tr class="focus"><td class="n">1</td><td><b>AI 소프트웨어</b> <span class="chip teal" style="padding:3px 6px">★</span> <span class="chip green" style="padding:3px 6px">집중</span></td><td class="n up">+14.7%</td><td class="n up">+22.1%</td><td class="n" style="color:var(--amber);font-weight:700">1.9배</td><td class="n">14</td><td style="white-space:nowrap;font-size:13.5px">★ 12일째</td></tr><tr><td class="n">2</td><td><b>전력망</b> <span class="chip teal" style="padding:3px 6px">★</span><span class="why">집중 아님 · 20일 수익은 높지만 6개월 추세가 플러스가 아님</span></td><td class="n up">+9.1%</td><td class="n up">+18.4%</td><td class="n" style="color:var(--amber);font-weight:700">1.4배</td><td class="n">11</td><td style="white-space:nowrap;font-size:13.5px">★ 5일째</td></tr><tr class="focus"><td class="n">3</td><td><b>게임·콘텐츠</b> <span class="chip teal" style="padding:3px 6px">★</span> <span class="chip green" style="padding:3px 6px">집중</span></td><td class="n up">+3.8%</td><td class="n up">+9.7%</td><td class="n">1.1배</td><td class="n">12</td><td style="white-space:nowrap;font-size:13.5px">★ 21일째</td></tr><tr class="focus"><td class="n">4</td><td><b>반도체 소재·기판</b> <span class="chip blue" style="padding:3px 6px">↗</span> <span class="chip green" style="padding:3px 6px">집중</span></td><td class="n up">+2.3%</td><td class="n up">+4.0%</td><td class="n" style="color:var(--amber);font-weight:700">1.6배</td><td class="n">15</td><td style="white-space:nowrap;font-size:13.5px">—</td></tr><tr><td class="n">5</td><td><b>방산</b> <span class="chip teal" style="padding:3px 6px">★</span><span class="why">집중 아님 · 20일 수익 순위가 집중 3개 밖</span></td><td class="n up">+2.0%</td><td class="n up">+12.5%</td><td class="n">1.0배</td><td class="n">9</td><td style="white-space:nowrap;font-size:13.5px">★ 3일째</td></tr><tr><td class="n">6</td><td><b>은행</b> <span class="chip teal" style="padding:3px 6px">★</span><span class="why">집중 아님 · 20일 수익 순위가 집중 3개 밖</span></td><td class="n up">+1.6%</td><td class="n up">+7.2%</td><td class="n">0.9배</td><td class="n">10</td><td style="white-space:nowrap;font-size:13.5px">🟢 전환</td></tr><tr><td class="n">7</td><td><b>인바운드관광</b> <span class="chip teal" style="padding:3px 6px">★</span><span class="why">집중 아님 · 10/21 교체 때 빠짐 · 20일 수익 순위가 집중 3개 밖</span></td><td class="n up">+1.1%</td><td class="n down">−2.4%</td><td class="n">0.8배</td><td class="n">13</td><td style="white-space:nowrap;font-size:13.5px">★ 30일째</td></tr><tr><td class="n">8</td><td><b>로봇</b> <span class="chip blue" style="padding:3px 6px">↗</span></td><td class="n up">+0.7%</td><td class="n up">+3.3%</td><td class="n" style="color:var(--amber);font-weight:700">1.3배</td><td class="n">8</td><td style="white-space:nowrap;font-size:13.5px">—</td></tr><tr><td class="n">9</td><td><b>해운</b></td><td class="n down">−0.4%</td><td class="n down">−5.1%</td><td class="n">0.7배</td><td class="n">6</td><td style="white-space:nowrap;font-size:13.5px">🔴 이탈</td></tr><tr><td class="n">10</td><td><b>통신</b></td><td class="n down">−0.9%</td><td class="n up">+1.2%</td><td class="n">0.9배</td><td class="n">7</td><td style="white-space:nowrap;font-size:13.5px">—</td></tr><tr><td class="n">11</td><td><b>바이오·의약</b></td><td class="n down">−1.5%</td><td class="n down">−3.8%</td><td class="n">1.0배</td><td class="n">16</td><td style="white-space:nowrap;font-size:13.5px">—</td></tr><tr><td class="n">12</td><td><b>부동산</b></td><td class="n down">−2.2%</td><td class="n down">−6.0%</td><td class="n">0.8배</td><td class="n">9</td><td style="white-space:nowrap;font-size:13.5px">—</td></tr></tbody></table></div>
+      <p class="note" style="padding-top:10px">1개월 = 최근 20거래일 · 3개월 = 60거래일 · 돈 몰림 = 최근 20일 거래대금이 평소의 몇 배(1.2배 이상 주황) · 🟢 전환 = 어제 ↗ 에서 오늘 ★ · 🔴 이탈 = ★ 에서 빠짐</p>
+    </section>
+   </div>
+
+   <div class="col r">
+    <section class="card" aria-labelledby="s-h">
+      <div class="card-h"><h2 id="s-h">★ 주도 테마<span class="c">6</span></h2><small>20일 수익 상위 6</small></div>
+      <div class="card-b"><ul class="sl"><li><span class="nm">AI 소프트웨어</span><span class="chip green"><i></i>집중 테마</span><small>★ 12일째</small></li><li><span class="nm">전력망</span><span class="chip gray">집중 아님</span><small>★ 5일째</small><small class="why">20일 수익은 높지만 6개월 추세가 플러스가 아님</small></li><li><span class="nm">게임·콘텐츠</span><span class="chip green"><i></i>집중 테마</span><small>★ 21일째</small></li><li><span class="nm">방산</span><span class="chip gray">집중 아님</span><small>★ 3일째</small><small class="why">20일 수익 순위가 집중 3개 밖</small></li><li><span class="nm">은행</span><span class="chip gray">집중 아님</span><span class="chip blue">🟢 전환</span><small class="why">20일 수익 순위가 집중 3개 밖</small></li><li><span class="nm">인바운드관광</span><span class="chip gray">집중 아님</span><small>★ 30일째</small><small class="why">10/21 교체 때 빠짐 · 20일 수익 순위가 집중 3개 밖</small></li></ul>
+        <p class="note" style="padding:8px 0 0">★ 테마이지만 집중이 아닌 것은 나쁘다는 뜻이 아닙니다 — 이번 규칙의 A·B·C 대상이 아닐 뿐입니다.</p></div>
+    </section>
+
+    <section class="card blue" aria-labelledby="m-h">
+      <div class="card-h"><h2 id="m-h">돈이 먼저 오는 테마</h2><small>↗ 관찰</small></div>
+      <div class="card-b"><div class="sum3">
+        <div><b>↗ 돈이 먼저 옴</b><span>2개</span><small>반도체 소재·기판 · 로봇</small></div>
+        <div><b>↗ → ★ 오늘 바뀜</b><span>1개</span><small>은행</small></div>
+      </div><p class="note" style="padding:8px 0 0">어제 기록이 없으면 «비교 불가», 바뀐 게 없으면 «오늘은 없습니다»로 나옵니다.</p></div>
+    </section>
+
+    <details class="fold"><summary>말 풀이 — ★ · ↗ · 돈 몰림 · 시장온도<span class="ar" aria-hidden="true">›</span></summary>
+      <div class="in"><dl class="gloss">
+        <dt>★ 주도</dt><dd>최근 20거래일 수익 상위 6개 테마</dd>
+        <dt>↗ 돈이 먼저 옴</dt><dd>값은 아직이지만 거래대금이 먼저 늘어난 테마</dd>
+        <dt>★ 며칠째</dt><dd>장부에 ★ 로 남은 날 수(기록 기준)</dd>
+        <dt>돈 몰림</dt><dd>최근 20일 거래대금 ÷ 평소 · 순매수 금액 아님</dd>
+        <dt>시장온도</dt><dd>75 이상이면 신규매수 신중</dd>
+      </dl></div></details>
+   </div>
+  </div>
+  <p class="built">화면 만든 시각 <b>10/23 17:46</b> · 자료 기준일 <b>10/23</b> · 회의실은 이 방으로 합쳤습니다</p>
+  <footer class="foot"><b>호쿠토증권 디자인 v2.2 · 82c 시안</b> · 모든 숫자는 가상 자료 · 판단을 돕는 표시이고 매수 지시가 아닙니다</footer>
+
+</div></main>
+
+<nav class="mnav" aria-label="아래 메뉴">
+  <a href="home.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11 12 4l9 7v9h-6v-6H9v6H3z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>알림홈</a><a href="#" title="내 주식 방 (이번 시안 밖)"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="1" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M16 14h2" stroke="currentColor" stroke-width="1.8"/></svg>내 주식</a><a href="decision.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 5 5M8.5 11h5M11 8.5v5" stroke="currentColor" stroke-width="1.8"/></svg>결정실</a><a href="news.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h10l4 4v14H5z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 11h8M8 15h8M8 7h4" stroke="currentColor" stroke-width="1.8"/></svg>뉴스</a><a class="on" aria-current="page" href="menu.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>전체</a>
+</nav>
+
+<script>
+(function(){
+'use strict';
+const esc=s=>String(s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+
+document.getElementById('type-btn').addEventListener('click',e=>{const on=e.currentTarget.getAttribute('aria-pressed')!=='true';e.currentTarget.setAttribute('aria-pressed',String(on));document.documentElement.classList.toggle('big',on)});
+})();
+</script>
+</body>
+</html>

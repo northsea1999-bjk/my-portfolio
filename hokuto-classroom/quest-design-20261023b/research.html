@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#24344f">
+<title>호쿠토증권 북두테마 상세 · 버전2.2 시안</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="v22.css?v=22e">
+<link rel="stylesheet" href="rooms.css?v=82c">
+<style>
+
+.tops{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:14px}
+@media (max-width:560px){.tops{grid-template-columns:minmax(0,1fr)}}
+.tops div{border:1px solid var(--line-2);background:#fff;box-shadow:var(--shadow-s);padding:10px 14px}
+.tops b{display:block;font-size:13.5px;color:var(--muted)}
+.tops span{display:block;font-weight:800;font-size:17px;margin-top:2px}
+.tops small{display:block;font-size:13.5px;color:var(--muted)}
+.tl{list-style:none;margin:0;padding:0}
+.tl li{border-top:1px solid var(--line)}
+.tl button{width:100%;display:grid;grid-template-columns:30px minmax(0,1fr) auto;gap:2px 10px;align-items:center;text-align:left;border:0;background:#fff;padding:10px 16px;min-height:52px;cursor:pointer}
+.tl button[aria-pressed=true]{background:var(--blue-bg);box-shadow:inset 4px 0 0 var(--navy)}
+.tl .no{font-family:var(--mono);color:var(--muted);font-weight:700}
+.tl .nm{font-weight:800;font-size:16px}
+.tl .mv{grid-column:2/3;font-size:13.5px;color:var(--muted)}
+.tl .v{grid-row:1/3;grid-column:3;text-align:right;font-family:var(--mono);font-weight:700}
+.tl .v small{display:block;font-family:var(--font);font-weight:500;font-size:13px;color:var(--muted)}
+.hd{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0 0 12px}
+@media (min-width:560px){.hd{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.hd div{border:1px solid var(--line-2);padding:8px 10px;background:#fff}
+.hd b{display:block;font-size:13px;color:var(--muted)}
+.hd span{display:block;font-family:var(--mono);font-weight:700;font-size:17px}
+.hd small{font-size:13px;color:var(--muted)}
+td.c{text-align:right;font-family:var(--mono);font-size:14px;white-space:nowrap}
+.warnl{margin:0 0 10px;padding:8px 12px;border:1px solid var(--amber-line);background:var(--amber-bg);color:var(--amber);font-weight:700;font-size:14.5px}
+
+</style>
+</head>
+<body>
+<div class="demo gutter"><b>버전2.2 시안 · 82c</b>숫자는 모두 가상 · 북두테마 상세<a href="./">바뀐 점 ↗</a></div>
+
+<header class="top gutter"><div class="wrap">
+  <a class="brand" href="home.html" aria-label="호쿠토증권 알림홈"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M13 0h6v7h4v6h9v6h-9v6h-4v7h-6v-7H9v-6H0v-6h9V7h4z" fill="currentColor"/></svg><span><b>HOKUTO</b><small>SECURITIES</small></span></a>
+  <span class="place">북두테마 상세</span>
+  <button style="margin-left:auto" class="btn ghost type-btn" type="button" id="type-btn" aria-pressed="false" aria-label="글자 크게">가+</button>
+</div></header>
+
+<nav class="nav gutter" aria-label="주요 메뉴"><div class="wrap">
+  <a href="home.html">알림홈</a><a href="#" title="내 주식 방 (이번 시안 밖)">내 주식</a><a href="decision.html">결정실</a><a href="news.html">뉴스</a><a class="all on" href="menu.html" aria-current="page">전체 메뉴</a>
+</div></nav>
+
+<main class="gutter"><div class="wrap">
+  <nav class="crumb" aria-label="위치"><a href="menu.html">전체메뉴</a><span aria-hidden="true">›</span><span>참고 자료</span><span aria-hidden="true">›</span><b style="color:var(--ink)">북두테마 상세</b></nav>
+  <div class="heading" style="padding-top:6px">
+    <div><div class="eyebrow">참고 · 북두테마 상세</div><h1>테마와 구성 종목</h1><p class="lede">테마 순위에서 하나를 고르면 그 테마의 종목과 숫자를 자세히 봅니다.</p></div>
+    <svg class="dipper px" viewBox="0 0 64 30" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><path fill="#1b2638" d="M0 0h50v1h-50zM51 0h13v1h-13zM0 1h27v1h-27zM28 1h22v1h-22zM51 1h13v1h-13zM0 2h11v1h-11zM12 2h35v1h-35zM48 2h1v1h-1zM52 2h12v1h-12zM0 3h3v1h-3zM4 3h32v1h-32zM37 3h9v1h-9zM55 3h9v1h-9zM0 4h14v1h-14zM15 4h34v1h-34zM52 4h9v1h-9zM62 4h2v1h-2zM0 5h20v1h-20zM21 5h29v1h-29zM51 5h13v1h-13zM0 6h49v1h-49zM51 6h13v1h-13zM0 7h1v1h-1zM2 7h1v1h-1zM4 7h1v1h-1zM6 7h1v1h-1zM8 7h1v1h-1zM10 7h1v1h-1zM12 7h1v1h-1zM14 7h1v1h-1zM16 7h1v1h-1zM18 7h1v1h-1zM20 7h1v1h-1zM22 7h1v1h-1zM24 7h1v1h-1zM26 7h1v1h-1zM28 7h1v1h-1zM30 7h1v1h-1zM32 7h1v1h-1zM34 7h1v1h-1zM36 7h1v1h-1zM38 7h1v1h-1zM40 7h1v1h-1zM42 7h1v1h-1zM44 7h1v1h-1zM46 7h1v1h-1zM48 7h1v1h-1zM52 7h1v1h-1zM54 7h1v1h-1zM56 7h1v1h-1zM58 7h1v1h-1zM60 7h1v1h-1zM62 7h1v1h-1z"/><path fill="#20304a" d="M1 7h1v1h-1zM3 7h1v1h-1zM5 7h1v1h-1zM7 7h1v1h-1zM9 7h1v1h-1zM11 7h1v1h-1zM13 7h1v1h-1zM15 7h1v1h-1zM17 7h1v1h-1zM19 7h1v1h-1zM21 7h1v1h-1zM23 7h1v1h-1zM25 7h1v1h-1zM27 7h1v1h-1zM29 7h1v1h-1zM31 7h1v1h-1zM33 7h1v1h-1zM35 7h1v1h-1zM37 7h1v1h-1zM39 7h1v1h-1zM43 7h1v1h-1zM45 7h1v1h-1zM47 7h1v1h-1zM49 7h1v1h-1zM51 7h1v1h-1zM53 7h1v1h-1zM55 7h1v1h-1zM57 7h1v1h-1zM59 7h1v1h-1zM61 7h1v1h-1zM63 7h1v1h-1zM0 8h5v1h-5zM6 8h16v1h-16zM23 8h23v1h-23zM47 8h1v1h-1zM49 8h15v1h-15zM0 9h22v1h-22zM23 9h10v1h-10zM34 9h12v1h-12zM47 9h17v1h-17zM0 10h21v1h-21zM25 10h20v1h-20zM48 10h10v1h-10zM59 10h5v1h-5zM0 11h14v1h-14zM15 11h4v1h-4zM26 11h4v1h-4zM31 11h9v1h-9zM41 11h1v1h-1zM50 11h14v1h-14zM0 12h8v1h-8zM9 12h4v1h-4zM17 12h1v1h-1zM19 12h2v1h-2zM24 12h2v1h-2zM27 12h1v1h-1zM33 12h1v1h-1zM35 12h1v1h-1zM37 12h1v1h-1zM39 12h6v1h-6zM48 12h16v1h-16zM0 13h12v1h-12zM17 13h5v1h-5zM23 13h7v1h-7zM31 13h15v1h-15zM47 13h8v1h-8zM56 13h8v1h-8zM1 14h1v1h-1zM3 14h1v1h-1zM5 14h1v1h-1zM7 14h1v1h-1zM9 14h1v1h-1zM11 14h1v1h-1zM17 14h1v1h-1zM19 14h1v1h-1zM21 14h1v1h-1zM23 14h1v1h-1zM25 14h1v1h-1zM27 14h1v1h-1zM29 14h1v1h-1zM33 14h1v1h-1zM35 14h1v1h-1zM37 14h1v1h-1zM39 14h1v1h-1zM41 14h1v1h-1zM43 14h1v1h-1zM45 14h1v1h-1zM47 14h1v1h-1zM49 14h1v1h-1zM51 14h1v1h-1zM53 14h1v1h-1zM55 14h1v1h-1zM57 14h1v1h-1zM59 14h1v1h-1zM61 14h1v1h-1zM63 14h1v1h-1z"/><path fill="#26395a" d="M0 14h1v1h-1zM2 14h1v1h-1zM4 14h1v1h-1zM6 14h1v1h-1zM8 14h1v1h-1zM10 14h1v1h-1zM16 14h1v1h-1zM18 14h1v1h-1zM20 14h1v1h-1zM24 14h1v1h-1zM26 14h1v1h-1zM28 14h1v1h-1zM30 14h1v1h-1zM32 14h1v1h-1zM34 14h1v1h-1zM36 14h1v1h-1zM38 14h1v1h-1zM40 14h1v1h-1zM42 14h1v1h-1zM48 14h1v1h-1zM50 14h1v1h-1zM52 14h1v1h-1zM54 14h1v1h-1zM56 14h1v1h-1zM58 14h1v1h-1zM60 14h1v1h-1zM62 14h1v1h-1zM0 15h14v1h-14zM15 15h15v1h-15zM31 15h14v1h-14zM46 15h18v1h-18zM0 16h6v1h-6zM7 16h3v1h-3zM11 16h20v1h-20zM32 16h20v1h-20zM53 16h11v1h-11zM0 17h2v1h-2zM3 17h3v1h-3zM7 17h1v1h-1zM9 17h36v1h-36zM46 17h18v1h-18zM0 18h5v1h-5zM8 18h9v1h-9zM18 18h14v1h-14zM33 18h31v1h-31zM0 19h3v1h-3zM10 19h21v1h-21zM34 19h5v1h-5zM40 19h4v1h-4zM45 19h17v1h-17zM63 19h1v1h-1zM1 20h1v1h-1zM3 20h1v1h-1zM9 20h1v1h-1zM11 20h1v1h-1zM13 20h1v1h-1zM15 20h1v1h-1zM17 20h1v1h-1zM19 20h1v1h-1zM21 20h1v1h-1zM23 20h1v1h-1zM25 20h1v1h-1zM27 20h1v1h-1zM29 20h1v1h-1zM35 20h1v1h-1zM37 20h1v1h-1zM39 20h1v1h-1zM41 20h1v1h-1zM47 20h1v1h-1zM49 20h1v1h-1zM51 20h1v1h-1zM53 20h1v1h-1zM55 20h1v1h-1zM57 20h1v1h-1zM59 20h1v1h-1zM61 20h1v1h-1zM63 20h1v1h-1z"/><path fill="#2d4468" d="M0 20h1v1h-1zM2 20h1v1h-1zM4 20h1v1h-1zM8 20h1v1h-1zM10 20h1v1h-1zM12 20h1v1h-1zM14 20h1v1h-1zM16 20h1v1h-1zM18 20h1v1h-1zM20 20h1v1h-1zM22 20h1v1h-1zM24 20h1v1h-1zM26 20h1v1h-1zM28 20h1v1h-1zM38 20h1v1h-1zM40 20h1v1h-1zM42 20h1v1h-1zM46 20h1v1h-1zM48 20h1v1h-1zM50 20h1v1h-1zM52 20h1v1h-1zM54 20h1v1h-1zM56 20h1v1h-1zM58 20h1v1h-1zM60 20h1v1h-1zM62 20h1v1h-1zM0 21h6v1h-6zM7 21h24v1h-24zM34 21h4v1h-4zM39 21h1v1h-1zM41 21h1v1h-1zM47 21h17v1h-17zM0 22h6v1h-6zM7 22h25v1h-25zM33 22h10v1h-10zM46 22h18v1h-18zM0 23h44v1h-44zM45 23h10v1h-10zM59 23h5v1h-5zM0 24h54v1h-54zM60 24h4v1h-4zM0 25h28v1h-28zM34 25h19v1h-19zM61 25h3v1h-3zM0 26h25v1h-25zM40 26h2v1h-2zM47 26h5v1h-5zM62 26h2v1h-2zM8 27h3v1h-3zM18 27h3v1h-3zM51 27h1v1h-1z"/><path fill="#6f83a3" d="M27 1h1v1h-1zM11 2h1v1h-1zM47 2h1v1h-1zM3 3h1v1h-1zM36 3h1v1h-1zM61 4h1v1h-1zM20 5h1v1h-1zM41 7h1v1h-1zM24 10h1v1h-1zM58 10h1v1h-1zM8 12h1v1h-1zM30 15h1v1h-1zM52 16h1v1h-1zM2 17h1v1h-1zM17 18h1v1h-1zM39 19h1v1h-1zM62 19h1v1h-1z"/><path class="tw2" fill="#a9bbd6" d="M14 4h1v1h-1zM5 8h1v1h-1zM33 9h1v1h-1zM55 13h1v1h-1zM44 14h1v1h-1z"/><path fill="#5e8f8a" d="M40 11h1v1h-1zM42 11h1v1h-1zM16 12h1v1h-1zM18 12h1v1h-1zM26 12h1v1h-1zM28 12h1v1h-1zM32 12h1v1h-1zM34 12h1v1h-1zM36 12h1v1h-1zM38 12h1v1h-1zM12 14h1v1h-1zM31 14h1v1h-1zM45 15h1v1h-1zM10 16h1v1h-1zM31 16h1v1h-1zM8 17h1v1h-1zM45 17h1v1h-1zM36 20h1v1h-1zM38 21h1v1h-1zM40 21h1v1h-1z"/><path fill="#9c8a57" d="M49 6h1v1h-1zM48 8h1v1h-1z"/><path fill="#173033" d="M28 25h6v1h-6zM25 26h15v1h-15zM42 26h5v1h-5zM11 27h7v1h-7zM21 27h10v1h-10zM40 27h11v1h-11zM62 27h1v1h-1zM14 28h11v1h-11zM46 28h6v1h-6z"/><path fill="#11262a" d="M0 27h8v1h-8zM31 27h9v1h-9zM63 27h1v1h-1zM0 28h14v1h-14zM25 28h21v1h-21zM62 28h2v1h-2zM0 29h52v1h-52zM62 29h2v1h-2z"/><path fill="#a87a26" d="M22 8h1v1h-1zM46 8h1v1h-1zM14 11h1v1h-1zM19 11h1v1h-1zM25 11h1v1h-1zM43 11h1v1h-1zM49 11h1v1h-1zM12 13h1v1h-1zM16 13h1v1h-1zM22 14h1v1h-1zM46 14h1v1h-1zM14 15h1v1h-1zM6 16h1v1h-1zM32 18h1v1h-1zM3 19h1v1h-1zM9 19h1v1h-1zM44 19h1v1h-1zM30 20h1v1h-1zM34 20h1v1h-1zM42 21h1v1h-1zM46 21h1v1h-1zM6 22h1v1h-1zM32 22h1v1h-1zM44 23h1v1h-1z"/><path fill="#f2cf73" d="M22 9h1v1h-1zM46 9h1v1h-1zM21 10h1v1h-1zM23 10h1v1h-1zM45 10h1v1h-1zM47 10h1v1h-1zM20 11h1v1h-1zM24 11h1v1h-1zM30 11h1v1h-1zM44 11h1v1h-1zM48 11h1v1h-1zM13 12h1v1h-1zM15 12h1v1h-1zM21 12h1v1h-1zM23 12h1v1h-1zM29 12h1v1h-1zM31 12h1v1h-1zM45 12h1v1h-1zM47 12h1v1h-1zM22 13h1v1h-1zM30 13h1v1h-1zM46 13h1v1h-1zM13 14h1v1h-1zM15 14h1v1h-1zM6 17h1v1h-1zM5 18h1v1h-1zM7 18h1v1h-1zM4 19h1v1h-1zM8 19h1v1h-1zM31 19h1v1h-1zM33 19h1v1h-1zM5 20h1v1h-1zM7 20h1v1h-1zM43 20h1v1h-1zM45 20h1v1h-1zM6 21h1v1h-1zM31 21h1v1h-1zM33 21h1v1h-1zM43 22h1v1h-1zM45 22h1v1h-1z"/><path fill="#fff6d6" d="M22 10h1v1h-1zM46 10h1v1h-1zM21 11h3v1h-3zM45 11h3v1h-3zM14 12h1v1h-1zM22 12h1v1h-1zM30 12h1v1h-1zM46 12h1v1h-1zM13 13h3v1h-3zM14 14h1v1h-1zM6 18h1v1h-1zM5 19h3v1h-3zM32 19h1v1h-1zM6 20h1v1h-1zM31 20h3v1h-3zM44 20h1v1h-1zM32 21h1v1h-1zM43 21h3v1h-3zM44 22h1v1h-1z"/><path class="tw1" fill="#7d98c4" d="M50 0h1v1h-1zM46 3h2v1h-2zM53 3h2v1h-2zM50 6h1v1h-1zM50 7h1v1h-1z"/><path fill="#c5d6f0" d="M50 1h1v1h-1zM49 2h1v1h-1zM51 2h1v1h-1zM48 3h1v1h-1zM52 3h1v1h-1zM49 4h1v1h-1zM51 4h1v1h-1zM50 5h1v1h-1z"/><path fill="#ffffff" d="M50 2h1v1h-1zM49 3h3v1h-3zM50 4h1v1h-1z"/><path fill="#7f8ea3" d="M55 23h4v1h-4zM54 24h1v1h-1zM59 24h1v1h-1zM53 25h1v1h-1zM60 25h1v1h-1zM52 26h1v1h-1zM61 26h1v1h-1z"/><path fill="#c9d3df" d="M55 24h2v1h-2zM58 24h1v1h-1zM54 25h3v1h-3zM58 25h2v1h-2zM53 26h4v1h-4zM58 26h3v1h-3z"/><path fill="#1b2638" d="M57 24h1v1h-1zM57 25h1v1h-1zM57 26h1v1h-1z"/><path fill="#3a4a5e" d="M52 27h10v1h-10zM52 28h2v1h-2zM56 28h6v1h-6zM52 29h2v1h-2zM56 29h6v1h-6z"/><path fill="#f5d27a" d="M54 28h2v1h-2zM54 29h2v1h-2z"/></svg>
+  </div>
+
+  <div class="status" role="note" aria-label="자료 기준">
+    <div class="when-row"><span>자료 기준일 <b>10/23(금)</b> 종가 · 오늘 자료</span><span>만든 시각 <b class="num">17:46</b></span></div>
+    <div class="when-row"><span>1개월 = 20거래일 · 3개월 = 60거래일 · 종목은 같은 무게로 평균</span></div>
+  </div>
+  <div class="tops">
+    <div><b>가장 센 대장주</b><span>미도리 클라우드 · AI 소프트웨어</span><small>1개월 +31.0% · 과열 주의</small></div>
+    <div><b>식는 중 (3개월↑ 1개월↓)</b><span>아오이 게임즈 · 해운 · 부동산</span><small>오른 뒤 최근 내려옴</small></div>
+  </div>
+  <div class="grid">
+   <div class="col l" style="flex:5 1 0">
+    <section class="card navy" aria-labelledby="l-h">
+      <div class="card-h"><h2 id="l-h">테마 순위<span class="c">12</span></h2><small>누르면 오른쪽에 상세</small></div>
+      <ul class="tl" id="tl"></ul>
+    </section>
+   </div>
+   <div class="col r" style="flex:7 1 0" id="detail">
+    <section class="card sage" aria-labelledby="d-h">
+      <div class="card-h"><h2 id="d-h">테마</h2><small>선택한 테마</small></div>
+      <div class="card-b" id="d-b"></div>
+    </section>
+    <details class="fold"><summary>숫자 뜻 — 간판·대장·같이 움직임·돈 몰림<span class="ar" aria-hidden="true">›</span></summary>
+      <div class="in"><ul style="margin:0;padding-left:18px;font-size:14.5px">
+        <li><b>간판</b> = 테마를 대표하는 종목 · <b>대장</b> = 최근 가장 강한 종목</li>
+        <li><b>돈 몰림</b> = 최근 20일 거래대금 ÷ 평소(1.25배↑ 많이, 0.85배↓ 빠짐) · 순매수 금액 아님</li>
+        <li>색칸: 진한 빨강 +20%↑ · 옅은 빨강 +5%↑ · 파랑 내림</li>
+        <li>판단 재료이며 매매 지시가 아닙니다</li>
+      </ul></div></details>
+   </div>
+  </div>
+  <p class="built">화면 만든 시각 <b>10/23 17:46</b> · 자료 기준일 <b>10/23</b></p>
+  <footer class="foot"><b>호쿠토증권 디자인 v2.2 · 82c 시안</b> · 모든 숫자는 가상 자료 · 판단을 돕는 표시이고 매수 지시가 아닙니다</footer>
+
+</div></main>
+
+<nav class="mnav" aria-label="아래 메뉴">
+  <a href="home.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11 12 4l9 7v9h-6v-6H9v6H3z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>알림홈</a><a href="#" title="내 주식 방 (이번 시안 밖)"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="1" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M16 14h2" stroke="currentColor" stroke-width="1.8"/></svg>내 주식</a><a href="decision.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 5 5M8.5 11h5M11 8.5v5" stroke="currentColor" stroke-width="1.8"/></svg>결정실</a><a href="news.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h10l4 4v14H5z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 11h8M8 15h8M8 7h4" stroke="currentColor" stroke-width="1.8"/></svg>뉴스</a><a class="on" aria-current="page" href="menu.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>전체</a>
+</nav>
+
+<script>
+(function(){
+'use strict';
+const esc=s=>String(s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+
+const T=[["AI 소프트웨어", 1, 0, 1, 14.7, 22.1, 1.9, 14, "★ 12일째"], ["전력망", 1, 0, 0, 9.1, 18.4, 1.4, 11, "★ 5일째"], ["게임·콘텐츠", 1, 0, 1, 3.8, 9.7, 1.1, 12, "★ 21일째"], ["반도체 소재·기판", 0, 1, 1, 2.3, 4.0, 1.6, 15, ""], ["방산", 1, 0, 0, 2.0, 12.5, 1.0, 9, "★ 3일째"], ["은행", 1, 0, 0, 1.6, 7.2, 0.9, 10, "🟢 전환"], ["인바운드관광", 1, 0, 0, 1.1, -2.4, 0.8, 13, "★ 30일째"], ["로봇", 0, 1, 0, 0.7, 3.3, 1.3, 8, ""], ["해운", 0, 0, 0, -0.4, -5.1, 0.7, 6, "🔴 이탈"], ["통신", 0, 0, 0, -0.9, 1.2, 0.9, 7, ""], ["바이오·의약", 0, 0, 0, -1.5, -3.8, 1.0, 16, ""], ["부동산", 0, 0, 0, -2.2, -6.0, 0.8, 9, ""]];
+const S={"AI 소프트웨어": [["간판 1위", "세이운 소프트", "DEMO-S", 62.1, 38.4, 21.5, 9.8, -0.8], ["대장 2위", "미도리 클라우드", "DEMO-M", 88.0, 51.2, 44.2, 31.0, -1.1], ["대장 3위", "아마츠 데이터", "DEMO-1", 24.5, 12.0, 8.8, 6.1, -4.2], ["관련", "코하쿠 시스템", "DEMO-2", -3.2, 4.4, 6.0, 5.2, -12.5], ["관련", "시노부 넷", "DEMO-3", 11.0, 9.1, 3.3, 2.0, -7.7]], "전력망": [["간판 1위", "미나토 중공업", "DEMO-C", 45.0, 28.0, 18.4, 9.1, -0.4], ["대장 2위", "키요 전선", "DEMO-4", 30.2, 22.1, 14.0, 8.0, -2.2], ["관련", "이부키 변압기", "DEMO-5", 12.8, 9.5, 6.6, 4.4, -5.0]], "게임·콘텐츠": [["간판 1위", "아오이 게임즈", "DEMO-B", 18.0, 5.5, -1.0, -3.4, -17.0], ["대장 2위", "유키 메디컬", "DEMO-Y", 40.0, 22.0, 12.0, 8.1, -2.4], ["관련", "소라 게임웍스", "DEMO-R", -9.0, -12.0, -11.3, -4.0, -15.8]], "반도체 소재·기판": [["간판 1위", "호쿠토 반도체", "DEMO-A", 35.0, 18.0, 6.0, 2.3, -3.0], ["대장 2위", "하나비 소재", "DEMO-H", 28.0, 15.5, 9.9, 6.4, -3.0], ["관련", "키타 전력설비", "DEMO-K", 8.0, 6.0, 4.1, 0.6, -6.2], ["관련", "츠키 로보틱스", "DEMO-T", 2.0, -1.8, -1.8, 3.2, -9.5]]};
+const MV={'AI 소프트웨어':'★ 1위 → 1위','전력망':'★ 4위 → 2위','게임·콘텐츠':'★ 2위 → 3위','반도체 소재·기판':'★ 밖 · ↗','방산':'★ 새로 진입','은행':'↗ → ★','인바운드관광':'★ 5위 → 6위','로봇':'★ 밖 · ↗','해운':'★ 6위 → 밖'};
+const pct=v=>(v>0?'+':v<0?'−':'')+Math.abs(v).toFixed(1)+'%';
+const cell=v=>`<td class="c" style="background:${v>=20?'#f6d6d4':v>=5?'#fbe9e7':v<=-10?'#d9e5f5':v<0?'#eef3fa':'#fff'}">${pct(v)}</td>`;
+document.getElementById('tl').innerHTML=T.map((t,i)=>`<li><button type="button" data-t="${esc(t[0])}" aria-pressed="false"><span class="no">${i+1}</span><span class="nm">${esc(t[0])} ${t[1]?'★':''}${t[2]?' ↗':''}</span><span class="v ${t[4]>0?'up':'down'}">${pct(t[4])}<small>돈 ${t[6].toFixed(1)}배</small></span><span class="mv">${MV[t[0]]||'★ 밖'}</span></button></li>`).join('');
+function show(name){const i=T.findIndex(t=>t[0]===name);if(i<0)return;const t=T[i];
+  document.querySelectorAll('#tl button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.t===name)));
+  const st=S[name];
+  document.getElementById('d-h').textContent=name;
+  document.getElementById('d-b').innerHTML=`<div class="hd"><div><b>1개월</b><span class="${t[4]>0?'up':'down'}">${pct(t[4])}</span><small>${i+1}등</small></div><div><b>3개월</b><span class="${t[5]>0?'up':'down'}">${pct(t[5])}</span><small>${[...T].sort((a,b)=>b[5]-a[5]).findIndex(x=>x[0]===name)+1}등</small></div><div><b>돈 몰림 20일</b><span>${t[6].toFixed(1)}배</span><small>${t[6]>=1.25?'많이 몰림':t[6]<=0.85?'빠짐':'보통'}</small></div><div><b>종목</b><span>${t[7]}개</span><small>같은 무게 평균</small></div></div>
+  ${name==='AI 소프트웨어'?'<p class="warnl">쏠림 주의 — 테마 오름의 절반 이상이 종목 2개(세이운 소프트·미도리 클라우드)에서 나옴</p>':''}
+  ${st?`<div class="tw"><table class="t"><thead><tr><th>종목</th><th class="n">1년</th><th class="n">6개월</th><th class="n">3개월</th><th class="n">1개월</th><th class="n">고점 대비</th></tr></thead><tbody>${st.map(s=>`<tr><td><b>${esc(s[1])}</b> <small style="color:var(--muted);font-family:var(--mono);font-size:12.5px">${s[2]}</small><span class="why">${s[0]}</span></td>${cell(s[3])}${cell(s[4])}${cell(s[5])}${cell(s[6])}<td class="c">${s[7]>=-0.5?'고점':pct(s[7])}</td></tr>`).join('')}</tbody></table></div><p class="note" style="padding:8px 0 0">종목 수 ${t[7]}개 중 위 몇 개만 가상으로 적음 · 실제 화면은 전부</p>`:'<p class="empty"><b>이 테마의 종목 표는 시안에서 생략</b>실제 화면은 테마마다 종목 전부를 보여 줍니다.</p>'}
+  <div class="links"><a class="link" href="news.html#theme-${encodeURIComponent(name)}">이 테마의 뉴스 보기 →</a><a class="link" href="ops.html">작전실 순위표 →</a></div>`;
+  history.replaceState(null,'','#t-'+encodeURIComponent(name))}
+document.getElementById('tl').addEventListener('click',e=>{const b=e.target.closest('button');if(b){show(b.dataset.t);if(innerWidth<980)document.getElementById('detail').scrollIntoView()}});
+const h=decodeURIComponent(location.hash.replace(/^#t-/,''));show(T.some(t=>t[0]===h)?h:T[0][0]);
+
+document.getElementById('type-btn').addEventListener('click',e=>{const on=e.currentTarget.getAttribute('aria-pressed')!=='true';e.currentTarget.setAttribute('aria-pressed',String(on));document.documentElement.classList.toggle('big',on)});
+})();
+</script>
+</body>
+</html>
